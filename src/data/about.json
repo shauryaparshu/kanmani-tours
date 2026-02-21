@@ -1,0 +1,123 @@
+{
+    "hero": {
+        "title": "We take you from Japan to India — with heart, safety, and unforgettable memories.",
+        "subtitle": "Bridging cultures through curated experiences. Your trusted partner for authentic South Indian journeys guided by passion and local expertise.",
+        "image": "/assets/img/home/sections/about-hero.jpg",
+        "ctaPrimary": {
+            "text": "View Tours",
+            "link": "/tours"
+        },
+        "ctaSecondary": {
+            "text": "Contact Us",
+            "link": "/contact"
+        }
+    },
+    "story": {
+        "title": "Our Story",
+        "content": [
+            "Srikan Tours was born out of a simple realization: the most beautiful parts of India are often the hardest to reach without the right guidance. Our founders, with deep roots in both Japanese hospitality and Indian culture, saw a gap between the curiosity of Japanese travelers and the complexity of exploring India independently.",
+            "We focus on South India because it offers a unique blend of ancient traditions, cinematic energy, and lush landscapes that resonate deeply with the Japanese spirit. We solve the problems of planning complexity, language barriers, and safety concerns, replacing them with curated, comfortable, and deeply personal experiences.",
+            "Today, we are more than a travel company. We are storytellers, cultural bridges, and companions on a journey that begins with a dream and ends with memories that last a lifetime."
+        ],
+        "image": "/assets/img/home/sections/story-image.jpg"
+    },
+    "founders": {
+        "title": "Meet our Team",
+        "members": [
+            {
+                "name": "Kanmani",
+                "role": "CEO",
+                "bio": "Growing up in the heart of Chennai, Kanmani's passion for South Indian cinema and heritage led her to share her home with the world. She ensures every tour feels like visiting an old friend.",
+                "photo": "/assets/img/people/team/founder-1.jpg",
+                "quote": "Travel is not about seeing new places, but seeing with new eyes."
+            },
+            {
+                "name": "Maki Suzuki",
+                "role": "Co-Founder & Experience Director",
+                "bio": "With a background in premium Japanese hospitality (Omotenashi), Maki meticulously designs every itinerary to meet the highest standards of comfort and cultural respect.",
+                "photo": "/assets/img/people/team/founder-2.jpg",
+                "quote": "The bridge between Japan and India is built on trust and shared wonder."
+            }
+        ]
+    },
+    "visionMission": {
+        "mission": {
+            "title": "Our Mission",
+            "text": "To provide safe, seamless, and emotionally resonant travel experiences that connect Japanese hearts with the authentic soul of India."
+        },
+        "vision": {
+            "title": "Our Vision",
+            "text": "To be the most trusted and sought-after bridge for cultural exchange between Japan and South India, fostering deep mutual respect through travel."
+        },
+        "values": [
+            "Unwavering Safety",
+            "Raw Authenticity",
+            "Premium Comfort",
+            "Cultural Respect",
+            "Full Transparency"
+        ]
+    },
+    "differentiators": {
+        "title": "What Makes Us Different",
+        "items": [
+            {
+                "title": "Curated Itineraries",
+                "description": "Not just tourist spots, but hidden gems and exclusive cultural encounters."
+            },
+            {
+                "title": "Local Support",
+                "description": "On-ground partners and guides who speak your language and know every corner."
+            },
+            {
+                "title": "Transparent Pricing",
+                "description": "No hidden costs. We believe in honesty from the very first quote."
+            },
+            {
+                "title": "Comfort First",
+                "description": "Carefully selected stays and private transport optimized for Your comfort."
+            },
+            {
+                "title": "Small Groups",
+                "description": "We keep groups small to ensure personal attention and a family-like vibe."
+            },
+            {
+                "title": "Cultural Depth",
+                "description": "Experience traditions, cinema, and cuisine beyond the surface level."
+            }
+        ]
+    },
+    "milestones": [
+        {
+            "year": "2022",
+            "event": "Founded in Tokyo and Chennai"
+        },
+        {
+            "year": "2023",
+            "event": "Successfully hosted over 500 guests"
+        },
+        {
+            "year": "2024",
+            "event": "Official Partnership with major South Indian Film Studios"
+        },
+        {
+            "year": "2025",
+            "event": "Expanded curated tours to 10+ South Indian cities"
+        }
+    ],
+    "safety": {
+        "title": "Your Safety & Support",
+        "text": "We handle everything from airport pickups to 24/7 emergency support. Every tour includes Japanese-speaking guides, pre-vetted accommodations, and clear inclusions so you can travel with complete peace of mind."
+    },
+    "testimonials": [
+        {
+            "name": "Sato Hiroshi",
+            "text": "The founders' passion for India is contagious. Everything was handled with such care and professionalism. I felt completely safe and at home.",
+            "image": "/assets/img/people/customers/002-hiroshi-sato.png"
+        },
+        {
+            "name": "Tanaka Yuki",
+            "text": "A life-changing experience. Seeing the studios and meeting locals was something I could never have organized myself.",
+            "image": "/assets/img/people/customers/001-yuki-tanaka.png"
+        }
+    ]
+}

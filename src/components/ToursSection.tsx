@@ -1,0 +1,129 @@
+'use client';
+
+import React, { useState } from 'react';
+import Link from 'next/link';
+import { getAllTours, formatDateRange, formatPriceJPY, type Tour } from '@/lib/tours';
+
+interface ToursSectionProps {
+    cardImages?: Record<number, string | null>;
+}
+
+function getRemainingDays(startDate: string): string {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const start = new Date(startDate);
+    start.setHours(0, 0, 0, 0);
+    const diffDays = Math.ceil((start.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+    if (diffDays > 0) return `${diffDays} days to go`;
+    if (diffDays === 0) return 'Starts today!';
+    return 'In progress';
+}
+
+const catBg = (cat: string) => {
+    if (cat === 'Celebrity') return '#7c3aed';
+    if (cat === 'Food') return '#16a34a';
+    if (cat === 'Cultural') return '#2563eb';
+    return 'var(--primary)';
+};
+
+const catText = (cat: string) => 'white';
+
+export default function ToursSection({ cardImages = {} }: ToursSectionProps) {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const upcomingTours = getAllTours()
+        .filter(t => {
+            const start = new Date(t.startDate);
+            start.setHours(0, 0, 0, 0);
+            return start > today;
+        })
+        .slice(0, 3);
+
+    return (
+        <section id="tours" className="container animate" style={{ animationDelay: '0.4s' }}>
+            <div className="section-header-flex">
+                <div className="section-title-wrap">
+                    <h2 className="section-title">Upcoming Tours</h2>
+                    <p className="section-subtitle">Specially curated journeys through the heart of India</p>
+                </div>
+                <Link href="/tours" className="btn-outline-primary">
+                    View All Tours
+                </Link>
+            </div>
+
+            <div className="itineraries-grid">
+                {upcomingTours.map((tour) => {
+                    const imagePath = cardImages[tour.id] ?? tour.coverImage;
+
+                    return (
+                        <div key={tour.id} className="tour-card">
+                            <Link href={`/tours/${tour.slug}`} className="tour-img-link">
+                                <div className="tour-img-wrap">
+                                    <img
+                                        src={imagePath || `https://placehold.co/600x400?text=${encodeURIComponent(tour.title)}`}
+                                        alt={tour.title}
+                                        className="tour-img"
+                                        onError={(e) => {
+                                            const target = e.currentTarget as HTMLImageElement;
+                                            target.src = `https://placehold.co/600x400?text=${encodeURIComponent(tour.title)}`;
+                                        }}
+                                    />
+                                    <div
+                                        className="tour-badge"
+                                        style={{
+                                            backgroundColor: catBg(tour.category),
+                                            color: catText(tour.category),
+                                            boxShadow: `0 4px 10px ${catBg(tour.category)}40`
+                                        }}
+                                    >
+                                        {tour.category}
+                                    </div>
+                                </div>
+                            </Link>
+                            <div className="tour-content">
+                                <div className="tour-dates-row">
+                                    <div className="tour-dates">
+                                        {formatDateRange(tour.startDate, tour.endDate)}
+                                    </div>
+                                    <div className="tour-countdown">
+                                        {getRemainingDays(tour.startDate)}
+                                    </div>
+                                </div>
+
+                                <div className="tour-location">
+                                    <svg viewBox="0 0 24 24" width="14" height="14" fill="var(--primary)">
+                                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+                                    </svg>
+                                    {tour.location}
+                                </div>
+
+                                <h3 className="tour-title-new">
+                                    <Link href={`/tours/${tour.slug}`}>
+                                        {tour.title}
+                                    </Link>
+                                </h3>
+
+                                <ul className="tour-features">
+                                    {tour.features.map((feature, i) => (
+                                        <li key={i}>{feature}</li>
+                                    ))}
+                                </ul>
+
+                                <div className="tour-availability">
+                                    <span className="availability-icon">🔥</span>
+                                    <span className="availability-text">Only {tour.seatsLeft} seats left!</span>
+                                </div>
+
+
+                                {/* KEY CHANGE: Learn More links to /tours/[slug] */}
+                                <Link href={`/tours/${tour.slug}`} className="btn-tour-details">
+                                    Learn More →
+                                </Link>
+                            </div>
+                        </div>
+                    );
+                })}
+            </div>
+        </section>
+    );
+}

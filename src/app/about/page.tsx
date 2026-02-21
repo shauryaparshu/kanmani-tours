@@ -1,0 +1,146 @@
+'use client';
+
+import React from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import TopBar from '@/components/TopBar';
+import Navigation from '@/components/Navigation';
+import Footer from '@/components/FooterSection';
+import aboutData from '@/data/about.json';
+
+export default function AboutPage() {
+    const {
+        story
+    } = aboutData;
+
+    return (
+        <main className="about-page">
+            <TopBar />
+            <Navigation />
+
+            {/* 1. OUR STORY - CLEAN & MINIMAL */}
+            <section className="about-story section-padding">
+                <div className="container">
+                    <div className="about-story-grid">
+                        <div className="about-story-text animate-on-scroll">
+                            <span className="section-badge">Behind the Scenes</span>
+                            <h2 className="section-title-large">{story.title}</h2>
+                            {story.content.map((p: string, idx: number) => (
+                                <p key={idx} className="story-paragraph">{p}</p>
+                            ))}
+                        </div>
+                        <div className="about-story-visual animate-on-scroll">
+                            <div className="story-img-wrap">
+                                <Image
+                                    src={story.image}
+                                    alt="Kanmani"
+                                    width={500}
+                                    height={500}
+                                    className="story-img"
+                                    priority
+                                />
+                                <div className="story-attribution">
+                                    <strong>Kanmani</strong>
+                                    <span>CEO</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <Footer />
+
+            <style jsx>{`
+        .about-page {
+          background: #fff;
+          min-height: 100vh;
+          display: flex;
+          flex-direction: column;
+        }
+        .section-padding { padding: 80px 0; flex: 1; }
+        .mt-60 { margin-top: 60px; }
+
+        /* Story - Improved Image Handling */
+        .about-story-grid { 
+          display: grid; 
+          grid-template-columns: 1.2fr 0.8fr; 
+          gap: 60px; 
+          align-items: flex-start; 
+        }
+        
+        .section-badge { 
+          color: var(--primary); 
+          font-weight: 800; 
+          text-transform: uppercase; 
+          letter-spacing: 0.1em; 
+          font-size: 0.85rem; 
+          display: block; 
+          margin-bottom: 12px; 
+        }
+        
+        .section-title-large { 
+          font-size: clamp(2rem, 4vw, 3rem); 
+          font-weight: 900; 
+          color: #1e293b; 
+          margin-bottom: 30px; 
+          line-height: 1.2; 
+        }
+        
+        .story-paragraph { 
+          font-size: 1.1rem; 
+          color: #475569; 
+          margin-bottom: 24px; 
+          line-height: 1.8; 
+        }
+        
+        .story-img-wrap { 
+          position: relative;
+        }
+        
+        .story-img { 
+          border-radius: 24px; 
+          box-shadow: 0 20px 40px rgba(0,0,0,0.08); 
+          width: 100%; 
+          height: auto; 
+          max-width: 100%;
+          display: block;
+          object-fit: contain; /* Prevents stretching */
+          background: #f1f5f9;
+        }
+        
+        .story-attribution { 
+          margin-top: 24px; 
+          display: flex; 
+          flex-direction: column; 
+          border-left: 4px solid var(--primary); 
+          padding-left: 20px; 
+        }
+        
+        .story-attribution strong { 
+          color: #1e293b; 
+          font-size: 1.25rem; 
+          font-weight: 900; 
+        }
+        
+        .story-attribution span { 
+          color: var(--primary); 
+          font-weight: 700; 
+          font-size: 0.9rem; 
+          text-transform: uppercase; 
+          letter-spacing: 0.05em; 
+        }
+
+        /* Mobile */
+        @media (max-width: 991px) {
+          .about-story-grid { 
+            grid-template-columns: 1fr; 
+            gap: 40px; 
+          }
+          .section-padding { padding: 60px 0; }
+          .story-img-wrap { order: -1; margin-bottom: 20px; }
+        }
+      `}</style>
+        </main>
+    );
+}

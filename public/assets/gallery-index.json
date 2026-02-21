@@ -1,0 +1,44 @@
+{
+  "tours": [
+    {
+      "slug": "celebrity-tour-december-2025",
+      "title": "Celebrity Tour December 2025",
+      "shortDescription": "A landmark 10-day fan journey through Chennai and Madurai â€” featuring exclusive star meet-and-greets, temple city experiences, and the magical Pongal countdown atmosphere of Tamil Nadu.",
+      "category": "Celebrity",
+      "startDate": "2025-12-01",
+      "endDate": "2025-12-10",
+      "year": 2025,
+      "coverImage": "/assets/img/tours/celebrity-tour-december-2025/gallery/001-screensh.jpg",
+      "media": [
+        {
+          "type": "video",
+          "url": "/assets/img/tours/celebrity-tour-december-2025/gallery/lv_0_20251207154244.mp4"
+        },
+        {
+          "type": "image",
+          "url": "/assets/img/tours/celebrity-tour-december-2025/gallery/001-screensh.jpg"
+        },
+        {
+          "type": "image",
+          "url": "/assets/img/tours/celebrity-tour-december-2025/gallery/002-59707893.jpg"
+        },
+        {
+          "type": "image",
+          "url": "/assets/img/tours/celebrity-tour-december-2025/gallery/004-whatsapp.jpeg"
+        },
+        {
+          "type": "image",
+          "url": "/assets/img/tours/celebrity-tour-december-2025/gallery/005-whatsapp.jpeg"
+        },
+        {
+          "type": "image",
+          "url": "/assets/img/tours/celebrity-tour-december-2025/gallery/006-whatsapp.jpeg"
+        },
+        {
+          "type": "image",
+          "url": "/assets/img/tours/celebrity-tour-december-2025/gallery/cover-whatsapp.jpeg"
+        }
+      ]
+    }
+  ]
+}

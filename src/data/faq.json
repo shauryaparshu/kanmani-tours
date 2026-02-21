@@ -1,0 +1,52 @@
+[
+    {
+        "id": 1,
+        "question": "What’s included in the tour price?",
+        "answer": "Inclusions vary by tour, but usually cover major transport, stays, and guided experiences. Exact inclusions are listed on each tour page."
+    },
+    {
+        "id": 2,
+        "question": "What’s NOT included in the tour price?",
+        "answer": "Usually flights, personal shopping, and optional activities. Check the “Exclusions” section on the tour details page."
+    },
+    {
+        "id": 3,
+        "question": "How do I book a tour?",
+        "answer": "Open a tour page and click “Book Now”. You’ll be guided to the booking form/payment steps for that specific tour."
+    },
+    {
+        "id": 4,
+        "question": "Can I cancel or reschedule my booking?",
+        "answer": "Yes, cancellation rules depend on how close it is to the start date. We show the policy during booking and can help you reschedule if possible."
+    },
+    {
+        "id": 5,
+        "question": "Are the tours suitable for first-time travelers to India?",
+        "answer": "Yes. Our itineraries are designed to be smooth for first-timers, with support, clear schedules, and trusted local partners."
+    },
+    {
+        "id": 6,
+        "question": "Do you organize tours for families and kids?",
+        "answer": "Yes. Some tours are family-friendly—look for that tag on the Tours page, or ask us before booking."
+    },
+    {
+        "id": 7,
+        "question": "What should I pack for the tour?",
+        "answer": "We share a simple checklist after booking based on season and itinerary. Comfortable shoes and light layers are usually the best."
+    },
+    {
+        "id": 8,
+        "question": "Will there be a tour guide throughout the trip?",
+        "answer": "Most tours include a trip lead plus local guides in key locations. The exact support details are mentioned on the tour page."
+    },
+    {
+        "id": 9,
+        "question": "Can I request a custom/private tour?",
+        "answer": "Yes. Tell us your dates, group size, and interests, and we’ll suggest a custom plan and quote."
+    },
+    {
+        "id": 10,
+        "question": "How do I know upcoming vs past tours?",
+        "answer": "The Tours page automatically shows upcoming tours first, followed by past tours. You can also filter by “Upcoming” or “Past”."
+    }
+]
