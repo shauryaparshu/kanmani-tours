@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { getAllTours, formatDateRange, formatPriceJPY, type Tour } from '@/lib/tours';
+import { getCategoryColor, getCategoryLabel } from '@/lib/categories';
 
 interface ToursSectionProps {
     tours: Tour[];
@@ -20,13 +21,7 @@ function getRemainingDays(startDate: string): string {
     return 'In progress';
 }
 
-const catBg = (cat: string) => {
-    if (cat === 'Celebrity') return '#7c3aed';
-    if (cat === 'Food') return '#16a34a';
-    if (cat === 'Cultural') return '#2563eb';
-    return 'var(--primary)';
-};
-
+const catBg = (cat: string) => getCategoryColor(cat);
 const catText = (cat: string) => 'white';
 
 export default function ToursSection({ tours, cardImages = {} }: ToursSectionProps) {
@@ -77,7 +72,7 @@ export default function ToursSection({ tours, cardImages = {} }: ToursSectionPro
                                             boxShadow: `0 4px 10px ${catBg(tour.category)}40`
                                         }}
                                     >
-                                        {tour.category}
+                                        {getCategoryLabel(tour.category)}
                                     </div>
                                 </div>
                             </Link>

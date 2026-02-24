@@ -1,9 +1,11 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter, useSearchParams } from 'next/navigation';
 import type { Tour } from '@/lib/tours';
 import { formatDateRange, formatPriceJPY } from '@/lib/tours';
+import { TOUR_CATEGORIES, getCategoryColor, getCategoryLabel } from '@/lib/categories';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 type StatusFilter = 'all' | 'upcoming' | 'past';
@@ -20,17 +22,8 @@ interface Props {
     allCategories: string[];
 }
 
-// ─── Category colors ──────────────────────────────────────────────────────────
-const CATEGORY_COLORS: Record<string, { bg: string; text: string }> = {
-    Celebrity: { bg: '#7c3aed', text: '#fff' },       // Purple + white text
-    Food: { bg: '#16a34a', text: '#fff' },       // Green
-    Cultural: { bg: '#2563eb', text: '#fff' },       // Blue
-    Nature: { bg: '#22c55e', text: '#fff' },
-    Heritage: { bg: '#eab308', text: '#fff' },
-    Adventure: { bg: '#ef4444', text: '#fff' },
-};
-const catBg = (c: string) => CATEGORY_COLORS[c]?.bg ?? '#64748b';
-const catText = (c: string) => CATEGORY_COLORS[c]?.text ?? '#fff';
+const catBg = (c: string) => getCategoryColor(c);
+const catText = (c: string) => '#fff';
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 function isTourUpcoming(tour: Tour): boolean {
@@ -83,7 +76,7 @@ function TourCard({ tour }: { tour: Tour }) {
                         className="tlc-badge"
                         style={{ background: catBg(tour.category), color: catText(tour.category) }}
                     >
-                        {tour.category}
+                        {getCategoryLabel(tour.category)}
                     </span>
                     {!upcoming && <span className="tlc-past-pill">Past</span>}
                 </div>
@@ -112,12 +105,33 @@ function TourCard({ tour }: { tour: Tour }) {
 
 // ─── Main client component ────────────────────────────────────────────────────
 export default function ToursListClient({ tours, allCategories }: Props) {
+    const router = useRouter();
+    const searchParams = useSearchParams();
+
     const [filters, setFilters] = useState<Filters>({
         year: '',
         categories: [],
         status: 'all',
         search: '',
     });
+
+    // Sync from URL on load
+    useEffect(() => {
+        const cat = searchParams?.get('category');
+        if (cat) {
+            setFilters(prev => ({ ...prev, categories: [cat] }));
+        }
+    }, [searchParams]);
+
+    const updateUrl = (cats: string[]) => {
+        const params = new URLSearchParams(searchParams?.toString() || '');
+        if (cats.length > 0) {
+            params.set('category', cats[0]); // Simple single-category URL sync for now as per shared patterns
+        } else {
+            params.delete('category');
+        }
+        router.push(`?${params.toString()}`, { scroll: false });
+    };
 
     const today = useMemo(() => {
         const d = new Date();
@@ -209,12 +223,15 @@ export default function ToursListClient({ tours, allCategories }: Props) {
         setFilters({ year: '', categories: [], status: 'all', search: '' });
 
     const toggleCategory = (cat: string) => {
+        const nextCats = filters.categories.includes(cat)
+            ? filters.categories.filter(c => c !== cat)
+            : [cat]; // Switching to single-category toggle to match URL pattern
+
         setFilters(prev => ({
             ...prev,
-            categories: prev.categories.includes(cat)
-                ? prev.categories.filter(c => c !== cat)
-                : [...prev.categories, cat],
+            categories: nextCats,
         }));
+        updateUrl(nextCats);
     };
 
     return (
@@ -295,21 +312,40 @@ export default function ToursListClient({ tours, allCategories }: Props) {
 
                     {/* Category pills — below filter bar, right of count */}
                     <div className="tlc-cat-group">
-                        {allCategories.map(cat => {
-                            const isActive = filters.categories.includes(cat);
+                        {TOUR_CATEGORIES.filter(c => c.priority).map(catDef => {
+                            const isActive = filters.categories.includes(catDef.key);
                             return (
                                 <button
-                                    key={cat}
+                                    key={catDef.key}
                                     className={`tlc-cat-pill ${isActive ? 'active' : ''}`}
                                     style={isActive
-                                        ? { background: catBg(cat), borderColor: catBg(cat), color: catText(cat) }
-                                        : { borderColor: catBg(cat), color: catBg(cat) }}
-                                    onClick={() => toggleCategory(cat)}
+                                        ? { background: catDef.color, borderColor: catDef.color, color: '#fff' }
+                                        : { borderColor: catDef.color, color: catDef.color }}
+                                    onClick={() => toggleCategory(catDef.key)}
                                 >
-                                    {cat}
+                                    {catDef.label}
                                 </button>
                             );
                         })}
+
+                        {/* More dropdown simulation or simple section */}
+                        <div className="tlc-more-cats">
+                            <select
+                                className="tlc-more-select"
+                                value=""
+                                onChange={(e) => {
+                                    if (e.target.value) toggleCategory(e.target.value);
+                                }}
+                            >
+                                <option value="" disabled>More Categories...</option>
+                                {TOUR_CATEGORIES.filter(c => !c.priority).map(catDef => (
+                                    <option key={catDef.key} value={catDef.key}>
+                                        {catDef.label} {filters.categories.includes(catDef.key) ? '✓' : ''}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+
                         {filters.categories.length > 0 && (
                             <button
                                 className="tlc-inline-clear"

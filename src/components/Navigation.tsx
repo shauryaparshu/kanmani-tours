@@ -12,6 +12,7 @@ export default function Navigation() {
         { name: 'Home', href: '/' },
         { name: 'Tours', href: '/tours' },
         { name: 'Gallery', href: '/gallery' },
+        { name: 'Airport Pickup & Drop', href: '/airport-transfer' },
         { name: 'About', href: '/about' },
         { name: 'FAQ', href: '/faq' },
         { name: 'Contact', href: '/contact' },

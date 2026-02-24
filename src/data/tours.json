@@ -73,7 +73,7 @@
         "exclusions": [
             "International flights to/from Chennai",
             "Personal shopping and souvenirs",
-            "Lunches on days 2â€“5 (allowance provided)",
+            "Lunches on days 2–5 (allowance provided)",
             "Travel insurance (strongly recommended)",
             "Any optional excursions not listed"
         ],
@@ -84,7 +84,7 @@
             },
             {
                 "question": "How is the celebrity confirmed?",
-                "answer": "We confirm the scheduled star 2â€“3 weeks before departure and notify all participants immediately. Availability can occasionally change due to filming schedules."
+                "answer": "We confirm the scheduled star 2–3 weeks before departure and notify all participants immediately. Availability can occasionally change due to filming schedules."
             },
             {
                 "question": "Is this tour suitable for solo female travellers?",
@@ -92,7 +92,7 @@
             },
             {
                 "question": "What is the cancellation policy?",
-                "answer": "Full refund if cancelled 30+ days before departure. 50% refund 15â€“29 days before. No refund within 14 days."
+                "answer": "Full refund if cancelled 30+ days before departure. 50% refund 15–29 days before. No refund within 14 days."
             }
         ],
         "bookingLink": null
@@ -102,7 +102,7 @@
         "slug": "food-tour-april-2026",
         "category": "Food",
         "title": "Food Tour April 2026",
-        "shortDescription": "A 7-day culinary odyssey through Hyderabad that takes you deep into the city's legendary food culture â€” from the world-famous Biryani to royal Nizam banquets and historic Irani cafÃ©s.",
+        "shortDescription": "A 7-day culinary odyssey through Hyderabad that takes you deep into the city's legendary food culture — from the world-famous Biryani to royal Nizam banquets and historic Irani cafés.",
         "longDescription": "Hyderabad is one of the world's true food capitals, and this tour gives you the keys to its kitchen. Over seven rich days you will master traditional Hyderabadi Dum Biryani in a hands-on cooking workshop, dine in the restored palaces of the Nizam era, and navigate the centuries-old alleyways of the Old City sampling Irani Chai and Osmania biscuits.\n\nThis is not a simple restaurant tour. You will meet the families who have guarded secret recipes for generations, visit the spice merchants of Laad Bazaar, and understand why Hyderabadi cuisine is considered the ultimate fusion of Mughal and South Indian flavour traditions.",
         "startDate": "2026-04-20",
         "endDate": "2026-04-26",
@@ -136,7 +136,7 @@
             {
                 "dayNumber": 3,
                 "title": "Charminar & Old City Food Trail",
-                "details": "Walking food trail through the Old City â€” Haleem, Paya, kebabs, Irani cafÃ©s, and Osmania biscuits with curated tasting stops.",
+                "details": "Walking food trail through the Old City — Haleem, Paya, kebabs, Irani cafés, and Osmania biscuits with curated tasting stops.",
                 "image": null
             },
             {
@@ -154,7 +154,7 @@
             {
                 "dayNumber": 6,
                 "title": "Modern Hyderabad Food Scene",
-                "details": "Explore the modern cafÃ© culture and fusion restaurants of Banjara Hills and Jubilee Hills â€” a study in how the city's food is evolving.",
+                "details": "Explore the modern café culture and fusion restaurants of Banjara Hills and Jubilee Hills — a study in how the city's food is evolving.",
                 "image": null
             },
             {
@@ -166,7 +166,7 @@
         ],
         "whatToExpect": [
             "Hands-on cooking with professional local chefs",
-            "7 curated food experiences â€” not just restaurants",
+            "7 curated food experiences — not just restaurants",
             "Access to family-run kitchens not open to the public",
             "Full Japanese language support throughout",
             "All tastings and workshop ingredients included"
@@ -202,8 +202,8 @@
         "slug": "cultural-tour-june-2026",
         "category": "Cultural",
         "title": "Cultural Tour June 2026",
-        "shortDescription": "An 8-day deep dive into the temples, art, and sacred traditions of Tamil Nadu â€” featuring private after-hours temple access, live classical Bharatanatyam, and UNESCO World Heritage sites.",
-        "longDescription": "Tamil Nadu is one of humanity's oldest living civilisations, and this tour is your intimate introduction to it. Over eight carefully paced days you will stand inside the Meenakshi Amman Temple in Madurai as a private guide brings its thousand-year history to life, photograph the Shore Temple at Mamallapuram in the golden hour, and witness â€” or even participate in â€” a live classical Bharatanatyam dance performance.\n\nThis is the tour for travellers who want to go beyond sightseeing. Every day has been designed to create a genuine cultural encounter, not just a visit.",
+        "shortDescription": "An 8-day deep dive into the temples, art, and sacred traditions of Tamil Nadu — featuring private after-hours temple access, live classical Bharatanatyam, and UNESCO World Heritage sites.",
+        "longDescription": "Tamil Nadu is one of humanity's oldest living civilisations, and this tour is your intimate introduction to it. Over eight carefully paced days you will stand inside the Meenakshi Amman Temple in Madurai as a private guide brings its thousand-year history to life, photograph the Shore Temple at Mamallapuram in the golden hour, and witness — or even participate in — a live classical Bharatanatyam dance performance.\n\nThis is the tour for travellers who want to go beyond sightseeing. Every day has been designed to create a genuine cultural encounter, not just a visit.",
         "startDate": "2026-06-05",
         "endDate": "2026-06-12",
         "durationDays": 8,
@@ -226,14 +226,14 @@
             },
             {
                 "dayNumber": 2,
-                "title": "Meenakshi Amman Temple â€” Private Tour",
+                "title": "Meenakshi Amman Temple — Private Tour",
                 "details": "Early-morning private architectural tour of the Meenakshi Temple with a specialist historian guide. Explore the Hall of a Thousand Pillars and the temple tank.",
                 "image": null
             },
             {
                 "dayNumber": 3,
                 "title": "Madurai Old City Walk & Craft",
-                "details": "Walking tour of Madurai's bazaars â€” silk, bronze, and flower markets. Afternoon traditional bronze-casting workshop.",
+                "details": "Walking tour of Madurai's bazaars — silk, bronze, and flower markets. Afternoon traditional bronze-casting workshop.",
                 "image": null
             },
             {
@@ -244,7 +244,7 @@
             },
             {
                 "dayNumber": 5,
-                "title": "Bharatanatyam â€” Live Performance & Intro Workshop",
+                "title": "Bharatanatyam — Live Performance & Intro Workshop",
                 "details": "Afternoon private Bharatanatyam performance in a traditional sabha. Optional 90-minute introduction workshop for participants interested in learning basic mudras.",
                 "image": null
             },
@@ -256,7 +256,7 @@
             },
             {
                 "dayNumber": 7,
-                "title": "UNESCO Heritage Sites â€” Photography Workshop",
+                "title": "UNESCO Heritage Sites — Photography Workshop",
                 "details": "Guided photography workshop at Shore Temple, Five Rathas, and Arjuna's Penance. Professional photographer guide included. Small print of your best shot gifted.",
                 "image": null
             },
@@ -272,7 +272,7 @@
             "Specialist heritage guides at every major site",
             "A professional photographer guide at Mamallapuram",
             "Optional participation in classical dance workshop",
-            "Balanced pace â€” cultural depth without exhaustion"
+            "Balanced pace — cultural depth without exhaustion"
         ],
         "inclusions": [
             "All internal transfers by air-conditioned van",
@@ -291,14 +291,14 @@
         "faq": [
             {
                 "question": "Is there a lot of walking involved?",
-                "answer": "Yes â€” the Meenakshi Temple and Mamallapuram sites involve moderate walking on uneven surfaces. Comfortable shoes are strongly recommended."
+                "answer": "Yes — the Meenakshi Temple and Mamallapuram sites involve moderate walking on uneven surfaces. Comfortable shoes are strongly recommended."
             },
             {
                 "question": "Are religious sites respectful of non-Hindu visitors?",
                 "answer": "Absolutely. Your guide will brief you on temple etiquette (footwear, dress, photography rules) before every visit."
             },
             {
-                "question": "Only 2 seats left â€” can I book for a group of 4?",
+                "question": "Only 2 seats left — can I book for a group of 4?",
                 "answer": "Please contact us directly. We may be able to arrange a private group departure or reserve seats on our next cultural tour."
             }
         ],
@@ -309,8 +309,8 @@
         "slug": "celebrity-tour-december-2025",
         "category": "Celebrity",
         "title": "Celebrity Tour December 2025",
-        "shortDescription": "A landmark 10-day fan journey through Chennai and Madurai â€” featuring exclusive star meet-and-greets, temple city experiences, and the magical Pongal countdown atmosphere of Tamil Nadu.",
-        "longDescription": "December in Tamil Nadu is an extraordinary time to be a film fan. As the state gears up for the festive season, the film industry buzzes with premieres, press events, and charity galas â€” making it the perfect moment for our most ambitious celebrity tour to date.\n\nOver ten carefully curated days, you will divide your time between Chennai, India's film capital for Tamil cinema, and the ancient temple city of Madurai. In Chennai you will access live film sets, attend a private screening of an upcoming release, and enjoy a personal interaction session with a confirmed Tamil star. In Madurai, the atmosphere shifts to one of deep spiritual culture as the city prepares its legendary December Music and Dance Festival.\n\nThis tour is limited to just 8 participants to ensure every experience remains intimate, personal, and unforgettable.",
+        "shortDescription": "A landmark 10-day fan journey through Chennai and Madurai — featuring exclusive star meet-and-greets, temple city experiences, and the magical Pongal countdown atmosphere of Tamil Nadu.",
+        "longDescription": "December in Tamil Nadu is an extraordinary time to be a film fan. As the state gears up for the festive season, the film industry buzzes with premieres, press events, and charity galas — making it the perfect moment for our most ambitious celebrity tour to date.\n\nOver ten carefully curated days, you will divide your time between Chennai, India's film capital for Tamil cinema, and the ancient temple city of Madurai. In Chennai you will access live film sets, attend a private screening of an upcoming release, and enjoy a personal interaction session with a confirmed Tamil star. In Madurai, the atmosphere shifts to one of deep spiritual culture as the city prepares its legendary December Music and Dance Festival.\n\nThis tour is limited to just 8 participants to ensure every experience remains intimate, personal, and unforgettable.",
         "startDate": "2025-12-01",
         "endDate": "2025-12-10",
         "durationDays": 10,
@@ -328,7 +328,7 @@
             {
                 "dayNumber": 1,
                 "title": "Arrival in Chennai",
-                "details": "Welcome at Chennai International Airport. Transfer to your 5-star hotel on ECR. Evening orientation walk along Marina Beach â€” the world's second longest urban beach â€” and a welcome dinner with your guide.",
+                "details": "Welcome at Chennai International Airport. Transfer to your 5-star hotel on ECR. Evening orientation walk along Marina Beach — the world's second longest urban beach — and a welcome dinner with your guide.",
                 "image": null
             },
             {
@@ -340,7 +340,7 @@
             {
                 "dayNumber": 3,
                 "title": "Celebrity Meet & Greet",
-                "details": "The signature moment of the tour. A private, structured interaction session with a confirmed Tamil film star â€” including a Q&A, personal photo opportunity, and exclusive signed memorabilia prepared by our team.",
+                "details": "The signature moment of the tour. A private, structured interaction session with a confirmed Tamil film star — including a Q&A, personal photo opportunity, and exclusive signed memorabilia prepared by our team.",
                 "image": null
             },
             {
@@ -364,13 +364,13 @@
             {
                 "dayNumber": 7,
                 "title": "Meenakshi Temple Deep Dive",
-                "details": "Private guided architectural tour of the Meenakshi Temple complex with a specialist historian. Explore the Hall of a Thousand Pillars, the sacred tank, and the temple museum â€” with full Japanese interpretation provided.",
+                "details": "Private guided architectural tour of the Meenakshi Temple complex with a specialist historian. Explore the Hall of a Thousand Pillars, the sacred tank, and the temple museum — with full Japanese interpretation provided.",
                 "image": null
             },
             {
                 "dayNumber": 8,
                 "title": "December Festival Experience",
-                "details": "Attend a curated selection of performances from the Madurai December Music and Dance Festival â€” featuring Bharatanatyam, Carnatic music, and traditional Nadhaswaram recitals. A rare cultural privilege.",
+                "details": "Attend a curated selection of performances from the Madurai December Music and Dance Festival — featuring Bharatanatyam, Carnatic music, and traditional Nadhaswaram recitals. A rare cultural privilege.",
                 "image": null
             },
             {
@@ -392,7 +392,7 @@
             "Live film set access and private pre-release screening",
             "Attendance at the legendary Madurai December Music Festival",
             "Full Japanese-speaking escort for all 10 days",
-            "Small group of maximum 8 â€” a truly boutique experience"
+            "Small group of maximum 8 — a truly boutique experience"
         ],
         "inclusions": [
             "Return airport transfers (Chennai in, Madurai out)",
@@ -407,7 +407,7 @@
             "International flights to/from India",
             "Travel insurance (strongly recommended)",
             "Personal shopping and souvenirs",
-            "Lunches on days 2â€“9 (daily allowance provided)",
+            "Lunches on days 2–9 (daily allowance provided)",
             "Optional spa services"
         ],
         "faq": [
@@ -421,9 +421,154 @@
             },
             {
                 "question": "Will there be a similar tour in 2026?",
-                "answer": "Yes! Watch for our Celebrity Tour March 2026 which follows a similar format in Chennai. Seats are limited â€” book early."
+                "answer": "Yes! Watch for our Celebrity Tour March 2026 which follows a similar format in Chennai. Seats are limited — book early."
             }
         ],
+        "bookingLink": null
+    },
+    {
+        "id": 5,
+        "slug": "short-tour-chennai",
+        "category": "Short",
+        "title": "Chennai Weekend Explorer",
+        "shortDescription": "A compact 2-day tour of Chennai covering Marina Beach, Kapaleeshwarar Temple, and authentic South Indian cuisine.",
+        "longDescription": "Not everyone has a full week to spare, and that is exactly why we created this focused weekend tour of Chennai. In just two days you will experience the city's most iconic highlights — from the historic Mylapore neighbourhood to the vibrant colours of Marina Beach at sunrise.",
+        "startDate": "2026-05-10",
+        "endDate": "2026-05-11",
+        "durationDays": 2,
+        "location": "Chennai",
+        "priceJPY": 45000,
+        "priceRangeJPY": {
+            "min": 35000,
+            "max": 55000
+        },
+        "seatsLeft": 10,
+        "coverImage": null,
+        "galleryImages": [],
+        "features": [
+            "Marina Beach sunrise walk",
+            "Kapaleeshwarar Temple guided visit",
+            "T. Nagar shopping with local guide"
+        ],
+        "itinerary": [
+            {
+                "dayNumber": 1,
+                "title": "Arrival & Chennai Highlights",
+                "details": "Morning arrival and transfer. Visit Kapaleeshwarar Temple and explore T. Nagar. Evening Marina Beach sunset walk.",
+                "image": null
+            },
+            {
+                "dayNumber": 2,
+                "title": "Culture & Departure",
+                "details": "Early-morning Marina Beach sunrise. Visit the Government Museum. Farewell brunch and transfer to airport.",
+                "image": null
+            }
+        ],
+        "whatToExpect": [
+            "Compact 2-day itinerary",
+            "Japanese-speaking guide",
+            "Authentic local food"
+        ],
+        "inclusions": [
+            "Airport transfers",
+            "1 night accommodation",
+            "Japanese-speaking guide"
+        ],
+        "exclusions": [
+            "International flights"
+        ],
+        "faq": [],
+        "bookingLink": null
+    },
+    {
+        "id": 6,
+        "slug": "short-tour-madurai",
+        "category": "Short",
+        "title": "Madurai Temple Express",
+        "shortDescription": "A focused 2-day pilgrimage and cultural tour of Madurai.",
+        "longDescription": "Madurai is one of the oldest continuously inhabited cities in the world. This short tour is designed for travellers who want to experience the spiritual and cultural heart of Tamil Nadu without committing to a week-long journey.",
+        "startDate": "2026-06-14",
+        "endDate": "2026-06-15",
+        "durationDays": 2,
+        "location": "Madurai",
+        "priceJPY": 40000,
+        "priceRangeJPY": {
+            "min": 30000,
+            "max": 50000
+        },
+        "seatsLeft": 8,
+        "coverImage": null,
+        "galleryImages": [],
+        "features": [
+            "Private early-morning Meenakshi Temple tour",
+            "Ancient bazaar walking trail"
+        ],
+        "itinerary": [
+            {
+                "dayNumber": 1,
+                "title": "Arrival & Temple Immersion",
+                "details": "Arrive at Madurai Airport. Afternoon guided tour of Meenakshi Amman Temple. Evening ceremony viewing.",
+                "image": null
+            },
+            {
+                "dayNumber": 2,
+                "title": "Bazaars & Departure",
+                "details": "Morning flower and banana markets. Visit Thirumalai Nayakkar Palace. Transfer to airport.",
+                "image": null
+            }
+        ],
+        "whatToExpect": [
+            "Expert historian guide",
+            "Japanese interpretation"
+        ],
+        "inclusions": [
+            "Airport transfers",
+            "1 night accommodation"
+        ],
+        "exclusions": [],
+        "faq": [],
+        "bookingLink": null
+    },
+    {
+        "id": 7,
+        "slug": "short-tour-hyderabad",
+        "category": "Short",
+        "title": "Hyderabad Heritage Quick Tour",
+        "shortDescription": "A 1-day intensive tour of Hyderabad's most iconic landmarks.",
+        "longDescription": "Hyderabad packs centuries of royal history into a single, vibrant city. This one-day intensive tour is perfect for transit travellers.",
+        "startDate": "2026-07-05",
+        "endDate": "2026-07-05",
+        "durationDays": 1,
+        "location": "Hyderabad",
+        "priceJPY": 25000,
+        "priceRangeJPY": {
+            "min": 20000,
+            "max": 35000
+        },
+        "seatsLeft": 12,
+        "coverImage": null,
+        "galleryImages": [],
+        "features": [
+            "Charminar & Laad Bazaar guided walk",
+            "Golconda Fort tour"
+        ],
+        "itinerary": [
+            {
+                "dayNumber": 1,
+                "title": "Full-Day Hyderabad Highlights",
+                "details": "Morning pickup. Visit Charminar and Laad Bazaar. Authentic Biryani lunch. Afternoon tour of Golconda Fort. Evening drop-off.",
+                "image": null
+            }
+        ],
+        "whatToExpect": [
+            "Fast-paced single-day itinerary",
+            "Japanese-speaking guide"
+        ],
+        "inclusions": [
+            "Hotel/airport pickup and drop-off"
+        ],
+        "exclusions": [],
+        "faq": [],
         "bookingLink": null
     }
 ]

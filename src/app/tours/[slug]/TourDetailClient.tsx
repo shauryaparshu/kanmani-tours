@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import type { Tour, TourFaq } from '@/lib/tours';
-import { formatPriceJPY } from '@/lib/tours';
+import { formatDateRange, formatPriceJPY, formatPriceRange } from '@/lib/tours';
 import { useBooking } from '@/context/BookingContext';
 
 interface TourDetailClientProps {
@@ -269,7 +269,9 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
                     <div className="td-price-card">
                         <div className="td-price-card-left">
                             <div className="td-price-card-label">Price per person</div>
-                            <div className="td-price-card-amount">{formatPriceJPY(tour.priceJPY)}</div>
+                            <div className="td-price-card-amount">
+                                {tour.priceRangeJPY ? formatPriceRange(tour.priceRangeJPY) : formatPriceJPY(tour.priceJPY)}
+                            </div>
                             <div className="td-price-card-note">Includes accommodation, meals, guide &amp; all activity fees listed above.</div>
                         </div>
                         <div className="td-price-card-right">
@@ -316,7 +318,10 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
 
             {/* STICKY MOBILE BOOK NOW */}
             <div className="td-sticky-mobile">
-                <div className="td-sticky-price">{formatPriceJPY(tour.priceJPY)} <small>/person</small></div>
+                <div className="td-sticky-price">
+                    {tour.priceRangeJPY ? formatPriceRange(tour.priceRangeJPY) : formatPriceJPY(tour.priceJPY)}
+                    <small> /person</small>
+                </div>
                 <button
                     className="td-btn-primary"
                     onClick={handleBook}

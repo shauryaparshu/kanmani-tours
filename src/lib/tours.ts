@@ -27,6 +27,7 @@ interface RawTour {
     durationDays: number;
     location: string;
     priceJPY: number;
+    priceRangeJPY?: { min: number; max: number };
     seatsLeft: number;
     coverImage: any;
     galleryImages: any[];
@@ -127,4 +128,8 @@ export function formatDateRange(startDate: string, endDate: string): string {
 
 export function formatPriceJPY(price: number): string {
     return new Intl.NumberFormat('ja-JP', { style: 'currency', currency: 'JPY' }).format(price);
+}
+
+export function formatPriceRange(range: { min: number; max: number }): string {
+    return `${formatPriceJPY(range.min)} – ${formatPriceJPY(range.max)}`;
 }
