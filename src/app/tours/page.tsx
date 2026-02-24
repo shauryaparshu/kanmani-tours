@@ -1,7 +1,7 @@
+import React, { Suspense } from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getAllTours } from '@/lib/tours';
-import { getLatestImage } from '@/lib/server-images';
 import TopBar from '@/components/TopBar';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/FooterSection';
@@ -43,7 +43,9 @@ export default async function ToursPage() {
                 </section>
 
                 {/* Client-side filter + card grid */}
-                <ToursListClient tours={tours} allCategories={allCategories} />
+                <Suspense fallback={<div className="container" style={{ padding: '60px 20px' }}>Loading tours...</div>}>
+                    <ToursListClient tours={tours} allCategories={allCategories} />
+                </Suspense>
             </main>
             <Footer />
         </>
