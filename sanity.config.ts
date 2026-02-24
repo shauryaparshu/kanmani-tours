@@ -3,6 +3,7 @@ import { defineConfig } from 'sanity'
 import { structureTool } from 'sanity/structure'
 import { apiVersion, dataset, projectId } from './src/sanity/env'
 import { schema } from './src/sanity/schemaTypes'
+import { orderableDocumentListDeskItem } from '@sanity/orderable-document-list'
 
 // Define the singleton types
 const singletonTypes = new Set(['about'])
@@ -29,7 +30,7 @@ export default defineConfig({
     },
     plugins: [
         structureTool({
-            structure: (S) =>
+            structure: (S, context) =>
                 S.list()
                     .title('Content')
                     .items([
@@ -43,9 +44,16 @@ export default defineConfig({
                                     .documentId('about')
                             ),
                         S.divider(),
+                        orderableDocumentListDeskItem({
+                            type: 'faq',
+                            title: 'FAQs',
+                            S,
+                            context,
+                        }),
+                        S.divider(),
                         // Regular document types
                         ...S.documentTypeListItems().filter(
-                            (listItem) => !singletonTypes.has(listItem.getId() || '')
+                            (listItem) => !singletonTypes.has(listItem.getId() || '') && listItem.getId() !== 'faq'
                         ),
                     ]),
         }),

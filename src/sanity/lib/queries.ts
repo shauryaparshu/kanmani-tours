@@ -50,7 +50,7 @@ export const TOUR_BY_SLUG_QUERY = defineQuery(`*[_type == "tour" && slug.current
   bookingLink
 }`)
 
-export const FAQS_QUERY = defineQuery(`*[_type == "faq"] | order(order asc) {
+export const FAQS_QUERY = defineQuery(`*[_type == "faq"] | order(orderRank) {
   _id,
   question,
   answer
