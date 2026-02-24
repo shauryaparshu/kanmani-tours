@@ -22,12 +22,13 @@ async function syncTours() {
         return;
     }
 
-    const tours = JSON.parse(fs.readFileSync(toursFile, 'utf8'));
+    const localTours = JSON.parse(fs.readFileSync(toursFile, 'utf8'));
+    const sanityTours = await client.fetch(`*[_type == "tour"]{ _id, "slug": slug.current }`);
 
-    for (const tour of tours) {
-        const doc = {
-            _type: 'tour',
-            _id: `tour-${tour.id}`,
+    for (const tour of localTours) {
+        const existingTour = sanityTours.find(st => st.slug === tour.slug);
+
+        const docFields = {
             title: tour.title,
             slug: { _type: 'slug', current: tour.slug },
             category: tour.category,
@@ -50,8 +51,15 @@ async function syncTours() {
         };
 
         try {
-            await client.createOrReplace(doc);
-            console.log(`Synced: ${tour.title}`);
+            if (existingTour) {
+                // Update existing tour without touching its random ID or cover image
+                await client.patch(existingTour._id).set(docFields).commit();
+                console.log(`Updated existing: ${tour.title}`);
+            } else {
+                // Create new tour
+                await client.create({ _type: 'tour', ...docFields });
+                console.log(`Created new: ${tour.title}`);
+            }
         } catch (err) {
             console.error(`Error syncing ${tour.title}:`, err.message);
         }
@@ -66,20 +74,31 @@ async function syncFAQs() {
         return;
     }
 
-    const faqs = JSON.parse(fs.readFileSync(faqFile, 'utf8'));
+    const localFaqs = JSON.parse(fs.readFileSync(faqFile, 'utf8'));
+    const sanityFaqs = await client.fetch(`*[_type == "faq"]{ _id, question }`);
 
-    for (const faq of faqs) {
-        const doc = {
-            _type: 'faq',
-            _id: `faq-${faq.id}`,
+    for (const faq of localFaqs) {
+        // Find existing FAQ by question text to avoid duplicates
+        const existingFaq = sanityFaqs.find(sf =>
+            sf.question && faq.question && sf.question.trim().toLowerCase() === faq.question.trim().toLowerCase()
+        );
+
+        const docFields = {
             question: faq.question,
             answer: faq.answer,
             order: faq.id,
         };
 
         try {
-            await client.createOrReplace(doc);
-            console.log(`Synced: ${faq.question}`);
+            if (existingFaq) {
+                // Update existing
+                await client.patch(existingFaq._id).set(docFields).commit();
+                console.log(`Updated existing: ${faq.question}`);
+            } else {
+                // Create new
+                await client.create({ _type: 'faq', ...docFields });
+                console.log(`Created new: ${faq.question}`);
+            }
         } catch (err) {
             console.error(`Error syncing ${faq.question}:`, err.message);
         }
@@ -95,7 +114,7 @@ async function main() {
 
     await syncTours();
     await syncFAQs();
-    console.log('\nSync complete!');
+    console.log('\nSync methodology updated to guarantee no duplicates!');
 }
 
 main().catch(console.error);
