@@ -11,8 +11,8 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: "Srikan Tours | Exclusive South India Fan Experiences",
-  description: "Premium Japanese fan tours to South India. Exclusive celebrity encounters, studio access, cultural heritage, and culinary journeys — all with Japanese-speaking guides.",
-  keywords: "Srikan Tours, India tours, South Indian cinema, Kollywood, Tollywood, travel, celebrity tours, cultural heritage",
+  description: "Premium Japanese fan tours to South India. Exclusive celebrity-related experiences, studio access, cultural heritage, and culinary journeys — all with Japanese-speaking guides.",
+  keywords: "Srikan Tours, India tours, South Indian cinema, Kollywood, Tollywood, travel, celebrity-related tours, cultural heritage",
 };
 
 export default async function RootLayout({

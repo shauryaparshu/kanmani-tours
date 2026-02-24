@@ -11,7 +11,7 @@ export interface CategoryDef {
 export const TOUR_CATEGORIES: CategoryDef[] = [
     { key: 'Cultural', label: 'Cultural Tours', color: '#2563eb', priority: true },
     { key: 'Food', label: 'Food Tours', color: '#16a34a', priority: true },
-    { key: 'Celebrity', label: 'Celebrity Tours', color: '#7c3aed', priority: true },
+    { key: 'Celebrity', label: 'Celebrity-Related Tours', color: '#7c3aed', priority: true },
     { key: 'Short', label: 'Short Tours (1–2 days)', color: '#f59e0b', priority: true },
     { key: 'Ayurveda', label: 'Ayurveda Tours', color: '#14b8a6', priority: true },
     { key: 'Homestay', label: 'Homestay with Indian Family', color: '#e11d48', priority: true },

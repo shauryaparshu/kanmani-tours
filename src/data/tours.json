@@ -3,9 +3,9 @@
         "id": 1,
         "slug": "celebrity-tour-march-2026",
         "category": "Celebrity",
-        "title": "Celebrity Tour March 2026",
-        "shortDescription": "An exclusive celebrity meet-and-greet experience in Chennai. Get VIP access to live movie sets, private star dinners, and backstage studio tours you simply cannot find anywhere else.",
-        "longDescription": "Step into the glamorous world of South Indian cinema with our flagship Celebrity Tour. Across five unforgettable days in and around Chennai, you will move beyond the silver screen and into the very heart of the industry. From walking through active film sets to sharing a private dinner with established cinema critics, every moment is crafted to give you a level of access that no ordinary tourist ever gets.\n\nOur small-group format ensures a premium, personal experience. A dedicated Japanese-speaking guide accompanies you from arrival to departure, managing every logistics detail so you can focus entirely on the experience.",
+        "title": "Celebrity-Related Tour March 2026",
+        "shortDescription": "An exclusive celebrity-related fan experience in Chennai. Visit movie-related locations, renowned film studios, and enjoy sessions with industry insiders for a unique look into South Indian cinema.",
+        "longDescription": "Step into the glamorous world of South Indian cinema with our flagship Celebrity-Related Tour. Across five unforgettable days in and around Chennai, you will move beyond the silver screen and into the very heart of the industry. From visiting iconic film studio areas to participating in sessions with cinema critics and industry staff, every moment is crafted to give you a deep perspective that no ordinary tourist ever gets.\n\nOur small-group format ensures a premium, personal experience. A dedicated Japanese-speaking guide accompanies you from arrival to departure, managing every logistics detail so you can focus entirely on the experience.",
         "startDate": "2026-03-10",
         "endDate": "2026-03-14",
         "durationDays": 5,
@@ -19,9 +19,9 @@
             "/assets/img/tours/celebrity-tour-march-2026/gallery/003.jpg"
         ],
         "features": [
-            "Exclusive star meet & greet",
-            "Studio tour with live shooting access",
-            "VIP dinner with local cinema critics"
+            "Cinema industry fan session",
+            "Studio area tour and history",
+            "Dining session with local cinema critics"
         ],
         "itinerary": [
             {
@@ -38,8 +38,8 @@
             },
             {
                 "dayNumber": 3,
-                "title": "Star Meet & Greet",
-                "details": "The centrepiece of the tour. A private, structured meet-and-greet session with a confirmed celebrity. Photo opportunities, Q&A, and a small gift from us included.",
+                "title": "Celebrity-Related Fan Session",
+                "details": "The centrepiece of the tour. A structured session at a celebrity-related location or with industry staff. Learn behind-the-scenes stories, participate in Q&A, and receive a special souvenir from us included.",
                 "image": null
             },
             {
@@ -67,7 +67,7 @@
             "4 nights accommodation (4-star hotel)",
             "All breakfasts and 3 group dinners",
             "Japanese-speaking guide for all days",
-            "All studio entry and celebrity session fees",
+            "All studio entry and fan session fees",
             "Local transport in an air-conditioned van"
         ],
         "exclusions": [
@@ -83,8 +83,8 @@
                 "answer": "Yes. A dedicated Japanese-speaking guide accompanies the group every day throughout the tour."
             },
             {
-                "question": "How is the celebrity confirmed?",
-                "answer": "We confirm the scheduled star 2–3 weeks before departure and notify all participants immediately. Availability can occasionally change due to filming schedules."
+                "question": "How are the guest sessions confirmed?",
+                "answer": "We confirm the industry guest or featured location 2–3 weeks before departure and notify all participants immediately. Availability can occasionally change due to filming or industry schedules."
             },
             {
                 "question": "Is this tour suitable for solo female travellers?",

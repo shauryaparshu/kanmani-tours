@@ -10,7 +10,7 @@ import ToursListClient from '@/components/ToursListClient';
 export const metadata: Metadata = {
     title: 'All Tours — Srikan Tours',
     description:
-        'Browse all upcoming and past tours by Srikan Tours. Celebrity encounters, culinary journeys, and cultural heritage trips across India.',
+        'Browse all upcoming and past tours by Srikan Tours. Celebrity-related experiences, culinary journeys, and cultural heritage trips across India.',
 };
 
 export default async function ToursPage() {

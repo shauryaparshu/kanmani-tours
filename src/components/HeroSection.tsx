@@ -104,7 +104,7 @@ export default function HeroSection({ heroImages, pollImages }: HeroSectionProps
                         <h4 className="vote-title">
                             ⭐ Exclusive Fan Vote
                         </h4>
-                        <h3 className="vote-question">Whom do you want to meet?</h3>
+                        <h3 className="vote-question">Who’s your favorite celebrity?</h3>
                     </div>
 
                     <div className="vote-list">

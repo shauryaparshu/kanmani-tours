@@ -37,7 +37,7 @@ export default function FooterSection() {
                     <div>
                         <h4 className="footer-title">Tour Categories</h4>
                         <ul className="footer-links">
-                            <li><a href="#">Celebrity Tourism</a></li>
+                            <li><a href="#">Celebrity-Related Tours</a></li>
                             <li><a href="#">Studio VIP Tours</a></li>
                             <li><a href="#">Cultural Heritage</a></li>
                             <li><a href="#">Food &amp; Gastronomy</a></li>
