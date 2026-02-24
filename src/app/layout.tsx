@@ -15,13 +15,14 @@ export const metadata: Metadata = {
   keywords: "Srikan Tours, India tours, South Indian cinema, Kollywood, Tollywood, travel, celebrity tours, cultural heritage",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   // Filter only upcoming tours for the booking dropdown
-  const upcomingTours = getAllTours().filter(t => {
+  const allTours = await getAllTours();
+  const upcomingTours = allTours.filter(t => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     return new Date(t.startDate) >= today;

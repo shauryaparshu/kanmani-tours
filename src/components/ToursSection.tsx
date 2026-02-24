@@ -5,7 +5,8 @@ import Link from 'next/link';
 import { getAllTours, formatDateRange, formatPriceJPY, type Tour } from '@/lib/tours';
 
 interface ToursSectionProps {
-    cardImages?: Record<number, string | null>;
+    tours: Tour[];
+    cardImages?: Record<number | string, string | null>;
 }
 
 function getRemainingDays(startDate: string): string {
@@ -28,10 +29,10 @@ const catBg = (cat: string) => {
 
 const catText = (cat: string) => 'white';
 
-export default function ToursSection({ cardImages = {} }: ToursSectionProps) {
+export default function ToursSection({ tours, cardImages = {} }: ToursSectionProps) {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    const upcomingTours = getAllTours()
+    const upcomingTours = tours
         .filter(t => {
             const start = new Date(t.startDate);
             start.setHours(0, 0, 0, 0);

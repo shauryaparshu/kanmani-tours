@@ -28,7 +28,7 @@ export default async function Home() {
       <TopBar />
       <Navigation />
       <HeroSection heroImages={heroImages} pollImages={pollImages} />
-      <ToursSection cardImages={tourCardImages} />
+      <ToursSection tours={tours} cardImages={tourCardImages} />
       <Testimonials customerImages={customerImages} />
       <Footer />
     </main>
