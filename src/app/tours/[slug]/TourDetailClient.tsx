@@ -182,14 +182,14 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
                 {/* DESCRIPTION */}
                 <section className="td-section">
                     <h2 className="td-section-title">About This Tour</h2>
-                    {tour.longDescription.split('\n\n').map((para, i) => (
+                    {tour.longDescription?.split('\n\n').map((para, i) => (
                         <p key={i} className="td-paragraph">{para}</p>
                     ))}
-                    {tour.whatToExpect.length > 0 && (
+                    {(tour.whatToExpect ?? []).length > 0 && (
                         <div className="td-expect-box">
                             <h3 className="td-subsection-title">What you'll experience</h3>
                             <ul className="td-bullet-list">
-                                {tour.whatToExpect.map((item, i) => (
+                                {(tour.whatToExpect ?? []).map((item, i) => (
                                     <li key={i}><span className="bullet-check">✓</span>{item}</li>
                                 ))}
                             </ul>
@@ -202,8 +202,8 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
                     <h2 className="td-section-title">Day-by-Day Itinerary</h2>
                     <p className="td-section-sub">Click each day to expand the details.</p>
                     <div className="itin-timeline">
-                        {tour.itinerary.map((day, i) => (
-                            <ItineraryItem key={day.dayNumber} day={day} last={i === tour.itinerary.length - 1} />
+                        {(tour.itinerary ?? []).map((day, i) => (
+                            <ItineraryItem key={day.dayNumber} day={day} last={i === (tour.itinerary ?? []).length - 1} />
                         ))}
                     </div>
                 </section>
@@ -215,7 +215,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
                         <div className="td-inc-box">
                             <h3 className="td-subsection-title td-inc-title">✅ Included</h3>
                             <ul className="td-bullet-list">
-                                {tour.inclusions.map((item, i) => (
+                                {(tour.inclusions ?? []).map((item, i) => (
                                     <li key={i}><span className="bullet-check">✓</span>{item}</li>
                                 ))}
                             </ul>
@@ -223,7 +223,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
                         <div className="td-exc-box">
                             <h3 className="td-subsection-title td-exc-title">❌ Not Included</h3>
                             <ul className="td-bullet-list">
-                                {tour.exclusions.map((item, i) => (
+                                {(tour.exclusions ?? []).map((item, i) => (
                                     <li key={i}><span className="bullet-cross">✕</span>{item}</li>
                                 ))}
                             </ul>
@@ -232,19 +232,19 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
                 </section>
 
                 {/* GALLERY */}
-                {tour.galleryImages.length > 0 && (
+                {(tour.galleryImages ?? []).length > 0 && (
                     <section className="td-section">
                         <h2 className="td-section-title">Photo Gallery</h2>
-                        <Gallery images={tour.galleryImages} tourTitle={tour.title} />
+                        <Gallery images={tour.galleryImages ?? []} tourTitle={tour.title} />
                     </section>
                 )}
 
                 {/* FAQ */}
-                {tour.faq.length > 0 && (
+                {(tour.faq ?? []).length > 0 && (
                     <section className="td-section">
                         <h2 className="td-section-title">Frequently Asked Questions</h2>
                         <div className="faq-list">
-                            {tour.faq.map((f, i) => <AccordionItem key={i} {...f} />)}
+                            {(tour.faq ?? []).map((f, i) => <AccordionItem key={i} {...f} />)}
                         </div>
                     </section>
                 )}

@@ -56,6 +56,15 @@ function resolveImageUrl(image: any): string {
 function normaliseTour(t: RawTour): Tour {
     return {
         ...t,
+        // Ensure all array fields are never null/undefined — Sanity can return null for unset arrays
+        galleryImages: t.galleryImages ?? [],
+        features: t.features ?? [],
+        itinerary: t.itinerary ?? [],
+        whatToExpect: t.whatToExpect ?? [],
+        inclusions: t.inclusions ?? [],
+        exclusions: t.exclusions ?? [],
+        faq: t.faq ?? [],
+        // Resolve cover image
         coverImage: resolveImageUrl(t.coverImage) || (t.galleryImages?.[0] ? resolveImageUrl(t.galleryImages[0]) : '')
     };
 }
