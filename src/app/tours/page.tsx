@@ -13,19 +13,14 @@ export const metadata: Metadata = {
         'Browse all upcoming and past tours by Srikan Tours. Celebrity encounters, culinary journeys, and cultural heritage trips across India.',
 };
 
-export default function ToursPage() {
-    const rawTours = getAllTours();
+export default async function ToursPage() {
+    const rawTours = await getAllTours();
 
     // Derive unique categories sorted alphabetically
     const allCategories = [...new Set(rawTours.map(t => t.category))].sort();
 
-    // Resolve coverImage from filesystem — always picks up the latest uploaded image.
-    // Priority: /cards/ folder latest file → JSON coverImage → galleryImages[0] → ''
-    const tours = rawTours.map(tour => {
-        const fsImage = getLatestImage(`/assets/img/tours/${tour.slug}/cards`);
-        const resolved = fsImage || tour.coverImage || tour.galleryImages[0] || '';
-        return { ...tour, coverImage: resolved };
-    });
+    // The imagery is now handled within getAllTours (Sanity vs JSON fallback)
+    const tours = rawTours;
 
     return (
         <>

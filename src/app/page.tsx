@@ -7,16 +7,20 @@ import Footer from '@/components/FooterSection';
 import { getImages, getSlugs, getLatestImage } from '@/lib/server-images';
 import { getAllTours } from '@/lib/tours';
 
-export default function Home() {
+export default async function Home() {
   const heroImages = getImages('/assets/img/home/hero');
   const pollImages = getImages('/assets/img/home/poll');
   const customerImages = getImages('/assets/img/people/customers');
 
-  // Get latest card image for each tour from the cards folder
-  const tours = getAllTours();
-  const tourCardImages: Record<number, string | null> = {};
+  // Fetch tours from Sanity (or JSON fallback)
+  const tours = await getAllTours();
+
+  // We'll pass the full tour objects to the section, 
+  // but let's see what cardImages mapping it expects.
+  // It seems it used tour.id as key.
+  const tourCardImages: Record<number | string, string | null> = {};
   tours.forEach(tour => {
-    tourCardImages[tour.id] = getLatestImage(`/assets/img/tours/${tour.slug}/cards`);
+    tourCardImages[tour.id] = tour.coverImage;
   });
 
   return (

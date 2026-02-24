@@ -1,10 +1,13 @@
 import toursData from '@/data/tours.json';
+import { client } from '@/sanity/lib/client';
+import { TOURS_QUERY, TOUR_BY_SLUG_QUERY } from '@/sanity/lib/queries';
+import { urlForImage } from '@/sanity/lib/image';
 
 export interface TourItineraryDay {
     dayNumber: number;
     title: string;
     details: string;
-    image: string | null;
+    image: any;
 }
 
 export interface TourFaq {
@@ -12,9 +15,8 @@ export interface TourFaq {
     answer: string;
 }
 
-/** Shape from tours.json — coverImage may be null when no card image has been uploaded yet */
 interface RawTour {
-    id: number;
+    id: number | string;
     slug: string;
     category: string;
     title: string;
@@ -26,11 +28,8 @@ interface RawTour {
     location: string;
     priceJPY: number;
     seatsLeft: number;
-    /** Specific card thumbnail. Null = auto-derive from heroImage or galleryImages[0]. */
-    coverImage: string | null;
-    /** Optional dedicated hero/banner image (takes priority over galleryImages). */
-    heroImage?: string | null;
-    galleryImages: string[];
+    coverImage: any;
+    galleryImages: any[];
     features: string[];
     itinerary: TourItineraryDay[];
     whatToExpect: string[];
@@ -40,50 +39,74 @@ interface RawTour {
     bookingLink: string | null;
 }
 
-/** Normalised tour — coverImage is always a resolved string, never null */
 export interface Tour extends Omit<RawTour, 'coverImage'> {
     coverImage: string;
 }
 
-// ─── Image resolution ─────────────────────────────────────────────────────────
-/**
- * Resolve the best available image for a tour.
- * Priority: coverImage → heroImage → galleryImages[0] → ''
- *
- * Both the listing card AND the detail-page hero automatically share the same
- * image unless a dedicated image is uploaded separately.
- * • To use a specific card thumbnail → set `coverImage` in tours.json.
- * • To use a specific hero banner    → set `heroImage`  in tours.json.
- * • If neither is set, the first gallery image is used for both.
- */
-function resolveCoverImage(t: RawTour): string {
-    if (t.coverImage?.trim()) return t.coverImage;
-    if (t.heroImage?.trim()) return t.heroImage;
-    if (t.galleryImages?.length) return t.galleryImages[0];
-    return '';
+function resolveImageUrl(image: any): string {
+    if (!image) return '';
+    if (typeof image === 'string') return image;
+    try {
+        return urlForImage(image)?.url() || '';
+    } catch (e) {
+        return '';
+    }
 }
 
 function normaliseTour(t: RawTour): Tour {
-    return { ...t, coverImage: resolveCoverImage(t) };
+    return {
+        ...t,
+        coverImage: resolveImageUrl(t.coverImage) || (t.galleryImages?.[0] ? resolveImageUrl(t.galleryImages[0]) : '')
+    };
 }
 
-const tours: Tour[] = (toursData as RawTour[]).map(normaliseTour);
-
 // ─── Public API ───────────────────────────────────────────────────────────────
-export function getAllTours(): Tour[] {
-    return [...tours].sort(
+
+export async function getAllTours(): Promise<Tour[]> {
+    try {
+        const sanityTours = await client.fetch(TOURS_QUERY);
+        if (sanityTours && sanityTours.length > 0) {
+            return sanityTours.map(normaliseTour);
+        }
+    } catch (error) {
+        console.error('Error fetching tours from Sanity:', error);
+    }
+
+    // Fallback to JSON
+    return (toursData as any[]).map(t => ({
+        ...t,
+        coverImage: t.coverImage || (t.galleryImages?.[0] || '')
+    })).sort(
         (a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
     );
 }
 
-export function getUpcomingTours(limit?: number): Tour[] {
+export async function getUpcomingTours(limit?: number): Promise<Tour[]> {
+    const all = await getAllTours();
     const now = new Date();
-    const upcoming = getAllTours().filter(t => new Date(t.startDate) >= now);
+    const upcoming = all.filter(t => new Date(t.startDate) >= now);
     return limit ? upcoming.slice(0, limit) : upcoming;
 }
 
-export function getTourBySlug(slug: string): Tour | undefined {
-    return tours.find(t => t.slug === slug);
+export async function getTourBySlug(slug: string): Promise<Tour | undefined> {
+    try {
+        const tour = await client.fetch(TOUR_BY_SLUG_QUERY, { slug });
+        if (tour) {
+            return normaliseTour(tour);
+        }
+    } catch (error) {
+        console.error(`Error fetching tour ${slug} from Sanity:`, error);
+    }
+
+    // Fallback to JSON
+    const localTour = (toursData as any[]).find(t => t.slug === slug);
+    if (localTour) {
+        return {
+            ...localTour,
+            coverImage: localTour.coverImage || (localTour.galleryImages?.[0] || '')
+        };
+    }
+    return undefined;
 }
 
 export function formatDateRange(startDate: string, endDate: string): string {

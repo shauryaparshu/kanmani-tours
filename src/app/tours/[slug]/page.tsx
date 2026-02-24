@@ -13,19 +13,17 @@ interface PageProps {
 
 // Generate all static slugs at build time
 export async function generateStaticParams() {
-    return getAllTours().map(tour => ({ slug: tour.slug }));
+    const tours = await getAllTours();
+    return tours.map(tour => ({ slug: tour.slug }));
 }
 
 // Dynamic SEO metadata per tour
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
     const { slug } = await params;
-    const tour = getTourBySlug(slug);
+    const tour = await getTourBySlug(slug);
     if (!tour) return { title: 'Tour Not Found — Srikan Tours' };
 
-    const heroImage =
-        getLatestImage(`/assets/img/tours/${slug}/hero`) ||
-        getLatestImage(`/assets/img/tours/${slug}/cards`) ||
-        tour.coverImage;
+    const heroImage = tour.coverImage;
 
     return {
         title: `${tour.title} — Srikan Tours`,
@@ -40,21 +38,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function TourDetailPage({ params }: PageProps) {
     const { slug } = await params;
-    const rawTour = getTourBySlug(slug);
+    const tour = await getTourBySlug(slug);
 
-    if (!rawTour) notFound();
-
-    // Resolve images from the filesystem — hero folder takes priority for the hero image;
-    // cards folder for the card thumbnail. Falls back to JSON values then gallery.
-    const fsCard = getLatestImage(`/assets/img/tours/${slug}/cards`);
-    const fsHero = getLatestImage(`/assets/img/tours/${slug}/hero`);
-    const resolvedCover = fsHero || fsCard || rawTour.coverImage || rawTour.galleryImages[0] || '';
-    const tour = { ...rawTour, coverImage: resolvedCover };
+    if (!tour) notFound();
 
     // Other upcoming tours (exclude current)
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    const otherTours = getAllTours()
+    const allTours = await getAllTours();
+    const otherTours = allTours
         .filter(t => {
             const start = new Date(t.startDate);
             start.setHours(0, 0, 0, 0);
