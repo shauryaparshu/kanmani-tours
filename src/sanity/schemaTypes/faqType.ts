@@ -26,5 +26,12 @@ export const faqType = defineType({
             type: 'number',
         }),
     ],
+    preview: {
+        select: {
+            title: 'question',
+            subtitle: 'answer',
+        },
+    },
 })
+
 
