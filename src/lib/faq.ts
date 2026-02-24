@@ -9,10 +9,11 @@ export interface FAQ {
 }
 
 export async function getFAQs(): Promise<FAQ[]> {
+    let faqs: FAQ[] = [];
     try {
         const sanityFaqs = await client.fetch(FAQS_QUERY, {}, { next: { revalidate: 60 } });
         if (sanityFaqs && sanityFaqs.length > 0) {
-            return sanityFaqs.map((f: any) => ({
+            faqs = sanityFaqs.map((f: any) => ({
                 id: f._id,
                 question: f.question,
                 answer: f.answer,
@@ -22,6 +23,15 @@ export async function getFAQs(): Promise<FAQ[]> {
         console.error('Error fetching FAQs from Sanity:', error);
     }
 
-    // Fallback to JSON
-    return faqData as FAQ[];
+    if (faqs.length === 0) {
+        faqs = faqData as FAQ[];
+    }
+
+    // Deduplicate by question
+    const seen = new Set();
+    return faqs.filter(faq => {
+        const duplicate = seen.has(faq.question);
+        seen.add(faq.question);
+        return !duplicate;
+    });
 }
