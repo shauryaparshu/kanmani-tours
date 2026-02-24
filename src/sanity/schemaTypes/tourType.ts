@@ -1,4 +1,5 @@
 import { defineField, defineType } from 'sanity'
+import { TOUR_CATEGORIES } from '../../lib/categories'
 
 export const tourType = defineType({
     name: 'tour',
@@ -26,11 +27,10 @@ export const tourType = defineType({
             title: 'Category',
             type: 'string',
             options: {
-                list: [
-                    { title: 'Celebrity', value: 'Celebrity' },
-                    { title: 'Food', value: 'Food' },
-                    { title: 'Cultural', value: 'Cultural' },
-                ],
+                list: TOUR_CATEGORIES.map(cat => ({
+                    title: cat.label,
+                    value: cat.key
+                })),
             },
             validation: (Rule) => Rule.required(),
         }),
@@ -70,6 +70,15 @@ export const tourType = defineType({
             name: 'priceJPY',
             title: 'Price (JPY)',
             type: 'number',
+        }),
+        defineField({
+            name: 'priceRangeJPY',
+            title: 'Price Range (JPY) - Optional',
+            type: 'object',
+            fields: [
+                { name: 'min', type: 'number', title: 'Min Price' },
+                { name: 'max', type: 'number', title: 'Max Price' },
+            ]
         }),
         defineField({
             name: 'seatsLeft',

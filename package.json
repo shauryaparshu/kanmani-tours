@@ -6,6 +6,7 @@
     "dev": "npm run gallery:index && next dev",
     "build": "npm run gallery:index && next build",
     "gallery:index": "node scripts/generate-gallery-index.mjs",
+    "sync:sanity": "node scripts/sync-local-to-sanity.mjs",
     "start": "next start",
     "lint": "eslint"
   },
