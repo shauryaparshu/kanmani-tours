@@ -10,7 +10,7 @@ export interface FAQ {
 
 export async function getFAQs(): Promise<FAQ[]> {
     try {
-        const sanityFaqs = await client.fetch(FAQS_QUERY);
+        const sanityFaqs = await client.fetch(FAQS_QUERY, {}, { next: { revalidate: 60 } });
         if (sanityFaqs && sanityFaqs.length > 0) {
             return sanityFaqs.map((f: any) => ({
                 id: f._id,

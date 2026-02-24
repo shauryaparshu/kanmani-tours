@@ -4,7 +4,7 @@ import { urlForImage } from '@/sanity/lib/image';
 
 export async function getAboutData() {
     try {
-        const sanityAbout = await client.fetch(`*[_type == "about"][0]`);
+        const sanityAbout = await client.fetch(`*[_type == "about"][0]`, {}, { next: { revalidate: 60 } });
         if (sanityAbout) {
             // Process images
             if (sanityAbout.story?.image) {

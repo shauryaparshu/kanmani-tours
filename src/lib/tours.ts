@@ -73,7 +73,7 @@ function normaliseTour(t: RawTour): Tour {
 
 export async function getAllTours(): Promise<Tour[]> {
     try {
-        const sanityTours = await client.fetch(TOURS_QUERY);
+        const sanityTours = await client.fetch(TOURS_QUERY, {}, { next: { revalidate: 60 } });
         if (sanityTours && sanityTours.length > 0) {
             return sanityTours.map(normaliseTour);
         }
@@ -99,7 +99,7 @@ export async function getUpcomingTours(limit?: number): Promise<Tour[]> {
 
 export async function getTourBySlug(slug: string): Promise<Tour | undefined> {
     try {
-        const tour = await client.fetch(TOUR_BY_SLUG_QUERY, { slug });
+        const tour = await client.fetch(TOUR_BY_SLUG_QUERY, { slug }, { next: { revalidate: 60 } });
         if (tour) {
             return normaliseTour(tour);
         }
