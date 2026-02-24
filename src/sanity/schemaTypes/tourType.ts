@@ -1,5 +1,4 @@
 import { defineField, defineType } from 'sanity'
-import { TOUR_CATEGORIES } from '../../lib/categories'
 
 export const tourType = defineType({
     name: 'tour',
@@ -27,10 +26,19 @@ export const tourType = defineType({
             title: 'Category',
             type: 'string',
             options: {
-                list: TOUR_CATEGORIES.map(cat => ({
-                    title: cat.label,
-                    value: cat.key
-                })),
+                list: [
+                    { title: 'Cultural Tours', value: 'Cultural' },
+                    { title: 'Food Tours', value: 'Food' },
+                    { title: 'Celebrity-Related Tours', value: 'Celebrity' },
+                    { title: 'Short Tours (1–2 days)', value: 'Short' },
+                    { title: 'Ayurveda Tours', value: 'Ayurveda' },
+                    { title: 'Homestay with Indian Family', value: 'Homestay' },
+                    { title: 'Education Tours', value: 'Education' },
+                    { title: 'Industrial Tours', value: 'Industrial' },
+                    { title: 'Village Tours', value: 'Village' },
+                    { title: 'Cooking Classes', value: 'Cooking' },
+                    { title: 'Temple Tours', value: 'Temple' },
+                ],
             },
             validation: (Rule) => Rule.required(),
         }),
