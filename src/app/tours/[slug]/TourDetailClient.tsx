@@ -197,6 +197,21 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
                     )}
                 </section>
 
+                {/* TOUR FEATURES / HIGHLIGHTS */}
+                {(tour.features ?? []).length > 0 && (
+                    <section className="td-section">
+                        <h2 className="td-section-title">Tour Highlights</h2>
+                        <ul className="td-features-list">
+                            {(tour.features ?? []).map((feature, i) => (
+                                <li key={i} className="td-feature-item">
+                                    <span className="td-feature-icon">⭐</span>
+                                    {feature}
+                                </li>
+                            ))}
+                        </ul>
+                    </section>
+                )}
+
                 {/* ITINERARY */}
                 <section className="td-section">
                     <h2 className="td-section-title">Day-by-Day Itinerary</h2>
