@@ -14,8 +14,9 @@ export const metadata: Metadata = {
         'Browse all upcoming and past tours by Srikan Tours. Celebrity-related experiences, culinary journeys, and cultural heritage trips across India.',
 };
 
-export default async function ToursPage() {
-    const rawTours = await getAllTours();
+export default async function ToursPage({ params }: { params: Promise<{ locale: string }> }) {
+    const { locale } = await params;
+    const rawTours = await getAllTours(locale);
     const t = await getTranslations('Tours');
 
     // Derive unique categories sorted alphabetically

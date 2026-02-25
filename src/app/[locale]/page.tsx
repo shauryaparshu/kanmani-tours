@@ -7,13 +7,14 @@ import Footer from '@/components/FooterSection';
 import { getImages, getSlugs, getLatestImage } from '@/lib/server-images';
 import { getAllTours } from '@/lib/tours';
 
-export default async function Home() {
+export default async function Home({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
   const heroImages = getImages('/assets/img/home/hero');
   const pollImages = getImages('/assets/img/home/poll');
   const customerImages = getImages('/assets/img/people/customers');
 
   // Fetch tours from Sanity (or JSON fallback)
-  const tours = await getAllTours();
+  const tours = await getAllTours(locale);
 
   // We'll pass the full tour objects to the section, 
   // but let's see what cardImages mapping it expects.

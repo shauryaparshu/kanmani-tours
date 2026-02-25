@@ -1,8 +1,11 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 export default function ContactForm() {
+    const t = useTranslations('ContactForm');
+
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -114,11 +117,11 @@ export default function ContactForm() {
         <form className="modern-contact-form" onSubmit={handleSubmit} noValidate>
             <div className="contact-form-row">
                 <div className="contact-form-group">
-                    <label>Your Name</label>
+                    <label>{t('name')}</label>
                     <input
                         name="name"
                         type="text"
-                        placeholder="Full Name"
+                        placeholder={t('namePlaceholder')}
                         className={errors.name ? 'input-error' : ''}
                         value={formData.name}
                         onChange={handleChange}
@@ -128,11 +131,11 @@ export default function ContactForm() {
                     {errors.name && <span className="error-text">{errors.name}</span>}
                 </div>
                 <div className="contact-form-group">
-                    <label>Email Address</label>
+                    <label>{t('email')}</label>
                     <input
                         name="email"
                         type="email"
-                        placeholder="example@domain.com"
+                        placeholder={t('emailPlaceholder')}
                         className={errors.email ? 'input-error' : ''}
                         value={formData.email}
                         onChange={handleChange}
@@ -143,11 +146,11 @@ export default function ContactForm() {
                 </div>
             </div>
             <div className="contact-form-group">
-                <label>Phone Number (Optional)</label>
+                <label>{t('phone')}</label>
                 <input
                     name="phone"
                     type="tel"
-                    placeholder="09012345678"
+                    placeholder={t('phonePlaceholder')}
                     value={formData.phone}
                     onChange={handleChange}
                     onBlur={handleBlur}
@@ -157,20 +160,20 @@ export default function ContactForm() {
                 {errors.phone && <span className="error-text">{errors.phone}</span>}
             </div>
             <div className="contact-form-group">
-                <label>Subject</label>
+                <label>{t('subject')}</label>
                 <select name="subject" value={formData.subject} onChange={handleChange}>
-                    <option value="Tour Enquiry">Tour Enquiry</option>
-                    <option value="Celebrity Meeting Request">Celebrity Meeting Request</option>
-                    <option value="Partnership">Partnership</option>
-                    <option value="Other">Other</option>
+                    <option value="Tour Enquiry">{t('subjectOptions.enquiry')}</option>
+                    <option value="Booking Enquiry">{t('subjectOptions.booking')}</option>
+                    <option value="Custom Consultation">{t('subjectOptions.custom')}</option>
+                    <option value="Other">{t('subjectOptions.other')}</option>
                 </select>
             </div>
             <div className="contact-form-group">
-                <label>Message</label>
+                <label>{t('message')}</label>
                 <textarea
                     name="message"
                     rows={5}
-                    placeholder="Tell us more about what you're looking for..."
+                    placeholder={t('messagePlaceholder')}
                     className={errors.message ? 'input-error' : ''}
                     value={formData.message}
                     onChange={handleChange}
@@ -179,7 +182,7 @@ export default function ContactForm() {
                 ></textarea>
                 {errors.message && <span className="error-text">{errors.message}</span>}
             </div>
-            <button type="submit" className="contact-submit-btn">Send Message</button>
+            <button type="submit" className="contact-submit-btn">{t('submit')}</button>
         </form>
     );
 }

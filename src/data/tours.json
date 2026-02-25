@@ -4,12 +4,16 @@
         "slug": "celebrity-tour-march-2026",
         "category": "Celebrity",
         "title": "Celebrity-Related Tour March 2026",
+        "title_ja": "セレブリティ関連ツアー 2026年3月",
         "shortDescription": "An exclusive celebrity-related fan experience in Chennai. Visit movie-related locations, renowned film studios, and enjoy sessions with industry insiders for a unique look into South Indian cinema.",
-        "longDescription": "Step into the glamorous world of South Indian cinema with our flagship Celebrity-Related Tour. Across five unforgettable days in and around Chennai, you will move beyond the silver screen and into the very heart of the industry. From visiting iconic film studio areas to participating in sessions with cinema critics and industry staff, every moment is crafted to give you a deep perspective that no ordinary tourist ever gets.\n\nOur small-group format ensures a premium, personal experience. A dedicated Japanese-speaking guide accompanies you from arrival to departure, managing every logistics detail so you can focus entirely on the experience.",
+        "shortDescription_ja": "チェンナイでの独占的なセレブリティ関連のファン体験。映画ゆかりの地や有名な映画スタジオを訪れ、業界関係者とのセッションを通じて、南インド映画のユニークな世界を覗いてみましょう。",
+        "longDescription": "Step into the glamorous world of South Indian cinema with our flagship Celebrity-Related Tour. Across five unforgettable days in and around Chennai, you will move beyond the silver screen and into the very heart of the industry. From visiting iconic film studio areas to participating in sessions with cinema critics and industry staff, every moment is crafted to give you a deep perspective that no ordinary tourist ever gets.\\n\\nOur small-group format ensures a premium, personal experience. A dedicated Japanese-speaking guide accompanies you from arrival to departure, managing every logistics detail so you can focus entirely on the experience.",
+        "longDescription_ja": "フラッグシップであるセレブリティ関連ツアーで、南インド映画の華やかな世界に足を踏み入れましょう。チェンナイとその周辺での忘れられない5日間を通して、スクリーンの向こう側、業界の核心部へとご案内します。象徴的な映画スタジオエリアの訪問から、映画批評家や業界スタッフとのセッションまで、すべての瞬間が、通常の観光客では決して得られない深い洞察を提供するために作り上げられています。\\n\\n小グループ制により、プレミアムでパーソナルな体験をお約束します。専属の日本語ガイドが到着から出発まで同行し、すべてのロジスティクスを管理するため、お客様は体験そのものに完全に集中することができます。",
         "startDate": "2026-03-10",
         "endDate": "2026-03-14",
         "durationDays": 5,
         "location": "Chennai, Polichoalur",
+        "location_ja": "チェンナイ、ポリチョルール",
         "priceJPY": 250000,
         "seatsLeft": 4,
         "coverImage": "/assets/img/tours/celebrity-tour-march-2026/cards/006-whatsapp.jpeg",
@@ -23,35 +27,50 @@
             "Studio area tour and history",
             "Dining session with local cinema critics"
         ],
+        "features_ja": [
+            "映画業界ファンセッション",
+            "スタジオエリアの見学と歴史解説",
+            "地元映画批評家とのディナーセッション"
+        ],
         "itinerary": [
             {
                 "dayNumber": 1,
                 "title": "Arrival & Welcome in Chennai",
+                "title_ja": "チェンナイ到着＆ウェルカム",
                 "details": "Airport pickup and transfer to your luxury hotel. Evening welcome dinner at a rooftop restaurant overlooking Marina Beach. Meet your Japanese guide and co-travellers.",
+                "details_ja": "空港でお迎えし、ラグジュアリーホテルへ送迎します。夕食はマリーナビーチを見渡す屋上レストランでウェルカムディナー。日本語ガイドや同行者と顔合わせを行います。",
                 "image": null
             },
             {
                 "dayNumber": 2,
                 "title": "Studio Access & Live Set Walk",
+                "title_ja": "スタジオ見学＆ライブセット見学",
                 "details": "Private behind-the-scenes tour of a major Chennai film studio. Watch live shooting in progress and explore costume, prop, and editing departments. Lunch with the production crew.",
+                "details_ja": "チェンナイの主要映画スタジオのプライベートな舞台裏ツアー。進行中のライブ撮影を見学し、衣装、小道具、編集部門を探索します。制作クルーと一緒にランチを楽しみます。",
                 "image": null
             },
             {
                 "dayNumber": 3,
                 "title": "Celebrity-Related Fan Session",
+                "title_ja": "セレブリティ関連ファンセッション",
                 "details": "The centrepiece of the tour. A structured session at a celebrity-related location or with industry staff. Learn behind-the-scenes stories, participate in Q&A, and receive a special souvenir from us included.",
+                "details_ja": "ツアーのハイライト。セレブリティゆかりの場所や業界スタッフとの体系的なセッション。舞台裏の話を聞き、Q&Aに参加し、当社特製の記念品を受け取ります。",
                 "image": null
             },
             {
                 "dayNumber": 4,
                 "title": "Polichoalur Village & Local Culture",
+                "title_ja": "ポリチョルール村と伝統文化",
                 "details": "Day trip to the historic weaving village of Polichoalur. Traditional silk weaving demonstration, local lunch, and an evening Bharatanatyam cultural performance.",
+                "details_ja": "歴史的な織物の村ポリチョルールへの日帰り旅行。伝統的なシルク織りの実演、地元のランチ、そして夕方のバラタナティヤム文化公演を楽しみます。",
                 "image": null
             },
             {
                 "dayNumber": 5,
                 "title": "Farewell & Departure",
+                "title_ja": "お別れ＆出発",
                 "details": "Free morning for last-minute shopping at T. Nagar and Pondy Bazaar. Farewell lunch at a renowned local restaurant. Transfer to Chennai International Airport.",
+                "details_ja": "最終日の午前中はT. ナガルやポンディ・バザールでショッピング。有名な地元レストランでの送別ランチの後、チェンナイ国際空港へお送りします。",
                 "image": null
             }
         ],
@@ -62,6 +81,13 @@
             "All cultural moments interpreted and explained in Japanese",
             "24/7 emergency support from our Chennai base team"
         ],
+        "whatToExpect_ja": [
+            "日本人エスコートによる5日間の完全ガイド付きの旅",
+            "プレミアムな体験のための最大8名の小グループ制",
+            "観光のハイライトと、深く独占的なインサイダーアクセスの両方を提供",
+            "すべての文化的な瞬間が日本語で通訳・解説されます",
+            "チェンナイ拠点チームによる24時間年中無休の緊急サポート"
+        ],
         "inclusions": [
             "Return airport transfers",
             "4 nights accommodation (4-star hotel)",
@@ -70,6 +96,14 @@
             "All studio entry and fan session fees",
             "Local transport in an air-conditioned van"
         ],
+        "inclusions_ja": [
+            "往復空港送迎",
+            "宿泊（4つ星ホテル4泊）",
+            "すべての朝食と3回のグループディナー",
+            "全日程の日本語ガイド",
+            "すべてのスタジオ入場料とファンセッション費用",
+            "エアコン付き車両での市内移動"
+        ],
         "exclusions": [
             "International flights to/from Chennai",
             "Personal shopping and souvenirs",
@@ -77,22 +111,37 @@
             "Travel insurance (strongly recommended)",
             "Any optional excursions not listed"
         ],
+        "exclusions_ja": [
+            "チェンナイへの往復国際航空券",
+            "個人的な買い物や土産物",
+            "2日目〜5日目の昼食（目安額の案内あり）",
+            "海外旅行保険（強く推奨）",
+            "リストにないオプションのエクスカーション"
+        ],
         "faq": [
             {
                 "question": "Is Japanese language support available throughout?",
-                "answer": "Yes. A dedicated Japanese-speaking guide accompanies the group every day throughout the tour."
+                "question_ja": "全行程で日本語でのサポートはありますか？",
+                "answer": "Yes. A dedicated Japanese-speaking guide accompanies the group every day throughout the tour.",
+                "answer_ja": "はい。ツアー中、専属の日本語ガイドが毎日グループに同行します。"
             },
             {
                 "question": "How are the guest sessions confirmed?",
-                "answer": "We confirm the industry guest or featured location 2–3 weeks before departure and notify all participants immediately. Availability can occasionally change due to filming or industry schedules."
+                "question_ja": "ゲストセッションはどのように確定しますか？",
+                "answer": "We confirm the industry guest or featured location 2–3 weeks before departure and notify all participants immediately. Availability can occasionally change due to filming or industry schedules.",
+                "answer_ja": "出発の2〜3週間前に業界ゲストや訪問場所を確定し、すべての参加者に直ちにお知らせします。撮影や業界のスケジュールの都合により、急遽変更になる場合があります。"
             },
             {
                 "question": "Is this tour suitable for solo female travellers?",
-                "answer": "Absolutely. Our tours are specifically designed with Japanese solo travellers in mind, with a strong emphasis on safety and group cohesion."
+                "question_ja": "女性の海外一人旅でも大丈夫ですか？",
+                "answer": "Absolutely. Our tours are specifically designed with Japanese solo travellers in mind, with a strong emphasis on safety and group cohesion.",
+                "answer_ja": "もちろんです。当社のツアーは日本の個人旅行者を念頭に設計されており、安全性とグループの一体感を重視しています。"
             },
             {
                 "question": "What is the cancellation policy?",
-                "answer": "Full refund if cancelled 30+ days before departure. 50% refund 15–29 days before. No refund within 14 days."
+                "question_ja": "キャンセルポリシーを教えてください。",
+                "answer": "Full refund if cancelled 30+ days before departure. 50% refund 15–29 days before. No refund within 14 days.",
+                "answer_ja": "出発の30日以上前までのキャンセルは全額返金。15〜29日前は50％返金。14日以内は返金不可となります。"
             }
         ],
         "bookingLink": null

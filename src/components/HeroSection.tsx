@@ -15,11 +15,11 @@ interface HeroSectionProps {
  * The first keyword that matches any file wins.
  */
 const ACTORS = [
-    { id: 'sethupathi', name: 'Vijay Sethupathi', keywords: ['sethupathi', 'vijay'] },
-    { id: 'ram', name: 'Ram Charan', keywords: ['ram-charan', 'ramcharan', 'ram'] },
-    { id: 'ntr', name: 'Jr NTR', keywords: ['ntr', 'jr', 'jr-ntr'] },
-    { id: 'allu', name: 'Allu Arjun', keywords: ['allu'] },
-    { id: 'suryah', name: 'SJ Suryah', keywords: ['suryah', 'suriya', 'sj-suriya', 'sj'] },
+    { id: 'sethupathi', keywords: ['sethupathi', 'vijay'] },
+    { id: 'ram', keywords: ['ram-charan', 'ramcharan', 'ram'] },
+    { id: 'ntr', keywords: ['ntr', 'jr', 'jr-ntr'] },
+    { id: 'allu', keywords: ['allu'] },
+    { id: 'suryah', keywords: ['suryah', 'suriya', 'sj-suriya', 'sj'] },
 ];
 
 export default function HeroSection({ heroImages, pollImages }: HeroSectionProps) {
@@ -43,7 +43,8 @@ export default function HeroSection({ heroImages, pollImages }: HeroSectionProps
     useEffect(() => {
         function handleClickOutside(event: MouseEvent) {
             if (voteCardRef.current && !voteCardRef.current.contains(event.target as Node)) {
-                setSelectedActor(null);
+                // Keep selected actor even if click outside, or reset if desired
+                // For now, let's keep it selected so user can click VOTE button
             }
         }
 
@@ -111,26 +112,29 @@ export default function HeroSection({ heroImages, pollImages }: HeroSectionProps
                     </div>
 
                     <div className="vote-list">
-                        {ACTORS.map(actor => (
-                            <div
-                                key={actor.id}
-                                className={`vote-item ${selectedActor === actor.name ? 'active' : ''}`}
-                                onClick={() => setSelectedActor(actor.name)}
-                            >
-                                <div className="vote-info">
-                                    <img
-                                        src={findAvatar(actor.keywords)}
-                                        alt={actor.name}
-                                        width={48}
-                                        height={48}
-                                        className="vote-avatar"
-                                        style={{ objectFit: 'cover', borderRadius: '50%', flexShrink: 0 }}
-                                    />
-                                    <span className="vote-name">{actor.name}</span>
+                        {ACTORS.map(actor => {
+                            const actorName = t(`actors.${actor.id}`);
+                            return (
+                                <div
+                                    key={actor.id}
+                                    className={`vote-item ${selectedActor === actorName ? 'active' : ''}`}
+                                    onClick={() => setSelectedActor(actorName)}
+                                >
+                                    <div className="vote-info">
+                                        <img
+                                            src={findAvatar(actor.keywords)}
+                                            alt={actorName}
+                                            width={48}
+                                            height={48}
+                                            className="vote-avatar"
+                                            style={{ objectFit: 'cover', borderRadius: '50%', flexShrink: 0 }}
+                                        />
+                                        <span className="vote-name">{actorName}</span>
+                                    </div>
+                                    <div className="custom-radio"></div>
                                 </div>
-                                <div className="custom-radio"></div>
-                            </div>
-                        ))}
+                            );
+                        })}
                     </div>
 
                     <div className="vote-footer">
