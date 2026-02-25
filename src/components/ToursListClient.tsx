@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import type { Tour } from '@/lib/tours';
 import { formatDateRange, formatPriceJPY } from '@/lib/tours';
-import { TOUR_CATEGORIES, getCategoryColor, getCategoryLabel } from '@/lib/categories';
+import { getCategoryColor, getCategoryLabel } from '@/lib/categories';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 type StatusFilter = 'all' | 'upcoming' | 'past';
@@ -222,11 +222,9 @@ export default function ToursListClient({ tours, allCategories }: Props) {
     const clearFilters = () =>
         setFilters({ year: '', categories: [], status: 'all', search: '' });
 
-    const toggleCategory = (cat: string) => {
-        const nextCats = filters.categories.includes(cat)
-            ? filters.categories.filter(c => c !== cat)
-            : [cat]; // Switching to single-category toggle to match URL pattern
-
+    const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const cat = e.target.value;
+        const nextCats = cat ? [cat] : [];
         setFilters(prev => ({
             ...prev,
             categories: nextCats,
@@ -238,6 +236,27 @@ export default function ToursListClient({ tours, allCategories }: Props) {
         <div className="tlc-wrapper">
             {/* ── Filter Bar ── */}
             <div className="tlc-filter-bar">
+                <div className="container" style={{ marginBottom: '1rem' }}>
+                    <select
+                        className="tlc-year-select"
+                        style={{ width: '100%', padding: '0.85rem 1rem', fontSize: '1rem', border: '1px solid #e5e7eb', borderRadius: '6px', backgroundColor: '#fff', color: '#111827', fontWeight: '500' }}
+                        value={filters.categories[0] || ''}
+                        onChange={handleCategoryChange}
+                    >
+                        <option value="">All Categories</option>
+                        <option value="Cultural">Cultural Tours</option>
+                        <option value="Food">Food Tours</option>
+                        <option value="Celebrity">Celebrity-Related Tours</option>
+                        <option value="Education">Education Tours</option>
+                        <option value="Industrial">Industrial Tours</option>
+                        <option value="Ayurveda">Ayurveda Tours</option>
+                        <option value="Village">Village Tours</option>
+                        <option value="Cooking">Cooking Classes</option>
+                        <option value="Homestay">Homestay with an Indian Family</option>
+                        <option value="Temple">Temple Tours</option>
+                        <option value="Short">Short Tours (1–2 days)</option>
+                    </select>
+                </div>
                 <div className="container tlc-filter-inner">
 
                     {/* Search — fixed 220px */}
@@ -309,52 +328,6 @@ export default function ToursListClient({ tours, allCategories }: Props) {
                     <p className="tlc-result-count">
                         {filtered.length === 0 ? 'No tours found' : `${filtered.length} tour${filtered.length === 1 ? '' : 's'} found`}
                     </p>
-
-                    {/* Category pills — below filter bar, right of count */}
-                    <div className="tlc-cat-group">
-                        {TOUR_CATEGORIES.filter(c => c.priority).map(catDef => {
-                            const isActive = filters.categories.includes(catDef.key);
-                            return (
-                                <button
-                                    key={catDef.key}
-                                    className={`tlc-cat-pill ${isActive ? 'active' : ''}`}
-                                    style={isActive
-                                        ? { background: catDef.color, borderColor: catDef.color, color: '#fff' }
-                                        : { borderColor: catDef.color, color: catDef.color }}
-                                    onClick={() => toggleCategory(catDef.key)}
-                                >
-                                    {catDef.label}
-                                </button>
-                            );
-                        })}
-
-                        {/* More dropdown simulation or simple section */}
-                        <div className="tlc-more-cats">
-                            <select
-                                className="tlc-more-select"
-                                value=""
-                                onChange={(e) => {
-                                    if (e.target.value) toggleCategory(e.target.value);
-                                }}
-                            >
-                                <option value="" disabled>More Categories...</option>
-                                {TOUR_CATEGORIES.filter(c => !c.priority).map(catDef => (
-                                    <option key={catDef.key} value={catDef.key}>
-                                        {catDef.label} {filters.categories.includes(catDef.key) ? '✓' : ''}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
-
-                        {filters.categories.length > 0 && (
-                            <button
-                                className="tlc-inline-clear"
-                                onClick={() => setFilters(prev => ({ ...prev, categories: [] }))}
-                            >
-                                ✕ Clear
-                            </button>
-                        )}
-                    </div>
                 </div>
 
                 {filtered.length === 0 ? (

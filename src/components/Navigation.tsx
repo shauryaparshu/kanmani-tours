@@ -2,10 +2,8 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useBooking } from '@/context/BookingContext';
 
 export default function Navigation() {
-    const { openBooking } = useBooking();
     const pathname = usePathname();
 
     const navLinks = [
@@ -41,7 +39,6 @@ export default function Navigation() {
                         );
                     })}
                 </nav>
-                <button className="btn-primary" onClick={() => openBooking()}>Book Now</button>
             </div>
         </header>
     );
