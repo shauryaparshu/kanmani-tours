@@ -6,6 +6,7 @@ import TopBar from '@/components/TopBar';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/FooterSection';
 import ToursListClient from '@/components/ToursListClient';
+import { getTranslations } from 'next-intl/server';
 
 export const metadata: Metadata = {
     title: 'All Tours — Srikan Tours',
@@ -15,11 +16,10 @@ export const metadata: Metadata = {
 
 export default async function ToursPage() {
     const rawTours = await getAllTours();
+    const t = await getTranslations('Tours');
 
     // Derive unique categories sorted alphabetically
     const allCategories = [...new Set(rawTours.map(t => t.category))].sort();
-
-    // The imagery is now handled within getAllTours (Sanity vs JSON fallback)
     const tours = rawTours;
 
     return (
@@ -31,19 +31,19 @@ export default async function ToursPage() {
                 <section className="tours-page-hero">
                     <div className="container">
                         <nav className="breadcrumbs" aria-label="Breadcrumb">
-                            <Link href="/">Home</Link>
+                            <Link href="/">{t('breadcrumbHome')}</Link>
                             <span>/</span>
-                            <span>Tours</span>
+                            <span>{t('breadcrumbTours')}</span>
                         </nav>
-                        <h1 className="tours-page-title">Explore Our Tours</h1>
+                        <h1 className="tours-page-title">{t('heroTitle')}</h1>
                         <p className="tours-page-subtitle">
-                            Curated journeys connecting Japanese fans with the heart of South Indian culture, cinema &amp; cuisine.
+                            {t('heroSubtitle')}
                         </p>
                     </div>
                 </section>
 
                 {/* Client-side filter + card grid */}
-                <Suspense fallback={<div className="container" style={{ padding: '60px 20px' }}>Loading tours...</div>}>
+                <Suspense fallback={<div className="container" style={{ padding: '60px 20px' }}>{t('loading')}</div>}>
                     <ToursListClient tours={tours} allCategories={allCategories} />
                 </Suspense>
             </main>

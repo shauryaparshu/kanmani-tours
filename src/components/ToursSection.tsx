@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
-import { getAllTours, formatDateRange, formatPriceJPY, type Tour } from '@/lib/tours';
+import { useTranslations } from 'next-intl';
+import { formatDateRange, type Tour } from '@/lib/tours';
 import { getCategoryColor, getCategoryLabel } from '@/lib/categories';
 
 interface ToursSectionProps {
@@ -25,6 +26,8 @@ const catBg = (cat: string) => getCategoryColor(cat);
 const catText = (cat: string) => 'white';
 
 export default function ToursSection({ tours, cardImages = {} }: ToursSectionProps) {
+    const t = useTranslations('Home');
+
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     const upcomingTours = tours
@@ -39,11 +42,11 @@ export default function ToursSection({ tours, cardImages = {} }: ToursSectionPro
         <section id="tours" className="container animate" style={{ animationDelay: '0.4s' }}>
             <div className="section-header-flex">
                 <div className="section-title-wrap">
-                    <h2 className="section-title">Upcoming Tours</h2>
-                    <p className="section-subtitle">Specially curated journeys through the heart of India</p>
+                    <h2 className="section-title">{t('upcomingTours')}</h2>
+                    <p className="section-subtitle">{t('upcomingToursSubtitle')}</p>
                 </div>
                 <Link href="/tours" className="btn-outline-primary">
-                    View All Tours
+                    {t('viewAllTours')}
                 </Link>
             </div>
 
@@ -77,7 +80,7 @@ export default function ToursSection({ tours, cardImages = {} }: ToursSectionPro
                                     </div>
                                     {showComingSoon && (
                                         <div className="tour-badge" style={{ right: '1rem', left: 'auto', backgroundColor: '#eab308', color: '#fff' }}>
-                                            Coming Soon
+                                            {t('comingSoon')}
                                         </div>
                                     )}
                                 </div>
@@ -115,13 +118,11 @@ export default function ToursSection({ tours, cardImages = {} }: ToursSectionPro
 
                                 <div className="tour-availability">
                                     <span className="availability-icon">🔥</span>
-                                    <span className="availability-text">Only {tour.seatsLeft} seats left!</span>
+                                    <span className="availability-text">{t('seatsLeft', { count: tour.seatsLeft })}</span>
                                 </div>
 
-
-                                {/* KEY CHANGE: Learn More links to /tours/[slug] */}
                                 <Link href={`/tours/${tour.slug}`} className="btn-tour-details">
-                                    Learn More →
+                                    {t('learnMore')}
                                 </Link>
                             </div>
                         </div>

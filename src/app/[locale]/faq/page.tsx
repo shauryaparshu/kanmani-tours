@@ -6,6 +6,7 @@ import Navigation from '@/components/Navigation';
 import Footer from '@/components/FooterSection';
 import FaqAccordion from '@/components/FaqAccordion';
 import { getFAQs } from '@/lib/faq';
+import { getTranslations } from 'next-intl/server';
 import './faq.css';
 
 export const metadata: Metadata = {
@@ -15,6 +16,7 @@ export const metadata: Metadata = {
 
 export default async function FAQPage() {
     const faqs = await getFAQs();
+    const t = await getTranslations('FAQ');
 
     return (
         <main className="faq-page">
@@ -23,9 +25,9 @@ export default async function FAQPage() {
 
             <section className="faq-hero section-padding-small">
                 <div className="container text-center">
-                    <span className="section-badge">Support Center</span>
-                    <h1 className="section-title-large">Frequently Asked Questions</h1>
-                    <p className="faq-subtitle">Everything you need to know about traveling to India with us.</p>
+                    <span className="section-badge">{t('badge')}</span>
+                    <h1 className="section-title-large">{t('title')}</h1>
+                    <p className="faq-subtitle">{t('subtitle')}</p>
                 </div>
             </section>
 
@@ -34,10 +36,10 @@ export default async function FAQPage() {
                     <FaqAccordion faqs={faqs} />
 
                     <div className="faq-cta-footer mt-80 text-center">
-                        <h3>Still have questions?</h3>
-                        <p>If you can't find what you're looking for, our team is here to help.</p>
+                        <h3>{t('stillHaveQuestions')}</h3>
+                        <p>{t('contactPrompt')}</p>
                         <Link href="/contact" className="btn-primary-large mt-20 inline-block">
-                            Contact Us
+                            {t('contactUs')}
                         </Link>
                     </div>
                 </div>

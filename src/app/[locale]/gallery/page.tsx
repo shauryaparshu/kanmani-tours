@@ -4,13 +4,16 @@ import Navigation from '@/components/Navigation';
 import Footer from '@/components/FooterSection';
 import GalleryListClient from '@/components/GalleryListClient';
 import Link from 'next/link';
+import { getTranslations } from 'next-intl/server';
 
 export const metadata: Metadata = {
     title: 'Tour Gallery — Srikan Tours',
     description: 'Relive the magic of our past tours. Explore photo galleries from celebrity encounters, cultural festivals, and culinary adventures across India.',
 };
 
-export default function GalleryPage() {
+export default async function GalleryPage() {
+    const t = await getTranslations('Gallery');
+
     return (
         <>
             <TopBar />
@@ -20,13 +23,13 @@ export default function GalleryPage() {
                 <section className="tours-page-hero">
                     <div className="container">
                         <nav className="breadcrumbs" aria-label="Breadcrumb">
-                            <Link href="/">Home</Link>
+                            <Link href="/">{t('breadcrumbHome')}</Link>
                             <span>/</span>
-                            <span>Gallery</span>
+                            <span>{t('breadcrumbGallery')}</span>
                         </nav>
-                        <h1 className="tours-page-title">Past Tour Highlights</h1>
+                        <h1 className="tours-page-title">{t('title')}</h1>
                         <p className="tours-page-subtitle">
-                            A visual journey through our previous adventures. See the real moments and connections that make our tours special.
+                            {t('subtitle')}
                         </p>
                     </div>
                 </section>

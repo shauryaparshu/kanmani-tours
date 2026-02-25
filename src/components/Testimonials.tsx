@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import React, { useState } from 'react';
 
 const TESTIMONIALS_LIST = [
@@ -68,9 +69,11 @@ const TESTIMONIALS_LIST = [
 interface TestimonialCardProps {
     item: typeof TESTIMONIALS_LIST[0];
     imageSrc: string;
+    readMore: string;
+    showLess: string;
 }
 
-function TestimonialCard({ item, imageSrc }: TestimonialCardProps) {
+function TestimonialCard({ item, imageSrc, readMore, showLess }: TestimonialCardProps) {
     const [isExpanded, setIsExpanded] = useState(false);
     const charLimit = 150;
     const isLongText = item.text.length > charLimit;
@@ -101,7 +104,7 @@ function TestimonialCard({ item, imageSrc }: TestimonialCardProps) {
                                     setIsExpanded(!isExpanded);
                                 }}
                             >
-                                {isExpanded ? "show less" : "read more"}
+                                {isExpanded ? showLess : readMore}
                             </button>
                         )}
                     </div>
@@ -123,15 +126,14 @@ interface TestimonialsProps {
 }
 
 export default function Testimonials({ customerImages }: TestimonialsProps) {
+    const t = useTranslations('Home');
     const [currentIndex, setCurrentIndex] = useState(0);
     const totalItems = TESTIMONIALS_LIST.length;
 
-    // Move to next slide
     const nextSlide = () => {
         setCurrentIndex((prev) => (prev + 1) % totalItems);
     };
 
-    // Move to previous slide
     const prevSlide = () => {
         setCurrentIndex((prev) => (prev - 1 + totalItems) % totalItems);
     };
@@ -141,8 +143,8 @@ export default function Testimonials({ customerImages }: TestimonialsProps) {
             <div className="testimonials-container">
                 <div className="testimonials-header">
                     <div className="section-title-wrap" style={{ margin: '0 auto', textAlign: 'center' }}>
-                        <h2 className="section-title">Happy Clients</h2>
-                        <p className="section-subtitle">What our global community says about their journey</p>
+                        <h2 className="section-title">{t('happyClients')}</h2>
+                        <p className="section-subtitle">{t('happyClientsSubtitle')}</p>
                     </div>
                 </div>
 
@@ -189,6 +191,8 @@ export default function Testimonials({ customerImages }: TestimonialsProps) {
                                     key={item.id}
                                     item={item}
                                     imageSrc={imageSrc}
+                                    readMore={t('readMore')}
+                                    showLess={t('showLess')}
                                 />
                             );
                         })}

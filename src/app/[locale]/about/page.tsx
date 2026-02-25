@@ -5,6 +5,7 @@ import TopBar from '@/components/TopBar';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/FooterSection';
 import { getAboutData } from '@/lib/about';
+import { getTranslations } from 'next-intl/server';
 import './about.css';
 
 export const metadata: Metadata = {
@@ -15,6 +16,7 @@ export const metadata: Metadata = {
 export default async function AboutPage() {
   const aboutData = await getAboutData();
   const { story } = aboutData;
+  const t = await getTranslations('About');
 
   return (
     <main className="about-page">
@@ -26,7 +28,7 @@ export default async function AboutPage() {
         <div className="container">
           <div className="about-story-grid">
             <div className="about-story-text">
-              <span className="section-badge">Behind the Scenes</span>
+              <span className="section-badge">{t('badge')}</span>
               <h2 className="section-title-large">{story.title}</h2>
               {story.content.map((p: string, idx: number) => (
                 <p key={idx} className="story-paragraph">{p}</p>
@@ -46,7 +48,7 @@ export default async function AboutPage() {
                 )}
                 <div className="story-attribution">
                   <strong>Kanmani</strong>
-                  <span>CEO</span>
+                  <span>{t('ceoTitle')}</span>
                 </div>
               </div>
             </div>

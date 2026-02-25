@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import HeroSlideshow from './HeroSlideshow';
+import { useTranslations } from 'next-intl';
 
 interface HeroSectionProps {
     heroImages: string[];
@@ -21,10 +22,9 @@ const ACTORS = [
     { id: 'suryah', name: 'SJ Suryah', keywords: ['suryah', 'suriya', 'sj-suriya', 'sj'] },
 ];
 
-import { useTranslations } from 'next-intl';
-
 export default function HeroSection({ heroImages, pollImages }: HeroSectionProps) {
     const t = useTranslations('Home');
+
     // No default selection (initialize as null)
     const [selectedActor, setSelectedActor] = useState<string | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -98,8 +98,6 @@ export default function HeroSection({ heroImages, pollImages }: HeroSectionProps
     return (
         <section id="home" className="hero animate" style={{ animationDelay: '0.2s' }}>
             <div className="hero-content">
-                <h1 className="hero-title">{t('heroTitle')}</h1>
-                <p className="hero-subtitle">{t('heroSubtitle')}</p>
                 {/* Slideshow */}
                 <HeroSlideshow images={heroImages} altPrefix="Srikan Tours" />
 
@@ -107,9 +105,9 @@ export default function HeroSection({ heroImages, pollImages }: HeroSectionProps
                 <div className="vote-card" ref={voteCardRef}>
                     <div className="vote-header">
                         <h4 className="vote-title">
-                            ⭐ Exclusive Fan Vote
+                            ⭐ {t('fanVoteTitle')}
                         </h4>
-                        <h3 className="vote-question">Who’s your favorite celebrity?</h3>
+                        <h3 className="vote-question">{t('fanVoteQuestion')}</h3>
                     </div>
 
                     <div className="vote-list">
@@ -138,14 +136,14 @@ export default function HeroSection({ heroImages, pollImages }: HeroSectionProps
                     <div className="vote-footer">
                         {selectionError && (
                             <div className="selection-error">
-                                Please choose a star to vote!
+                                {t('pleaseChoose')}
                             </div>
                         )}
                         <button
                             className="btn-vote"
                             onClick={handleVoteClick}
                         >
-                            VOTE
+                            {t('voteButton')}
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width="16" height="16">
                                 <polyline points="9 18 15 12 9 6" />
                             </svg>
@@ -160,32 +158,32 @@ export default function HeroSection({ heroImages, pollImages }: HeroSectionProps
                     {!isSubmitted ? (
                         <>
                             <button className="modal-close" onClick={() => setIsModalOpen(false)}>&times;</button>
-                            <h2 className="modal-title">Finalize Your Vote</h2>
+                            <h2 className="modal-title">{t('finalizeVote')}</h2>
                             <form onSubmit={handleSubmit}>
                                 <div className="form-group">
-                                    <label className="form-label">Full Name</label>
+                                    <label className="form-label">{t('fullName')}</label>
                                     <input
                                         type="text"
                                         className="form-input"
-                                        placeholder="Enter your name"
+                                        placeholder={t('enterName')}
                                         required
                                         value={formData.name}
                                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                                     />
                                 </div>
                                 <div className="form-group">
-                                    <label className="form-label">Email Address</label>
+                                    <label className="form-label">{t('emailAddress')}</label>
                                     <input
                                         type="email"
                                         className="form-input"
-                                        placeholder="Enter your email"
+                                        placeholder={t('enterEmail')}
                                         required
                                         value={formData.email}
                                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                                     />
                                 </div>
                                 <div className="form-group">
-                                    <label className="form-label">Phone Number</label>
+                                    <label className="form-label">{t('phoneNumber')}</label>
                                     <div className="phone-input-wrap">
                                         <div className="phone-prefix">
                                             <div className="japan-flag"></div>
@@ -211,15 +209,15 @@ export default function HeroSection({ heroImages, pollImages }: HeroSectionProps
                                     </small>
                                 </div>
                                 <button type="submit" className="btn-vote" style={{ marginTop: '10px' }}>
-                                    Submit Vote
+                                    {t('submitVote')}
                                 </button>
                             </form>
                         </>
                     ) : (
                         <div className="submit-success">
                             <div className="success-icon">✓</div>
-                            <h2 className="modal-title" style={{ marginBottom: '8px' }}>Vote Submitted!</h2>
-                            <p style={{ color: '#64748b' }}>Thank you for voting for <strong>{selectedActor}</strong>.</p>
+                            <h2 className="modal-title" style={{ marginBottom: '8px' }}>{t('voteSubmitted')}</h2>
+                            <p style={{ color: '#64748b' }}>{t('thankYouVote')} <strong>{selectedActor}</strong>.</p>
                         </div>
                     )}
                 </div>
