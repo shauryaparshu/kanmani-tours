@@ -1,0 +1,42 @@
+{
+    "Navigation": {
+        "home": "Home",
+        "tours": "Tours",
+        "gallery": "Gallery",
+        "airport": "Airport Pickup & Drop",
+        "about": "About",
+        "faq": "FAQ",
+        "contact": "Contact"
+    },
+    "Home": {
+        "heroTitle": "Explore the Colors of South India",
+        "heroSubtitle": "Immersive cultural tours, exclusively guided in Japanese."
+    },
+    "Tours": {
+        "allCategories": "All Categories",
+        "cultureTours": "Culture Tours",
+        "foodTours": "Food Tours",
+        "celebrityTours": "Celebrity-Related Tours",
+        "educationTours": "Education Tours",
+        "industrialTours": "Industrial Tours",
+        "ayurvedaTours": "Ayurveda Tours",
+        "villageTours": "Village Tours",
+        "cookingClasses": "Cooking Classes",
+        "homestay": "Homestay with an Indian Family",
+        "templeTours": "Temple Tours",
+        "shortTours": "Short Tours (1–2 days)",
+        "searchPlaceholder": "Search tours…",
+        "all": "All",
+        "upcoming": "Upcoming",
+        "past": "Past"
+    },
+    "Buttons": {
+        "learnMore": "Learn More →",
+        "bookNow": "Book Now",
+        "viewAllTours": "View All Tours",
+        "clear": "✕ Clear",
+        "noTours": "No tours found",
+        "clearAll": "Clear All Filters",
+        "comingSoon": "Coming Soon"
+    }
+}

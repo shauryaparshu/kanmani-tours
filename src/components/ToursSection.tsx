@@ -50,6 +50,7 @@ export default function ToursSection({ tours, cardImages = {} }: ToursSectionPro
             <div className="itineraries-grid">
                 {upcomingTours.map((tour) => {
                     const imagePath = cardImages[tour.id] ?? tour.coverImage;
+                    const showComingSoon = tour.isComingSoon;
 
                     return (
                         <div key={tour.id} className="tour-card">
@@ -74,16 +75,23 @@ export default function ToursSection({ tours, cardImages = {} }: ToursSectionPro
                                     >
                                         {getCategoryLabel(tour.category)}
                                     </div>
+                                    {showComingSoon && (
+                                        <div className="tour-badge" style={{ right: '1rem', left: 'auto', backgroundColor: '#eab308', color: '#fff' }}>
+                                            Coming Soon
+                                        </div>
+                                    )}
                                 </div>
                             </Link>
                             <div className="tour-content">
                                 <div className="tour-dates-row">
                                     <div className="tour-dates">
-                                        {formatDateRange(tour.startDate, tour.endDate)}
+                                        {showComingSoon && tour.dateDisplay ? tour.dateDisplay : formatDateRange(tour.startDate, tour.endDate)}
                                     </div>
-                                    <div className="tour-countdown">
-                                        {getRemainingDays(tour.startDate)}
-                                    </div>
+                                    {!showComingSoon && (
+                                        <div className="tour-countdown">
+                                            {getRemainingDays(tour.startDate)}
+                                        </div>
+                                    )}
                                 </div>
 
                                 <div className="tour-location">

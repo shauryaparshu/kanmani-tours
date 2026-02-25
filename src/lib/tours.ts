@@ -24,6 +24,8 @@ interface RawTour {
     longDescription: string;
     startDate: string;
     endDate: string;
+    isComingSoon?: boolean;
+    dateDisplay?: string;
     durationDays: number;
     location: string;
     priceJPY: number;
@@ -57,6 +59,8 @@ function resolveImageUrl(image: any): string {
 function normaliseTour(t: RawTour): Tour {
     return {
         ...t,
+        isComingSoon: t.isComingSoon || false,
+        dateDisplay: t.dateDisplay || '',
         // Ensure all array fields are never null/undefined — Sanity can return null for unset arrays
         galleryImages: t.galleryImages ?? [],
         features: t.features ?? [],

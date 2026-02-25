@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import type { Tour } from '@/lib/tours';
 import { formatDateRange, formatPriceJPY } from '@/lib/tours';
 import { getCategoryColor, getCategoryLabel } from '@/lib/categories';
+import { useTranslations } from 'next-intl';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 type StatusFilter = 'all' | 'upcoming' | 'past';
@@ -57,8 +58,9 @@ function defaultSort(tours: Tour[]): Tour[] {
 }
 
 // ─── Card ─────────────────────────────────────────────────────────────────────
-function TourCard({ tour }: { tour: Tour }) {
+function TourCard({ tour, tLabels }: { tour: Tour; tLabels: any }) {
     const upcoming = isTourUpcoming(tour);
+    const showComingSoon = upcoming && tour.isComingSoon;
     return (
         <article className="tlc-card">
             <Link href={`/tours/${tour.slug}`} className="tlc-card-img-link" tabIndex={-1} aria-hidden>
@@ -78,11 +80,12 @@ function TourCard({ tour }: { tour: Tour }) {
                     >
                         {getCategoryLabel(tour.category)}
                     </span>
-                    {!upcoming && <span className="tlc-past-pill">Past</span>}
+                    {!upcoming && <span className="tlc-past-pill">{tLabels('past')}</span>}
+                    {showComingSoon && <span className="tlc-badge" style={{ right: '10px', left: 'auto', background: '#eab308' }}>{tLabels('comingSoon')}</span>}
                 </div>
             </Link>
             <div className="tlc-body">
-                <p className="tlc-dates">{formatDateRange(tour.startDate, tour.endDate)}</p>
+                <p className="tlc-dates">{showComingSoon && tour.dateDisplay ? tour.dateDisplay : formatDateRange(tour.startDate, tour.endDate)}</p>
                 <h2 className="tlc-title">
                     <Link href={`/tours/${tour.slug}`}>{tour.title}</Link>
                 </h2>
@@ -95,7 +98,7 @@ function TourCard({ tour }: { tour: Tour }) {
                 <p className="tlc-desc">{tour.shortDescription}</p>
                 <div className="tlc-footer">
                     <Link href={`/tours/${tour.slug}`} className="tlc-btn">
-                        Learn More →
+                        {tLabels('learnMore')}
                     </Link>
                 </div>
             </div>
@@ -107,6 +110,8 @@ function TourCard({ tour }: { tour: Tour }) {
 export default function ToursListClient({ tours, allCategories }: Props) {
     const router = useRouter();
     const searchParams = useSearchParams();
+    const t = useTranslations('Tours');
+    const tLabels = useTranslations('Buttons');
 
     const [filters, setFilters] = useState<Filters>({
         year: '',
@@ -243,18 +248,18 @@ export default function ToursListClient({ tours, allCategories }: Props) {
                         value={filters.categories[0] || ''}
                         onChange={handleCategoryChange}
                     >
-                        <option value="">All Categories</option>
-                        <option value="Cultural">Cultural Tours</option>
-                        <option value="Food">Food Tours</option>
-                        <option value="Celebrity">Celebrity-Related Tours</option>
-                        <option value="Education">Education Tours</option>
-                        <option value="Industrial">Industrial Tours</option>
-                        <option value="Ayurveda">Ayurveda Tours</option>
-                        <option value="Village">Village Tours</option>
-                        <option value="Cooking">Cooking Classes</option>
-                        <option value="Homestay">Homestay with an Indian Family</option>
-                        <option value="Temple">Temple Tours</option>
-                        <option value="Short">Short Tours (1–2 days)</option>
+                        <option value="">{t('allCategories')}</option>
+                        <option value="Cultural">{t('cultureTours')}</option>
+                        <option value="Food">{t('foodTours')}</option>
+                        <option value="Celebrity">{t('celebrityTours')}</option>
+                        <option value="Education">{t('educationTours')}</option>
+                        <option value="Industrial">{t('industrialTours')}</option>
+                        <option value="Ayurveda">{t('ayurvedaTours')}</option>
+                        <option value="Village">{t('villageTours')}</option>
+                        <option value="Cooking">{t('cookingClasses')}</option>
+                        <option value="Homestay">{t('homestay')}</option>
+                        <option value="Temple">{t('templeTours')}</option>
+                        <option value="Short">{t('shortTours')}</option>
                     </select>
                 </div>
                 <div className="container tlc-filter-inner">
@@ -267,7 +272,7 @@ export default function ToursListClient({ tours, allCategories }: Props) {
                         <input
                             type="text"
                             className="tlc-search-input"
-                            placeholder="Search tours…"
+                            placeholder={t('searchPlaceholder')}
                             value={filters.search}
                             onChange={e => setFilters(prev => ({ ...prev, search: e.target.value }))}
                         />
@@ -282,10 +287,10 @@ export default function ToursListClient({ tours, allCategories }: Props) {
                                 onClick={() => setFilters(prev => ({ ...prev, status: s }))}
                             >
                                 {s === 'all'
-                                    ? `All (${tours.length})`
+                                    ? `${t('all')} (${tours.length})`
                                     : s === 'upcoming'
-                                        ? `Upcoming (${upcomingCount})`
-                                        : `Past (${pastCount})`}
+                                        ? `${t('upcoming')} (${upcomingCount})`
+                                        : `${t('past')} (${pastCount})`}
                             </button>
                         ))}
                     </div>
@@ -316,7 +321,7 @@ export default function ToursListClient({ tours, allCategories }: Props) {
                             aria-hidden={!hasFilters}
                             tabIndex={hasFilters ? 0 : -1}
                         >
-                            ✕ Clear
+                            {tLabels('clear')}
                         </button>
                     </div>
                 </div>
@@ -333,14 +338,14 @@ export default function ToursListClient({ tours, allCategories }: Props) {
                 {filtered.length === 0 ? (
                     <div className="tlc-empty">
                         <div className="tlc-empty-icon">🗺️</div>
-                        <h3>No tours match your current filters</h3>
-                        <p>Try broadening your search or clearing the filters below.</p>
-                        <button className="tlc-btn-clear-empty" onClick={clearFilters}>Clear All Filters</button>
+                        <h3>{tLabels('noTours')}</h3>
+                        <p></p>
+                        <button className="tlc-btn-clear-empty" onClick={clearFilters}>{tLabels('clearAll')}</button>
                     </div>
                 ) : (
                     <div className="tlc-grid">
                         {filtered.map(tour => (
-                            <TourCard key={tour.id} tour={tour} />
+                            <TourCard key={tour.id} tour={tour} tLabels={tLabels} />
                         ))}
                     </div>
                 )}

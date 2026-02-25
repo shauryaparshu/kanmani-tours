@@ -1,0 +1,42 @@
+{
+    "Navigation": {
+        "home": "ホーム",
+        "tours": "ツアー",
+        "gallery": "ギャラリー",
+        "airport": "送迎サービス",
+        "about": "私たちについて",
+        "faq": "よくある質問",
+        "contact": "お問い合わせ"
+    },
+    "Home": {
+        "heroTitle": "南インドの色彩を探求",
+        "heroSubtitle": "日本語ガイドによる没入型文化ツアー"
+    },
+    "Tours": {
+        "allCategories": "すべてのカテゴリー",
+        "cultureTours": "カルチャーツアー",
+        "foodTours": "フードツアー",
+        "celebrityTours": "有名人関連ツアー",
+        "educationTours": "エデュケーションツアー",
+        "industrialTours": "工場見学ツアー",
+        "ayurvedaTours": "アーユルヴェーダツアー",
+        "villageTours": "村のツアー",
+        "cookingClasses": "料理教室",
+        "homestay": "インドの家族とホームステイ",
+        "templeTours": "お寺ツアー",
+        "shortTours": "ショートツアー（1〜2日）",
+        "searchPlaceholder": "ツアーを検索…",
+        "all": "すべて",
+        "upcoming": "今後の予定",
+        "past": "過去"
+    },
+    "Buttons": {
+        "learnMore": "詳細を見る →",
+        "bookNow": "今すぐ予約",
+        "viewAllTours": "すべてのツアーを見る",
+        "clear": "✕ クリア",
+        "noTours": "ツアーが見つかりません",
+        "clearAll": "すべてのフィルターをクリア",
+        "comingSoon": "近日公開"
+    }
+}

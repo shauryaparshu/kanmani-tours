@@ -102,6 +102,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
     const start = new Date(tour.startDate);
     start.setHours(0, 0, 0, 0);
     const isPast = start <= today;
+    const showComingSoon = !isPast && tour.isComingSoon;
 
     // Always provide a non-empty src — empty string causes React to re-fetch the page
     const heroSrc = tour.coverImage ||
@@ -149,7 +150,10 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
                         </div>
                     </div>
                     <div className="td-hero-meta-light">
-                        <span>📅 {new Date(tour.startDate).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })} — {new Date(tour.endDate).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
+                        {showComingSoon && (
+                            <span style={{ backgroundColor: '#eab308', color: '#fff', padding: '4px 12px', borderRadius: '4px', fontWeight: 'bold', marginRight: '1rem' }}>Coming Soon</span>
+                        )}
+                        <span>📅 {showComingSoon && tour.dateDisplay ? tour.dateDisplay : `${new Date(tour.startDate).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })} — ${new Date(tour.endDate).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}`}</span>
                     </div>
                 </div>
             </div>
@@ -165,10 +169,12 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
                         <span className="chip-icon">📍</span>
                         <div><div className="chip-label">Location</div><div className="chip-value">{tour.location}</div></div>
                     </div>
-                    <div className="td-info-chip">
-                        <span className="chip-icon">⏳</span>
-                        <div><div className="chip-label">{isPast ? 'Status' : 'Days Left'}</div><div className="chip-value td-seats">{isPast ? 'Completed' : daysLeft}</div></div>
-                    </div>
+                    {!showComingSoon && (
+                        <div className="td-info-chip">
+                            <span className="chip-icon">⏳</span>
+                            <div><div className="chip-label">{isPast ? 'Status' : 'Days Left'}</div><div className="chip-value td-seats">{isPast ? 'Completed' : daysLeft}</div></div>
+                        </div>
+                    )}
                     {!isPast && (
                         <div className="td-info-chip">
                             <span className="chip-icon">🪑</span>

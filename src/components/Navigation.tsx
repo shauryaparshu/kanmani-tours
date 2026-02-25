@@ -1,19 +1,26 @@
 'use client';
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { useTranslations, useLocale } from 'next-intl';
+import { Link, usePathname, useRouter } from '@/i18n/routing';
 
 export default function Navigation() {
+    const t = useTranslations('Navigation');
     const pathname = usePathname();
+    const router = useRouter();
+    const locale = useLocale();
+
+    const changeLanguage = (nextLocale: string) => {
+        router.replace(pathname, { locale: nextLocale });
+    };
 
     const navLinks = [
-        { name: 'Home', href: '/' },
-        { name: 'Tours', href: '/tours' },
-        { name: 'Gallery', href: '/gallery' },
-        { name: 'Airport Pickup & Drop', href: '/airport-transfer' },
-        { name: 'About', href: '/about' },
-        { name: 'FAQ', href: '/faq' },
-        { name: 'Contact', href: '/contact' },
+        { name: t('home'), href: '/' },
+        { name: t('tours'), href: '/tours' },
+        { name: t('gallery'), href: '/gallery' },
+        { name: t('airport'), href: '/airport-transfer' },
+        { name: t('about'), href: '/about' },
+        { name: t('faq'), href: '/faq' },
+        { name: t('contact'), href: '/contact' },
     ];
 
     return (
@@ -39,6 +46,16 @@ export default function Navigation() {
                         );
                     })}
                 </nav>
+                <div style={{ marginLeft: '1rem', display: 'flex', alignItems: 'center' }}>
+                    <select
+                        value={locale}
+                        onChange={(e) => changeLanguage(e.target.value)}
+                        style={{ padding: '0.5rem', borderRadius: '4px', border: '1px solid #d1d5db', backgroundColor: '#fff', fontSize: '0.9rem', cursor: 'pointer' }}
+                    >
+                        <option value="ja">日本語</option>
+                        <option value="en">English</option>
+                    </select>
+                </div>
             </div>
         </header>
     );

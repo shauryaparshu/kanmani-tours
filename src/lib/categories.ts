@@ -9,7 +9,7 @@ export interface CategoryDef {
 }
 
 export const TOUR_CATEGORIES: CategoryDef[] = [
-    { key: 'Cultural', label: 'Cultural Tours', color: '#2563eb', priority: true },
+    { key: 'Cultural', label: 'Culture Tours', color: '#2563eb', priority: true },
     { key: 'Food', label: 'Food Tours', color: '#16a34a', priority: true },
     { key: 'Celebrity', label: 'Celebrity-Related Tours', color: '#7c3aed', priority: true },
     { key: 'Short', label: 'Short Tours (1–2 days)', color: '#f59e0b', priority: true },

@@ -21,7 +21,10 @@ const ACTORS = [
     { id: 'suryah', name: 'SJ Suryah', keywords: ['suryah', 'suriya', 'sj-suriya', 'sj'] },
 ];
 
+import { useTranslations } from 'next-intl';
+
 export default function HeroSection({ heroImages, pollImages }: HeroSectionProps) {
+    const t = useTranslations('Home');
     // No default selection (initialize as null)
     const [selectedActor, setSelectedActor] = useState<string | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -95,6 +98,8 @@ export default function HeroSection({ heroImages, pollImages }: HeroSectionProps
     return (
         <section id="home" className="hero animate" style={{ animationDelay: '0.2s' }}>
             <div className="hero-content">
+                <h1 className="hero-title">{t('heroTitle')}</h1>
+                <p className="hero-subtitle">{t('heroSubtitle')}</p>
                 {/* Slideshow */}
                 <HeroSlideshow images={heroImages} altPrefix="Srikan Tours" />
 

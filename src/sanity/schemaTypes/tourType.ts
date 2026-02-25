@@ -27,7 +27,7 @@ export const tourType = defineType({
             type: 'string',
             options: {
                 list: [
-                    { title: 'Cultural Tours', value: 'Cultural' },
+                    { title: 'Culture Tours', value: 'Cultural' },
                     { title: 'Food Tours', value: 'Food' },
                     { title: 'Celebrity-Related Tours', value: 'Celebrity' },
                     { title: 'Short Tours (1–2 days)', value: 'Short' },
@@ -63,6 +63,18 @@ export const tourType = defineType({
             name: 'endDate',
             title: 'End Date',
             type: 'date',
+        }),
+        defineField({
+            name: 'isComingSoon',
+            title: 'Is Coming Soon',
+            type: 'boolean',
+            description: 'Check this if the exact dates are not finalized and you want to show "Coming Soon"',
+        }),
+        defineField({
+            name: 'dateDisplay',
+            title: 'Date Display Text',
+            type: 'string',
+            description: 'E.g., "August – October". Overrides start/end date display if Is Coming Soon is true.',
         }),
         defineField({
             name: 'durationDays',
