@@ -5,7 +5,7 @@ import Link from 'next/link';
 import type { Tour, TourFaq } from '@/lib/tours';
 import { formatPriceJPY, formatPriceRange } from '@/lib/tours';
 import { useBooking } from '@/context/BookingContext';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 
 interface TourDetailClientProps {
     tour: Tour;
@@ -97,6 +97,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
     const t = useTranslations('Home');
     const tButtons = useTranslations('Buttons');
     const tNav = useTranslations('Tours');
+    const locale = useLocale();
 
     const handleBook = () => openBooking(tour.slug);
 
@@ -108,6 +109,8 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
     start.setHours(0, 0, 0, 0);
     const isPast = start <= today;
     const showComingSoon = !isPast && tour.isComingSoon;
+
+    const dateOptions: Intl.DateTimeFormatOptions = { month: 'long', day: 'numeric', year: 'numeric' };
 
     // Always provide a non-empty src — empty string causes React to re-fetch the page
     const heroSrc = tour.coverImage ||
@@ -158,7 +161,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
                         {showComingSoon && (
                             <span style={{ backgroundColor: '#eab308', color: '#fff', padding: '4px 12px', borderRadius: '4px', fontWeight: 'bold', marginRight: '1rem' }}>{t('comingSoon')}</span>
                         )}
-                        <span>📅 {showComingSoon && tour.dateDisplay ? tour.dateDisplay : `${new Date(tour.startDate).toLocaleDateString('ja-JP', { month: 'long', day: 'numeric', year: 'numeric' })} — ${new Date(tour.endDate).toLocaleDateString('ja-JP', { month: 'long', day: 'numeric', year: 'numeric' })}`}</span>
+                        <span>📅 {showComingSoon && tour.dateDisplay ? tour.dateDisplay : `${new Date(tour.startDate).toLocaleDateString(locale, dateOptions)} — ${new Date(tour.endDate).toLocaleDateString(locale, dateOptions)}`}</span>
                     </div>
                 </div>
             </div>
