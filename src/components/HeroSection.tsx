@@ -4,9 +4,12 @@ import { useState, useEffect, useRef } from 'react';
 import HeroSlideshow from './HeroSlideshow';
 import { useTranslations } from 'next-intl';
 
+import { Celebrity } from '@/lib/celebrities';
+
 interface HeroSectionProps {
     heroImages: string[];
     pollImages: string[];
+    initialCelebrities?: Celebrity[];
 }
 
 /**
@@ -15,14 +18,15 @@ interface HeroSectionProps {
  * The first keyword that matches any file wins.
  */
 const ACTORS = [
-    { id: 'sethupathi', keywords: ['sethupathi', 'vijay'] },
+    { id: 'vijay_thalapathi', keywords: ['vijay-thalapathy', 'thalapathy', 'vijay'] },
+    { id: 'sethupathi', keywords: ['sethupathi'] },
     { id: 'ram', keywords: ['ram-charan', 'ramcharan', 'ram'] },
     { id: 'ntr', keywords: ['ntr', 'jr', 'jr-ntr'] },
     { id: 'allu', keywords: ['allu'] },
     { id: 'suryah', keywords: ['suryah', 'suriya', 'sj-suriya', 'sj'] },
 ];
 
-export default function HeroSection({ heroImages, pollImages }: HeroSectionProps) {
+export default function HeroSection({ heroImages, pollImages, initialCelebrities }: HeroSectionProps) {
     const t = useTranslations('Home');
 
     // No default selection (initialize as null)
@@ -112,8 +116,12 @@ export default function HeroSection({ heroImages, pollImages }: HeroSectionProps
                     </div>
 
                     <div className="vote-list">
-                        {ACTORS.map(actor => {
-                            const actorName = t(`actors.${actor.id}`);
+                        {(initialCelebrities && initialCelebrities.length > 0 ? initialCelebrities : ACTORS.map(a => ({
+                            id: a.id,
+                            name: t(`actors.${a.id}`),
+                            photo: findAvatar(a.keywords)
+                        }))).map(actor => {
+                            const actorName = actor.name;
                             return (
                                 <div
                                     key={actor.id}
@@ -122,7 +130,7 @@ export default function HeroSection({ heroImages, pollImages }: HeroSectionProps
                                 >
                                     <div className="vote-info">
                                         <img
-                                            src={findAvatar(actor.keywords)}
+                                            src={actor.photo}
                                             alt={actorName}
                                             width={48}
                                             height={48}

@@ -6,6 +6,7 @@ import Testimonials from '@/components/Testimonials';
 import Footer from '@/components/FooterSection';
 import { getImages, getSlugs, getLatestImage } from '@/lib/server-images';
 import { getAllTours } from '@/lib/tours';
+import { getAllCelebrities } from '@/lib/celebrities';
 
 export default async function Home({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -13,8 +14,11 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
   const pollImages = getImages('/assets/img/home/poll');
   const customerImages = getImages('/assets/img/people/customers');
 
-  // Fetch tours from Sanity (or JSON fallback)
-  const tours = await getAllTours(locale);
+  // Fetch tours and celebrities from Sanity
+  const [tours, celebrities] = await Promise.all([
+    getAllTours(locale),
+    getAllCelebrities(locale)
+  ]);
 
   // We'll pass the full tour objects to the section, 
   // but let's see what cardImages mapping it expects.
@@ -28,7 +32,11 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
     <main>
       <TopBar />
       <Navigation />
-      <HeroSection heroImages={heroImages} pollImages={pollImages} />
+      <HeroSection
+        heroImages={heroImages}
+        pollImages={pollImages}
+        initialCelebrities={celebrities}
+      />
       <ToursSection tours={tours} cardImages={tourCardImages} />
       <Testimonials customerImages={customerImages} />
       <Footer />

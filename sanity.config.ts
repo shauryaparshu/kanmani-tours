@@ -51,9 +51,17 @@ export default defineConfig({
                             context,
                         }),
                         S.divider(),
+                        orderableDocumentListDeskItem({
+                            type: 'celebrity',
+                            title: 'Celebrity Poll',
+                            S,
+                            context,
+                        }),
+                        S.divider(),
                         // Regular document types
                         ...S.documentTypeListItems().filter(
-                            (listItem) => !singletonTypes.has(listItem.getId() || '') && listItem.getId() !== 'faq'
+                            (listItem) => !singletonTypes.has(listItem.getId() || '') &&
+                                !['faq', 'celebrity'].includes(listItem.getId() || '')
                         ),
                     ]),
         }),

@@ -55,3 +55,11 @@ export const FAQS_QUERY = defineQuery(`*[_type == "faq"] | order(orderRank) {
   question,
   answer
 }`)
+
+export const CELEBRITIES_QUERY = defineQuery(`*[_type == "celebrity"] | order(orderRank asc) {
+  _id,
+  name,
+  name_ja,
+  photo,
+  orderRank
+}`)
