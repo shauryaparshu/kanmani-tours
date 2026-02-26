@@ -58,10 +58,17 @@ export default defineConfig({
                             context,
                         }),
                         S.divider(),
+                        orderableDocumentListDeskItem({
+                            type: 'tourCategory',
+                            title: 'Tour Categories',
+                            S,
+                            context,
+                        }),
+                        S.divider(),
                         // Regular document types
                         ...S.documentTypeListItems().filter(
                             (listItem) => !singletonTypes.has(listItem.getId() || '') &&
-                                !['faq', 'celebrity'].includes(listItem.getId() || '')
+                                !['faq', 'celebrity', 'tourCategory'].includes(listItem.getId() || '')
                         ),
                     ]),
         }),

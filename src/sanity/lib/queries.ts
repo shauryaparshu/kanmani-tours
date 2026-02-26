@@ -63,3 +63,12 @@ export const CELEBRITIES_QUERY = defineQuery(`*[_type == "celebrity"] | order(or
   photo,
   orderRank
 }`)
+
+export const CATEGORIES_QUERY = defineQuery(`*[_type == "tourCategory"] | order(orderRank asc) {
+  _id,
+  title,
+  title_ja,
+  key,
+  color,
+  priority
+}`)
