@@ -29,4 +29,11 @@ export const celebrityType = defineType({
             validation: (Rule) => Rule.required(),
         }),
     ],
+    preview: {
+        select: {
+            title: 'name',
+            subtitle: 'name_ja',
+            media: 'photo',
+        },
+    },
 })

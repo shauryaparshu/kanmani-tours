@@ -18,12 +18,12 @@ interface HeroSectionProps {
  * The first keyword that matches any file wins.
  */
 const ACTORS = [
-    { id: 'vijay_thalapathi', keywords: ['vijay-thalapathy', 'thalapathy', 'vijay'] },
-    { id: 'sethupathi', keywords: ['sethupathi'] },
-    { id: 'ram', keywords: ['ram-charan', 'ramcharan', 'ram'] },
-    { id: 'ntr', keywords: ['ntr', 'jr', 'jr-ntr'] },
-    { id: 'allu', keywords: ['allu'] },
-    { id: 'suryah', keywords: ['suryah', 'suriya', 'sj-suriya', 'sj'] },
+    { id: 'vijay_thalapathi', keywords: ['vijay-thalapathy', 'thalapathy'] },
+    { id: 'sethupathi', keywords: ['sethupathi', 'vijay-sethupathi'] },
+    { id: 'ram', keywords: ['ram-charan', 'ramcharan'] },
+    { id: 'ntr', keywords: ['ntr', 'jr-ntr'] },
+    { id: 'allu', keywords: ['allu-arjun', 'allu'] },
+    { id: 'suryah', keywords: ['suryah', 'suriya', 'sj-suriya'] },
 ];
 
 export default function HeroSection({ heroImages, pollImages, initialCelebrities }: HeroSectionProps) {
@@ -116,7 +116,11 @@ export default function HeroSection({ heroImages, pollImages, initialCelebrities
                     </div>
 
                     <div className="vote-list">
-                        {(initialCelebrities && initialCelebrities.length > 0 ? initialCelebrities : ACTORS.map(a => ({
+                        {(initialCelebrities && initialCelebrities.length > 0 ? initialCelebrities.map(c => ({
+                            id: c.id,
+                            name: c.name,
+                            photo: c.photo || findAvatar([c.name])
+                        })) : ACTORS.map(a => ({
                             id: a.id,
                             name: t(`actors.${a.id}`),
                             photo: findAvatar(a.keywords)
