@@ -2,6 +2,7 @@ import React, { Suspense } from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getAllTours } from '@/lib/tours';
+import { getAllCategories } from '@/lib/categories';
 import TopBar from '@/components/TopBar';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/FooterSection';
@@ -16,11 +17,14 @@ export const metadata: Metadata = {
 
 export default async function ToursPage({ params }: { params: Promise<{ locale: string }> }) {
     const { locale } = await params;
-    const rawTours = await getAllTours(locale);
+
+    const [rawTours, categories] = await Promise.all([
+        getAllTours(locale),
+        getAllCategories(locale)
+    ]);
+
     const t = await getTranslations('Tours');
 
-    // Derive unique categories sorted alphabetically
-    const allCategories = [...new Set(rawTours.map(t => t.category))].sort();
     const tours = rawTours;
 
     return (
@@ -45,7 +49,7 @@ export default async function ToursPage({ params }: { params: Promise<{ locale: 
 
                 {/* Client-side filter + card grid */}
                 <Suspense fallback={<div className="container" style={{ padding: '60px 20px' }}>{t('loading')}</div>}>
-                    <ToursListClient tours={tours} allCategories={allCategories} />
+                    <ToursListClient tours={tours} categories={categories} />
                 </Suspense>
             </main>
             <Footer />

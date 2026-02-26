@@ -20,10 +20,10 @@ interface Filters {
 
 interface Props {
     tours: Tour[];
-    allCategories: string[];
+    categories: any[];
 }
 
-const catBg = (c: string) => getCategoryColor(c);
+const catBg = (c: string, cats: any[]) => getCategoryColor(c, cats);
 const catText = (c: string) => '#fff';
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -58,7 +58,7 @@ function defaultSort(tours: Tour[]): Tour[] {
 }
 
 // ─── Card ─────────────────────────────────────────────────────────────────────
-function TourCard({ tour, tLabels }: { tour: Tour; tLabels: any }) {
+function TourCard({ tour, tLabels, categories }: { tour: Tour; tLabels: any, categories: any[] }) {
     const upcoming = isTourUpcoming(tour);
     const showComingSoon = upcoming && tour.isComingSoon;
     return (
@@ -76,9 +76,9 @@ function TourCard({ tour, tLabels }: { tour: Tour; tLabels: any }) {
                     />
                     <span
                         className="tlc-badge"
-                        style={{ background: catBg(tour.category), color: catText(tour.category) }}
+                        style={{ background: catBg(tour.category, categories), color: catText(tour.category) }}
                     >
-                        {getCategoryLabel(tour.category)}
+                        {getCategoryLabel(tour.category, categories)}
                     </span>
                     {!upcoming && <span className="tlc-past-pill">{tLabels('past')}</span>}
                     {showComingSoon && <span className="tlc-badge" style={{ right: '10px', left: 'auto', background: '#eab308' }}>{tLabels('comingSoon')}</span>}
@@ -107,7 +107,7 @@ function TourCard({ tour, tLabels }: { tour: Tour; tLabels: any }) {
 }
 
 // ─── Main client component ────────────────────────────────────────────────────
-export default function ToursListClient({ tours, allCategories }: Props) {
+export default function ToursListClient({ tours, categories }: Props) {
     const router = useRouter();
     const searchParams = useSearchParams();
     const t = useTranslations('Tours');
@@ -241,25 +241,32 @@ export default function ToursListClient({ tours, allCategories }: Props) {
         <div className="tlc-wrapper">
             {/* ── Filter Bar ── */}
             <div className="tlc-filter-bar">
-                <div className="container" style={{ marginBottom: '1rem' }}>
+                <div className="container" style={{ marginBottom: '1.5rem', display: 'flex', justifyContent: 'flex-start' }}>
                     <select
-                        className="tlc-year-select"
-                        style={{ width: '100%', padding: '0.85rem 1rem', fontSize: '1rem', border: '1px solid #e5e7eb', borderRadius: '6px', backgroundColor: '#fff', color: '#111827', fontWeight: '500' }}
+                        className="tlc-category-select"
+                        style={{
+                            width: 'auto',
+                            minWidth: '280px',
+                            maxWidth: '400px',
+                            padding: '0.85rem 1rem',
+                            fontSize: '1rem',
+                            border: '2px solid #f97316',
+                            borderRadius: '8px',
+                            backgroundColor: '#fff',
+                            color: '#111827',
+                            fontWeight: '600',
+                            cursor: 'pointer',
+                            boxShadow: '0 2px 4px rgba(249, 115, 22, 0.1)'
+                        }}
                         value={filters.categories[0] || ''}
                         onChange={handleCategoryChange}
                     >
                         <option value="">{t('allCategories')}</option>
-                        <option value="Cultural">{t('cultureTours')}</option>
-                        <option value="Food">{t('foodTours')}</option>
-                        <option value="Celebrity">{t('celebrityTours')}</option>
-                        <option value="Education">{t('educationTours')}</option>
-                        <option value="Industrial">{t('industrialTours')}</option>
-                        <option value="Ayurveda">{t('ayurvedaTours')}</option>
-                        <option value="Village">{t('villageTours')}</option>
-                        <option value="Cooking">{t('cookingClasses')}</option>
-                        <option value="Homestay">{t('homestay')}</option>
-                        <option value="Temple">{t('templeTours')}</option>
-                        <option value="Short">{t('shortTours')}</option>
+                        {categories.map(cat => (
+                            <option key={cat.key} value={cat.key}>
+                                {cat.label}
+                            </option>
+                        ))}
                     </select>
                 </div>
                 <div className="container tlc-filter-inner">
@@ -345,7 +352,7 @@ export default function ToursListClient({ tours, allCategories }: Props) {
                 ) : (
                     <div className="tlc-grid">
                         {filtered.map(tour => (
-                            <TourCard key={tour.id} tour={tour} tLabels={tLabels} />
+                            <TourCard key={tour.id} tour={tour} tLabels={tLabels} categories={categories} />
                         ))}
                     </div>
                 )}
