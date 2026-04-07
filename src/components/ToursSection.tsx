@@ -56,7 +56,7 @@ export default function ToursSection({ tours, cardImages = {} }: ToursSectionPro
                     const showComingSoon = tour.isComingSoon;
 
                     return (
-                        <div key={tour.id} className="tour-card">
+                        <div key={tour._id} className="tour-card">
                             <Link href={`/tours/${tour.slug}`} className="tour-img-link">
                                 <div className="tour-img-wrap">
                                     <img

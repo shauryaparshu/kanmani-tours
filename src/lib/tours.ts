@@ -16,6 +16,7 @@ export interface TourFaq {
 }
 
 interface RawTour {
+    _id?: string;
     id: number | string;
     slug: string;
     category: string;

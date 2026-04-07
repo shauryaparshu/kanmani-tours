@@ -135,7 +135,7 @@ export default function HeroSection({ heroImages, pollImages, initialCelebrities
                                     <div className="vote-info">
                                         <img
                                             src={actor.photo}
-                                            alt={actorName}
+                                            alt={actor.name}
                                             width={48}
                                             height={48}
                                             className="vote-avatar"
