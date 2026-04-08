@@ -1,4 +1,3 @@
-import TopBar from '@/components/layout/TopBar';
 import Navigation from '@/components/layout/Navigation';
 import HeroSection from '@/components/sections/HeroSection';
 import ToursSection from '@/components/sections/ToursSection';
@@ -29,13 +28,10 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
   });
 
   return (
-    <main>
-      <TopBar />
+    <main style={{ maxWidth: '100%', width: '100%', padding: 0 }}>
       <Navigation />
       <HeroSection
         heroImages={heroImages}
-        pollImages={pollImages}
-        initialCelebrities={celebrities}
       />
       <ToursSection tours={tours} cardImages={tourCardImages} />
       <Testimonials customerImages={customerImages} />

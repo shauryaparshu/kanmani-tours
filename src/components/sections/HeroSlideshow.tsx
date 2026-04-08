@@ -40,25 +40,34 @@ export default function HeroSlideshow({
     }
 
     return (
-        <div className="hero-banner" style={{ position: 'relative' }}>
+        <div className="hero-banner" style={{ position: 'relative', width: '100%', height: '100vh' }}>
             {images.map((src, i) => (
-                <Image
+                <div
                     key={src}
-                    src={src}
-                    alt={`${altPrefix} ${i + 1}`}
-                    fill
                     style={{
-                        objectFit: 'cover',
-                        objectPosition: 'center 20%',
-                        opacity: current === i ? 1 : 0,
-                        // Fast cross-fade: 0.4s instead of 1s
-                        transition: 'opacity 0.4s ease-in-out',
-                        zIndex: current === i ? 1 : 0,
+                        position: 'relative',
+                        width: '100vw',
+                        maxWidth: '100%',
+                        flexShrink: '0',
+                        height: '100vh',
+                        display: current === i ? 'block' : 'none'
                     }}
-                    priority={i === 0}
-                    sizes="(max-width: 768px) 100vw, 70vw"
-                    unoptimized
-                />
+                >
+                    <Image
+                        src={src}
+                        alt={`${altPrefix} ${i + 1}`}
+                        fill
+                        style={{
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'cover',
+                            objectPosition: 'center',
+                        }}
+                        priority={i === 0}
+                        sizes="100vw"
+                        unoptimized
+                    />
+                </div>
             ))}
 
             {/* Navigation arrows */}
