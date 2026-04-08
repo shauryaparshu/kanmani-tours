@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { Link, usePathname, useRouter } from '@/i18n/routing';
 
@@ -8,6 +9,16 @@ export default function Navigation() {
     const pathname = usePathname();
     const router = useRouter();
     const locale = useLocale();
+
+    const [scrolled, setScrolled] = useState(false);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setScrolled(window.scrollY > 60);
+        };
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     const changeLanguage = (nextLocale: string) => {
         router.replace(pathname, { locale: nextLocale });
@@ -26,16 +37,22 @@ export default function Navigation() {
     return (
         <nav style={{
             width: '100%',
-            backgroundColor: '#1C1917',
+            backgroundColor: scrolled ? 'rgba(28, 25, 23, 0.97)' : '#1C1917',
+            backdropFilter: scrolled ? 'blur(12px)' : 'none',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
             padding: '0 40px',
-            height: '72px',
-            position: 'sticky',
+            height: scrolled ? '64px' : '72px',
+            position: 'fixed',
             top: '0',
+            left: '0',
+            right: '0',
             zIndex: 1000,
-            borderBottom: '1px solid rgba(201, 147, 58, 0.15)'
+            borderBottom: scrolled 
+                ? '1px solid rgba(201, 147, 58, 0.3)' 
+                : '1px solid rgba(201, 147, 58, 0.15)',
+            transition: 'all 0.4s ease'
         }}>
             {/* LEFT COLUMN — Logo */}
             <div style={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}>
@@ -66,27 +83,46 @@ export default function Navigation() {
             </div>
 
             {/* CENTER COLUMN — Navigation links */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '36px' }}>
-                {navLinks.map((link) => {
+            <div style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
+                {navLinks.map((link, index) => {
                     const isActive = pathname === link.href || (link.href !== '/' && pathname?.startsWith(link.href));
                     return (
-                        <Link
-                            key={link.href}
-                            href={link.href}
-                            style={{
-                                fontFamily: "'Cormorant Garamond', Georgia, serif",
-                                fontSize: '18px',
-                                fontWeight: '600',
-                                letterSpacing: '0.08em',
-                                color: isActive ? '#C9933A' : '#F5F1EB',
-                                textDecoration: 'none',
-                                opacity: isActive ? '1' : '1',
-                                borderBottom: isActive ? '1px solid #C9933A' : 'none',
-                                paddingBottom: isActive ? '2px' : '0'
-                            }}
-                        >
-                            {link.name}
-                        </Link>
+                        <div key={link.href} style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
+                            <Link
+                                href={link.href}
+                                style={{
+                                    fontFamily: "'Cormorant Garamond', Georgia, serif",
+                                    fontSize: '17px',
+                                    fontWeight: '500',
+                                    letterSpacing: '0.08em',
+                                    color: isActive ? '#C9933A' : '#F5F1EB',
+                                    textDecoration: 'none',
+                                    opacity: '1',
+                                    transition: 'color 0.3s ease, opacity 0.3s ease',
+                                    cursor: 'pointer',
+                                    borderBottom: isActive ? '1px solid #C9933A' : 'none',
+                                    paddingBottom: isActive ? '2px' : '0'
+                                }}
+                                onMouseEnter={(e) => {
+                                    if (!isActive) e.currentTarget.style.color = '#C9933A';
+                                }}
+                                onMouseLeave={(e) => {
+                                    if (!isActive) e.currentTarget.style.color = '#F5F1EB';
+                                }}
+                            >
+                                {link.name}
+                            </Link>
+                            {index < navLinks.length - 1 && (
+                                <span style={{
+                                    color: 'rgba(201, 147, 58, 0.25)',
+                                    fontSize: '12px',
+                                    userSelect: 'none',
+                                    pointerEvents: 'none'
+                                }}>
+                                    ·
+                                </span>
+                            )}
+                        </div>
                     );
                 })}
             </div>

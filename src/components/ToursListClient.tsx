@@ -62,9 +62,30 @@ function TourCard({ tour, tLabels, categories }: { tour: Tour; tLabels: any, cat
     const upcoming = isTourUpcoming(tour);
     const showComingSoon = upcoming && tour.isComingSoon;
     return (
-        <article className="tlc-card">
+        <article 
+            style={{
+                backgroundColor: '#FFFFFF',
+                border: '1px solid #E8E4DC',
+                borderRadius: '2px',
+                overflow: 'hidden',
+                transition: 'all 0.35s ease',
+                cursor: 'pointer',
+                display: 'flex',
+                flexDirection: 'column'
+            }}
+            onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = '#C9933A';
+                e.currentTarget.style.transform = 'translateY(-4px)';
+                e.currentTarget.style.boxShadow = '0 12px 40px rgba(201,147,58,0.12)';
+            }}
+            onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = '#E8E4DC';
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = 'none';
+            }}
+        >
             <Link href={`/tours/${tour.slug}`} className="tlc-card-img-link" tabIndex={-1} aria-hidden>
-                <div className="tlc-img-wrap">
+                <div className="tlc-img-wrap" style={{ position: 'relative' }}>
                     <img
                         src={tour.coverImage || `https://placehold.co/640x400/1c2331/ffffff?text=${encodeURIComponent(tour.title)}`}
                         alt={tour.title}
@@ -75,30 +96,129 @@ function TourCard({ tour, tLabels, categories }: { tour: Tour; tLabels: any, cat
                         }}
                     />
                     <span
-                        className="tlc-badge"
-                        style={{ background: catBg(tour.category, categories), color: catText(tour.category) }}
+                        style={{ 
+                            position: 'absolute',
+                            top: '10px',
+                            left: '10px',
+                            fontFamily: "'Cormorant Garamond', Georgia, serif",
+                            fontSize: '10px',
+                            fontWeight: '500',
+                            letterSpacing: '0.22em',
+                            color: '#C9933A',
+                            backgroundColor: 'rgba(201, 147, 58, 0.1)',
+                            border: '1px solid rgba(201, 147, 58, 0.3)',
+                            padding: '4px 12px',
+                            textTransform: 'uppercase',
+                            borderRadius: '0px',
+                            zIndex: 2
+                        }}
                     >
                         {getCategoryLabel(tour.category, categories)}
                     </span>
-                    {!upcoming && <span className="tlc-past-pill">{tLabels('past')}</span>}
-                    {showComingSoon && <span className="tlc-badge" style={{ right: '10px', left: 'auto', background: '#eab308' }}>{tLabels('comingSoon')}</span>}
+                    {!upcoming && (
+                        <span style={{ 
+                            position: 'absolute',
+                            bottom: '10px',
+                            left: '10px',
+                            fontFamily: "'Cormorant Garamond', Georgia, serif",
+                            fontSize: '10px',
+                            fontWeight: '500',
+                            letterSpacing: '0.15em',
+                            color: '#6B6560',
+                            backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                            padding: '4px 8px',
+                            textTransform: 'uppercase',
+                            zIndex: 2
+                        }}>
+                            {tLabels('past')}
+                        </span>
+                    )}
+                    {showComingSoon && (
+                        <span style={{ 
+                            position: 'absolute',
+                            top: '10px',
+                            right: '10px', 
+                            fontFamily: "'Cormorant Garamond', Georgia, serif",
+                            fontSize: '10px',
+                            fontWeight: '500',
+                            letterSpacing: '0.22em',
+                            color: '#1C1917',
+                            backgroundColor: 'rgba(234, 179, 8, 0.2)',
+                            border: '1px solid rgba(234, 179, 8, 0.5)',
+                            padding: '4px 12px',
+                            textTransform: 'uppercase',
+                            borderRadius: '0px',
+                            zIndex: 2
+                        }}>
+                            {tLabels('comingSoon')}
+                        </span>
+                    )}
                 </div>
             </Link>
-            <div className="tlc-body">
-                <p className="tlc-dates">{showComingSoon && tour.dateDisplay ? tour.dateDisplay : formatDateRange(tour.startDate, tour.endDate)}</p>
-                <h2 className="tlc-title">
-                    <Link href={`/tours/${tour.slug}`}>{tour.title}</Link>
+            <div className="tlc-body" style={{ padding: '20px' }}>
+                <p style={{
+                    fontFamily: "'Cormorant Garamond', Georgia, serif",
+                    fontSize: '13px',
+                    color: '#6B6560',
+                    letterSpacing: '0.06em',
+                    marginBottom: '8px'
+                }}>
+                    {showComingSoon && tour.dateDisplay ? tour.dateDisplay : formatDateRange(tour.startDate, tour.endDate)}
+                </p>
+                <h2 style={{ marginBottom: '10px' }}>
+                    <Link href={`/tours/${tour.slug}`} style={{
+                        fontFamily: "'Cormorant Garamond', Georgia, serif",
+                        fontSize: '22px',
+                        fontWeight: '500',
+                        color: '#1C1917',
+                        letterSpacing: '0.04em',
+                        lineHeight: '1.3',
+                        textDecoration: 'none'
+                    }}>
+                        {tour.title}
+                    </Link>
                 </h2>
-                <p className="tlc-location">
-                    <svg viewBox="0 0 24 24" width="13" height="13" fill="var(--primary)">
+                <p style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '4px',
+                    fontFamily: "'Cormorant Garamond', Georgia, serif",
+                    fontSize: '14px',
+                    color: '#6B6560',
+                    marginBottom: '12px'
+                }}>
+                    <svg viewBox="0 0 24 24" width="13" height="13" fill="#6B6560">
                         <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
                     </svg>
                     {tour.location}
                 </p>
-                <p className="tlc-desc">{tour.shortDescription}</p>
-                <div className="tlc-footer">
-                    <Link href={`/tours/${tour.slug}`} className="tlc-btn">
-                        {tLabels('learnMore')}
+                <p style={{
+                    fontFamily: "'Cormorant Garamond', Georgia, serif",
+                    fontSize: '15px',
+                    color: '#64748b',
+                    lineHeight: '1.6',
+                    marginBottom: '20px',
+                    display: '-webkit-box',
+                    WebkitLineClamp: '3',
+                    WebkitBoxOrient: 'vertical',
+                    overflow: 'hidden'
+                }}>
+                    {tour.shortDescription}
+                </p>
+                <div style={{ marginTop: 'auto' }}>
+                    <Link href={`/tours/${tour.slug}`} style={{
+                        fontFamily: "'Cormorant Garamond', Georgia, serif",
+                        fontSize: '13px',
+                        fontWeight: '500',
+                        letterSpacing: '0.2em',
+                        color: '#C9933A',
+                        textDecoration: 'none',
+                        textTransform: 'uppercase',
+                        borderBottom: '1px solid rgba(201,147,58,0.4)',
+                        paddingBottom: '2px',
+                        transition: 'border-color 0.3s ease'
+                    }}>
+                        {tLabels('learnMore')} →
                     </Link>
                 </div>
             </div>

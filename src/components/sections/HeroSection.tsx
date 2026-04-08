@@ -107,7 +107,7 @@ export default function HeroSection({ heroImages, pollImages, initialCelebrities
             marginLeft: '0',
             marginRight: '0',
             padding: '0',
-            paddingTop: '0',
+            paddingTop: '72px',
             marginTop: '0',
             top: '0',
             overflow: 'hidden',
