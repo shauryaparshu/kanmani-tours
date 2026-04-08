@@ -40,7 +40,7 @@ export default async function RootLayout({
   });
 
   return (
-    <html lang={locale}>
+    <html lang={locale} style={{ scrollbarWidth: 'thin', scrollbarColor: '#C9933A #1C1917' }}>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />

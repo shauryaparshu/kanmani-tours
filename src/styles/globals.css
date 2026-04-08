@@ -23,7 +23,12 @@ body {
   line-height: 1.5;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-weight: 700;
   line-height: 1.2;
   margin-bottom: var(--spacing-md);
@@ -32,4 +37,34 @@ h1, h2, h3, h4, h5, h6 {
 a {
   color: inherit;
   text-decoration: none;
+}
+
+/* Firefox */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #C9933A #1C1917;
+}
+
+*::-webkit-scrollbar {
+  width: 8px !important;
+  height: 8px !important;
+}
+
+*::-webkit-scrollbar-track {
+  background: #1C1917 !important;
+  border-radius: 0 !important;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: #C9933A !important;
+  border-radius: 0 !important;
+  min-height: 40px !important;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: #E8D5B0 !important;
+}
+
+*::-webkit-scrollbar-corner {
+  background: #1C1917 !important;
 }
