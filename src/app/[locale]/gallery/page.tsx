@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
-import TopBar from '@/components/TopBar';
-import Navigation from '@/components/Navigation';
-import Footer from '@/components/FooterSection';
-import GalleryListClient from '@/components/GalleryListClient';
+import TopBar from '@/components/layout/TopBar';
+import Navigation from '@/components/layout/Navigation';
+import Footer from '@/components/layout/FooterSection';
+import GalleryListClient from '@/components/ui/GalleryListClient';
 import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
 

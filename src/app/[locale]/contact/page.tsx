@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
-import TopBar from '@/components/TopBar';
-import Navigation from '@/components/Navigation';
-import Footer from '@/components/FooterSection';
+import TopBar from '@/components/layout/TopBar';
+import Navigation from '@/components/layout/Navigation';
+import Footer from '@/components/layout/FooterSection';
 import Link from 'next/link';
-import ContactForm from '@/components/ContactForm';
-import SocialIcons from '@/components/SocialIcons';
+import ContactForm from '@/components/forms/ContactForm';
+import SocialIcons from '@/components/ui/SocialIcons';
 import { getTranslations } from 'next-intl/server';
 
 export const metadata: Metadata = {

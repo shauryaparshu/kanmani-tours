@@ -1,8 +1,8 @@
 import React from 'react';
 import Link from 'next/link';
-import TopBar from '@/components/TopBar';
-import Navigation from '@/components/Navigation';
-import Footer from '@/components/FooterSection';
+import TopBar from '@/components/layout/TopBar';
+import Navigation from '@/components/layout/Navigation';
+import Footer from '@/components/layout/FooterSection';
 import { getTranslations } from 'next-intl/server';
 import './airport-transfer.css';
 

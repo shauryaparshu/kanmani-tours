@@ -1,9 +1,9 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import Image from 'next/image';
-import TopBar from '@/components/TopBar';
-import Navigation from '@/components/Navigation';
-import Footer from '@/components/FooterSection';
+import TopBar from '@/components/layout/TopBar';
+import Navigation from '@/components/layout/Navigation';
+import Footer from '@/components/layout/FooterSection';
 import { getAboutData } from '@/lib/about';
 import { getTranslations } from 'next-intl/server';
 import './about.css';

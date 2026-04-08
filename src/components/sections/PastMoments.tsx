@@ -1,4 +1,4 @@
-import ImageGrid from './ImageGrid';
+import ImageGrid from '@/components/ui/ImageGrid';
 
 interface PastMomentsProps {
     galleryImages: string[];

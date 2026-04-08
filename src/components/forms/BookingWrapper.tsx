@@ -1,7 +1,7 @@
 'use client';
 
 import { BookingProvider } from '@/context/BookingContext';
-import BookingModal from '@/components/BookingModal';
+import BookingModal from '@/components/forms/BookingModal';
 
 interface Tour {
     slug: string;

@@ -1,5 +1,5 @@
 // TopBar — contact info + social icons above the nav
-import SocialIcons from '@/components/SocialIcons';
+import SocialIcons from '@/components/ui/SocialIcons';
 
 export default function TopBar() {
     return (

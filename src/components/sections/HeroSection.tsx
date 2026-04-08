@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import HeroSlideshow from './HeroSlideshow';
+import HeroSlideshow from '@/components/sections/HeroSlideshow';
 import { useTranslations } from 'next-intl';
 
 import { Celebrity } from '@/lib/celebrities';

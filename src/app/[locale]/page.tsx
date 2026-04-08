@@ -1,9 +1,9 @@
-import TopBar from '@/components/TopBar';
-import Navigation from '@/components/Navigation';
-import HeroSection from '@/components/HeroSection';
-import ToursSection from '@/components/ToursSection';
-import Testimonials from '@/components/Testimonials';
-import Footer from '@/components/FooterSection';
+import TopBar from '@/components/layout/TopBar';
+import Navigation from '@/components/layout/Navigation';
+import HeroSection from '@/components/sections/HeroSection';
+import ToursSection from '@/components/sections/ToursSection';
+import Testimonials from '@/components/sections/Testimonials';
+import Footer from '@/components/layout/FooterSection';
 import { getImages, getSlugs, getLatestImage } from '@/lib/server-images';
 import { getAllTours } from '@/lib/tours';
 import { getAllCelebrities } from '@/lib/celebrities';

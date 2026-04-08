@@ -2,9 +2,9 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getAllTours, getTourBySlug } from '@/lib/tours';
 import { getLatestImage } from '@/lib/server-images';
-import TopBar from '@/components/TopBar';
-import Navigation from '@/components/Navigation';
-import Footer from '@/components/FooterSection';
+import TopBar from '@/components/layout/TopBar';
+import Navigation from '@/components/layout/Navigation';
+import Footer from '@/components/layout/FooterSection';
 import TourDetailClient from './TourDetailClient';
 
 interface PageProps {

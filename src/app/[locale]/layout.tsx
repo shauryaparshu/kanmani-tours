@@ -5,7 +5,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
-import BookingWrapper from "@/components/BookingWrapper";
+import BookingWrapper from "@/components/forms/BookingWrapper";
 import { getAllTours } from "@/lib/tours";
 
 const inter = Inter({

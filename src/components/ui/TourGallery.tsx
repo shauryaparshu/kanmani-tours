@@ -19,7 +19,7 @@
 
 import React from 'react';
 import Image from 'next/image';
-import HeroSlideshow from './HeroSlideshow';
+import HeroSlideshow from '@/components/sections/HeroSlideshow';
 import ImageGrid from './ImageGrid';
 
 interface TourGalleryProps {
