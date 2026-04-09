@@ -178,5 +178,34 @@ export const tourType = defineType({
             title: 'Booking Link',
             type: 'url',
         }),
+        defineField({
+            name: 'featured',
+            title: 'Show on Homepage',
+            type: 'boolean',
+            description: 'Turn on to feature this tour in the homepage upcoming section',
+            initialValue: false,
+        }),
+        defineField({
+            name: 'status',
+            title: 'Tour Status',
+            type: 'string',
+            options: {
+                list: [
+                    { title: 'Upcoming', value: 'upcoming' },
+                    { title: 'Ongoing', value: 'ongoing' },
+                    { title: 'Completed', value: 'completed' },
+                    { title: 'Cancelled', value: 'cancelled' },
+                    { title: 'Sold Out', value: 'soldout' },
+                ]
+            },
+            initialValue: 'upcoming',
+        }),
+        defineField({
+            name: 'highlights',
+            title: 'Tour Highlights',
+            type: 'array',
+            of: [{ type: 'string' }],
+            description: '3-5 short selling points shown on the tour card',
+        }),
     ],
 })

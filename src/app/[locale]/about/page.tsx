@@ -1,8 +1,6 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import Image from 'next/image';
-import TopBar from '@/components/layout/TopBar';
-import Navigation from '@/components/layout/Navigation';
 import Footer from '@/components/layout/FooterSection';
 import { getAboutData } from '@/lib/about';
 import { getTranslations } from 'next-intl/server';
@@ -20,8 +18,6 @@ export default async function AboutPage() {
 
   return (
     <main className="about-page">
-      <TopBar />
-      <Navigation />
 
       {/* 1. OUR STORY - CLEAN & MINIMAL */}
       <section className="about-story section-padding">

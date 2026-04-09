@@ -1,6 +1,4 @@
 import type { Metadata } from 'next';
-import TopBar from '@/components/layout/TopBar';
-import Navigation from '@/components/layout/Navigation';
 import Footer from '@/components/layout/FooterSection';
 import Link from 'next/link';
 import ContactForm from '@/components/forms/ContactForm';
@@ -17,8 +15,6 @@ export default async function ContactPage() {
 
     return (
         <>
-            <TopBar />
-            <Navigation />
             <main>
                 {/* Hero */}
                 <section className="contact-hero">

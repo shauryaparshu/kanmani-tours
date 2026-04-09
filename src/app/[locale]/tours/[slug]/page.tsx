@@ -2,8 +2,6 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getAllTours, getTourBySlug } from '@/lib/tours';
 import { getLatestImage } from '@/lib/server-images';
-import TopBar from '@/components/layout/TopBar';
-import Navigation from '@/components/layout/Navigation';
 import Footer from '@/components/layout/FooterSection';
 import TourDetailClient from './TourDetailClient';
 
@@ -48,6 +46,18 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function TourDetailPage({ params }: PageProps) {
     const { locale, slug } = await params;
     const tour = await getTourBySlug(slug, locale);
+    
+    console.log("HERO PANEL DATA CHECK:", JSON.stringify({
+      title: tour?.title,
+      category: tour?.category,
+      startDate: tour?.startDate,
+      endDate: tour?.endDate,
+      dateDisplay: tour?.dateDisplay,
+      isComingSoon: tour?.isComingSoon,
+      shortDescription: tour?.shortDescription,
+      location: tour?.location,
+      seatsLeft: tour?.seatsLeft,
+    }, null, 2))
 
     if (!tour) notFound();
 
@@ -65,8 +75,6 @@ export default async function TourDetailPage({ params }: PageProps) {
 
     return (
         <>
-            <TopBar />
-            <Navigation />
             <main style={{ paddingBottom: '80px' }}>
                 <TourDetailClient tour={tour} otherTours={otherTours} />
             </main>

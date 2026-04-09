@@ -1,6 +1,4 @@
 import type { Metadata } from 'next';
-import TopBar from '@/components/layout/TopBar';
-import Navigation from '@/components/layout/Navigation';
 import Footer from '@/components/layout/FooterSection';
 import GalleryListClient from '@/components/ui/GalleryListClient';
 import Link from 'next/link';
@@ -16,8 +14,6 @@ export default async function GalleryPage() {
 
     return (
         <>
-            <TopBar />
-            <Navigation />
             <main>
                 {/* Hero */}
                 <section className="tours-page-hero">

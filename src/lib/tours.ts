@@ -41,6 +41,8 @@ interface RawTour {
     exclusions: string[];
     faq: TourFaq[];
     bookingLink: string | null;
+    featured?: boolean;
+    status?: string;
 }
 
 export interface Tour extends Omit<RawTour, 'coverImage'> {
@@ -84,7 +86,9 @@ function normaliseTour(t: any, locale: string = 'ja'): Tour {
             answer: (isJa && f.answer_ja) ? f.answer_ja : f.answer,
         })),
         // Resolve cover image
-        coverImage: resolveImageUrl(t.coverImage) || (t.galleryImages?.[0] ? resolveImageUrl(t.galleryImages[0]) : '')
+        coverImage: resolveImageUrl(t.coverImage) || (t.galleryImages?.[0] ? resolveImageUrl(t.galleryImages[0]) : ''),
+        featured: t.featured || false,
+        status: t.status || 'upcoming',
     };
 }
 

@@ -68,3 +68,38 @@ html {
 *::-webkit-scrollbar-corner {
   background: #1C1917 !important;
 }
+
+/* Tour Detail Redesign */
+.main-tour-details {
+  display: grid;
+  grid-template-columns: 65% 30%;
+  gap: 5%;
+}
+
+.tour-sticky-widget {
+  position: sticky;
+  top: 100px;
+  align-self: start;
+}
+
+.tour-mobile-bottom-bar {
+  display: none;
+}
+
+@media (max-width: 992px) {
+  .main-tour-details {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+  .tour-sticky-widget {
+    display: none;
+  }
+  .tour-mobile-bottom-bar {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+  }
+}

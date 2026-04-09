@@ -3,8 +3,6 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getAllTours } from '@/lib/tours';
 import { getAllCategories } from '@/lib/categories';
-import TopBar from '@/components/layout/TopBar';
-import Navigation from '@/components/layout/Navigation';
 import Footer from '@/components/layout/FooterSection';
 import ToursListClient from '@/components/ToursListClient';
 import { getTranslations } from 'next-intl/server';
@@ -29,8 +27,6 @@ export default async function ToursPage({ params }: { params: Promise<{ locale: 
 
     return (
         <>
-            <TopBar />
-            <Navigation />
             <main>
                 {/* Hero */}
                 <section className="tours-page-hero">

@@ -7,6 +7,7 @@ import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import BookingWrapper from "@/components/forms/BookingWrapper";
 import { getAllTours } from "@/lib/tours";
+import Navigation from '@/components/layout/Navigation';
 
 const inter = Inter({
   variable: "--font-inter",
@@ -44,11 +45,12 @@ export default async function RootLayout({
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
       </head>
       <body className={`${inter.variable}`}>
         <NextIntlClientProvider messages={messages}>
           <BookingWrapper upcomingTours={upcomingTours}>
+            <Navigation />
             {children}
           </BookingWrapper>
         </NextIntlClientProvider>

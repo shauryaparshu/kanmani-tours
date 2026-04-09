@@ -3,8 +3,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
-import TopBar from '@/components/layout/TopBar';
-import Navigation from '@/components/layout/Navigation';
 import Footer from '@/components/layout/FooterSection';
 
 interface GalleryMedia {
@@ -87,8 +85,6 @@ export default function GalleryDetailPage() {
 
     return (
         <div className="gallery-detail-page">
-            <TopBar />
-            <Navigation />
 
             <main>
                 <section className="gallery-header section-padding-small">

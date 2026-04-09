@@ -2467,7 +2467,7 @@ button {
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: var(--primary);
+  background: #C9933A;
   color: white;
   display: flex;
   align-items: center;
@@ -2629,7 +2629,7 @@ button {
 }
 
 .faq-item.open {
-  border-color: var(--primary);
+  border-color: #C9933A;
 }
 
 .faq-question {
@@ -2650,7 +2650,7 @@ button {
 }
 
 .faq-item.open .faq-question {
-  color: var(--primary);
+  color: #C9933A;
 }
 
 .faq-answer {

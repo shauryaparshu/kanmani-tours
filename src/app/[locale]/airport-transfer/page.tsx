@@ -1,7 +1,5 @@
 import React from 'react';
 import Link from 'next/link';
-import TopBar from '@/components/layout/TopBar';
-import Navigation from '@/components/layout/Navigation';
 import Footer from '@/components/layout/FooterSection';
 import { getTranslations } from 'next-intl/server';
 import './airport-transfer.css';
@@ -11,8 +9,6 @@ export default async function AirportTransferPage() {
 
     return (
         <>
-            <TopBar />
-            <Navigation />
             <main className="atp-wrapper">
                 {/* HERO SECTION */}
                 <section className="atp-hero">

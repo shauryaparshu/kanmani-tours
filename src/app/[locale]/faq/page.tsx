@@ -1,8 +1,6 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import TopBar from '@/components/layout/TopBar';
-import Navigation from '@/components/layout/Navigation';
 import Footer from '@/components/layout/FooterSection';
 import FaqAccordion from '@/components/sections/FaqAccordion';
 import { getFAQs } from '@/lib/faq';
@@ -20,8 +18,6 @@ export default async function FAQPage() {
 
     return (
         <main className="faq-page">
-            <TopBar />
-            <Navigation />
 
             <section className="faq-hero section-padding-small">
                 <div className="container text-center">
