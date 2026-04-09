@@ -9,7 +9,6 @@ export const TOURS_QUERY = defineQuery(`*[_type == "tour"] | order(startDate asc
   longDescription,
   startDate,
   endDate,
-  durationDays,
   location,
   priceJPY,
   priceRangeJPY,
@@ -34,7 +33,6 @@ export const TOUR_BY_SLUG_QUERY = defineQuery(`*[_type == "tour" && slug.current
   longDescription,
   startDate,
   endDate,
-  durationDays,
   location,
   priceJPY,
   priceRangeJPY,
@@ -50,11 +48,14 @@ export const TOUR_BY_SLUG_QUERY = defineQuery(`*[_type == "tour" && slug.current
   bookingLink
 }`)
 
-export const FAQS_QUERY = defineQuery(`*[_type == "faq"] | order(orderRank) {
-  _id,
-  question,
-  answer
-}`)
+export const FAQS_QUERY = defineQuery(`
+  *[_type == "faq"] | order(category asc, orderRank asc) {
+    _id,
+    category,
+    question,
+    answer
+  }
+`)
 
 export const CELEBRITIES_QUERY = defineQuery(`*[_type == "celebrity"] | order(orderRank asc) {
   _id,

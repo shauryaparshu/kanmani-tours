@@ -15,6 +15,23 @@ export interface TourFaq {
     answer: string;
 }
 
+export interface FaqItem {
+    _id: string;
+    category: string;
+    question: string;
+    answer: string;
+}
+
+export const FAQ_CATEGORIES = [
+    { value: 'booking', label: 'Booking & Payment', star: false },
+    { value: 'visa', label: 'Visa & Travel Documents', star: false },
+    { value: 'experience', label: 'The Tour Experience', star: false },
+    { value: 'health', label: 'Safety & Health', star: false },
+    { value: 'money', label: 'Money & Practical', star: false },
+    { value: 'weather', label: 'Weather & Timing', star: false },
+    { value: 'celebrity', label: 'Celebrity & Special Tours',   star: true },
+] as const;
+
 interface RawTour {
     _id?: string;
     id: number | string;
@@ -25,9 +42,9 @@ interface RawTour {
     longDescription: string;
     startDate: string;
     endDate: string;
+    durationDays: number;
     isComingSoon?: boolean;
     dateDisplay?: string;
-    durationDays: number;
     location: string;
     priceJPY: number;
     priceRangeJPY?: { min: number; max: number };
@@ -42,7 +59,6 @@ interface RawTour {
     faq: TourFaq[];
     bookingLink: string | null;
     featured?: boolean;
-    status?: string;
 }
 
 export interface Tour extends Omit<RawTour, 'coverImage'> {
@@ -70,6 +86,14 @@ function normaliseTour(t: any, locale: string = 'ja'): Tour {
         location: (isJa && t.location_ja) ? t.location_ja : t.location,
         isComingSoon: t.isComingSoon || false,
         dateDisplay: (isJa && t.dateDisplay_ja) ? t.dateDisplay_ja : (t.dateDisplay || ''),
+        durationDays: (() => {
+            if (!t.startDate || !t.endDate) return 0;
+            const start = new Date(t.startDate);
+            const end = new Date(t.endDate);
+            const diffMs = end.getTime() - start.getTime();
+            const diffDays = Math.round(diffMs / (1000 * 60 * 60 * 24));
+            return diffDays + 1;
+        })(),
         // Ensure all array fields are never null/undefined — Sanity can return null for unset arrays
         galleryImages: t.galleryImages ?? [],
         features: (isJa && t.features_ja) ? t.features_ja : (t.features ?? []),
@@ -88,7 +112,6 @@ function normaliseTour(t: any, locale: string = 'ja'): Tour {
         // Resolve cover image
         coverImage: resolveImageUrl(t.coverImage) || (t.galleryImages?.[0] ? resolveImageUrl(t.galleryImages[0]) : ''),
         featured: t.featured || false,
-        status: t.status || 'upcoming',
     };
 }
 

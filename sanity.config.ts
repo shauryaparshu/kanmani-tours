@@ -13,8 +13,8 @@ const singletonActions = new Set(['publish', 'discardChanges', 'restore'])
 
 export default defineConfig({
     basePath: '/studio',
-    projectId,
-    dataset,
+    projectId: '31klefy7',
+    dataset: 'production',
     schema: {
         types: schema.types,
         // Filter out singleton types from the global “New document” menu

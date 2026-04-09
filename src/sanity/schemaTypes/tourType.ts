@@ -44,13 +44,14 @@ export const tourType = defineType({
         }),
         defineField({
             name: 'shortDescription',
-            title: 'Short Description',
+            title: 'Hero Description (shown on tour panel)',
             type: 'text',
             rows: 3,
+            description: 'Write 1-2 sentences max. First sentence appears on the tour hero panel. Keep it under 150 characters for best display.',
         }),
         defineField({
             name: 'longDescription',
-            title: 'Long Description',
+            title: 'About This Tour',
             type: 'text',
             rows: 10,
         }),
@@ -76,11 +77,7 @@ export const tourType = defineType({
             type: 'string',
             description: 'E.g., "August – October". Overrides start/end date display if Is Coming Soon is true.',
         }),
-        defineField({
-            name: 'durationDays',
-            title: 'Duration (Days)',
-            type: 'number',
-        }),
+
         defineField({
             name: 'location',
             title: 'Location',
@@ -107,11 +104,12 @@ export const tourType = defineType({
         }),
         defineField({
             name: 'coverImage',
-            title: 'Cover Image',
+            title: 'Hero Photo (use wide landscape photos only)',
             type: 'image',
             options: {
                 hotspot: true,
             },
+            description: 'Use wide landscape photos minimum 1400px wide. Avoid close-up or portrait photos — they do not look good as full-screen hero backgrounds.',
         }),
         defineField({
             name: 'galleryImages',
@@ -121,9 +119,10 @@ export const tourType = defineType({
         }),
         defineField({
             name: 'features',
-            title: 'Features',
+            title: 'Tour Highlights',
             type: 'array',
             of: [{ type: 'string' }],
+            description: 'Up to 6 highlights shown as numbered cards (01, 02, 03...) on the tour detail page',
         }),
         defineField({
             name: 'itinerary',
@@ -143,21 +142,23 @@ export const tourType = defineType({
         }),
         defineField({
             name: 'whatToExpect',
-            title: 'What To Expect',
+            title: "What You'll Experience",
             type: 'array',
             of: [{ type: 'string' }],
         }),
         defineField({
             name: 'inclusions',
-            title: 'Inclusions',
+            title: 'Included',
             type: 'array',
             of: [{ type: 'string' }],
+            description: 'What is covered in the tour price',
         }),
         defineField({
             name: 'exclusions',
-            title: 'Exclusions',
+            title: 'Not Included',
             type: 'array',
             of: [{ type: 'string' }],
+            description: 'What guests need to arrange or pay for separately',
         }),
         defineField({
             name: 'faq',
@@ -175,37 +176,17 @@ export const tourType = defineType({
         }),
         defineField({
             name: 'bookingLink',
-            title: 'Booking Link',
+            title: 'External Booking URL (optional)',
             type: 'url',
+            description: 'If provided, the Book Now button links here. If empty, the booking modal opens instead.',
         }),
         defineField({
             name: 'featured',
-            title: 'Show on Homepage',
+            title: 'Feature on Homepage',
             type: 'boolean',
             description: 'Turn on to feature this tour in the homepage upcoming section',
             initialValue: false,
         }),
-        defineField({
-            name: 'status',
-            title: 'Tour Status',
-            type: 'string',
-            options: {
-                list: [
-                    { title: 'Upcoming', value: 'upcoming' },
-                    { title: 'Ongoing', value: 'ongoing' },
-                    { title: 'Completed', value: 'completed' },
-                    { title: 'Cancelled', value: 'cancelled' },
-                    { title: 'Sold Out', value: 'soldout' },
-                ]
-            },
-            initialValue: 'upcoming',
-        }),
-        defineField({
-            name: 'highlights',
-            title: 'Tour Highlights',
-            type: 'array',
-            of: [{ type: 'string' }],
-            description: '3-5 short selling points shown on the tour card',
-        }),
+
     ],
 })
