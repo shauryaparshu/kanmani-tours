@@ -27,257 +27,216 @@ const catBg = (cat: string) => getCategoryColor(cat);
 export default function ToursSection({ tours, cardImages = {} }: ToursSectionProps) {
     const t = useTranslations('Home');
 
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const upcomingTours = tours
-        .filter(t => {
-            const start = new Date(t.startDate);
-            start.setHours(0, 0, 0, 0);
-            return start > today;
-        })
-        .slice(0, 3);
+    if (!tours || tours.length === 0) return null;
 
     return (
-        <section id="tours" className="animate" style={{ 
-            animationDelay: '0.4s', 
-            backgroundColor: '#FAFAF7', 
-            padding: '96px 40px 64px 40px' 
-        }}>
-            <div className="section-header-flex">
-                <div className="section-title-wrap">
-                    <h2 style={{
-                        fontFamily: "'Cormorant Garamond', Georgia, serif",
-                        fontSize: 'clamp(36px, 4vw, 52px)',
-                        fontWeight: '400',
-                        color: '#1C1917',
-                        letterSpacing: '0.06em',
-                        marginBottom: '8px'
-                    }}>{t('upcomingTours')}</h2>
-                    <div style={{
-                        width: '48px',
-                        height: '1px',
-                        backgroundColor: '#C9933A',
-                        margin: '16px 0 12px 0'
-                    }}/>
-                    <p style={{
-                        fontFamily: "'Cormorant Garamond', Georgia, serif",
-                        fontSize: '17px',
-                        fontWeight: '400',
-                        color: '#4A4540',
-                        letterSpacing: '0.04em',
-                        fontStyle: 'italic'
-                    }}>{t('upcomingToursSubtitle')}</p>
-                </div>
-                <Link 
-                    href="/tours" 
+        <section id="tours" style={{ backgroundColor: '#FAFAF7', overflow: 'hidden' }}>
+            <style dangerouslySetInnerHTML={{ __html: `
+                .upcoming-tours-grid {
+                    display: grid;
+                    grid-template-columns: repeat(3, 1fr);
+                    gap: 2rem;
+                    margin-top: 3rem;
+                }
+                .tour-card-link {
+                    text-decoration: none;
+                    color: inherit;
+                    display: block;
+                }
+                .tour-card-image-wrap {
+                    aspect-ratio: 4 / 3;
+                    overflow: hidden;
+                    position: relative;
+                    background-color: #1a1918;
+                }
+                .tour-card-img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    display: block;
+                    transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+                }
+                .tour-card-link:hover .tour-card-img {
+                    transform: scale(1.03);
+                }
+                .tour-card-cta {
+                    display: inline-block;
+                    margin-top: auto;
+                    color: #d49a36;
+                    font-family: 'Jost', Arial, sans-serif;
+                    font-size: 13px;
+                    font-weight: 600;
+                    letter-spacing: 0.15em;
+                    text-transform: uppercase;
+                    transition: transform 0.3s ease;
+                }
+                .tour-card-link:hover .tour-card-cta {
+                    transform: translateX(4px);
+                }
+                @media (max-width: 992px) {
+                    .upcoming-tours-grid {
+                        grid-template-columns: repeat(2, 1fr);
+                    }
+                }
+                @media (max-width: 640px) {
+                    .upcoming-tours-grid {
+                        grid-template-columns: 1fr;
+                    }
+                }
+            `}} />
+            
+            <div style={{
+                maxWidth: '1200px',
+                margin: '0 auto',
+                padding: '5rem 2rem'
+            }}>
+                {/* Section Header */}
+                <div style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'flex-end',
+                    marginBottom: '3rem',
+                    borderBottom: '1px solid #E8E4DC',
+                    paddingBottom: '2rem'
+                }}>
+                    <div style={{ textAlign: 'left' }}>
+                        <h2 style={{
+                            fontFamily: "'Cormorant Garamond', Georgia, serif",
+                            fontSize: 'clamp(32px, 4vw, 44px)',
+                            fontWeight: '500',
+                            color: '#1a1918',
+                            letterSpacing: '0.04em',
+                            margin: 0
+                        }}>
+                            Upcoming Tours
+                        </h2>
+                        <p style={{
+                            fontFamily: "'Cormorant Garamond', Georgia, serif",
+                            fontSize: '17px',
+                            fontWeight: '400',
+                            color: '#4a4a4a',
+                            letterSpacing: '0.04em',
+                            fontStyle: 'italic',
+                            marginTop: '8px',
+                            margin: 0
+                        }}>
+                            Specially curated journeys through the heart of India
+                        </p>
+                    </div>
+                    
+                    <Link href="/tours" style={{
+                        fontFamily: "'Jost', Arial, sans-serif",
+                        fontSize: '12px',
+                        fontWeight: '600',
+                        letterSpacing: '0.22em',
+                        color: '#d49a36',
+                        backgroundColor: 'transparent',
+                        border: '1px solid #d49a36',
+                        padding: '14px 32px',
+                        textDecoration: 'none',
+                        textTransform: 'uppercase',
+                        transition: 'all 0.3s ease'
+                    }}
                     onMouseEnter={(e) => {
-                        e.currentTarget.style.backgroundColor = '#C9933A';
-                        e.currentTarget.style.color = '#1C1917';
+                        e.currentTarget.style.backgroundColor = '#d49a36';
+                        e.currentTarget.style.color = '#FFFFFF';
                     }}
                     onMouseLeave={(e) => {
                         e.currentTarget.style.backgroundColor = 'transparent';
-                        e.currentTarget.style.color = '#C9933A';
-                    }}
-                    style={{
-                        fontFamily: "'Cormorant Garamond', Georgia, serif",
-                        fontSize: '13px',
-                        fontWeight: '500',
-                        letterSpacing: '0.28em',
-                        color: '#C9933A',
-                        backgroundColor: 'transparent',
-                        border: '1.5px solid #C9933A',
-                        padding: '14px 36px',
-                        textDecoration: 'none',
-                        textTransform: 'uppercase',
-                        display: 'inline-block',
-                        cursor: 'pointer',
-                        transition: 'all 0.3s ease'
-                    }}
-                >
-                    {t('viewAllTours')}
-                </Link>
-            </div>
+                        e.currentTarget.style.color = '#d49a36';
+                    }}>
+                        VIEW ALL TOURS
+                    </Link>
+                </div>
 
-            <div style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(3, 1fr)',
-                gap: '28px',
-                marginTop: '48px'
-            }}>
-                {upcomingTours.map((tour) => {
-                    const imagePath = cardImages[tour.id] ?? tour.coverImage;
-                    const showComingSoon = tour.isComingSoon;
-
-                    return (
-                        <div 
-                            key={tour._id} 
-                            style={{
-                                backgroundColor: '#FFFFFF',
-                                border: '1px solid #E8E4DC',
-                                borderRadius: '2px',
-                                overflow: 'hidden',
-                                transition: 'all 0.35s ease',
-                                cursor: 'pointer'
-                            }}
-                            onMouseEnter={(e) => {
-                                e.currentTarget.style.borderColor = '#C9933A';
-                                e.currentTarget.style.transform = 'translateY(-4px)';
-                                e.currentTarget.style.boxShadow = '0 12px 40px rgba(201,147,58,0.12)';
-                            }}
-                            onMouseLeave={(e) => {
-                                e.currentTarget.style.borderColor = '#E8E4DC';
-                                e.currentTarget.style.transform = 'translateY(0)';
-                                e.currentTarget.style.boxShadow = 'none';
-                            }}
-                        >
-                            <Link href={`/tours/${tour.slug}`} className="tour-img-link">
-                                <div className="tour-img-wrap" style={{ 
-                                    position: 'relative', 
-                                    width: '100%', 
-                                    minHeight: '220px', 
-                                    backgroundColor: '#E8E4DC', 
-                                    overflow: 'hidden' 
-                                }}>
-                                    <img
-                                        src={imagePath || `https://placehold.co/600x400?text=${encodeURIComponent(tour.title)}`}
-                                        alt={tour.title}
-                                        className="tour-img"
-                                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                                        onError={(e) => {
-                                            const target = e.currentTarget as HTMLImageElement;
-                                            target.src = `https://placehold.co/600x400?text=${encodeURIComponent(tour.title)}`;
-                                        }}
-                                    />
-                                    <div
-                                        style={{
+                {/* Tour Grid */}
+                <div className="upcoming-tours-grid">
+                    {tours.map((tour) => {
+                        const imagePath = (tour as any).hero_image || (tour as any).featured_image || (tour as any).thumbnail_image || (tour as any).banner_image || tour.coverImage;
+                        return (
+                            <Link key={tour._id || tour.id} href={`/tours/${tour.slug}`} className="tour-card-link">
+                                <article style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+                                    <div className="tour-card-image-wrap">
+                                        {imagePath ? (
+                                            <img 
+                                                src={imagePath}
+                                                alt={tour.title}
+                                                className="tour-card-img"
+                                            />
+                                        ) : (
+                                            <div style={{
+                                                width: '100%',
+                                                height: '100%',
+                                                display: 'flex',
+                                                justifyContent: 'center',
+                                                alignItems: 'center',
+                                                backgroundColor: '#1a1918',
+                                                backgroundImage: 'radial-gradient(circle at center, rgba(212,154,54,0.15) 0%, transparent 70%)'
+                                            }}>
+                                                <span style={{
+                                                    fontFamily: "'Cormorant Garamond', Georgia, serif",
+                                                    fontSize: '16px',
+                                                    letterSpacing: '0.2em',
+                                                    color: 'rgba(212,154,54,0.4)',
+                                                    textTransform: 'uppercase'
+                                                }}>
+                                                    Srikan Tours
+                                                </span>
+                                            </div>
+                                        )}
+                                        <span style={{
                                             position: 'absolute',
-                                            top: '1rem',
-                                            left: '1rem',
-                                            fontFamily: "'Cormorant Garamond', Georgia, serif",
+                                            top: '0',
+                                            left: '0',
+                                            backgroundColor: '#1a1918',
+                                            color: '#FFFFFF',
+                                            fontFamily: "'Jost', Arial, sans-serif",
                                             fontSize: '10px',
-                                            fontWeight: '500',
-                                            letterSpacing: '0.22em',
-                                            color: '#C9933A',
-                                            backgroundColor: 'rgba(201, 147, 58, 0.1)',
-                                            border: '1px solid rgba(201, 147, 58, 0.3)',
-                                            padding: '4px 12px',
+                                            fontWeight: '600',
+                                            letterSpacing: '0.2em',
+                                            padding: '8px 16px',
                                             textTransform: 'uppercase',
-                                            borderRadius: '0px',
-                                            zIndex: 2
-                                        }}
-                                    >
-                                        {getCategoryLabel(tour.category)}
-                                    </div>
-                                    {showComingSoon && (
-                                        <div style={{ 
-                                            position: 'absolute',
-                                            top: '1rem',
-                                            right: '1rem', 
-                                            fontFamily: "'Cormorant Garamond', Georgia, serif",
-                                            fontSize: '10px',
-                                            fontWeight: '500',
-                                            letterSpacing: '0.22em',
-                                            color: '#1C1917',
-                                            backgroundColor: 'rgba(234, 179, 8, 0.2)',
-                                            border: '1px solid rgba(234, 179, 8, 0.5)',
-                                            padding: '4px 12px',
-                                            textTransform: 'uppercase',
-                                            borderRadius: '0px',
                                             zIndex: 2
                                         }}>
-                                            {t('comingSoon')}
-                                        </div>
-                                    )}
-                                </div>
-                            </Link>
-                            <div className="tour-content" style={{ padding: '24px' }}>
-                                <div className="tour-dates-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-                                    <div style={{
-                                        fontFamily: "'Cormorant Garamond', Georgia, serif",
-                                        fontSize: '13px',
-                                        color: '#4A4540',
-                                        letterSpacing: '0.06em'
-                                    }}>
-                                        {showComingSoon && tour.dateDisplay ? tour.dateDisplay : formatDateRange(tour.startDate, tour.endDate)}
+                                            {getCategoryLabel(tour.category)}
+                                        </span>
                                     </div>
-                                    {!showComingSoon && (
+                                    
+                                    <div style={{ padding: '1.5rem 0', textAlign: 'left', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
                                         <div style={{
-                                            fontFamily: "'Cormorant Garamond', Georgia, serif",
-                                            fontSize: '11px',
+                                            fontFamily: "'Jost', Arial, sans-serif",
+                                            fontSize: '12px',
                                             fontWeight: '500',
-                                            letterSpacing: '0.15em',
-                                            color: '#C9933A',
-                                            backgroundColor: 'transparent',
-                                            border: 'none',
-                                            textTransform: 'uppercase'
+                                            color: '#4a4a4a',
+                                            letterSpacing: '0.08em',
+                                            marginBottom: '10px'
                                         }}>
-                                            {getRemainingDays(tour.startDate)}
+                                            {formatDateRange(tour.startDate, tour.endDate)} | {tour.location?.toUpperCase()}
                                         </div>
-                                    )}
-                                </div>
-                                <div style={{
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: '6px',
-                                    marginBottom: '12px',
-                                    fontFamily: "'Cormorant Garamond', Georgia, serif",
-                                    fontSize: '14px',
-                                    color: '#4A4540'
-                                }}>
-                                    <svg viewBox="0 0 24 24" width="14" height="14" fill="#4A4540">
-                                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
-                                    </svg>
-                                    {tour.location}
-                                </div>
-                                <h3 style={{ marginBottom: '16px' }}>
-                                    <Link href={`/tours/${tour.slug}`} style={{
-                                        fontFamily: "'Cormorant Garamond', Georgia, serif",
-                                        fontSize: '24px',
-                                        fontWeight: '500',
-                                        color: '#1C1917',
-                                        letterSpacing: '0.04em',
-                                        lineHeight: '1.3',
-                                        textDecoration: 'none'
-                                    }}>
-                                        {tour.title}
-                                    </Link>
-                                </h3>
-                                <div style={{
-                                    fontFamily: "'Cormorant Garamond', Georgia, serif",
-                                    fontSize: '12px',
-                                    fontWeight: '500',
-                                    letterSpacing: '0.15em',
-                                    color: '#1C1917',
-                                    backgroundColor: 'rgba(201, 147, 58, 0.12)',
-                                    border: '1px solid rgba(201, 147, 58, 0.25)',
-                                    padding: '8px 16px',
-                                    textTransform: 'uppercase',
-                                    borderRadius: '0px',
-                                    display: 'inline-block',
-                                    marginBottom: '20px'
-                                }}>
-                                    {t('seatsLeft', { count: tour.seatsLeft })}
-                                </div>
-                                <div>
-                                    <Link href={`/tours/${tour.slug}`} style={{
-                                        fontFamily: "'Cormorant Garamond', Georgia, serif",
-                                        fontSize: '13px',
-                                        fontWeight: '500',
-                                        letterSpacing: '0.2em',
-                                        color: '#C9933A',
-                                        textDecoration: 'none',
-                                        textTransform: 'uppercase',
-                                        borderBottom: '1px solid rgba(201,147,58,0.4)',
-                                        paddingBottom: '2px',
-                                        transition: 'border-color 0.3s ease'
-                                    }}>
-                                        {t('learnMore')} →
-                                    </Link>
-                                </div>
-                            </div>
-                        </div>
-                    );
-                })}
+                                        
+                                        <h3 style={{
+                                            fontFamily: "'Jost', Arial, sans-serif",
+                                            fontSize: '1.4rem',
+                                            fontWeight: '600',
+                                            color: '#1a1918',
+                                            letterSpacing: '0.04em',
+                                            lineHeight: '1.3',
+                                            marginBottom: '1rem',
+                                            marginTop: 0,
+                                            fontVariantNumeric: 'lining-nums'
+                                        }}>
+                                            {tour.title}
+                                        </h3>
+                                        
+                                        <div className="tour-card-cta">
+                                            LEARN MORE &rarr;
+                                        </div>
+                                    </div>
+                                </article>
+                            </Link>
+                        );
+                    })}
+                </div>
             </div>
         </section>
     );

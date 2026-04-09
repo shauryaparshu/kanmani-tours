@@ -209,25 +209,43 @@ export default function HeroSection({ heroImages, pollImages, initialCelebrities
                     }}>
                         Discover the Soul of India
                     </h1>
-                    <a href="/tours" style={{
-                        fontFamily: "'Cormorant Garamond', Georgia, serif",
-                        fontSize: '13px',
-                        fontWeight: '600',
-                        letterSpacing: '0.3em',
-                        color: '#1C1917',
-                        backgroundColor: '#C9933A',
-                        padding: '18px 52px',
-                        textDecoration: 'none',
-                        textTransform: 'uppercase',
-                        display: 'inline-block',
-                        cursor: 'pointer',
-                        marginTop: '8px',
-                        border: 'none',
-                        WebkitTextFillColor: '#1C1917',
-                        textShadow: 'none',
-                        opacity: '1'
-                    }}>
-                        Explore Tours
+                    <style dangerouslySetInnerHTML={{ __html: `
+                        .hero-cta-btn {
+                            font-family: 'Jost', Arial, sans-serif;
+                            font-size: 15px;
+                            font-weight: 600;
+                            letter-spacing: 2px;
+                            color: #1a1918 !important;
+                            background-color: #d49a36;
+                            padding: 1.2rem 3.5rem;
+                            text-decoration: none;
+                            text-transform: uppercase;
+                            display: inline-flex;
+                            align-items: center;
+                            justify-content: center;
+                            cursor: pointer;
+                            margin-top: 3rem;
+                            border: none;
+                            border-radius: 4px;
+                            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+                            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                        }
+                        .hero-cta-btn:hover {
+                            transform: translateY(-4px);
+                            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+                            filter: brightness(1.1);
+                        }
+                        .hero-cta-btn .cta-arrow {
+                            margin-left: 0.8rem;
+                            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+                        }
+                        .hero-cta-btn:hover .cta-arrow {
+                            transform: translateX(4px);
+                        }
+                    `}} />
+                    <a href="/tours" className="hero-cta-btn">
+                        EXPLORE TOURS
+                        <span className="cta-arrow">→</span>
                     </a>
                 </div>
             </div>

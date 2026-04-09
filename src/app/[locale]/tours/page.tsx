@@ -29,15 +29,53 @@ export default async function ToursPage({ params }: { params: Promise<{ locale: 
         <>
             <main>
                 {/* Hero */}
-                <section className="tours-page-hero">
-                    <div className="container">
-                        <nav className="breadcrumbs" aria-label="Breadcrumb">
-                            <Link href="/">{t('breadcrumbHome')}</Link>
+                <section className="tours-page-hero" style={{
+                    backgroundColor: '#1a1918',
+                    width: '100%'
+                }}>
+                    <div style={{
+                        maxWidth: '1200px',
+                        margin: '0 auto',
+                        padding: '3rem 2rem 1rem'
+                    }}>
+                        <nav className="breadcrumbs" style={{ 
+                            fontFamily: "'Jost', Arial, sans-serif",
+                            fontSize: '12px',
+                            letterSpacing: '0.1em',
+                            marginBottom: '16px',
+                            display: 'flex',
+                            gap: '8px',
+                            color: '#9A948F',
+                            textTransform: 'uppercase'
+                        }} aria-label="Breadcrumb">
+                            <Link href="/" style={{ color: 'inherit', textDecoration: 'none' }}>{t('breadcrumbHome')}</Link>
                             <span>/</span>
-                            <span>{t('breadcrumbTours')}</span>
+                            <span style={{ color: '#d49a36' }}>{t('breadcrumbTours')}</span>
                         </nav>
-                        <h1 className="tours-page-title">{t('heroTitle')}</h1>
-                        <p className="tours-page-subtitle">
+                        <h1 className="tours-page-title" style={{
+                            fontFamily: "'Cormorant Garamond', Georgia, serif",
+                            fontSize: 'clamp(36px, 5vw, 64px)',
+                            fontWeight: '500',
+                            color: '#F5F1EB',
+                            letterSpacing: '0.06em',
+                            marginBottom: '8px',
+                            lineHeight: '1.1',
+                            textAlign: 'left'
+                        }}>{t('heroTitle')}</h1>
+                        
+                        <div style={{ width: '40px', height: '1px', backgroundColor: '#d49a36', margin: '8px 0' }} />
+                        
+                        <p className="tours-page-subtitle" style={{
+                            fontFamily: "'Jost', Arial, sans-serif",
+                            fontSize: '16px',
+                            fontWeight: '300',
+                            color: '#9A948F',
+                            letterSpacing: '0.04em',
+                            lineHeight: '1.7',
+                            maxWidth: '560px',
+                            textAlign: 'left',
+                            margin: 0
+                        }}>
                             {t('heroSubtitle')}
                         </p>
                     </div>

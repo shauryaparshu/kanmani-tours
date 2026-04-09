@@ -13,25 +13,32 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
   const customerImages = getImages('/assets/img/people/customers');
 
   // Fetch tours and celebrities from Sanity
-  const [tours, celebrities] = await Promise.all([
+  const [allTours, celebrities] = await Promise.all([
     getAllTours(locale),
     getAllCelebrities(locale)
   ]);
 
-  // We'll pass the full tour objects to the section, 
-  // but let's see what cardImages mapping it expects.
-  // It seems it used tour.id as key.
-  const tourCardImages: Record<number | string, string | null> = {};
-  tours.forEach(tour => {
-    tourCardImages[tour.id] = tour.coverImage;
-  });
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const upcomingTours = allTours
+    .filter(tour => {
+      if (!tour.startDate) return false;
+      const start = new Date(tour.startDate);
+      start.setHours(0, 0, 0, 0);
+      return start >= today;
+    })
+    .sort((a, b) => 
+      new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
+    )
+    .slice(0, 3);
 
   return (
     <main style={{ maxWidth: '100%', width: '100%', padding: 0 }}>
       <HeroSection
         heroImages={heroImages}
       />
-      <ToursSection tours={tours} cardImages={tourCardImages} />
+      <ToursSection tours={upcomingTours} />
       <Testimonials customerImages={customerImages} />
       <Footer />
     </main>

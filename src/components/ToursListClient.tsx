@@ -61,143 +61,151 @@ function defaultSort(tours: Tour[]): Tour[] {
 function TourCard({ tour, tLabels, categories }: { tour: Tour; tLabels: any, categories: any[] }) {
     const upcoming = isTourUpcoming(tour);
     const showComingSoon = upcoming && tour.isComingSoon;
+    const [hovered, setHovered] = useState(false);
+
     return (
+        <Link href={`/tours/${tour.slug}`} style={{ textDecoration: 'none', display: 'block' }}>
         <article 
             style={{
-                backgroundColor: '#FFFFFF',
-                border: '1px solid #E8E4DC',
-                borderRadius: '2px',
-                overflow: 'hidden',
-                transition: 'all 0.35s ease',
+                backgroundColor: 'transparent',
+                borderRadius: '0',
                 cursor: 'pointer',
                 display: 'flex',
-                flexDirection: 'column'
+                flexDirection: 'column',
+                height: '100%'
             }}
-            onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = '#C9933A';
-                e.currentTarget.style.transform = 'translateY(-4px)';
-                e.currentTarget.style.boxShadow = '0 12px 40px rgba(201,147,58,0.12)';
-            }}
-            onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = '#E8E4DC';
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = 'none';
-            }}
+            onMouseEnter={() => setHovered(true)}
+            onMouseLeave={() => setHovered(false)}
         >
-            <Link href={`/tours/${tour.slug}`} className="tlc-card-img-link" tabIndex={-1} aria-hidden>
-                <div className="tlc-img-wrap" style={{ position: 'relative' }}>
-                    <img
-                        src={tour.coverImage || `https://placehold.co/640x400/1c2331/ffffff?text=${encodeURIComponent(tour.title)}`}
-                        alt={tour.title}
-                        className="tlc-img"
-                        onError={e => {
-                            (e.currentTarget as HTMLImageElement).src =
-                                `https://placehold.co/640x400/1c2331/ffffff?text=${encodeURIComponent(tour.title)}`;
-                        }}
-                    />
-                    <span
-                        style={{ 
-                            position: 'absolute',
-                            top: '10px',
-                            left: '10px',
-                            fontFamily: "'Cormorant Garamond', Georgia, serif",
-                            fontSize: '10px',
-                            fontWeight: '500',
-                            letterSpacing: '0.22em',
-                            color: '#C9933A',
-                            backgroundColor: 'rgba(201, 147, 58, 0.1)',
-                            border: '1px solid rgba(201, 147, 58, 0.3)',
-                            padding: '4px 12px',
-                            textTransform: 'uppercase',
-                            borderRadius: '0px',
-                            zIndex: 2
-                        }}
-                    >
-                        {getCategoryLabel(tour.category, categories)}
-                    </span>
-                    {!upcoming && (
-                        <span style={{ 
-                            position: 'absolute',
-                            bottom: '10px',
-                            left: '10px',
-                            fontFamily: "'Cormorant Garamond', Georgia, serif",
-                            fontSize: '10px',
-                            fontWeight: '500',
-                            letterSpacing: '0.15em',
-                            color: '#6B6560',
-                            backgroundColor: 'rgba(255, 255, 255, 0.9)',
-                            padding: '4px 8px',
-                            textTransform: 'uppercase',
-                            zIndex: 2
+                <div style={{ width: '100%', aspectRatio: '4/3', overflow: 'hidden', position: 'relative', backgroundColor: '#1a1918' }}>
+                    {tour.coverImage ? (
+                        <img
+                            src={tour.coverImage}
+                            alt={tour.title}
+                            style={{
+                                width: '100%', height: '100%', objectFit: 'cover', display: 'block',
+                                transition: 'transform 0.5s ease',
+                                transform: hovered ? 'scale(1.03)' : 'scale(1)'
+                            }}
+                        />
+                    ) : (
+                        <div style={{
+                            width: '100%', height: '100%',
+                            display: 'flex', justifyContent: 'center', alignItems: 'center',
+                            backgroundImage: 'radial-gradient(circle at center, rgba(212,154,54,0.15) 0%, transparent 60%)'
                         }}>
-                            {tLabels('past')}
-                        </span>
+                            <span style={{
+                                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                                fontSize: '18px', letterSpacing: '0.2em', color: 'rgba(212,154,54,0.4)',
+                                textTransform: 'uppercase'
+                            }}>
+                                Srikan Tours
+                            </span>
+                        </div>
                     )}
-                    {showComingSoon && (
-                        <span style={{ 
-                            position: 'absolute',
-                            top: '10px',
-                            right: '10px', 
-                            fontFamily: "'Cormorant Garamond', Georgia, serif",
-                            fontSize: '10px',
-                            fontWeight: '500',
-                            letterSpacing: '0.22em',
-                            color: '#1C1917',
-                            backgroundColor: 'rgba(234, 179, 8, 0.2)',
-                            border: '1px solid rgba(234, 179, 8, 0.5)',
-                            padding: '4px 12px',
-                            textTransform: 'uppercase',
-                            borderRadius: '0px',
-                            zIndex: 2
-                        }}>
-                            {tLabels('comingSoon')}
+                    
+                    {/* Badge Wrapper */}
+                    <div style={{
+                        position: 'absolute',
+                        top: '1rem',
+                        left: '1rem',
+                        display: 'flex',
+                        gap: '0.5rem',
+                        flexWrap: 'wrap',
+                        alignItems: 'center',
+                        zIndex: 3
+                    }}>
+                        {!upcoming && (
+                            <span style={{ 
+                                fontFamily: "'Jost', Arial, sans-serif",
+                                fontSize: '10px',
+                                fontWeight: '600',
+                                letterSpacing: '0.15em',
+                                color: '#FFFFFF',
+                                backgroundColor: '#1a1918',
+                                padding: '6px 14px',
+                                textTransform: 'uppercase'
+                            }}>
+                                {tLabels('past')}
+                            </span>
+                        )}
+                        <span
+                            style={{ 
+                                fontFamily: "'Jost', Arial, sans-serif",
+                                fontSize: '10px',
+                                fontWeight: '600',
+                                letterSpacing: '0.22em',
+                                color: '#1a1918',
+                                backgroundColor: '#d49a36',
+                                padding: '6px 14px',
+                                textTransform: 'uppercase'
+                            }}
+                        >
+                            {getCategoryLabel(tour.category, categories)}
                         </span>
-                    )}
+                    </div>
                 </div>
-            </Link>
-            <div className="tlc-body" style={{ padding: '20px' }}>
+            <div style={{ padding: '1.5rem 0', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
                 <p style={{
-                    fontFamily: "'Cormorant Garamond', Georgia, serif",
-                    fontSize: '13px',
-                    color: '#6B6560',
-                    letterSpacing: '0.06em',
+                    fontFamily: "'Jost', Arial, sans-serif",
+                    fontSize: '12px',
+                    fontWeight: '500',
+                    color: '#4a4a4a',
+                    letterSpacing: '0.08em',
                     marginBottom: '8px'
                 }}>
                     {showComingSoon && tour.dateDisplay ? tour.dateDisplay : formatDateRange(tour.startDate, tour.endDate)}
                 </p>
-                <h2 style={{ marginBottom: '10px' }}>
-                    <Link href={`/tours/${tour.slug}`} style={{
-                        fontFamily: "'Cormorant Garamond', Georgia, serif",
-                        fontSize: '22px',
-                        fontWeight: '500',
-                        color: '#1C1917',
-                        letterSpacing: '0.04em',
+                <h2 style={{ marginBottom: '8px' }}>
+                    <span style={{
+                        fontFamily: "'Jost', Arial, sans-serif",
+                        fontSize: '20px',
+                        fontWeight: '600',
+                        color: hovered ? '#d49a36' : '#1C1917',
+                        letterSpacing: '0.5px',
                         lineHeight: '1.3',
-                        textDecoration: 'none'
+                        transition: 'color 0.3s ease',
+                        fontVariantNumeric: 'lining-nums'
                     }}>
                         {tour.title}
-                    </Link>
+                    </span>
                 </h2>
-                <p style={{
+                <div style={{
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '4px',
-                    fontFamily: "'Cormorant Garamond', Georgia, serif",
-                    fontSize: '14px',
-                    color: '#6B6560',
+                    gap: '6px',
+                    fontFamily: "'Jost', Arial, sans-serif",
+                    fontSize: '12px',
+                    color: '#4a4a4a',
+                    letterSpacing: '0.06em',
                     marginBottom: '12px'
                 }}>
-                    <svg viewBox="0 0 24 24" width="13" height="13" fill="#6B6560">
+                    <svg viewBox="0 0 24 24" width="12" height="12" fill="#4a4a4a">
                         <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
                     </svg>
-                    {tour.location}
-                </p>
+                    {tour.location?.toUpperCase()}
+                </div>
+                
+                {showComingSoon && (
+                    <div style={{
+                        fontFamily: "'Jost', Arial, sans-serif",
+                        fontSize: '11px',
+                        fontWeight: '500',
+                        letterSpacing: '0.15em',
+                        color: '#C9933A',
+                        textTransform: 'uppercase',
+                        marginBottom: '12px'
+                    }}>
+                        {tLabels('comingSoon')}
+                    </div>
+                )}
+
                 <p style={{
                     fontFamily: "'Cormorant Garamond', Georgia, serif",
-                    fontSize: '15px',
-                    color: '#64748b',
+                    fontSize: '16px',
+                    color: '#4A4540',
                     lineHeight: '1.6',
-                    marginBottom: '20px',
+                    marginBottom: '16px',
                     display: '-webkit-box',
                     WebkitLineClamp: '3',
                     WebkitBoxOrient: 'vertical',
@@ -205,24 +213,44 @@ function TourCard({ tour, tLabels, categories }: { tour: Tour; tLabels: any, cat
                 }}>
                     {tour.shortDescription}
                 </p>
-                <div style={{ marginTop: 'auto' }}>
-                    <Link href={`/tours/${tour.slug}`} style={{
-                        fontFamily: "'Cormorant Garamond', Georgia, serif",
-                        fontSize: '13px',
-                        fontWeight: '500',
-                        letterSpacing: '0.2em',
-                        color: '#C9933A',
-                        textDecoration: 'none',
+
+                {upcoming && tour.seatsLeft > 0 && tour.seatsLeft <= 5 && (
+                    <div style={{
+                        fontFamily: "'Jost', Arial, sans-serif",
+                        fontSize: '11px',
+                        fontWeight: '600',
+                        letterSpacing: '0.15em',
+                        color: '#1C1917',
+                        backgroundColor: 'rgba(201, 147, 58, 0.12)',
+                        border: '1px solid rgba(201, 147, 58, 0.3)',
+                        padding: '6px 14px',
                         textTransform: 'uppercase',
-                        borderBottom: '1px solid rgba(201,147,58,0.4)',
-                        paddingBottom: '2px',
-                        transition: 'border-color 0.3s ease'
+                        borderRadius: '0',
+                        display: 'inline-block',
+                        marginBottom: '16px',
+                        alignSelf: 'flex-start'
                     }}>
-                        {tLabels('learnMore')} →
-                    </Link>
+                        ONLY {tour.seatsLeft} SEATS LEFT
+                    </div>
+                )}
+
+                <div style={{ marginTop: 'auto' }}>
+                    <span style={{
+                        fontFamily: "'Jost', Arial, sans-serif",
+                        fontSize: '13px',
+                        fontWeight: '600',
+                        letterSpacing: '0.2em',
+                        color: '#d49a36',
+                        textTransform: 'uppercase',
+                        paddingBottom: '2px',
+                        display: 'inline-block'
+                    }}>
+                        {upcoming ? tLabels('learnMore') : 'TOUR DETAILS'} →
+                    </span>
                 </div>
             </div>
         </article>
+        </Link>
     );
 }
 
@@ -358,28 +386,40 @@ export default function ToursListClient({ tours, categories }: Props) {
     };
 
     return (
-        <div className="tlc-wrapper">
+        <div style={{ backgroundColor: '#FAFAF7', width: '100%', minHeight: '100vh', paddingBottom: '80px' }}>
+            <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
             {/* ── Filter Bar ── */}
-            <div className="tlc-filter-bar">
-                <div className="container" style={{ marginBottom: '1.5rem', display: 'flex', justifyContent: 'flex-start' }}>
+            <div style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                borderBottom: '1px solid #e0d8c8',
+                paddingBottom: '1rem',
+                paddingTop: '1.5rem',
+                marginBottom: '2rem'
+            }}>
+                {/* Left Side: Category & Search */}
+                <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                    {/* Category Select */}
                     <select
                         className="tlc-category-select"
                         style={{
-                            width: 'auto',
-                            minWidth: '280px',
-                            maxWidth: '400px',
-                            padding: '0.85rem 1rem',
-                            fontSize: '1rem',
-                            border: '2px solid #f97316',
-                            borderRadius: '8px',
-                            backgroundColor: '#fff',
-                            color: '#111827',
-                            fontWeight: '600',
+                            fontFamily: "'Jost', Arial, sans-serif",
+                            fontSize: '13px',
+                            fontWeight: '400',
+                            letterSpacing: '0.08em',
+                            color: '#1C1917',
+                            backgroundColor: '#FFFFFF',
+                            border: '1px solid #E8E4DC',
+                            padding: '10px 16px',
+                            outline: 'none',
                             cursor: 'pointer',
-                            boxShadow: '0 2px 4px rgba(249, 115, 22, 0.1)'
+                            minWidth: '220px'
                         }}
                         value={filters.categories[0] || ''}
                         onChange={handleCategoryChange}
+                        onFocus={(e) => e.target.style.borderColor = '#C9933A'}
+                        onBlur={(e) => e.target.style.borderColor = '#E8E4DC'}
                     >
                         <option value="">{t('allCategories')}</option>
                         {categories.map(cat => (
@@ -388,95 +428,160 @@ export default function ToursListClient({ tours, categories }: Props) {
                             </option>
                         ))}
                     </select>
-                </div>
-                <div className="container tlc-filter-inner">
 
-                    {/* Search — fixed 220px */}
-                    <div className="tlc-search-wrap">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="16" height="16" className="tlc-search-icon">
-                            <circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" />
-                        </svg>
+                    {/* Search Input */}
+                    <div style={{ position: 'relative', width: '280px' }}>
                         <input
                             type="text"
-                            className="tlc-search-input"
                             placeholder={t('searchPlaceholder')}
                             value={filters.search}
                             onChange={e => setFilters(prev => ({ ...prev, search: e.target.value }))}
+                            style={{
+                                width: '100%',
+                                fontFamily: "'Jost', Arial, sans-serif",
+                                fontSize: '13px',
+                                color: '#1C1917',
+                                backgroundColor: '#FFFFFF',
+                                border: '1px solid #E8E4DC',
+                                padding: '10px 16px',
+                                outline: 'none'
+                            }}
+                            onFocus={(e) => e.target.style.borderColor = '#C9933A'}
+                            onBlur={(e) => e.target.style.borderColor = '#E8E4DC'}
                         />
                     </div>
+                </div>
 
-                    {/* Status toggle */}
-                    <div className="tlc-toggle">
-                        {(['all', 'upcoming', 'past'] as StatusFilter[]).map(s => (
+                {/* Center: Status Toggles */}
+                <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
+                    {(['all', 'upcoming', 'past'] as StatusFilter[]).map(s => {
+                        const isActive = filters.status === s;
+                        return (
                             <button
                                 key={s}
-                                className={`tlc-toggle-btn ${filters.status === s ? 'active' : ''}`}
                                 onClick={() => setFilters(prev => ({ ...prev, status: s }))}
+                                style={{
+                                    fontFamily: "'Jost', Arial, sans-serif",
+                                    fontSize: '12px',
+                                    fontWeight: '500',
+                                    letterSpacing: '0.15em',
+                                    textTransform: 'uppercase',
+                                    color: isActive ? '#d49a36' : '#6B6560',
+                                    backgroundColor: 'transparent',
+                                    border: 'none',
+                                    borderBottom: isActive ? '2px solid #d49a36' : '2px solid transparent',
+                                    padding: '4px 0',
+                                    cursor: 'pointer',
+                                    transition: 'all 0.3s ease'
+                                }}
                             >
                                 {s === 'all'
-                                    ? `${t('all')} (${tours.length})`
+                                    ? t('all')
                                     : s === 'upcoming'
-                                        ? `${t('upcoming')} (${upcomingCount})`
-                                        : `${t('past')} (${pastCount})`}
+                                        ? t('upcoming')
+                                        : t('past')}
                             </button>
+                        );
+                    })}
+                </div>
+
+                {/* Right Side: Year, Clear, and Count */}
+                <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
+                    <select
+                        style={{
+                            fontFamily: "'Jost', Arial, sans-serif",
+                            fontSize: '13px',
+                            color: '#1C1917',
+                            backgroundColor: '#FFFFFF',
+                            border: '1px solid #E8E4DC',
+                            padding: '10px 16px',
+                            outline: 'none',
+                            cursor: 'pointer'
+                        }}
+                        value={filters.year}
+                        onChange={e => setFilters(prev => ({ ...prev, year: e.target.value }))}
+                        onFocus={(e) => e.target.style.borderColor = '#C9933A'}
+                        onBlur={(e) => e.target.style.borderColor = '#E8E4DC'}
+                    >
+                        <option value="">All Years</option>
+                        {availableYears.map(y => (
+                            <option key={y} value={y}>{y}</option>
                         ))}
-                    </div>
+                    </select>
+                    
+                    <button
+                        onClick={clearFilters}
+                        style={{
+                            visibility: hasFilters ? 'visible' : 'hidden',
+                            fontFamily: "'Jost', Arial, sans-serif",
+                            fontSize: '12px',
+                            fontWeight: '500',
+                            color: '#9A948F',
+                            backgroundColor: 'transparent',
+                            border: 'none',
+                            textTransform: 'uppercase',
+                            cursor: 'pointer',
+                            letterSpacing: '0.1em'
+                        }}
+                    >
+                        {tLabels('clear')}
+                    </button>
 
-                    {/* Year dropdown + Clear button — grouped right next to each other */}
-                    <div className="tlc-year-clear-group">
-                        <div className="tlc-year-wrap">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="14" height="14" className="tlc-year-icon">
-                                <rect x="3" y="4" width="18" height="18" rx="2" />
-                                <path d="M16 2v4M8 2v4M3 10h18" />
-                            </svg>
-                            <select
-                                className="tlc-year-select"
-                                value={filters.year}
-                                onChange={e => setFilters(prev => ({ ...prev, year: e.target.value }))}
-                            >
-                                <option value="">All Years</option>
-                                {availableYears.map(y => (
-                                    <option key={y} value={y}>{y}</option>
-                                ))}
-                            </select>
-                        </div>
-
-                        {/* Clear — right beside the year dropdown */}
-                        <button
-                            className={`tlc-clear-btn ${hasFilters ? 'visible' : 'hidden'}`}
-                            onClick={clearFilters}
-                            aria-hidden={!hasFilters}
-                            tabIndex={hasFilters ? 0 : -1}
-                        >
-                            {tLabels('clear')}
-                        </button>
-                    </div>
+                    <span style={{
+                        fontFamily: "'Jost', Arial, sans-serif",
+                        fontSize: '13px',
+                        fontWeight: '400',
+                        letterSpacing: '0.12em',
+                        color: '#9A948F',
+                        textTransform: 'uppercase',
+                        marginLeft: '0.5rem',
+                        borderLeft: '1px solid #e0d8c8',
+                        paddingLeft: '1.5rem'
+                    }}>
+                        {filtered.length === 0 ? '0 Tours' : `${filtered.length} Tour${filtered.length === 1 ? '' : 's'} Found`}
+                    </span>
                 </div>
             </div>
 
             {/* ── Results ── */}
-            <section className="container tlc-results">
-                <div className="tlc-results-header">
-                    <p className="tlc-result-count">
-                        {filtered.length === 0 ? 'No tours found' : `${filtered.length} tour${filtered.length === 1 ? '' : 's'} found`}
-                    </p>
-                </div>
+            <section style={{ padding: '0' }}>
 
                 {filtered.length === 0 ? (
-                    <div className="tlc-empty">
-                        <div className="tlc-empty-icon">🗺️</div>
-                        <h3>{tLabels('noTours')}</h3>
-                        <p></p>
-                        <button className="tlc-btn-clear-empty" onClick={clearFilters}>{tLabels('clearAll')}</button>
+                    <div style={{ textAlign: 'center', padding: '100px 0', color: '#9A948F' }}>
+                        <div style={{ fontSize: '48px', marginBottom: '16px' }}>🗺️</div>
+                        <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '24px', fontWeight: '500' }}>{tLabels('noTours')}</h3>
+                        <button 
+                            onClick={clearFilters}
+                            style={{
+                                marginTop: '20px',
+                                fontFamily: "'Jost', Arial, sans-serif",
+                                fontSize: '12px',
+                                fontWeight: '500',
+                                letterSpacing: '0.15em',
+                                color: '#C9933A',
+                                backgroundColor: 'transparent',
+                                border: '1px solid #C9933A',
+                                padding: '10px 24px',
+                                cursor: 'pointer',
+                                textTransform: 'uppercase'
+                            }}
+                        >
+                            {tLabels('clearAll')}
+                        </button>
                     </div>
                 ) : (
-                    <div className="tlc-grid">
+                    <div style={{
+                        display: 'grid',
+                        gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))',
+                        gap: '2.5rem'
+                    }}>
                         {filtered.map(tour => (
                             <TourCard key={tour.id} tour={tour} tLabels={tLabels} categories={categories} />
                         ))}
                     </div>
                 )}
             </section>
+            </div>
         </div>
     );
 }
