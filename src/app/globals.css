@@ -3917,3 +3917,40 @@ button {
     width: 100%;
   }
 }
+
+/* ============================================================
+   CONTACT FORM PHONE INPUT OVERRIDES
+   ============================================================ */
+.custom-phone-input {
+  width: 100%;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.custom-phone-input .PhoneInputInput {
+  border: none !important;
+  outline: none !important;
+  background: transparent !important;
+  padding: 0 !important;
+  height: 100% !important;
+  font-family: 'Jost', Arial, sans-serif !important;
+  font-size: 15px !important;
+  color: #1C1917 !important;
+  width: 100% !important;
+}
+
+.custom-phone-input .PhoneInputCountry {
+  margin-right: 12px !important;
+  border: none !important;
+}
+
+.PhoneInputCountryIcon--border {
+  box-shadow: none !important;
+  background-color: transparent !important;
+  border: none !important;
+}
+
+.PhoneInputCountrySelectArrow {
+  opacity: 0.6 !important;
+  margin-left: 4px !important;
+}
