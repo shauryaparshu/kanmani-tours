@@ -144,7 +144,7 @@
     },
     "Contact": {
         "title": "Let's Start Your Journey",
-        "subtitle": "Expert help is just a message away. Reach out to our teams in Tokyo or Chennai.",
+        "subtitle": "Expert help is just a message away. Reach out to our team in Chennai.",
         "breadcrumbHome": "Home",
         "breadcrumbContact": "Contact Us",
         "sendMessage": "Send us a Message",
@@ -203,13 +203,13 @@
         "visaAssistance": "Visa Assistance",
         "termsOfService": "Terms of Service",
         "contactInfo": "Contact Info",
-        "address": "Chiyoda City, Tokyo, Japan / Anna Nagar, Chennai, India",
-        "copyright": "© 2026 Srikan Tours. All rights reserved.",
+        "address": "Anna Nagar, Chennai, India",
+        "copyright": "© 2026 Kanmani Tours. All rights reserved.",
         "privacyPolicy": "Privacy Policy",
         "cookiePolicy": "Cookie Policy"
     },
     "TopBar": {
-        "phone": "+81 (0)3-1234-5678",
-        "email": "hello@srikantours.com"
+        "phone": "+91 95977-16664",
+        "email": "hello@kanmanitours.com"
     }
 }

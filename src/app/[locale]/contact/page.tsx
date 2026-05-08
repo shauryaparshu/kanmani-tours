@@ -128,7 +128,7 @@ export default async function ContactPage() {
                                 </div>
                                 <div style={{ display: 'flex', flexDirection: 'column' }}>
                                     <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '11px', fontWeight: '500', letterSpacing: '0.12em', color: '#C9933A', textTransform: 'uppercase' }}>Call Us</span>
-                                    <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '15px', color: '#1C1917' }}>+81 (0)3-1234-5678</span>
+                                    <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '15px', color: '#1C1917' }}>+91 95977-16664</span>
                                 </div>
                             </div>
 
@@ -169,14 +169,8 @@ export default async function ContactPage() {
                                 backgroundColor: '#C9933A', marginBottom: '24px'
                             }}/>
 
-                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-                                <div style={{ padding: '20px', backgroundColor: '#FFFFFF', border: '1px solid #E8E4DC', borderTop: '3px solid #C9933A' }}>
-                                    <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '11px', fontWeight: '500', letterSpacing: '0.2em', color: '#C9933A', textTransform: 'uppercase', display: 'block', marginBottom: '8px' }}>Tokyo Office</span>
-                                    <h3 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: '18px', fontWeight: '500', color: '#1C1917', marginBottom: '4px', margin: 0 }}>Tokyo, Japan</h3>
-                                    <p style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '13px', color: '#6B6560', lineHeight: 1.5, margin: 0 }}>Chiyoda City, Tokyo</p>
-                                    <p style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '12px', color: '#9A948F', marginTop: '8px', margin: 0 }}>Mon–Fri 9:00–18:00 JST</p>
-                                </div>
-                                <div style={{ padding: '20px', backgroundColor: '#FFFFFF', border: '1px solid #E8E4DC', borderTop: '3px solid #C9933A' }}>
+                            <div>
+                                <div style={{ padding: '24px', backgroundColor: '#FFFFFF', border: '1px solid #E8E4DC', borderTop: '3px solid #C9933A' }}>
                                     <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '11px', fontWeight: '500', letterSpacing: '0.2em', color: '#C9933A', textTransform: 'uppercase', display: 'block', marginBottom: '8px' }}>Chennai Office</span>
                                     <h3 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: '18px', fontWeight: '500', color: '#1C1917', marginBottom: '4px', margin: 0 }}>Chennai, India</h3>
                                     <p style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '13px', color: '#6B6560', lineHeight: 1.5, margin: 0 }}>Anna Nagar, Chennai</p>

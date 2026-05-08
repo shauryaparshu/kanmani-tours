@@ -143,7 +143,7 @@
     },
     "Contact": {
         "title": "旅を始めましょう",
-        "subtitle": "ご質問はメッセージ一つで解決。東京またはチェンナイのチームにお問い合わせください。",
+        "subtitle": "ご質問はメッセージ一つで解決。チェンナイのチームにお問い合わせください。",
         "breadcrumbHome": "ホーム",
         "breadcrumbContact": "お問い合わせ",
         "sendMessage": "メッセージを送る",
@@ -202,13 +202,13 @@
         "visaAssistance": "ビザサポート",
         "termsOfService": "利用規約",
         "contactInfo": "お問い合わせ",
-        "address": "東京都千代田区 ／ インド・チェンナイ アンナナガル",
-        "copyright": "© 2026 スリカン・ツアーズ. All rights reserved.",
+        "address": "インド・チェンナイ アンナナガル",
+        "copyright": "© 2026 カンマニ・ツアーズ. All rights reserved.",
         "privacyPolicy": "プライバシーポリシー",
         "cookiePolicy": "クッキーポリシー"
     },
     "TopBar": {
-        "phone": "+81 (0)3-1234-5678",
-        "email": "hello@srikantours.com"
+        "phone": "+91 95977-16664",
+        "email": "hello@kanmanitours.com"
     }
 }

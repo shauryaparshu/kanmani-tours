@@ -250,7 +250,7 @@ export default function Navigation() {
 
             {/* RIGHT COLUMN — Contact info + language switcher */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '20px', flexShrink: 0 }}>
-                <a href="tel:+810312345678" style={{
+                <a href="tel:+919597716664" style={{
                     fontFamily: "'Cormorant Garamond', Georgia, serif",
                     fontSize: '17px',
                     fontWeight: '600',
@@ -260,7 +260,7 @@ export default function Navigation() {
                     fontVariantNumeric: 'lining-nums',
                     fontFeatureSettings: '"lnum" 1'
                 }}>
-                    +81 (0)3-1234-5678
+                    +91 95977-16664
                 </a>
                 <span style={{ color: 'rgba(201,147,58,0.6)', fontSize: '14px' }}>|</span>
                 <a href="mailto:hello@kanmanitours.com" style={{
