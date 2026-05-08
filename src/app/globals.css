@@ -312,6 +312,11 @@ body {
   line-height: 1.6;
 }
 
+p, li {
+  font-size: 19px !important;
+  line-height: 1.8 !important;
+}
+
 a {
   text-decoration: none;
   color: inherit;

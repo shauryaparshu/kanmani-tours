@@ -15,9 +15,12 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Srikan Tours | Exclusive South India Fan Experiences",
+  title: "Kanmani Tours | Exclusive Japan-India Journeys",
   description: "Premium Japanese fan tours to South India. Exclusive celebrity-related experiences, studio access, cultural heritage, and culinary journeys — all with Japanese-speaking guides.",
-  keywords: "Srikan Tours, India tours, South Indian cinema, Kollywood, Tollywood, travel, celebrity-related tours, cultural heritage",
+  keywords: "Kanmani Tours, India tours, South Indian cinema, Kollywood, Tollywood, travel, celebrity-related tours, cultural heritage",
+  icons: {
+    icon: '/assets/logo.svg',
+  },
 };
 
 export default async function RootLayout({

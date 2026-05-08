@@ -858,7 +858,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
             {otherTours.map(tOther => (
               <Link
                 href={`/tours/${tOther.slug}`}
-                key={tOther.id}
+                key={tOther._id || tOther.slug}
                 style={{
                   display: 'flex', flexDirection: 'column', height: '100%', textDecoration: 'none',
                   backgroundColor: '#FFFFFF',
