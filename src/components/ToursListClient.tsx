@@ -354,15 +354,17 @@ export default function ToursListClient({ tours, categories }: Props) {
         }
 
         // Sort
-        if (filters.status === 'upcoming') {
-            result.sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime());
-        } else if (filters.status === 'past') {
-            result.sort((a, b) => new Date(b.endDate).getTime() - new Date(a.endDate).getTime());
-        } else {
-            result = defaultSort(result);
-        }
+        const sortedTours = [...result].sort((a, b) => {
+            const aIsCeleb = a.category?.toLowerCase().includes('celebrity');
+            const bIsCeleb = b.category?.toLowerCase().includes('celebrity');
+            if (aIsCeleb && !bIsCeleb) return -1;
+            if (!aIsCeleb && bIsCeleb) return 1;
+            if (!a.startDate) return 1;
+            if (!b.startDate) return -1;
+            return new Date(a.startDate).getTime() - new Date(b.startDate).getTime();
+        });
 
-        return result;
+        return sortedTours;
     }, [tours, filters, today]);
 
     const hasFilters = !!(
@@ -575,8 +577,8 @@ export default function ToursListClient({ tours, categories }: Props) {
                         gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))',
                         gap: '2.5rem'
                     }}>
-                        {filtered.map(tour => (
-                            <TourCard key={tour.id} tour={tour} tLabels={tLabels} categories={categories} />
+                        {filtered.map((tour, index) => (
+                            <TourCard key={tour._id || tour.id || index} tour={tour} tLabels={tLabels} categories={categories} />
                         ))}
                     </div>
                 )}

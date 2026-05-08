@@ -21,17 +21,25 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
-  const upcomingTours = allTours
-    .filter(tour => {
+  const upcomingTours = (() => {
+    const upcoming = allTours.filter(tour => {
       if (!tour.startDate) return false;
       const start = new Date(tour.startDate);
       start.setHours(0, 0, 0, 0);
       return start >= today;
-    })
-    .sort((a, b) => 
+    });
+
+    const celebrityTours = upcoming.filter(t =>
+      t.category?.toLowerCase().includes('celebrity')
+    );
+    const otherTours = upcoming.filter(t =>
+      !t.category?.toLowerCase().includes('celebrity')
+    ).sort((a, b) =>
       new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
-    )
-    .slice(0, 3);
+    );
+
+    return [...celebrityTours, ...otherTours].slice(0, 3);
+  })();
 
   return (
     <main style={{ maxWidth: '100%', width: '100%', padding: 0 }}>

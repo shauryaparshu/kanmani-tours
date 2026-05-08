@@ -15,6 +15,7 @@ export default function HeroSlideshow({
     altPrefix = 'Slide',
 }: HeroSlideshowProps) {
     const [current, setCurrent] = useState(0);
+    const [hoveredThumb, setHoveredThumb] = useState<number | null>(null);
 
     const next = useCallback(
         () => setCurrent(p => (p + 1) % images.length),
@@ -84,15 +85,58 @@ export default function HeroSlideshow({
                         </svg>
                     </button>
 
-                    {/* Dot indicators */}
-                    <div className="slideshow-dots">
-                        {images.map((_, i) => (
-                            <button
-                                key={i}
-                                className={'slideshow-dot' + (i === current ? ' active' : '')}
-                                onClick={() => setCurrent(i)}
-                                aria-label={`Go to slide ${i + 1}`}
-                            />
+                    {/* Thumbnail strip */}
+                    <div style={{
+                        position: 'absolute',
+                        bottom: '380px',
+                        left: '50%',
+                        transform: 'translateX(-50%)',
+                        display: 'flex',
+                        gap: '12px',
+                        zIndex: 20,
+                        padding: '10px 16px',
+                        backgroundColor: 'rgba(10,8,7,0.5)',
+                        backdropFilter: 'blur(8px)',
+                        border: '1px solid rgba(201,147,58,0.2)'
+                    }}>
+                        {images.map((image, index) => (
+                            <div
+                                key={index}
+                                onMouseEnter={() => setHoveredThumb(index)}
+                                onMouseLeave={() => setHoveredThumb(null)}
+                                onClick={() => setCurrent(index)}
+                                style={{
+                                    width: hoveredThumb === index ? '120px' : '88px',
+                                    height: '60px',
+                                    cursor: 'pointer',
+                                    overflow: 'hidden',
+                                    border: current === index
+                                        ? '2.5px solid #C9933A'
+                                        : '2px solid rgba(255,255,255,0.2)',
+                                    transition: 'all 0.3s ease',
+                                    flexShrink: 0,
+                                    position: 'relative'
+                                }}
+                            >
+                                <img
+                                    src={typeof image === 'string' ? image : (image as any).src || (image as any).url || image}
+                                    alt={`Slide ${index + 1}`}
+                                    style={{
+                                        width: '100%',
+                                        height: '100%',
+                                        objectFit: 'cover',
+                                        display: 'block',
+                                        pointerEvents: 'none'
+                                    }}
+                                />
+                                {current === index && (
+                                    <div style={{
+                                        position: 'absolute',
+                                        inset: 0,
+                                        backgroundColor: 'rgba(201,147,58,0.25)'
+                                    }} />
+                                )}
+                            </div>
                         ))}
                     </div>
                 </>
