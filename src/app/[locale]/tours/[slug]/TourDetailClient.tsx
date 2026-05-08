@@ -6,6 +6,7 @@ import type { Tour, TourFaq } from '@/lib/tours';
 import { formatPriceJPY, formatPriceRange } from '@/lib/tours';
 import { useBooking } from '@/context/BookingContext';
 import { useTranslations, useLocale } from 'next-intl';
+import { urlForImage } from '@/sanity/lib/image';
 
 interface TourDetailClientProps {
     tour: Tour;
@@ -164,6 +165,53 @@ function ItineraryItem({ day, last }: { day: Tour['itinerary'][0]; last: boolean
                         color: '#2C2420',
                         fontWeight: '400'
                     }}>{day.details}</p>
+                    {day.image && (
+                      <div style={{
+                        width: '100%',
+                        height: '280px',
+                        overflow: 'hidden',
+                        marginTop: '16px',
+                        position: 'relative',
+                        borderRadius: '4px'
+                      }}>
+                        <img
+                          src={typeof day.image === 'string'
+                            ? day.image
+                            : urlForImage(day.image)?.url() || day.image?.asset?.url || ''}
+                          alt={day.title}
+                          style={{
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'cover',
+                            display: 'block'
+                          }}
+                          onError={(e) => {
+                            (e.currentTarget as HTMLImageElement).style.display = 'none';
+                          }}
+                        />
+                        <div style={{
+                          position: 'absolute',
+                          bottom: '0',
+                          left: '0',
+                          right: '0',
+                          background:
+                            'linear-gradient(to top, rgba(28,25,23,0.7) 0%, transparent 100%)',
+                          padding: '20px 16px 12px',
+                        }}>
+                          <p style={{
+                            fontFamily: "'Jost', Arial, sans-serif",
+                            fontSize: '11px',
+                            fontWeight: '600',
+                            letterSpacing: '0.16em',
+                            color: '#C9933A',
+                            textTransform: 'uppercase',
+                            margin: '0'
+                          }}>
+                            Day {day.dayNumber}
+                          </p>
+                        </div>
+                      </div>
+                    )}
                 </div>
             </div>
         </div>

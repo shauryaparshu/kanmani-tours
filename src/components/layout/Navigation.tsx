@@ -12,6 +12,7 @@ export default function Navigation() {
 
     const [scrolled, setScrolled] = useState(false);
     const [snsOpen, setSnsOpen] = useState(false);
+    const [servicesOpen, setServicesOpen] = useState(false);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -89,30 +90,149 @@ export default function Navigation() {
                     const isActive = pathname === link.href || (link.href !== '/' && pathname?.startsWith(link.href));
                     return (
                         <div key={link.href} style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
-                            <Link
-                                href={link.href}
-                                style={{
+                            {link.name === 'Transfers' ? (
+                                <div
+                                  style={{ position: 'relative', height: '100%', display: 'flex', alignItems: 'center' }}
+                                  onMouseEnter={() => setServicesOpen(true)}
+                                  onMouseLeave={() => setServicesOpen(false)}
+                                >
+                                  <button style={{
                                     fontFamily: "'Cormorant Garamond', Georgia, serif",
                                     fontSize: '19px',
                                     fontWeight: '500',
                                     letterSpacing: '0.08em',
-                                    color: isActive ? '#C9933A' : '#F5F1EB',
-                                    textDecoration: 'none',
-                                    opacity: '1',
-                                    transition: 'color 0.3s ease, opacity 0.3s ease',
+                                    color: '#F5F1EB',
+                                    backgroundColor: 'transparent',
+                                    border: 'none',
                                     cursor: 'pointer',
-                                    borderBottom: isActive ? '1px solid #C9933A' : 'none',
-                                    paddingBottom: isActive ? '2px' : '0'
-                                }}
-                                onMouseEnter={(e) => {
-                                    if (!isActive) e.currentTarget.style.color = '#C9933A';
-                                }}
-                                onMouseLeave={(e) => {
-                                    if (!isActive) e.currentTarget.style.color = '#F5F1EB';
-                                }}
-                            >
-                                {link.name}
-                            </Link>
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '4px',
+                                    padding: '0',
+                                    transition: 'color 0.3s ease'
+                                  }}
+                                  onMouseEnter={(e) => {
+                                    e.currentTarget.style.color = '#C9933A';
+                                  }}
+                                  onMouseLeave={(e) => {
+                                    e.currentTarget.style.color = '#F5F1EB';
+                                  }}
+                                  >
+                                    Services
+                                    <span style={{
+                                      fontSize: '8px',
+                                      color: '#C9933A',
+                                      display: 'inline-block',
+                                      transform: servicesOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+                                      transition: 'transform 0.3s ease'
+                                    }}>▼</span>
+                                  </button>
+
+                                  {servicesOpen && (
+                                    <div style={{
+                                      position: 'absolute',
+                                      top: '100%',
+                                      left: '50%',
+                                      transform: 'translateX(-50%)',
+                                      backgroundColor: '#1C1917',
+                                      border: '1px solid rgba(201,147,58,0.2)',
+                                      borderTop: '2px solid #C9933A',
+                                      minWidth: '320px',
+                                      zIndex: 1001,
+                                      paddingTop: '8px',
+                                      paddingBottom: '8px',
+                                      boxShadow: '0 8px 32px rgba(0,0,0,0.5)'
+                                    }}>
+                                      {[
+                                        {
+                                          label: 'Airport Transfers',
+                                          desc: 'Pickup & drop service',
+                                          href: '/airport-transfer'
+                                        },
+                                        {
+                                          label: 'Moving to India Support',
+                                          desc: 'Relocation assistance',
+                                          href: '/services/moving'
+                                        },
+                                        {
+                                          label: 'All Services',
+                                          desc: 'View everything we offer',
+                                          href: '/services',
+                                          highlight: true
+                                        },
+                                      ].map(({ label, desc, href, highlight }) => (
+                                        <a
+                                          key={label}
+                                          href={href}
+                                          style={{
+                                            display: 'block',
+                                            padding: '12px 20px',
+                                            textDecoration: 'none',
+                                            borderBottom: highlight
+                                              ? 'none'
+                                              : '1px solid rgba(201,147,58,0.08)',
+                                            borderTop: highlight
+                                              ? '1px solid rgba(201,147,58,0.15)'
+                                              : 'none',
+                                            transition: 'background-color 0.2s ease'
+                                          }}
+                                          onMouseEnter={(e) => {
+                                            e.currentTarget.style.backgroundColor =
+                                              'rgba(201,147,58,0.06)';
+                                          }}
+                                          onMouseLeave={(e) => {
+                                            e.currentTarget.style.backgroundColor = 'transparent';
+                                          }}
+                                        >
+                                          <div style={{
+                                            fontFamily: "'Cormorant Garamond', Georgia, serif",
+                                            fontSize: '19px',
+                                            fontWeight: highlight ? '600' : '500',
+                                            color: highlight ? '#C9933A' : '#F5F1EB',
+                                            letterSpacing: '0.06em',
+                                            marginBottom: '4px'
+                                          }}>
+                                            {label}
+                                          </div>
+                                          <div style={{
+                                            fontFamily: "'Jost', Arial, sans-serif",
+                                            fontSize: '13px',
+                                            color: '#9A948F',
+                                            letterSpacing: '0.04em'
+                                          }}>
+                                            {desc}
+                                          </div>
+                                        </a>
+                                      ))}
+                                    </div>
+                                  )}
+                                </div>
+                            ) : (
+                                <Link
+                                    href={link.href}
+                                    style={{
+                                        fontFamily: "'Cormorant Garamond', Georgia, serif",
+                                        fontSize: '19px',
+                                        fontWeight: '500',
+                                        letterSpacing: '0.08em',
+                                        color: isActive ? '#C9933A' : '#F5F1EB',
+                                        textDecoration: 'none',
+                                        opacity: '1',
+                                        transition: 'color 0.3s ease, opacity 0.3s ease',
+                                        cursor: 'pointer',
+                                        borderBottom: isActive ? '1px solid #C9933A' : 'none',
+                                        paddingBottom: isActive ? '2px' : '0'
+                                    }}
+                                    onMouseEnter={(e) => {
+                                        if (!isActive) e.currentTarget.style.color = '#C9933A';
+                                    }}
+                                    onMouseLeave={(e) => {
+                                        if (!isActive) e.currentTarget.style.color = '#F5F1EB';
+                                    }}
+                                >
+                                    {link.name}
+                                </Link>
+                            )}
                             {index < navLinks.length - 1 && (
                                 <span style={{
                                     color: 'rgba(201, 147, 58, 0.6)',
