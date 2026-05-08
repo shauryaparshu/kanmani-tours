@@ -130,11 +130,11 @@ export default function FaqPageClient({ faqs }: { faqs: FaqItem[] }) {
       {/* HERO */}
       <div style={{
         backgroundColor: '#1C1917',
-        padding: '3rem 0',
+        padding: '80px 0 72px',
         borderBottom: '1px solid rgba(201,147,58,0.2)'
       }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 60px' }}>
-          <div style={{ maxWidth: '800px' }}>
+          <div style={{ maxWidth: '900px' }}>
             <p style={{
               fontFamily: "'Jost', Arial, sans-serif",
               fontSize: '11px',
@@ -153,7 +153,9 @@ export default function FaqPageClient({ faqs }: { faqs: FaqItem[] }) {
               color: '#F5F1EB',
               letterSpacing: '0.05em',
               lineHeight: '1.15',
-              marginBottom: '20px'
+              margin: '0 0 20px',
+              whiteSpace: 'nowrap',
+              maxWidth: 'none'
             }}>
               Everything You Need to Know
             </h1>
@@ -168,7 +170,8 @@ export default function FaqPageClient({ faqs }: { faqs: FaqItem[] }) {
               fontWeight: '300',
               color: '#faf9f6',
               lineHeight: '1.7',
-              maxWidth: '560px'
+              maxWidth: '600px',
+              margin: 0
             }}>
               Your questions about traveling from Japan to India, answered. 
               Can't find what you're looking for?{' '}

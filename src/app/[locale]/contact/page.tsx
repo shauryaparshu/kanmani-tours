@@ -16,48 +16,53 @@ export default async function ContactPage() {
                 {/* SECTION 1 — HERO (dark #1C1917) */}
                 <div style={{
                     backgroundColor: '#1C1917',
-                    padding: '80px 60px 72px',
+                    padding: '80px 0 72px',
                     borderBottom: '1px solid rgba(201,147,58,0.2)',
                     position: 'relative',
                     overflow: 'hidden'
                 }}>
-                    <div style={{ maxWidth: '700px' }}>
-                        <p style={{
-                            fontFamily: "'Jost', Arial, sans-serif",
-                            fontSize: '11px',
-                            fontWeight: '500',
-                            letterSpacing: '0.32em',
-                            color: '#C9933A',
-                            textTransform: 'uppercase',
-                            marginBottom: '16px'
-                        }}>GET IN TOUCH</p>
-                        <h1 style={{
-                            fontFamily: "'Cormorant Garamond', Georgia, serif",
-                            fontSize: 'clamp(36px, 5vw, 64px)',
-                            fontWeight: '500',
-                            color: '#F5F1EB',
-                            letterSpacing: '0.05em',
-                            lineHeight: '1.15',
-                            marginBottom: '16px'
-                        }}>
-                            Let's Plan Your Journey to India
-                        </h1>
-                        <div style={{
-                            width: '56px', height: '1px',
-                            backgroundColor: '#C9933A', marginBottom: '20px'
-                        }}/>
-                        <p style={{
-                            fontFamily: "'Jost', Arial, sans-serif",
-                            fontSize: '16px',
-                            fontWeight: '300',
-                            color: '#9A948F',
-                            lineHeight: '1.7',
-                            maxWidth: '520px'
-                        }}>
-                            Our Japanese-speaking team is ready to help you plan 
-                            the perfect India experience. We respond to all 
-                            enquiries within 24 hours.
-                        </p>
+                    <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 60px' }}>
+                        <div style={{ maxWidth: '1000px' }}>
+                            <p style={{
+                                fontFamily: "'Jost', Arial, sans-serif",
+                                fontSize: '11px',
+                                fontWeight: '500',
+                                letterSpacing: '0.32em',
+                                color: '#C9933A',
+                                textTransform: 'uppercase',
+                                marginBottom: '16px'
+                            }}>GET IN TOUCH</p>
+                            <h1 style={{
+                                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                                fontSize: 'clamp(36px, 5vw, 64px)',
+                                fontWeight: '500',
+                                color: '#F5F1EB',
+                                letterSpacing: '0.05em',
+                                lineHeight: '1.15',
+                                margin: '0 0 16px',
+                                whiteSpace: 'nowrap',
+                                maxWidth: 'none'
+                            }}>
+                                Let's Plan Your Journey to India
+                            </h1>
+                            <div style={{
+                                width: '56px', height: '1px',
+                                backgroundColor: '#C9933A', marginBottom: '20px'
+                            }}/>
+                            <p style={{
+                                fontFamily: "'Jost', Arial, sans-serif",
+                                fontSize: '16px',
+                                fontWeight: '300',
+                                color: '#9A948F',
+                                lineHeight: '1.7',
+                                maxWidth: '560px',
+                                margin: 0
+                            }}>
+                                Our Japanese-speaking team is ready to help you plan 
+                                the perfect India experience. We respond to all 
+                                enquiries within 24 hours.
+                            </p>
+                        </div>
                     </div>
                 </div>
 
