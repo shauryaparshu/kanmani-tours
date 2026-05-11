@@ -16,7 +16,17 @@ export const TOURS_QUERY = defineQuery(`*[_type == "tour"] | order(startDate asc
   coverImage,
   galleryImages,
   features,
-  itinerary,
+  itinerary[] {
+    ...,
+    image {
+      asset-> {
+        _id,
+        url
+      },
+      hotspot,
+      crop
+    }
+  },
   whatToExpect,
   inclusions,
   exclusions,
@@ -40,7 +50,17 @@ export const TOUR_BY_SLUG_QUERY = defineQuery(`*[_type == "tour" && slug.current
   coverImage,
   galleryImages,
   features,
-  itinerary,
+  itinerary[] {
+    ...,
+    image {
+      asset-> {
+        _id,
+        url
+      },
+      hotspot,
+      crop
+    }
+  },
   whatToExpect,
   inclusions,
   exclusions,

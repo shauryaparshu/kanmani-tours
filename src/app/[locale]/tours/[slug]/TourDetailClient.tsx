@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import type { Tour, TourFaq } from '@/lib/tours';
 import { formatPriceJPY, formatPriceRange } from '@/lib/tours';
@@ -76,176 +76,439 @@ function AccordionItem({ question, answer }: TourFaq) {
     );
 }
 
-function ItineraryItem({ day, last }: { day: Tour['itinerary'][0]; last: boolean }) {
-    const [open, setOpen] = useState(false);
-    const [hovered, setHovered] = useState(false);
-    return (
+function ItineraryItem({ 
+  day, 
+  last 
+}: { 
+  day: Tour['itinerary'][0]; 
+  last: boolean 
+}) {
+  const [open, setOpen] = useState(false);
+  const t = useTranslations('Home');
+
+  const dayImageUrl = (() => {
+    if (!day.image) return null;
+    if (typeof day.image === 'string') return day.image;
+    try {
+      const url = urlForImage(day.image)?.url();
+      return url || null;
+    } catch {
+      return (day.image as any)?.asset?.url || null;
+    }
+  })();
+
+  return (
+    <div style={{
+      marginBottom: '2px',
+      border: '1px solid #E8E4DC',
+      backgroundColor: open 
+        ? 'rgba(201,147,58,0.06)' 
+        : '#FFFFFF',
+      transition: 'background-color 0.3s ease'
+    }}>
+      {/* HEADER ROW */}
+      <button
+        onClick={() => setOpen(!open)}
+        style={{
+          width: '100%',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '20px',
+          padding: '20px 24px',
+          background: 'none',
+          border: 'none',
+          cursor: 'pointer',
+          textAlign: 'left'
+        }}
+      >
         <div style={{
-            display: 'flex',
-            alignItems: 'flex-start',
-            gap: '32px',
-            position: 'relative',
-            marginBottom: last ? '0' : '1.5rem'
+          width: '36px',
+          height: '36px',
+          borderRadius: '50%',
+          backgroundColor: open ? '#C9933A' : 'transparent',
+          border: `2px solid #C9933A`,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexShrink: 0,
+          transition: 'all 0.3s ease'
         }}>
-            <div style={{
-                position: 'relative',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                zIndex: 2,
-            }}>
-                <div style={{
-                    width: '32px',
-                    height: '32px',
-                    borderRadius: '50%',
-                    backgroundColor: '#d49a36',
-                    color: '#ffffff',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontFamily: "'Jost', Arial, sans-serif",
-                    fontSize: '13px',
-                    fontWeight: '600',
-                    flexShrink: 0,
-                    boxShadow: 'none',
-                    marginTop: '1.5rem' // Align with card header center
-                }}>{day.dayNumber}</div>
-            </div>
-            
-            <div 
-              onMouseEnter={() => setHovered(true)}
-              onMouseLeave={() => setHovered(false)}
-              style={{
-                flex: 1,
-                backgroundColor: '#FFFFFF',
-                border: '1px solid',
-                borderColor: hovered ? '#d49a36' : '#e0d8c8',
-                borderRadius: '8px',
-                boxShadow: hovered ? '0 6px 20px rgba(0,0,0,0.06)' : '0 4px 15px rgba(0,0,0,0.03)',
-                transition: 'all 0.3s ease',
-                transform: hovered ? 'translateY(-2px)' : 'translateY(0)',
-                overflow: 'hidden'
-            }}>
-                <button 
-                  onClick={() => setOpen(!open)}
-                  style={{
-                    width: '100%',
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    backgroundColor: 'transparent',
-                    border: 'none',
-                    padding: '1.5rem 2rem',
-                    cursor: 'pointer',
-                    textAlign: 'left'
-                }}>
-                    <span style={{
-                        fontFamily: "'Jost', Arial, sans-serif",
-                        fontSize: '18px',
-                        fontWeight: '500',
-                        color: '#1C1917',
-                        letterSpacing: '0.02em'
-                    }}>Day {day.dayNumber}: {day.title}</span>
-                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#d49a36" strokeWidth="2.5"
-                        style={{ transform: open ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.3s ease', flexShrink: 0 }}>
-                        <polyline points="6 9 12 15 18 9" />
-                    </svg>
-                </button>
-                <div style={{ 
-                  maxHeight: open ? '1000px' : '0', 
-                  overflow: 'hidden', 
-                  transition: 'all 0.5s ease',
-                  padding: open ? '0 2rem 2rem 2rem' : '0 2rem'
-                }}>
-                    <p style={{
-                        margin: 0,
-                        fontFamily: "'Jost', Arial, sans-serif",
-                        fontSize: '16px',
-                        lineHeight: '1.7',
-                        color: '#2C2420',
-                        fontWeight: '400'
-                    }}>{day.details}</p>
-                    {day.image && (
-                      <div style={{
-                        width: '100%',
-                        height: '280px',
-                        overflow: 'hidden',
-                        marginTop: '16px',
-                        position: 'relative',
-                        borderRadius: '4px'
-                      }}>
-                        <img
-                          src={typeof day.image === 'string'
-                            ? day.image
-                            : urlForImage(day.image)?.url() || day.image?.asset?.url || ''}
-                          alt={day.title}
-                          style={{
-                            width: '100%',
-                            height: '100%',
-                            objectFit: 'cover',
-                            display: 'block'
-                          }}
-                          onError={(e) => {
-                            (e.currentTarget as HTMLImageElement).style.display = 'none';
-                          }}
-                        />
-                        <div style={{
-                          position: 'absolute',
-                          bottom: '0',
-                          left: '0',
-                          right: '0',
-                          background:
-                            'linear-gradient(to top, rgba(28,25,23,0.7) 0%, transparent 100%)',
-                          padding: '20px 16px 12px',
-                        }}>
-                          <p style={{
-                            fontFamily: "'Jost', Arial, sans-serif",
-                            fontSize: '11px',
-                            fontWeight: '600',
-                            letterSpacing: '0.16em',
-                            color: '#C9933A',
-                            textTransform: 'uppercase',
-                            margin: '0'
-                          }}>
-                            Day {day.dayNumber}
-                          </p>
-                        </div>
-                      </div>
-                    )}
-                </div>
-            </div>
+          <span style={{
+            fontFamily: "'Jost', Arial, sans-serif",
+            fontSize: '13px',
+            fontWeight: '600',
+            color: open ? '#1C1917' : '#C9933A',
+            transition: 'color 0.3s ease'
+          }}>
+            {day.dayNumber}
+          </span>
         </div>
-    );
+
+        <span style={{
+          fontFamily: "'Cormorant Garamond', Georgia, serif",
+          fontSize: '20px',
+          fontWeight: '500',
+          color: '#1C1917',
+          letterSpacing: '0.03em',
+          flex: 1,
+          textAlign: 'left'
+        }}>
+          {t('day')} {day.dayNumber}: {day.title}
+        </span>
+
+        <svg
+          viewBox="0 0 24 24"
+          width="18"
+          height="18"
+          fill="none"
+          stroke="#C9933A"
+          strokeWidth="2"
+          style={{
+            flexShrink: 0,
+            transform: open ? 'rotate(180deg)' : 'rotate(0deg)',
+            transition: 'transform 0.3s ease'
+          }}
+        >
+          <polyline points="6 9 12 15 18 9"/>
+        </svg>
+      </button>
+
+      {/* EXPANDED CONTENT */}
+      {open && (
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: dayImageUrl ? '1fr 1fr' : '1fr',
+          borderTop: '1px solid rgba(201,147,58,0.15)',
+          minHeight: '320px'
+        }}>
+          {/* LEFT — Image */}
+          {dayImageUrl && (
+            <div style={{
+              position: 'relative',
+              overflow: 'hidden',
+              minHeight: '320px'
+            }}>
+              <img
+                src={dayImageUrl}
+                alt={`Day ${day.dayNumber}: ${day.title}`}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  objectPosition: 'center',
+                  display: 'block',
+                  position: 'absolute',
+                  top: 0,
+                  left: 0
+                }}
+                onError={(e) => {
+                  (e.currentTarget as HTMLImageElement).style.display = 'none';
+                }}
+              />
+              <div style={{
+                position: 'absolute',
+                bottom: '0',
+                left: '0',
+                right: '0',
+                background: 'linear-gradient(to top, rgba(10,8,7,0.8) 0%, transparent 60%)',
+                padding: '24px 20px 16px'
+              }}>
+                <span style={{
+                  fontFamily: "'Jost', Arial, sans-serif",
+                  fontSize: '10px',
+                  fontWeight: '500',
+                  letterSpacing: '0.22em',
+                  color: '#C9933A',
+                  textTransform: 'uppercase'
+                }}>
+                  Day {day.dayNumber}
+                </span>
+              </div>
+            </div>
+          )}
+
+          {/* RIGHT — Text */}
+          <div style={{
+            padding: '36px 40px',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            backgroundColor: '#FAFAF7'
+          }}>
+            <p style={{
+              fontFamily: "'Cormorant Garamond', Georgia, serif",
+              fontSize: '19px',
+              fontWeight: '400',
+              color: '#2C2420',
+              lineHeight: '1.9',
+              margin: '0'
+            }}>
+              {day.details}
+            </p>
+          </div>
+        </div>
+      )}
+    </div>
+  );
 }
 
-function Gallery({ images, tourTitle }: { images: string[]; tourTitle: string }) {
-    const [lightbox, setLightbox] = useState<string | null>(null);
-    if (images.length === 0) return null;
-    return (
-        <>
-            <div className="gallery-grid">
-                {images.map((src, i) => (
-                    <button key={i} className="gallery-cell" onClick={() => setLightbox(src)}>
-                        <img
-                            src={src}
-                            alt={`${tourTitle} — image ${i + 1}`}
-                            className="gallery-img"
-                            onError={(e) => {
-                                (e.currentTarget as HTMLImageElement).src =
-                                    `https://placehold.co/600x400/1c2331/ffffff?text=Photo+${i + 1}`;
-                            }}
-                        />
-                    </button>
-                ))}
-            </div>
-            {lightbox && (
-                <div className="lightbox-overlay" onClick={() => setLightbox(null)}>
-                    <button className="lightbox-close" onClick={() => setLightbox(null)}>✕</button>
-                    <img src={lightbox} alt="Gallery" className="lightbox-img" onClick={e => e.stopPropagation()} />
-                </div>
-            )}
-        </>
+function Gallery({ images, tourTitle }: { 
+  images: string[]; 
+  tourTitle: string 
+}) {
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+
+  const openLightbox = (index: number) => setLightboxIndex(index);
+  const closeLightbox = () => setLightboxIndex(null);
+  const goNext = () => {
+    if (lightboxIndex === null) return;
+    setLightboxIndex((lightboxIndex + 1) % images.length);
+  };
+  const goPrev = () => {
+    if (lightboxIndex === null) return;
+    setLightboxIndex(
+      (lightboxIndex - 1 + images.length) % images.length
     );
+  };
+
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (lightboxIndex === null) return;
+      if (e.key === 'ArrowRight') goNext();
+      if (e.key === 'ArrowLeft') goPrev();
+      if (e.key === 'Escape') closeLightbox();
+    };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [lightboxIndex]);
+
+  if (images.length === 0) return null;
+
+  return (
+    <>
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
+        gap: '8px'
+      }}>
+        {images.map((src, i) => (
+          <button
+            key={i}
+            onClick={() => openLightbox(i)}
+            style={{
+              border: 'none',
+              padding: 0,
+              cursor: 'pointer',
+              overflow: 'hidden',
+              height: '180px',
+              position: 'relative',
+              backgroundColor: '#1C1917'
+            }}
+          >
+            <img
+              src={src}
+              alt={`${tourTitle} — photo ${i + 1}`}
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                display: 'block',
+                transition: 'transform 0.4s ease'
+              }}
+              onMouseEnter={(e) => {
+                (e.currentTarget as HTMLImageElement).style.transform = 'scale(1.05)';
+              }}
+              onMouseLeave={(e) => {
+                (e.currentTarget as HTMLImageElement).style.transform = 'scale(1)';
+              }}
+            />
+          </button>
+        ))}
+      </div>
+
+      {lightboxIndex !== null && (
+        <div
+          onClick={closeLightbox}
+          style={{
+            position: 'fixed',
+            inset: 0,
+            backgroundColor: 'rgba(5,3,2,0.95)',
+            zIndex: 9999,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}
+        >
+          {/* Close button */}
+          <button
+            onClick={closeLightbox}
+            style={{
+              position: 'absolute',
+              top: '24px',
+              right: '24px',
+              background: 'none',
+              border: '1px solid rgba(201,147,58,0.4)',
+              color: '#F5F1EB',
+              fontSize: '20px',
+              width: '44px',
+              height: '44px',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              zIndex: 10000,
+              transition: 'border-color 0.3s ease'
+            }}
+          >✕</button>
+
+          {/* Image counter */}
+          <div style={{
+            position: 'absolute',
+            top: '28px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            fontFamily: "'Jost', Arial, sans-serif",
+            fontSize: '12px',
+            fontWeight: '400',
+            letterSpacing: '0.18em',
+            color: '#9A948F'
+          }}>
+            {lightboxIndex + 1} / {images.length}
+          </div>
+
+          {/* Left arrow */}
+          {images.length > 1 && (
+            <button
+              onClick={(e) => { e.stopPropagation(); goPrev(); }}
+              style={{
+                position: 'absolute',
+                left: '24px',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                background: 'rgba(28,25,23,0.8)',
+                border: '1px solid rgba(201,147,58,0.3)',
+                color: '#F5F1EB',
+                fontSize: '20px',
+                width: '52px',
+                height: '52px',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                zIndex: 10000,
+                transition: 'border-color 0.3s ease, background 0.3s ease'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = '#C9933A';
+                e.currentTarget.style.background = 'rgba(201,147,58,0.15)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = 'rgba(201,147,58,0.3)';
+                e.currentTarget.style.background = 'rgba(28,25,23,0.8)';
+              }}
+            >←</button>
+          )}
+
+          {/* Main image */}
+          <img
+            src={images[lightboxIndex]}
+            alt={`${tourTitle} — photo ${lightboxIndex + 1}`}
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              maxWidth: '88vw',
+              maxHeight: '85vh',
+              objectFit: 'contain',
+              display: 'block',
+              boxShadow: '0 24px 80px rgba(0,0,0,0.6)'
+            }}
+          />
+
+          {/* Right arrow */}
+          {images.length > 1 && (
+            <button
+              onClick={(e) => { e.stopPropagation(); goNext(); }}
+              style={{
+                position: 'absolute',
+                right: '24px',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                background: 'rgba(28,25,23,0.8)',
+                border: '1px solid rgba(201,147,58,0.3)',
+                color: '#F5F1EB',
+                fontSize: '20px',
+                width: '52px',
+                height: '52px',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                zIndex: 10000,
+                transition: 'border-color 0.3s ease, background 0.3s ease'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = '#C9933A';
+                e.currentTarget.style.background = 'rgba(201,147,58,0.15)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = 'rgba(201,147,58,0.3)';
+                e.currentTarget.style.background = 'rgba(28,25,23,0.8)';
+              }}
+            >→</button>
+          )}
+
+          {/* Thumbnail strip at bottom */}
+          <div style={{
+            position: 'absolute',
+            bottom: '24px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            display: 'flex',
+            gap: '6px',
+            padding: '8px 12px',
+            backgroundColor: 'rgba(10,8,7,0.7)',
+            backdropFilter: 'blur(8px)',
+            maxWidth: '80vw',
+            overflowX: 'auto',
+            scrollbarWidth: 'none'
+          }}>
+            {images.map((src, i) => (
+              <button
+                key={i}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setLightboxIndex(i);
+                }}
+                style={{
+                  width: '48px',
+                  height: '36px',
+                  flexShrink: 0,
+                  overflow: 'hidden',
+                  border: i === lightboxIndex
+                    ? '2px solid #C9933A'
+                    : '2px solid transparent',
+                  cursor: 'pointer',
+                  padding: 0,
+                  background: 'none',
+                  transition: 'border-color 0.2s ease'
+                }}
+              >
+                <img
+                  src={src}
+                  alt=""
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    display: 'block'
+                  }}
+                />
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+    </>
+  );
 }
 
 function HighlightCard({ index, text }: { index: number; text: string }) {
@@ -339,7 +602,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
           width: '100%',
           height: '100%',
           objectFit: 'cover',
-          objectPosition: 'center',
+          objectPosition: 'top',
           display: 'block'
         }}
         onError={(e) => {
@@ -390,7 +653,8 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
             color: '#9A948F',
             textTransform: 'uppercase'
           }}>
-            {new Date(tour.startDate).toLocaleString('en', { month: 'long' }).toUpperCase()}{' '}
+            {new Date(tour.startDate).toLocaleString('en', 
+              { month: 'long' }).toUpperCase()}{' '}
             {new Date(tour.startDate).getFullYear()}
           </span>
         </div>
@@ -485,6 +749,61 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
           )}
         </div>
       </div>
+      {(tour.galleryImages ?? []).length > 0 && (
+        <div style={{
+          position: 'absolute',
+          top: '80px',
+          right: '32px',
+          zIndex: 50
+        }}>
+          <button
+            onClick={() => {
+              const gallerySection = document.getElementById('gallery-section');
+              if (gallerySection) {
+                const offset = gallerySection.offsetTop - 100;
+                window.scrollTo({ top: offset, behavior: 'smooth' });
+              }
+            }}
+            style={{
+              fontFamily: "'Jost', Arial, sans-serif",
+              fontSize: '16px',
+              fontWeight: '600',
+              letterSpacing: '0.22em',
+              color: '#1C1917',
+              backgroundColor: '#C9933A',
+              border: '2px solid #C9933A',
+              padding: '18px 36px',
+              cursor: 'pointer',
+              textTransform: 'uppercase',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px',
+              transition: 'all 0.3s ease',
+              boxShadow: '0 4px 24px rgba(0,0,0,0.4)',
+              whiteSpace: 'nowrap'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = '#1C1917';
+              e.currentTarget.style.color = '#C9933A';
+              e.currentTarget.style.borderColor = '#C9933A';
+              e.currentTarget.style.transform = 'translateY(-2px)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = '#C9933A';
+              e.currentTarget.style.color = '#1C1917';
+              e.currentTarget.style.borderColor = '#C9933A';
+              e.currentTarget.style.transform = 'translateY(0)';
+            }}
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" 
+                 fill="none" stroke="currentColor" strokeWidth="2">
+              <rect x="3" y="3" width="18" height="18" rx="2"/>
+              <path d="M3 9h18M9 21V9"/>
+            </svg>
+            ALL PHOTOS
+          </button>
+        </div>
+      )}
     </div>
 
     {/* ══ BREADCRUMB ══ */}
@@ -627,26 +946,52 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
 
                 {/* GALLERY */}
                 {(tour.galleryImages ?? []).length > 0 && (
-                  <div style={{ marginTop: '64px' }}>
+                  <section id="gallery-section" style={{ marginTop: '64px' }}>
                     <h2 style={{
                       fontFamily: "'Cormorant Garamond', Georgia, serif",
                       fontSize: 'clamp(28px, 3vw, 36px)',
                       fontWeight: '500', color: '#1a1918',
                       marginBottom: '32px'
                     }}>{t('photoGallery')}</h2>
-                    <Gallery images={tour.galleryImages ?? []} tourTitle={tour.title} />
-                  </div>
+                    <Gallery 
+                      images={(tour.galleryImages ?? []).map((img: any) => {
+                        if (!img) return null;
+                        if (typeof img === 'string') return img;
+                        try {
+                          return urlForImage(img)?.url() ?? null;
+                        } catch {
+                          return img?.asset?.url ?? null;
+                        }
+                      }).filter((url): url is string => Boolean(url))}
+                      tourTitle={tour.title} 
+                    />
+                  </section>
                 )}
               </div>
             )}
 
             {activeTab === 'Itinerary' && (
-              <div style={{ animation: 'fadeIn 0.5s ease' }}>
-                <div style={{ position: 'relative', marginTop: '16px' }}>
-                  <div style={{
-                    position: 'absolute', top: '16px', bottom: '16px', left: '15px',
-                    width: '2px', backgroundColor: '#d49a36', zIndex: 1
-                  }} />
+              <div style={{ 
+                animation: 'fadeIn 0.5s ease',
+                backgroundColor: '#FAFAF7',
+                padding: '72px 60px'
+              }}>
+                <h2 style={{
+                  fontFamily: "'Cormorant Garamond', Georgia, serif",
+                  fontSize: 'clamp(30px, 3.2vw, 46px)',
+                  fontWeight: '500',
+                  color: '#1C1917',
+                  marginBottom: '8px'
+                }}>{t('itinerary')}</h2>
+                <p style={{
+                  fontFamily: "'Jost', Arial, sans-serif",
+                  fontStyle: 'italic',
+                  fontSize: '16px',
+                  color: '#6B6560',
+                  marginBottom: '40px'
+                }}>Experience the journey, day by day.</p>
+                
+                <div style={{ position: 'relative' }}>
                   <div style={{ position: 'relative', zIndex: 2 }}>
                     {(tour.itinerary ?? []).map((day, i) => (
                       <ItineraryItem

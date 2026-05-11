@@ -101,6 +101,7 @@ function normaliseTour(t: any, locale: string = 'ja'): Tour {
             ...day,
             title: (isJa && day.title_ja) ? day.title_ja : day.title,
             details: (isJa && day.details_ja) ? day.details_ja : day.details,
+            image: day.image ?? null,
         })),
         whatToExpect: (isJa && t.whatToExpect_ja) ? t.whatToExpect_ja : (t.whatToExpect ?? []),
         inclusions: (isJa && t.inclusions_ja) ? t.inclusions_ja : (t.inclusions ?? []),
