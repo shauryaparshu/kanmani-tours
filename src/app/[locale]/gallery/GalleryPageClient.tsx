@@ -1,0 +1,590 @@
+'use client';
+
+import React, { useState, useEffect, useRef } from 'react';
+import Link from 'next/link';
+
+interface TourGalleryData {
+  id: string;
+  title: string;
+  slug: string;
+  category: string;
+  startDate: string;
+  images: string[];
+}
+
+interface Props {
+  tours: TourGalleryData[];
+}
+
+const CATEGORIES = [
+  { label: 'All Events', value: 'all' },
+  { label: 'Celebrity Tours', value: 'Celebrity' },
+  { label: 'Culture Tours', value: 'Cultural' },
+  { label: 'Food Tours', value: 'Food' },
+  { label: 'Short Tours', value: 'Short' },
+  { label: 'Village Tours', value: 'Village' }
+];
+
+export default function GalleryPageClient({ tours }: Props) {
+  const [activeCategory, setActiveCategory] = useState<string>('all');
+  const [lightboxTour, setLightboxTour] = useState<string | null>(null);
+  const [lightboxIndex, setLightboxIndex] = useState<number>(0);
+  const [expandedTours, setExpandedTours] = useState<Set<string>>(new Set());
+  const thumbnailStripRef = useRef<HTMLDivElement>(null);
+
+  // Keyboard navigation
+  useEffect(() => {
+    if (!lightboxTour) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setLightboxTour(null);
+      } else if (e.key === 'ArrowRight') {
+        handleNextImage();
+      } else if (e.key === 'ArrowLeft') {
+        handlePrevImage();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [lightboxTour, lightboxIndex]);
+
+  const activeTourObj = tours.find(t => t.id === lightboxTour);
+
+  const handleNextImage = () => {
+    if (activeTourObj) {
+      setLightboxIndex((prev) => (prev + 1) % activeTourObj.images.length);
+    }
+  };
+
+  const handlePrevImage = () => {
+    if (activeTourObj) {
+      setLightboxIndex((prev) => (prev - 1 + activeTourObj.images.length) % activeTourObj.images.length);
+    }
+  };
+
+  useEffect(() => {
+    // Auto-scroll active thumbnail into view
+    if (thumbnailStripRef.current && activeTourObj) {
+      const activeThumb = thumbnailStripRef.current.children[lightboxIndex] as HTMLElement;
+      if (activeThumb) {
+        activeThumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      }
+    }
+  }, [lightboxIndex, activeTourObj]);
+
+  const toggleExpand = (id: string) => {
+    setExpandedTours(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
+  const filteredTours = activeCategory === 'all' 
+    ? tours 
+    : tours.filter(t => t.category === activeCategory);
+
+  const formatHeaderDate = (dateStr: string) => {
+    if (!dateStr) return '';
+    const date = new Date(dateStr);
+    return date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' }).toUpperCase();
+  };
+
+  return (
+    <div style={{ backgroundColor: '#FAFAF7', minHeight: '100vh', width: '100%' }}>
+      {/* SECTION 1 — DARK HERO HEADER */}
+      <section style={{
+        backgroundColor: '#1C1917',
+        padding: '72px 60px'
+      }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+          <div style={{
+            fontFamily: "'Jost', Arial, sans-serif",
+            fontSize: '11px',
+            color: '#C9933A',
+            textTransform: 'uppercase',
+            letterSpacing: '0.2em',
+            marginBottom: '16px'
+          }}>
+            OUR MOMENTS
+          </div>
+          <h1 style={{
+            fontFamily: "'Cormorant Garamond', Georgia, serif",
+            fontSize: 'clamp(36px, 5vw, 64px)',
+            fontWeight: '500',
+            color: '#F5F1EB',
+            margin: '0 0 24px 0',
+            lineHeight: '1.2'
+          }}>
+            A Journey in Photographs
+          </h1>
+          <div style={{
+            width: '56px',
+            height: '1px',
+            backgroundColor: '#C9933A',
+            marginBottom: '24px'
+          }} />
+          <p style={{
+            fontFamily: "'Jost', Arial, sans-serif",
+            fontWeight: '300',
+            fontSize: '16px',
+            color: '#9A948F',
+            maxWidth: '600px',
+            lineHeight: '1.7',
+            margin: '0'
+          }}>
+            Every photograph tells the story of a connection made, a dream fulfilled, and a memory that lasts a lifetime.
+          </p>
+        </div>
+      </section>
+
+      {/* SECTION 2 — FILTER BAR */}
+      <section style={{
+        backgroundColor: '#FAFAF7',
+        padding: '24px 60px',
+        borderBottom: '1px solid #E8E4DC'
+      }}>
+        <div style={{ 
+          maxWidth: '1200px', 
+          margin: '0 auto', 
+          display: 'flex', 
+          justifyContent: 'space-between', 
+          alignItems: 'center',
+          flexWrap: 'wrap',
+          gap: '16px'
+        }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+            {CATEGORIES.map(cat => {
+              const isActive = activeCategory === cat.value;
+              return (
+                <button
+                  key={cat.value}
+                  onClick={() => setActiveCategory(cat.value)}
+                  style={{
+                    fontFamily: "'Jost', Arial, sans-serif",
+                    fontSize: '12px',
+                    fontWeight: '400',
+                    letterSpacing: '0.15em',
+                    textTransform: 'uppercase',
+                    padding: '10px 24px',
+                    backgroundColor: isActive ? 'rgba(201,147,58,0.06)' : 'transparent',
+                    border: isActive ? '1px solid #C9933A' : '1px solid #E8E4DC',
+                    color: isActive ? '#C9933A' : '#1C1917',
+                    cursor: 'pointer',
+                    margin: '0',
+                    transition: 'all 0.25s ease',
+                    whiteSpace: 'nowrap'
+                  }}
+                >
+                  {cat.label}
+                </button>
+              )
+            })}
+          </div>
+          <div style={{
+            fontFamily: "'Jost', Arial, sans-serif",
+            fontSize: '12px',
+            color: '#9A948F',
+            whiteSpace: 'nowrap'
+          }}>
+            Showing {filteredTours.length} events
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 3 — EVENTS GALLERY LIST */}
+      <section style={{
+        backgroundColor: '#FAFAF7',
+        padding: '48px 60px 80px'
+      }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+          {filteredTours.length === 0 ? (
+            <div style={{
+              padding: '80px 0',
+              textAlign: 'center',
+              fontFamily: "'Cormorant Garamond', Georgia, serif",
+              fontSize: '22px',
+              fontStyle: 'italic',
+              color: '#9A948F'
+            }}>
+              No photos available for this category yet.
+            </div>
+          ) : (
+            filteredTours.map((tour, index) => {
+              const isExpanded = expandedTours.has(tour.id);
+              const imagesToShow = isExpanded ? tour.images : tour.images.slice(0, 4);
+              const hasMore = tour.images.length > 4;
+
+              return (
+                <div key={tour.id}>
+                  {/* A — EVENT HEADER ROW */}
+                  <div style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'flex-start',
+                    marginBottom: '20px',
+                    flexWrap: 'wrap',
+                    gap: '16px'
+                  }}>
+                    <div>
+                      <h2 style={{
+                        fontFamily: "'Cormorant Garamond', Georgia, serif",
+                        fontSize: '28px',
+                        fontWeight: '500',
+                        color: '#1C1917',
+                        margin: '0 0 12px 0'
+                      }}>
+                        {tour.title}
+                      </h2>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                        <span style={{
+                          fontFamily: "'Jost', Arial, sans-serif",
+                          fontSize: '12px',
+                          color: '#9A948F'
+                        }}>
+                          {formatHeaderDate(tour.startDate)}
+                        </span>
+                        <span style={{
+                          fontFamily: "'Jost', Arial, sans-serif",
+                          fontSize: '10px',
+                          color: '#C9933A',
+                          border: '1px solid #C9933A',
+                          backgroundColor: 'rgba(201,147,58,0.06)',
+                          textTransform: 'uppercase',
+                          letterSpacing: '0.2em',
+                          padding: '4px 10px'
+                        }}>
+                          {tour.category || 'Event'}
+                        </span>
+                      </div>
+                    </div>
+
+                    {hasMore && (
+                      <button
+                        onClick={() => toggleExpand(tour.id)}
+                        style={{
+                          fontFamily: "'Jost', Arial, sans-serif",
+                          fontSize: '11px',
+                          fontWeight: '600',
+                          letterSpacing: '0.18em',
+                          color: '#C9933A',
+                          border: '1px solid #C9933A',
+                          backgroundColor: 'transparent',
+                          padding: '8px 20px',
+                          cursor: 'pointer',
+                          textTransform: 'uppercase'
+                        }}
+                      >
+                        {isExpanded ? 'COLLAPSE PHOTOS' : `VIEW ALL PHOTOS (${tour.images.length})`}
+                      </button>
+                    )}
+                  </div>
+
+                  {/* B — PHOTO GRID */}
+                  <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(4, 1fr)',
+                    gap: '4px'
+                  }}>
+                    {imagesToShow.map((imgUrl, i) => (
+                      <div 
+                        key={i}
+                        onClick={() => {
+                          setLightboxTour(tour.id);
+                          setLightboxIndex(i);
+                        }}
+                        style={{
+                          aspectRatio: '1 / 1',
+                          overflow: 'hidden',
+                          cursor: 'pointer',
+                          position: 'relative',
+                          backgroundColor: '#E8E4DC'
+                        }}
+                      >
+                        <img
+                          src={imgUrl}
+                          alt={`${tour.title} photo ${i + 1}`}
+                          style={{
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'cover',
+                            objectPosition: 'center',
+                            transition: 'transform 0.4s ease',
+                            display: 'block'
+                          }}
+                          onMouseEnter={(e) => {
+                            (e.currentTarget as HTMLImageElement).style.transform = 'scale(1.06)';
+                          }}
+                          onMouseLeave={(e) => {
+                            (e.currentTarget as HTMLImageElement).style.transform = 'scale(1)';
+                          }}
+                        />
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* C — DIVIDER */}
+                  {index < filteredTours.length - 1 && (
+                    <div style={{
+                      width: '100%',
+                      height: '1px',
+                      backgroundColor: '#E8E4DC',
+                      margin: '48px 0'
+                    }} />
+                  )}
+                </div>
+              );
+            })
+          )}
+        </div>
+      </section>
+
+      {/* SECTION 4 — LIGHTBOX */}
+      {lightboxTour && activeTourObj && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(5,3,2,0.96)',
+          zIndex: 9999,
+          display: 'flex',
+          flexDirection: 'column'
+        }}>
+          {/* Top Bar */}
+          <div style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            padding: '24px 32px',
+            position: 'absolute',
+            top: 0, left: 0, right: 0,
+            zIndex: 10
+          }}>
+            <div style={{
+              fontFamily: "'Cormorant Garamond', Georgia, serif",
+              fontSize: '18px',
+              color: '#F5F1EB'
+            }}>
+              {activeTourObj.title}
+            </div>
+            <div style={{
+              fontFamily: "'Jost', Arial, sans-serif",
+              fontSize: '12px',
+              color: '#9A948F',
+              letterSpacing: '0.1em'
+            }}>
+              {lightboxIndex + 1} / {activeTourObj.images.length}
+            </div>
+            <button
+              onClick={() => setLightboxTour(null)}
+              style={{
+                width: '44px',
+                height: '44px',
+                border: '1px solid rgba(201,147,58,0.3)',
+                backgroundColor: 'transparent',
+                color: '#F5F1EB',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer',
+                fontSize: '20px',
+                padding: 0
+              }}
+            >
+              ✕
+            </button>
+          </div>
+
+          {/* Center Image */}
+          <div style={{
+            flex: 1,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '80px 24px' // padding to avoid overlap with top bar and bottom strip
+          }}>
+            <img
+              src={activeTourObj.images[lightboxIndex]}
+              alt="Lightbox"
+              style={{
+                maxWidth: '88vw',
+                maxHeight: '80vh',
+                objectFit: 'contain'
+              }}
+            />
+          </div>
+
+          {/* Left Arrow */}
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              handlePrevImage();
+            }}
+            style={{
+              position: 'absolute',
+              left: '24px',
+              top: '50%',
+              transform: 'translateY(-50%)',
+              width: '52px',
+              height: '52px',
+              backgroundColor: 'rgba(28,25,23,0.8)',
+              border: '1px solid rgba(201,147,58,0.3)',
+              color: '#F5F1EB',
+              fontSize: '20px',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              zIndex: 10,
+              transition: 'border-color 0.2s ease'
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.borderColor = '#C9933A'}
+            onMouseLeave={(e) => e.currentTarget.style.borderColor = 'rgba(201,147,58,0.3)'}
+          >
+            ←
+          </button>
+
+          {/* Right Arrow */}
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              handleNextImage();
+            }}
+            style={{
+              position: 'absolute',
+              right: '24px',
+              top: '50%',
+              transform: 'translateY(-50%)',
+              width: '52px',
+              height: '52px',
+              backgroundColor: 'rgba(28,25,23,0.8)',
+              border: '1px solid rgba(201,147,58,0.3)',
+              color: '#F5F1EB',
+              fontSize: '20px',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              zIndex: 10,
+              transition: 'border-color 0.2s ease'
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.borderColor = '#C9933A'}
+            onMouseLeave={(e) => e.currentTarget.style.borderColor = 'rgba(201,147,58,0.3)'}
+          >
+            →
+          </button>
+
+          {/* Bottom Thumbnail Strip */}
+          <div 
+            ref={thumbnailStripRef}
+            style={{
+              position: 'absolute',
+              bottom: '24px',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              display: 'flex',
+              flexDirection: 'row',
+              gap: '6px',
+              backgroundColor: 'rgba(10,8,7,0.7)',
+              backdropFilter: 'blur(8px)',
+              WebkitBackdropFilter: 'blur(8px)',
+              padding: '8px 12px',
+              maxWidth: '80vw',
+              overflowX: 'auto',
+              scrollbarWidth: 'none',
+              zIndex: 10
+            }}
+          >
+            {activeTourObj.images.map((thumbUrl, idx) => (
+              <img
+                key={idx}
+                src={thumbUrl}
+                alt={`Thumbnail ${idx + 1}`}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setLightboxIndex(idx);
+                }}
+                style={{
+                  width: '48px',
+                  height: '36px',
+                  objectFit: 'cover',
+                  cursor: 'pointer',
+                  border: lightboxIndex === idx ? '2px solid #C9933A' : '2px solid transparent',
+                  flexShrink: 0
+                }}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* SECTION 5 — BOTTOM CTA */}
+      <section style={{
+        backgroundColor: '#1C1917',
+        padding: '72px 60px',
+        textAlign: 'center',
+        borderTop: '1px solid rgba(201,147,58,0.2)'
+      }}>
+        <h2 style={{
+          fontFamily: "'Cormorant Garamond', Georgia, serif",
+          fontSize: '42px',
+          fontStyle: 'italic',
+          fontWeight: '400',
+          color: '#F5F1EB',
+          marginBottom: '32px'
+        }}>
+          Ready to be part of the story?
+        </h2>
+        <div style={{
+          display: 'flex',
+          justifyContent: 'center',
+          gap: '24px',
+          flexWrap: 'wrap'
+        }}>
+          <Link href="/tours" style={{ textDecoration: 'none' }}>
+            <button style={{
+              backgroundColor: '#C9933A',
+              color: '#1C1917',
+              padding: '18px 48px',
+              fontFamily: "'Jost', Arial, sans-serif",
+              fontSize: '12px',
+              fontWeight: '600',
+              letterSpacing: '0.28em',
+              textTransform: 'uppercase',
+              border: 'none',
+              cursor: 'pointer',
+              transition: 'background-color 0.3s ease'
+            }}>
+              Explore Tours
+            </button>
+          </Link>
+          <Link href="/contact" style={{ textDecoration: 'none' }}>
+            <button style={{
+              backgroundColor: 'transparent',
+              color: '#F5F1EB',
+              padding: '18px 48px',
+              fontFamily: "'Jost', Arial, sans-serif",
+              fontSize: '12px',
+              fontWeight: '600',
+              letterSpacing: '0.28em',
+              textTransform: 'uppercase',
+              border: '1px solid #C9933A',
+              cursor: 'pointer',
+              transition: 'background-color 0.3s ease'
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(201,147,58,0.1)'}
+            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+            >
+              Contact Us
+            </button>
+          </Link>
+        </div>
+      </section>
+    </div>
+  );
+}

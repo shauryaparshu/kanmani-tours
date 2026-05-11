@@ -91,5 +91,28 @@ export const CATEGORIES_QUERY = defineQuery(`*[_type == "tourCategory"] | order(
   title_ja,
   key,
   color,
-  priority
 }`)
+
+export const GALLERY_QUERY = defineQuery(`
+  *[_type == "tour" && defined(startDate) && dateTime(startDate + 'T00:00:00Z') < dateTime(now())] 
+  | order(startDate desc) {
+    _id,
+    title,
+    "slug": slug.current,
+    category,
+    startDate,
+    endDate,
+    coverImage {
+      asset-> {
+        _id,
+        url
+      }
+    },
+    galleryImages[] {
+      asset-> {
+        _id,
+        url
+      }
+    }
+  }
+`)

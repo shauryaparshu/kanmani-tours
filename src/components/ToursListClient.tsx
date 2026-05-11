@@ -67,12 +67,17 @@ function TourCard({ tour, tLabels, categories }: { tour: Tour; tLabels: any, cat
         <Link href={`/tours/${tour.slug}`} style={{ textDecoration: 'none', display: 'block' }}>
         <article 
             style={{
-                backgroundColor: 'transparent',
-                borderRadius: '0',
+                backgroundColor: '#FFFFFF',
+                borderRadius: '4px',
+                border: '1px solid #E8E4DC',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.03)',
+                overflow: 'hidden',
                 cursor: 'pointer',
                 display: 'flex',
                 flexDirection: 'column',
-                height: '100%'
+                height: '100%',
+                transition: 'all 0.3s ease',
+                transform: hovered ? 'translateY(-4px)' : 'translateY(0)'
             }}
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
@@ -145,7 +150,7 @@ function TourCard({ tour, tLabels, categories }: { tour: Tour; tLabels: any, cat
                         </span>
                     </div>
                 </div>
-            <div style={{ padding: '1.5rem 0', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
+            <div style={{ padding: '24px', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
                 <p style={{
                     fontFamily: "'Jost', Arial, sans-serif",
                     fontSize: '12px',
