@@ -6,63 +6,24 @@ import React, { useState } from 'react';
 const TESTIMONIALS_LIST = [
     {
         id: 1,
-        name: "Tanaka Yuki",
+        name: "Ram Charan Fan Community",
         location: "Tokyo, Japan",
-        text: "スター・インディア・ツアーのおかげで、長年の夢だったスターとの対面が叶いました！細やかな配慮と安全面へのこだわりが素晴らしく、女性一人での参加でしたが、最初から最後まで安心して楽しむことができました。現地のスタッフの方々も非常にプロフェッショナルで、言葉の壁を感じさせないおもてなしに感動しました。"
+        text: "Dr. Kanmani has been a wonderful friend to me and to our Ram Charan fan community in Tokyo. Her strong personal connections with top film personalities are truly remarkable. Thanks to her personal contacts, she arranged our visit to Ram Charan's home in Hyderabad. He spent 1.5 hours with all 16 of us, spoke individually, and even gave us gifts. All credit goes to Dr. Kanmani — caring, trustworthy, and deeply committed to people.",
+        tour: "Celebrity Home Visit — Ram Charan"
     },
     {
         id: 2,
-        name: "Sato Hiroshi",
-        location: "Osaka, Japan",
-        text: "プランが非常に練られていて、個人では絶対に行けないような映画スタジオの裏側や、スター御用達のレストランなど、貴重な体験の連続でした。映画ファンなら絶対に参加すべきツアーです。次回は家族を連れて参加したいと考えています。"
+        name: "S.J. Surya Fan Group",
+        location: "Japan",
+        text: "We are devoted S.J. Surya fans from Japan, and we asked Dr. Kanmani to help us meet him. She contacted director Karthik Subbaraj, who immediately reached out to S.J. Surya at her request. The very next day, we were welcomed into S.J. Surya's home — a dream we never thought possible. This unforgettable experience happened entirely because of Dr. Kanmani's care and influence. She understands exactly what we need, and her dedication and Japanese language skills make her truly exceptional.",
+        tour: "Celebrity Home Visit — S.J. Surya"
     },
     {
         id: 3,
-        name: "Kaneko Sato",
-        location: "Nagoya, Japan",
-        text: "インドへの旅行は初めてでしたが、事前のカウンセリングから帰国まで、日本人スタッフのサポートが手厚く、不安は一切ありませんでした。特にファンミーティングの演出は最高で、憧れの俳優さんと直接お話しできた時間は一生の宝物です！"
-    },
-    {
-        id: 4,
-        name: "Ono Miyuki",
-        location: "Yokohama, Japan",
-        text: "期待以上の体験でした。宿泊施設から移動手段、そして肝心のスターとの交流セッションまで、すべてが洗練されていました。特に南インドの文化に触れる機会も多く、映画だけでなくインドという国のファンになりました。プロ意識の高さに脱帽です。"
-    },
-    {
-        id: 5,
-        name: "Suzuki Haruka",
-        location: "Saitama, Japan",
-        text: "憧れのスターと間近で会えるなんて信じられませんでした。一生の思い出をありがとうございました。次回のツアーも必ず参加します！現地のガイドさんも日本語が完璧で、非常に心強かったです。食事も日本人の口に合うものを選んでいただき、大満足の旅でした。"
-    },
-    {
-        id: 6,
-        name: "Suzuki Aiko",
-        location: "Fukuoka, Japan",
-        text: "セキュリティがしっかりしていて、全く不安を感じませんでした。インドの魅力を再発見できる素晴らしい企画です。自分だけの特別な時間を過ごすことができ、リフレッシュできました。"
-    },
-    {
-        id: 7,
-        name: "Yamamoto Kenji",
-        location: "Kyoto, Japan",
-        text: "映画の裏側を知ることができ、映画への愛がさらに深まりました。ガイドの方の知識も豊富で、とても勉強になりました。歴史的な建造物と現代の映画産業が融合した不思議な体験を、ぜひ多くの人に味わってほしいです。"
-    },
-    {
-        id: 8,
-        name: "Matsuoka Rin",
-        location: "Chiba, Japan",
-        text: "心から感動しました。言葉が通じなくても、スタッフさんの熱意とプロフェッショナルな対応で、最高の時間を過ごせました。また近いうちに必ず戻ってきます！"
-    },
-    {
-        id: 9,
-        name: "Nakamura Mei",
-        location: "Hiroshima, Japan",
-        text: "夢のような1週間でした。スターとの対面はもちろん、映画のロケ地巡りや贅沢なホテルでの滞在など、すべてが一流でした。スタッフの皆さんのホスピタリティに心から感謝しています。"
-    },
-    {
-        id: 10,
-        name: "Kobayashi Kaito",
-        location: "Sapporo, Japan",
-        text: "インド映画のエネルギーを肌で感じることができました。最高のツアーをありがとうございました。友人や同僚にも自信を持っておすすめしたいと思います。一生忘れない経験を本当にありがとう！"
+        name: "Karthik Subbaraj Admirers",
+        location: "Japan",
+        text: "We have always admired director Karthik Subbaraj and dreamed of meeting him. During our Chennai visit, he was shooting near Madurai, yet Dr. Kanmani secured an appointment instantly. She arranged transportation from Chennai, and we spent the entire day with him and his film crew — he even hosted us for lunch. With just a few calls, Kanmani makes the impossible happen. To us, she is Akka — quick, caring, and a true leader who turns dreams into reality.",
+        tour: "Film Director Meet — Karthik Subbaraj"
     }
 ];
 

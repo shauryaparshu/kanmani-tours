@@ -82,7 +82,7 @@ export default function ContactForm() {
                 setErrors({ submit: 'Something went wrong. Please email us directly.' });
             }
         } catch {
-            setErrors({ submit: 'Connection error. Please email hello@kanmanitours.com' });
+            setErrors({ submit: 'Connection error. Please email kanmanitours@gmail.com' });
         } finally {
             setLoading(false);
         }

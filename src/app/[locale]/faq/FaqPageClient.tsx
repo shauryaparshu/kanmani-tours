@@ -91,6 +91,7 @@ function AccordionItem({ question, answer }: { question: string; answer: string 
 
 export default function FaqPageClient({ faqs }: { faqs: FaqItem[] }) {
   const [activeCategory, setActiveCategory] = useState('booking');
+  const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
   const sectionRefs = useRef<{ [key: string]: HTMLElement | null }>({});
   const sidebarRef = useRef<HTMLDivElement>(null);
 
@@ -214,7 +215,7 @@ export default function FaqPageClient({ faqs }: { faqs: FaqItem[] }) {
           >
             <p style={{
               fontFamily: "'Jost', Arial, sans-serif",
-              fontSize: '10px',
+              fontSize: '12px',
               fontWeight: '600',
               letterSpacing: '0.28em',
               color: '#9A948F',
@@ -224,79 +225,94 @@ export default function FaqPageClient({ faqs }: { faqs: FaqItem[] }) {
               CATEGORIES
             </p>
             <nav>
-              {FAQ_CATEGORIES.map(({ value, label, star }) => {
+              {FAQ_CATEGORIES.map(({ value, label, star }, index) => {
                 const isActive = activeCategory === value;
                 const count = groupedFaqs[value]?.length || 0;
                 return (
-                  <button
-                    key={value}
-                    onClick={() => scrollToCategory(value)}
-                    style={{
-                      display: 'flex',
-                      alignItems: 'flex-start',
-                      justifyContent: 'space-between',
-                      width: '100%',
-                      padding: isActive ? '10px 16px 10px 1rem' : '10px 16px 10px 12px',
-                      background: 'none',
-                      border: 'none',
-                      borderLeft: isActive
-                        ? '3px solid #d49a36'
-                        : '3px solid transparent',
-                      cursor: 'pointer',
-                      textAlign: 'left',
-                      marginBottom: '1.25rem',
-                      transition: 'all 0.25s ease',
-                      position: 'relative',
-                      zIndex: 10
-                    }}
-                  >
-                    <span style={{
-                      fontFamily: "'Jost', Arial, sans-serif",
-                      fontSize: '1.1rem',
-                      fontWeight: isActive ? '600' : '400',
-                      color: isActive ? '#d49a36' : '#6B6560',
-                      letterSpacing: '0.04em',
-                      lineHeight: '1.4',
-                      transition: 'color 0.25s ease',
-                      flex: 1,
-                      marginRight: '12px'
-                    }}>
-                      {(() => {
-                        const words = label.split(' ');
-                        const lastWord = words.pop();
-                        const mainText = words.join(' ');
-                        return (
-                          <>
-                            {mainText} 
-                            <span style={{ whiteSpace: 'nowrap' }}>
-                              &nbsp;{lastWord}
-                              {star && (
-                                <span style={{
-                                  color: '#d49a36',
-                                  marginLeft: '6px',
-                                  fontSize: '11px'
-                                }}>★</span>
-                              )}
-                            </span>
-                          </>
-                        );
-                      })()}
-                    </span>
-                    {count > 0 && (
+                  <React.Fragment key={value}>
+                    <button
+                      onClick={() => scrollToCategory(value)}
+                      onMouseEnter={() => setHoveredCategory(value)}
+                      onMouseLeave={() => setHoveredCategory(null)}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        width: '100%',
+                        padding: '14px 16px 14px 12px',
+                        background: hoveredCategory === value
+                          ? 'rgba(201,147,58,0.06)'
+                          : 'none',
+                        border: 'none',
+                        borderLeft: isActive
+                          ? '2px solid #C9933A'
+                          : hoveredCategory === value
+                            ? '2px solid rgba(201,147,58,0.4)'
+                            : '2px solid transparent',
+                        cursor: 'pointer',
+                        textAlign: 'left',
+                        transition: 'all 0.25s ease',
+                        transform: hoveredCategory === value
+                          ? 'translateY(-2px)'
+                          : 'translateY(0)',
+                        borderRadius: '0'
+                      }}
+                    >
                       <span style={{
                         fontFamily: "'Jost', Arial, sans-serif",
-                        fontSize: '12px',
-                        color: '#1a1918',
-                        backgroundColor: '#f5f1eb',
-                        padding: '3px 10px',
-                        borderRadius: '12px',
-                        fontWeight: '500',
-                        marginTop: '2px'
+                        fontSize: '19px',
+                        fontWeight: isActive || hoveredCategory === value ? '500' : '400',
+                        color: isActive
+                          ? '#C9933A'
+                          : hoveredCategory === value
+                            ? '#C9933A'
+                            : '#6B6560',
+                        letterSpacing: '0.04em',
+                        transition: 'color 0.25s ease'
                       }}>
-                        {count}
+                        {label}
+                        {star && (
+                          <span style={{
+                            color: '#C9933A',
+                            marginLeft: '6px',
+                            fontSize: '11px'
+                          }}>★</span>
+                        )}
                       </span>
+                      {count > 0 && (
+                        <span style={{
+                          fontFamily: "'Jost', Arial, sans-serif",
+                          fontSize: '17px',
+                          fontWeight: '600',
+                          color: isActive || hoveredCategory === value
+                            ? '#C9933A'
+                            : '#9A948F',
+                          transition: 'all 0.25s ease',
+                          backgroundColor: isActive || hoveredCategory === value
+                            ? 'rgba(201,147,58,0.15)'
+                            : 'rgba(201,147,58,0.06)',
+                          width: '34px',
+                          height: '34px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          borderRadius: '50%',
+                          flexShrink: 0,
+                          marginLeft: '8px'
+                        }}>
+                          {count}
+                        </span>
+                      )}
+                    </button>
+                    {index < FAQ_CATEGORIES.length - 1 && (
+                      <div style={{ 
+                        height: '1px', 
+                        backgroundColor: 'rgba(201, 147, 58, 0.15)',
+                        width: '100%',
+                        margin: '2px 0' 
+                      }} />
                     )}
-                  </button>
+                  </React.Fragment>
                 );
               })}
             </nav>

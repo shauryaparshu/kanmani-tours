@@ -145,7 +145,7 @@ export default async function ContactPage() {
                                 </div>
                                 <div style={{ display: 'flex', flexDirection: 'column' }}>
                                     <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '11px', fontWeight: '500', letterSpacing: '0.12em', color: '#C9933A', textTransform: 'uppercase' }}>Email Us</span>
-                                    <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '15px', color: '#1C1917' }}>hello@kanmanitours.com</span>
+                                    <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '15px', color: '#1C1917' }}>kanmanitours@gmail.com</span>
                                 </div>
                             </div>
 

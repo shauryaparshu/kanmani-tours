@@ -103,7 +103,7 @@ export default function HeroSection({ heroImages, pollImages, initialCelebrities
     return (
         <section id="home" className="hero animate" style={{
             animationDelay: '0.2s',
-            width: '100vw',
+            width: '100%',
             marginLeft: '0',
             marginRight: '0',
             padding: '0',
@@ -114,9 +114,48 @@ export default function HeroSection({ heroImages, pollImages, initialCelebrities
             maxWidth: 'none',
             borderRadius: '0'
         }}>
-            <div className="hero-content" style={{ width: '100%', height: '100vh', position: 'relative', overflowX: 'hidden', maxWidth: '100vw', borderRadius: '0' }}>
+            <div className="hero-content" style={{ width: '100%', height: '100vh', position: 'relative', overflowX: 'hidden', maxWidth: '100%', borderRadius: '0' }}>
                 {/* Slideshow */}
-                <HeroSlideshow images={heroImages} altPrefix="Srikan Tours" />
+                <HeroSlideshow images={heroImages} altPrefix="Srikan Tours">
+                    <style dangerouslySetInnerHTML={{ __html: `
+                        .hero-cta-btn {
+                            font-family: 'Jost', Arial, sans-serif;
+                            font-size: 15px;
+                            font-weight: 600;
+                            letter-spacing: 2px;
+                            color: #1a1918 !important;
+                            background-color: #d49a36;
+                            padding: 1.2rem 3.5rem;
+                            text-decoration: none;
+                            text-transform: uppercase;
+                            display: inline-flex;
+                            align-items: center;
+                            justify-content: center;
+                            cursor: pointer;
+                            margin-top: 8px;
+                            border: none;
+                            border-radius: 4px;
+                            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+                            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                        }
+                        .hero-cta-btn:hover {
+                            transform: translateY(-4px);
+                            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+                            filter: brightness(1.1);
+                        }
+                        .hero-cta-btn .cta-arrow {
+                            margin-left: 0.8rem;
+                            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+                        }
+                        .hero-cta-btn:hover .cta-arrow {
+                            transform: translateX(4px);
+                        }
+                    `}} />
+                    <a href="/tours" className="hero-cta-btn">
+                        EXPLORE TOURS
+                        <span className="cta-arrow">→</span>
+                    </a>
+                </HeroSlideshow>
 
                 {/* Vote card with ref for click-outside detection */}
                 {pollImages && pollImages.length > 0 && (
@@ -180,75 +219,8 @@ export default function HeroSection({ heroImages, pollImages, initialCelebrities
                         </div>
                     </div>
                 )}
-
-                {/* Text Overlay */}
-                <div style={{
-                    position: 'absolute',
-                    inset: '0',
-                    background: 'linear-gradient(to top, rgba(10,8,7,0.88) 0%, rgba(10,8,7,0.35) 55%, rgba(10,8,7,0.05) 100%)',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'flex-end',
-                    paddingBottom: '90px',
-                    zIndex: 10,
-                    textAlign: 'center'
-                }}>
-
-                    <h1 style={{
-                        fontFamily: "'Cormorant Garamond', Georgia, serif",
-                        fontSize: 'clamp(52px, 7vw, 96px)',
-                        fontWeight: '500',
-                        color: '#F5F1EB',
-                        letterSpacing: '0.06em',
-                        textAlign: 'center',
-                        lineHeight: '1.15',
-                        marginBottom: '36px',
-                        whiteSpace: 'nowrap',
-                        textShadow: '0 2px 12px rgba(0,0,0,0.4)'
-                    }}>
-                        Discover the Soul of India
-                    </h1>
-                    <style dangerouslySetInnerHTML={{ __html: `
-                        .hero-cta-btn {
-                            font-family: 'Jost', Arial, sans-serif;
-                            font-size: 15px;
-                            font-weight: 600;
-                            letter-spacing: 2px;
-                            color: #1a1918 !important;
-                            background-color: #d49a36;
-                            padding: 1.2rem 3.5rem;
-                            text-decoration: none;
-                            text-transform: uppercase;
-                            display: inline-flex;
-                            align-items: center;
-                            justify-content: center;
-                            cursor: pointer;
-                            margin-top: 3rem;
-                            border: none;
-                            border-radius: 4px;
-                            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-                            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-                        }
-                        .hero-cta-btn:hover {
-                            transform: translateY(-4px);
-                            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
-                            filter: brightness(1.1);
-                        }
-                        .hero-cta-btn .cta-arrow {
-                            margin-left: 0.8rem;
-                            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-                        }
-                        .hero-cta-btn:hover .cta-arrow {
-                            transform: translateX(4px);
-                        }
-                    `}} />
-                    <a href="/tours" className="hero-cta-btn">
-                        EXPLORE TOURS
-                        <span className="cta-arrow">→</span>
-                    </a>
-                </div>
             </div>
+
 
             {/* Vote Modal */}
             {pollImages && pollImages.length > 0 && (

@@ -7,12 +7,14 @@ interface HeroSlideshowProps {
     images: string[];
     interval?: number;
     altPrefix?: string;
+    children?: React.ReactNode;
 }
 
 export default function HeroSlideshow({
     images,
     interval = 4000,
     altPrefix = 'Slide',
+    children
 }: HeroSlideshowProps) {
     const [current, setCurrent] = useState(0);
     const [hoveredThumb, setHoveredThumb] = useState<number | null>(null);
@@ -41,35 +43,35 @@ export default function HeroSlideshow({
     }
 
     return (
-        <div className="hero-banner" style={{ position: 'relative', width: '100%', height: '100vh' }}>
-            {images.map((src, i) => (
-                <div
-                    key={src}
-                    style={{
-                        position: 'relative',
-                        width: '100vw',
-                        maxWidth: '100%',
-                        flexShrink: '0',
-                        height: '100vh',
-                        display: current === i ? 'block' : 'none'
-                    }}
-                >
-                    <Image
-                        src={src}
-                        alt={`${altPrefix} ${i + 1}`}
-                        fill
+        <div className="hero-banner" style={{ position: 'relative', width: '100%', height: '100vh', overflow: 'hidden' }}>
+            {/* Main Image Container */}
+            <div style={{ position: 'absolute', inset: 0 }}>
+                {images.map((src, i) => (
+                    <div
+                        key={src}
                         style={{
-                            width: '100%',
-                            height: '100%',
-                            objectFit: 'cover',
-                            objectPosition: 'center',
+                            position: 'absolute',
+                            inset: 0,
+                            display: current === i ? 'block' : 'none'
                         }}
-                        priority={i === 0}
-                        sizes="100vw"
-                        unoptimized
-                    />
-                </div>
-            ))}
+                    >
+                        <Image
+                            src={src}
+                            alt={`${altPrefix} ${i + 1}`}
+                            fill
+                            style={{
+                                width: '100%',
+                                height: '100%',
+                                objectFit: 'cover',
+                                objectPosition: 'top',
+                            }}
+                            priority={i === 0}
+                            sizes="100vw"
+                            unoptimized
+                        />
+                    </div>
+                ))}
+            </div>
 
             {/* Navigation arrows */}
             {images.length > 1 && (
@@ -84,20 +86,35 @@ export default function HeroSlideshow({
                             <polyline points="9 18 15 12 9 6" />
                         </svg>
                     </button>
+                </>
+            )}
 
-                    {/* Thumbnail strip */}
+            {/* Bottom Overlay Content */}
+            <div style={{
+                position: 'absolute',
+                bottom: 0,
+                left: 0,
+                right: 0,
+                zIndex: 20,
+                paddingBottom: '50px',
+                background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 50%, transparent 100%)',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: '8px'
+            }}>
+                {/* Thumbnail strip */}
+                {images.length > 1 && (
                     <div style={{
-                        position: 'absolute',
-                        bottom: '380px',
-                        left: '50%',
-                        transform: 'translateX(-50%)',
+                        padding: '12px 24px',
                         display: 'flex',
-                        gap: '12px',
-                        zIndex: 20,
-                        padding: '10px 16px',
-                        backgroundColor: 'rgba(10,8,7,0.5)',
-                        backdropFilter: 'blur(8px)',
-                        border: '1px solid rgba(201,147,58,0.2)'
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '8px',
+                        overflowX: 'auto',
+                        scrollbarWidth: 'none',
+                        width: '100%',
+                        backgroundColor: 'transparent'
                     }}>
                         {images.map((image, index) => (
                             <div
@@ -139,8 +156,11 @@ export default function HeroSlideshow({
                             </div>
                         ))}
                     </div>
-                </>
-            )}
+                )}
+
+                {/* Dynamic Children (e.g. Explore button) */}
+                {children}
+            </div>
         </div>
     );
 }
