@@ -83,7 +83,7 @@ function ItineraryItem({
   day: Tour['itinerary'][0]; 
   last: boolean 
 }) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const t = useTranslations('Home');
 
   const dayImageUrl = (() => {
@@ -99,155 +99,182 @@ function ItineraryItem({
 
   return (
     <div style={{
-      marginBottom: '2px',
-      border: '1px solid #E8E4DC',
-      backgroundColor: open 
-        ? 'rgba(201,147,58,0.06)' 
-        : '#FFFFFF',
-      transition: 'background-color 0.3s ease'
+      display: 'flex',
+      alignItems: 'flex-start',
+      gap: '32px',
+      position: 'relative',
+      marginBottom: last ? '0' : '20px'
     }}>
-      {/* HEADER ROW */}
-      <button
-        onClick={() => setOpen(!open)}
-        style={{
-          width: '100%',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '20px',
-          padding: '20px 24px',
-          background: 'none',
-          border: 'none',
-          cursor: 'pointer',
-          textAlign: 'left'
-        }}
-      >
+      {/* LEFT — Timeline Graphic Column */}
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        position: 'relative',
+        flexShrink: 0,
+        width: '36px',
+        alignSelf: 'stretch' // Fix: Dynamically stretch this container to full content height
+      }}>
+        {/* Number Circle */}
         <div style={{
           width: '36px',
           height: '36px',
           borderRadius: '50%',
-          backgroundColor: open ? '#C9933A' : 'transparent',
-          border: `2px solid #C9933A`,
+          backgroundColor: '#D49A36',
+          color: '#FFFFFF',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          flexShrink: 0,
-          transition: 'all 0.3s ease'
+          fontFamily: "'Jost', Arial, sans-serif",
+          fontSize: '13px',
+          fontWeight: '600',
+          zIndex: 3,
+          marginTop: '24px'
         }}>
-          <span style={{
-            fontFamily: "'Jost', Arial, sans-serif",
-            fontSize: '13px',
-            fontWeight: '600',
-            color: open ? '#1C1917' : '#C9933A',
-            transition: 'color 0.3s ease'
-          }}>
-            {day.dayNumber}
-          </span>
+          {day.dayNumber}
         </div>
 
-        <span style={{
-          fontFamily: "'Cormorant Garamond', Georgia, serif",
-          fontSize: '20px',
-          fontWeight: '500',
-          color: '#1C1917',
-          letterSpacing: '0.03em',
-          flex: 1,
-          textAlign: 'left'
-        }}>
-          {t('day')} {day.dayNumber}: {day.title}
-        </span>
+        {/* Persistent connector line */}
+        {!last && (
+          <div style={{
+            position: 'absolute',
+            top: '42px', 
+            bottom: '-44px', // Fix: bridges the full 20px gap plus 24px next-margin for total overlap
+            width: '2px',
+            backgroundColor: '#D49A36',
+            zIndex: 1
+          }}/>
+        )}
+      </div>
 
-        <svg
-          viewBox="0 0 24 24"
-          width="18"
-          height="18"
-          fill="none"
-          stroke="#C9933A"
-          strokeWidth="2"
+      {/* RIGHT — Main Accordion Content Container */}
+      <div style={{
+        flex: 1,
+        backgroundColor: '#FFFFFF',
+        border: '1px solid #E8E4DC',
+        borderRadius: '8px',
+        overflow: 'hidden',
+        boxShadow: '0 4px 20px rgba(28,25,23,0.02)',
+        transition: 'background-color 0.3s ease'
+      }}>
+        {/* ACCORDION HEADER ROW */}
+        <button
+          onClick={() => setOpen(!open)}
           style={{
-            flexShrink: 0,
-            transform: open ? 'rotate(180deg)' : 'rotate(0deg)',
-            transition: 'transform 0.3s ease'
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            padding: '26px 32px',
+            background: 'none',
+            border: 'none',
+            cursor: 'pointer',
+            textAlign: 'left'
           }}
         >
-          <polyline points="6 9 12 15 18 9"/>
-        </svg>
-      </button>
-
-      {/* EXPANDED CONTENT */}
-      {open && (
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: dayImageUrl ? '1fr 1fr' : '1fr',
-          borderTop: '1px solid rgba(201,147,58,0.15)',
-          minHeight: '320px'
-        }}>
-          {/* LEFT — Image */}
-          {dayImageUrl && (
-            <div style={{
-              position: 'relative',
-              overflow: 'hidden',
-              minHeight: '320px'
-            }}>
-              <img
-                src={dayImageUrl}
-                alt={`Day ${day.dayNumber}: ${day.title}`}
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover',
-                  objectPosition: 'center',
-                  display: 'block',
-                  position: 'absolute',
-                  top: 0,
-                  left: 0
-                }}
-                onError={(e) => {
-                  (e.currentTarget as HTMLImageElement).style.display = 'none';
-                }}
-              />
-              <div style={{
-                position: 'absolute',
-                bottom: '0',
-                left: '0',
-                right: '0',
-                background: 'linear-gradient(to top, rgba(10,8,7,0.8) 0%, transparent 60%)',
-                padding: '24px 20px 16px'
-              }}>
-                <span style={{
-                  fontFamily: "'Jost', Arial, sans-serif",
-                  fontSize: '10px',
-                  fontWeight: '500',
-                  letterSpacing: '0.22em',
-                  color: '#C9933A',
-                  textTransform: 'uppercase'
-                }}>
-                  Day {day.dayNumber}
-                </span>
-              </div>
-            </div>
-          )}
-
-          {/* RIGHT — Text */}
-          <div style={{
-            padding: '36px 40px',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            backgroundColor: '#FAFAF7'
+          <span style={{
+            fontFamily: "'Jost', Arial, sans-serif",
+            fontSize: '22px',
+            fontWeight: '500',
+            color: '#1C1917',
+            letterSpacing: '0.02em'
           }}>
-            <p style={{
-              fontFamily: "'Cormorant Garamond', Georgia, serif",
-              fontSize: '19px',
-              fontWeight: '400',
-              color: '#2C2420',
-              lineHeight: '1.9',
-              margin: '0'
+            {t('day')} {day.dayNumber}: {day.title}
+          </span>
+
+          <svg
+            viewBox="0 0 24 24"
+            width="20"
+            height="20"
+            fill="none"
+            stroke="#D49A36"
+            strokeWidth="2.5"
+            style={{
+              flexShrink: 0,
+              transform: open ? 'rotate(180deg)' : 'rotate(0deg)',
+              transition: 'transform 0.3s ease'
+            }}
+          >
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </button>
+
+        {/* EXPANDED CONTENT Split Grid */}
+        {open && (
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: dayImageUrl ? '1fr 1fr' : '1fr',
+            borderTop: '1px solid rgba(232,228,220,0.6)',
+            minHeight: '320px'
+          }}>
+            {/* LEFT HALF — Image */}
+            {dayImageUrl && (
+              <div style={{
+                position: 'relative',
+                overflow: 'hidden',
+                minHeight: '320px'
+              }}>
+                <img
+                  src={dayImageUrl}
+                  alt={`Day ${day.dayNumber}: ${day.title}`}
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    objectPosition: 'center',
+                    display: 'block',
+                    position: 'absolute',
+                    top: 0,
+                    left: 0
+                  }}
+                  onError={(e) => {
+                    (e.currentTarget as HTMLImageElement).style.display = 'none';
+                  }}
+                />
+                <div style={{
+                  position: 'absolute',
+                  bottom: '0',
+                  left: '0',
+                  right: '0',
+                  background: 'linear-gradient(to top, rgba(10,8,7,0.8) 0%, transparent 60%)',
+                  padding: '24px 20px 16px'
+                }}>
+                  <span style={{
+                    fontFamily: "'Jost', Arial, sans-serif",
+                    fontSize: '10px',
+                    fontWeight: '500',
+                    letterSpacing: '0.22em',
+                    color: '#C9933A',
+                    textTransform: 'uppercase'
+                  }}>
+                    Day {day.dayNumber}
+                  </span>
+                </div>
+              </div>
+            )}
+
+            {/* RIGHT HALF — Details Text */}
+            <div style={{
+              padding: '36px 40px',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              backgroundColor: '#FAFAF7'
             }}>
-              {day.details}
-            </p>
+              <p style={{
+                fontFamily: "'Jost', Arial, sans-serif",
+                fontSize: '20px',
+                fontWeight: '400',
+                color: '#111111',
+                lineHeight: '1.9',
+                margin: '0'
+              }}>
+                {day.details}
+              </p>
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }
@@ -814,7 +841,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
     }}>
       <nav style={{
         fontFamily: "'Jost', Arial, sans-serif",
-        fontSize: '12px', color: '#9A948F',
+        fontSize: '15px', color: '#9A948F',
         letterSpacing: '0.08em',
         display: 'flex', gap: '8px', alignItems: 'center'
       }}>
@@ -852,7 +879,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
                   onClick={() => setActiveTab(tab)}
                   style={{
                     fontFamily: "'Jost', Arial, sans-serif",
-                    fontSize: '14px', fontWeight: '600',
+                    fontSize: '17px', fontWeight: '600',
                     color: activeTab === tab ? '#1a1918' : '#9A948F',
                     letterSpacing: '0.1em',
                     textTransform: 'uppercase',
@@ -976,20 +1003,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
                 backgroundColor: '#FAFAF7',
                 padding: '72px 60px'
               }}>
-                <h2 style={{
-                  fontFamily: "'Cormorant Garamond', Georgia, serif",
-                  fontSize: 'clamp(30px, 3.2vw, 46px)',
-                  fontWeight: '500',
-                  color: '#1C1917',
-                  marginBottom: '8px'
-                }}>{t('itinerary')}</h2>
-                <p style={{
-                  fontFamily: "'Jost', Arial, sans-serif",
-                  fontStyle: 'italic',
-                  fontSize: '16px',
-                  color: '#6B6560',
-                  marginBottom: '40px'
-                }}>Experience the journey, day by day.</p>
+
                 
                 <div style={{ position: 'relative' }}>
                   <div style={{ position: 'relative', zIndex: 2 }}>
