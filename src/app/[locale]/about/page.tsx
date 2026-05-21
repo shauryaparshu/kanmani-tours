@@ -307,7 +307,7 @@ export default function AboutPage() {
                 color: '#F5F1EB',
                 letterSpacing: '0.05em',
                 marginBottom: '8px'
-              }}>Meet Kanmani</h2>
+              }}>Meet Dr. Kanmani</h2>
               <div style={{
                 width: '48px', height: '1px',
                 backgroundColor: '#C9933A', marginBottom: '28px'

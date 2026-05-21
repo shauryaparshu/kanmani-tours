@@ -146,7 +146,7 @@ export default function AboutKanmaniClient() {
             letterSpacing: '0.08em',
             lineHeight: '1.1',
             marginBottom: '8px'
-          }}>Kanmani</h1>
+          }}>Dr. Kanmani</h1>
           <h2 style={{
             fontFamily: "'Cormorant Garamond', Georgia, serif",
             fontSize: 'clamp(18px, 2.5vw, 28px)',

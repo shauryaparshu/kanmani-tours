@@ -25,7 +25,7 @@ export default function AboutKanmaniHoverLink() {
       e.currentTarget.style.backgroundColor = '#C9933A';
     }}
     >
-      Know More About Dr. Kanmani →
+      Know More About <span style={{ whiteSpace: 'nowrap' }}>Dr. Kanmani →</span>
     </Link>
   );
 }
