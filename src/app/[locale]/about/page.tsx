@@ -173,7 +173,7 @@ export default function AboutPage() {
               gridTemplateRows: '240px 240px',
               gap: '8px'
             }}>
-              {['Kanmani with\nJapanese guests', 'South India\nTemple Visit', 'Cultural\nExchange', 'Team\nPhoto'].map((label, i) => (
+              {['Dr. Kanmani with\nJapanese guests', 'South India\nTemple Visit', 'Cultural\nExchange', 'Team\nPhoto'].map((label, i) => (
                 <div key={i} style={{
                   backgroundColor: '#E8E4DC',
                   border: '1px solid #D4CFC9',
@@ -183,7 +183,9 @@ export default function AboutPage() {
                   flexDirection: 'column',
                   gap: '8px',
                   gridColumn: i === 0 ? 'span 2' : 'span 1',
-                  gridRow: i === 0 ? 'span 1' : 'span 1'
+                  gridRow: i === 0 ? 'span 1' : 'span 1',
+                  position: 'relative',
+                  overflow: 'hidden'
                 }}>
                   <div style={{
                     fontFamily: "'Jost', Arial, sans-serif",
@@ -199,6 +201,23 @@ export default function AboutPage() {
                     textAlign: 'center',
                     whiteSpace: 'pre-line'
                   }}>{label}</div>
+
+                  <img
+                    src={`/assets/img/about/about-${i + 1}.jpg`}
+                    alt={label.replace('\n', ' ')}
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      zIndex: 3
+                    }}
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none';
+                    }}
+                  />
                 </div>
               ))}
             </div>
@@ -231,7 +250,9 @@ export default function AboutPage() {
                 justifyContent: 'center',
                 flexDirection: 'column',
                 gap: '12px',
-                marginBottom: '16px'
+                marginBottom: '16px',
+                position: 'relative',
+                overflow: 'hidden'
               }}>
                 <div style={{
                   fontFamily: "'Jost', Arial, sans-serif",
@@ -245,7 +266,24 @@ export default function AboutPage() {
                   fontSize: '16px',
                   color: '#9A948F',
                   fontStyle: 'italic'
-                }}>Kanmani</div>
+                }}>Dr. Kanmani</div>
+
+                <img
+                  src="/assets/img/about/founder.jpg"
+                  alt="Dr. Kanmani - Founder"
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    zIndex: 3
+                  }}
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none';
+                  }}
+                />
               </div>
               <AboutKanmaniHoverLink />
             </div>
@@ -293,7 +331,7 @@ export default function AboutPage() {
                 lineHeight: '1.9',
                 marginBottom: '20px'
               }}>
-                Born in India, Kanmani came to Japan to pursue her PhD 
+                Born in India, Dr. Kanmani came to Japan to pursue her PhD 
                 and never quite left. Over more than two decades living 
                 between two extraordinary countries, she built deep 
                 relationships in both cultures and discovered a calling — 

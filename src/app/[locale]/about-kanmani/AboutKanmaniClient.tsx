@@ -7,7 +7,7 @@ const timelineEvents = [
   {
     year: '1998',
     title: 'Arrival in Japan',
-    description: 'Kanmani arrives in Japan from India to begin her postgraduate studies. Her first encounter with Japanese culture — its precision, its beauty, its depth — leaves a profound impression.',
+    description: 'Dr. Kanmani arrives in Japan from India to begin her postgraduate studies. Her first encounter with Japanese culture — its precision, its beauty, its depth — leaves a profound impression.',
     imageLabel: 'Arrival in Japan — 1998'
   },
   {
@@ -31,7 +31,7 @@ const timelineEvents = [
   {
     year: '2008',
     title: 'Kanmani Tours Founded',
-    description: 'After years of informal tours and countless requests from Japanese friends, colleagues and acquaintances, Kanmani formally establishes Kanmani Tours. The first official tour departs in December.',
+    description: 'After years of informal tours and countless requests from Japanese friends, colleagues and acquaintances, Dr. Kanmani formally establishes Kanmani Tours. The first official tour departs in December.',
     imageLabel: 'First Official Tour — 2008'
   },
   {
@@ -49,7 +49,7 @@ const timelineEvents = [
   {
     year: '2016',
     title: 'Recognition & Awards',
-    description: 'Kanmani and her work are recognised by prominent organisations in both Japan and India for her contribution to cultural exchange and responsible tourism.',
+    description: 'Dr. Kanmani and her work are recognised by prominent organisations in both Japan and India for her contribution to cultural exchange and responsible tourism.',
     imageLabel: 'Award Ceremony — 2016'
   },
   {
@@ -61,7 +61,7 @@ const timelineEvents = [
   {
     year: '2022',
     title: 'Post-Pandemic Revival',
-    description: 'After the global pause, Kanmani leads the revival of Japan-India travel with entirely redesigned tour experiences — smaller groups, deeper cultural immersion, and enhanced safety standards.',
+    description: 'After the global pause, Dr. Kanmani leads the revival of Japan-India travel with entirely redesigned tour experiences — smaller groups, deeper cultural immersion, and enhanced safety standards.',
     imageLabel: 'Revival Tour — 2022'
   },
   {
@@ -205,7 +205,8 @@ export default function AboutKanmaniClient() {
               justifyContent: 'center',
               flexDirection: 'column',
               gap: '8px',
-              position: 'relative'
+              position: 'relative',
+              overflow: 'hidden'
             }}>
               <div style={{
                 fontFamily: "'Jost', Arial, sans-serif",
@@ -219,14 +220,33 @@ export default function AboutKanmaniClient() {
                 fontSize: '16px',
                 color: '#6B6560',
                 fontStyle: 'italic'
-              }}>Main Portrait of Kanmani</div>
+              }}>Main Portrait of Dr. Kanmani</div>
+
+              <img
+                src="/assets/img/about-kanmani/founder-large.jpg"
+                alt="Main Portrait of Dr. Kanmani"
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  zIndex: 2
+                }}
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none';
+                }}
+              />
+
               <div style={{
                 position: 'absolute',
                 bottom: '20px',
                 left: '20px',
                 backgroundColor: 'rgba(28,25,23,0.75)',
                 padding: '8px 16px',
-                backdropFilter: 'blur(4px)'
+                backdropFilter: 'blur(4px)',
+                zIndex: 10
               }}>
                 <p style={{
                   fontFamily: "'Jost', Arial, sans-serif",
@@ -235,7 +255,7 @@ export default function AboutKanmaniClient() {
                   color: '#C9933A',
                   margin: 0,
                   textTransform: 'uppercase'
-                }}>Kanmani · Founder</p>
+                }}>Dr. Kanmani · Founder</p>
               </div>
             </div>
             {/* Two secondary images */}
@@ -251,7 +271,9 @@ export default function AboutKanmaniClient() {
                   flexDirection: 'column',
                   gap: '6px',
                   padding: '16px',
-                  textAlign: 'center'
+                  textAlign: 'center',
+                  position: 'relative',
+                  overflow: 'hidden'
                 }}>
                   <div style={{
                     fontFamily: "'Jost', Arial, sans-serif",
@@ -266,6 +288,23 @@ export default function AboutKanmaniClient() {
                     color: '#6B6560',
                     fontStyle: 'italic'
                   }}>{label}</div>
+
+                  <img
+                    src={`/assets/img/about-kanmani/secondary-${i + 1}.jpg`}
+                    alt={label}
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      zIndex: 3
+                    }}
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none';
+                    }}
+                  />
                 </div>
               ))}
             </div>
@@ -295,11 +334,11 @@ export default function AboutKanmaniClient() {
               backgroundColor: '#C9933A', marginBottom: '28px'
             }}/>
             {[
-              'Kanmani grew up in India with an insatiable curiosity about the world beyond her borders. In 1998, that curiosity carried her across continents to Japan, where she arrived as a student and began what would become a lifelong love affair with Japanese culture.',
-              'Japan, with its extraordinary precision, its aesthetic philosophy, its deep respect for craft and tradition — it resonated with Kanmani in ways she had not anticipated. She stayed. She studied. She completed her PhD. And all the while, she carried India within her.',
+              'Dr. Kanmani grew up in India with an insatiable curiosity about the world beyond her borders. In 1998, that curiosity carried her across continents to Japan, where she arrived as a student and began what would become a lifelong love affair with Japanese culture.',
+              'Japan, with its extraordinary precision, its aesthetic philosophy, its deep respect for craft and tradition — it resonated with Dr. Kanmani in ways she had not anticipated. She stayed. She studied. She completed her PhD. And all the while, she carried India within her.',
               'Over the years, she worked alongside prominent academics, cultural figures, and business leaders in both countries. She became known as someone who truly understood both worlds — their values, their aesthetics, their people.',
               'The idea for Kanmani Tours grew organically. Japanese colleagues and friends would ask her: "Can you take us to India? The real India?" She did. And those journeys changed people. They still do.',
-              'Today, Kanmani personally oversees every tour — the itinerary, the guides, the accommodations, the experiences. Her name is on the door, and she means it.',
+              'Today, Dr. Kanmani personally oversees every tour — the itinerary, the guides, the accommodations, the experiences. Her name is on the door, and she means it.',
             ].map((paragraph, i) => (
               <p key={i} style={{
                 fontFamily: "'Cormorant Garamond', Georgia, serif",
@@ -370,7 +409,9 @@ export default function AboutKanmaniClient() {
                 flexDirection: 'column',
                 gap: '8px',
                 padding: '20px',
-                textAlign: 'center'
+                textAlign: 'center',
+                position: 'relative',
+                overflow: 'hidden'
               }}>
                 <div style={{
                   fontFamily: "'Jost', Arial, sans-serif",
@@ -385,6 +426,23 @@ export default function AboutKanmaniClient() {
                   color: '#9A948F',
                   fontStyle: 'italic'
                 }}>{label}</div>
+
+                <img
+                  src={`/assets/img/about-kanmani/gallery-${i + 1}.jpg`}
+                  alt={label}
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    zIndex: 3
+                  }}
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none';
+                  }}
+                />
               </div>
             ))}
           </div>
@@ -466,10 +524,28 @@ export default function AboutKanmaniClient() {
                           gap: '6px',
                           marginBottom: '16px',
                           transition: 'all 0.3s ease',
-                          cursor: 'pointer'
+                          cursor: 'pointer',
+                          position: 'relative',
+                          overflow: 'hidden'
                         }}
                         onClick={() => setActiveYear(isActive ? null : event.year)}
                         >
+                          <img
+                            src={`/assets/img/about-kanmani/timeline-${event.year}.jpg`}
+                            alt={event.imageLabel}
+                            style={{
+                              position: 'absolute',
+                              top: 0,
+                              left: 0,
+                              width: '100%',
+                              height: '100%',
+                              objectFit: 'cover',
+                              zIndex: 3
+                            }}
+                            onError={(e) => {
+                              e.currentTarget.style.display = 'none';
+                            }}
+                          />
                           <div style={{
                             fontFamily: "'Jost', Arial, sans-serif",
                             fontSize: '10px',
@@ -556,10 +632,28 @@ export default function AboutKanmaniClient() {
                           gap: '6px',
                           marginBottom: '16px',
                           transition: 'all 0.3s ease',
-                          cursor: 'pointer'
+                          cursor: 'pointer',
+                          position: 'relative',
+                          overflow: 'hidden'
                         }}
                         onClick={() => setActiveYear(isActive ? null : event.year)}
                         >
+                          <img
+                            src={`/assets/img/about-kanmani/timeline-${event.year}.jpg`}
+                            alt={event.imageLabel}
+                            style={{
+                              position: 'absolute',
+                              top: 0,
+                              left: 0,
+                              width: '100%',
+                              height: '100%',
+                              objectFit: 'cover',
+                              zIndex: 3
+                            }}
+                            onError={(e) => {
+                              e.currentTarget.style.display = 'none';
+                            }}
+                          />
                           <div style={{
                             fontFamily: "'Jost', Arial, sans-serif",
                             fontSize: '10px',
