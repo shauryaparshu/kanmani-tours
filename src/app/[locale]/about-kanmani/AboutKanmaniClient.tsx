@@ -340,17 +340,17 @@ export default function AboutKanmaniClient() {
           }}>
             {[
               { label: 'Image 4 — First tour group, 2008', tall: true },
-              { label: 'Image 5 — Meenakshi Temple visit', tall: false },
-              { label: 'Image 6 — Celebrity meet, 2010', tall: false },
-              { label: 'Image 7 — Rajasthan expedition', tall: false },
+              { label: 'Image 5 — Meenakshi Temple visit', tall: true },
+              { label: 'Image 6 — Celebrity meet, 2010', tall: true },
+              { label: 'Image 7 — Rajasthan expedition', tall: true },
               { label: 'Image 8 — Japanese guests at Mahabalipuram', tall: true },
-              { label: 'Image 9 — Award ceremony', tall: false },
-              { label: 'Image 10 — Cooking class experience', tall: false },
-              { label: 'Image 11 — Kerala backwaters', tall: false },
-              { label: 'Image 12 — Recent tour 2024', tall: false },
+              { label: 'Image 9 — Award ceremony', tall: true },
+              { label: 'Image 10 — Cooking class experience', tall: true },
+              { label: 'Image 11 — Kerala backwaters', tall: true },
+              { label: 'Image 12 — Recent tour 2024', tall: true },
             ].map(({ label, tall }, i) => (
               <div key={i} style={{
-                height: tall ? '360px' : '240px',
+                height: '360px',
                 backgroundColor: '#2C2420',
                 border: '1px solid rgba(201,147,58,0.15)',
                 display: 'flex',
