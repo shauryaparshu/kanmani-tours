@@ -258,56 +258,6 @@ export default function AboutKanmaniClient() {
                 }}>Dr. Kanmani · Founder</p>
               </div>
             </div>
-            {/* Two secondary images */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
-              {['Image 2 — With Japanese guests in India', 'Image 3 — At a cultural ceremony'].map((label, i) => (
-                <div key={i} style={{
-                  height: '200px',
-                  backgroundColor: '#E8E4DC',
-                  border: '1px solid #D4CFC9',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  flexDirection: 'column',
-                  gap: '6px',
-                  padding: '16px',
-                  textAlign: 'center',
-                  position: 'relative',
-                  overflow: 'hidden'
-                }}>
-                  <div style={{
-                    fontFamily: "'Jost', Arial, sans-serif",
-                    fontSize: '10px',
-                    letterSpacing: '0.16em',
-                    color: '#9A948F',
-                    textTransform: 'uppercase'
-                  }}>Photo {i + 2}</div>
-                  <div style={{
-                    fontFamily: "'Cormorant Garamond', Georgia, serif",
-                    fontSize: '13px',
-                    color: '#6B6560',
-                    fontStyle: 'italic'
-                  }}>{label}</div>
-
-                  <img
-                    src={`/assets/img/about-kanmani/secondary-${i + 1}.jpg`}
-                    alt={label}
-                    style={{
-                      position: 'absolute',
-                      top: 0,
-                      left: 0,
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'cover',
-                      zIndex: 3
-                    }}
-                    onError={(e) => {
-                      e.currentTarget.style.display = 'none';
-                    }}
-                  />
-                </div>
-              ))}
-            </div>
           </div>
 
           {/* RIGHT — Bio text */}
