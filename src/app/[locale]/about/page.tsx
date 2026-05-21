@@ -175,7 +175,7 @@ export default function AboutPage() {
               gridTemplateRows: '240px 240px',
               gap: '8px'
             }}>
-              {['Dr. Kanmani with\nJapanese guests', 'South India\nTemple Visit', 'Cultural\nExchange', 'Team\nPhoto'].map((label, i) => (
+              {['Dr. Kanmani with\nJapanese guests', 'South India\nTemple Visit', 'Cultural\nExchange'].map((label, i) => (
                 <div key={i} style={{
                   backgroundColor: '#E8E4DC',
                   border: '1px solid #D4CFC9',
