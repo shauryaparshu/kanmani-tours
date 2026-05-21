@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 
 const timelineEvents = [
@@ -80,6 +80,39 @@ const timelineEvents = [
 
 export default function AboutKanmaniClient() {
   const [activeYear, setActiveYear] = useState<string | null>(null);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+
+  const galleryImages = [
+    { src: '/assets/img/about-kanmani/gallery-1.jpg', label: 'Image 4 — First tour group, 2008' },
+    { src: '/assets/img/about-kanmani/gallery-2.jpg', label: 'Image 5 — Meenakshi Temple visit' },
+    { src: '/assets/img/about-kanmani/gallery-3.jpg', label: 'Image 6 — Celebrity meet, 2010' },
+    { src: '/assets/img/about-kanmani/gallery-4.jpg', label: 'Image 7 — Rajasthan expedition' },
+    { src: '/assets/img/about-kanmani/gallery-5.jpg', label: 'Image 8 — Japanese guests at Mahabalipuram' },
+    { src: '/assets/img/about-kanmani/gallery-6.jpg', label: 'Image 9 — Award ceremony' },
+    { src: '/assets/img/about-kanmani/gallery-7.jpg', label: 'Image 10 — Cooking class experience' },
+    { src: '/assets/img/about-kanmani/gallery-8.jpg', label: 'Image 11 — Kerala backwaters' },
+    { src: '/assets/img/about-kanmani/gallery-9.jpg', label: 'Image 12 — Recent tour 2024' },
+  ];
+
+  const closeLightbox = useCallback(() => setLightboxIndex(null), []);
+  const prevImage = useCallback(() => setLightboxIndex(i => i !== null ? (i - 1 + galleryImages.length) % galleryImages.length : null), [galleryImages.length]);
+  const nextImage = useCallback(() => setLightboxIndex(i => i !== null ? (i + 1) % galleryImages.length : null), [galleryImages.length]);
+
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (lightboxIndex === null) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') prevImage();
+      if (e.key === 'ArrowRight') nextImage();
+    };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [lightboxIndex, closeLightbox, prevImage, nextImage]);
+
+  useEffect(() => {
+    document.body.style.overflow = lightboxIndex !== null ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [lightboxIndex]);
 
   return (
     <main>
@@ -361,8 +394,10 @@ export default function AboutKanmaniClient() {
                 padding: '20px',
                 textAlign: 'center',
                 position: 'relative',
-                overflow: 'hidden'
-              }}>
+                overflow: 'hidden',
+                cursor: 'pointer'
+              }}
+              onClick={() => setLightboxIndex(i)}>
                 <div style={{
                   fontFamily: "'Jost', Arial, sans-serif",
                   fontSize: '10px',
@@ -703,6 +738,133 @@ export default function AboutKanmaniClient() {
           }}>Contact Us</Link>
         </div>
       </div>
+
+      {/* LIGHTBOX */}
+      {lightboxIndex !== null && (
+        <div
+          onClick={closeLightbox}
+          style={{
+            position: 'fixed',
+            inset: 0,
+            backgroundColor: 'rgba(0,0,0,0.92)',
+            zIndex: 1000,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          {/* Close button */}
+          <button
+            onClick={closeLightbox}
+            style={{
+              position: 'absolute',
+              top: '24px',
+              right: '32px',
+              background: 'none',
+              border: 'none',
+              color: '#F5F1EB',
+              fontSize: '36px',
+              cursor: 'pointer',
+              lineHeight: 1,
+              opacity: 0.8,
+              fontFamily: "'Jost', sans-serif",
+            }}
+            aria-label="Close"
+          >×</button>
+
+          {/* Prev arrow */}
+          <button
+            onClick={(e) => { e.stopPropagation(); prevImage(); }}
+            style={{
+              position: 'absolute',
+              left: '24px',
+              background: 'rgba(201,147,58,0.15)',
+              border: '1px solid rgba(201,147,58,0.4)',
+              color: '#C9933A',
+              fontSize: '28px',
+              width: '56px',
+              height: '56px',
+              borderRadius: '50%',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              transition: 'background 0.2s',
+            }}
+            onMouseEnter={e => (e.currentTarget.style.background = 'rgba(201,147,58,0.35)')}
+            onMouseLeave={e => (e.currentTarget.style.background = 'rgba(201,147,58,0.15)')}
+            aria-label="Previous image"
+          >‹</button>
+
+          {/* Image */}
+          <div
+            onClick={e => e.stopPropagation()}
+            style={{
+              maxWidth: '88vw',
+              maxHeight: '88vh',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: '16px',
+            }}
+          >
+            <img
+              src={galleryImages[lightboxIndex].src}
+              alt={galleryImages[lightboxIndex].label}
+              style={{
+                maxWidth: '100%',
+                maxHeight: '80vh',
+                objectFit: 'contain',
+                borderRadius: '2px',
+                boxShadow: '0 8px 64px rgba(0,0,0,0.7)',
+              }}
+            />
+            <div style={{
+              fontFamily: "'Cormorant Garamond', Georgia, serif",
+              fontSize: '16px',
+              fontStyle: 'italic',
+              color: '#D4CFC9',
+              letterSpacing: '0.04em',
+              textAlign: 'center',
+            }}>
+              {galleryImages[lightboxIndex].label}
+            </div>
+            <div style={{
+              fontFamily: "'Jost', sans-serif",
+              fontSize: '11px',
+              letterSpacing: '0.18em',
+              color: '#6B6560',
+              textTransform: 'uppercase',
+            }}>
+              {lightboxIndex + 1} / {galleryImages.length}
+            </div>
+          </div>
+
+          {/* Next arrow */}
+          <button
+            onClick={(e) => { e.stopPropagation(); nextImage(); }}
+            style={{
+              position: 'absolute',
+              right: '24px',
+              background: 'rgba(201,147,58,0.15)',
+              border: '1px solid rgba(201,147,58,0.4)',
+              color: '#C9933A',
+              fontSize: '28px',
+              width: '56px',
+              height: '56px',
+              borderRadius: '50%',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              transition: 'background 0.2s',
+            }}
+            onMouseEnter={e => (e.currentTarget.style.background = 'rgba(201,147,58,0.35)')}
+            onMouseLeave={e => (e.currentTarget.style.background = 'rgba(201,147,58,0.15)')}
+            aria-label="Next image"
+          >›</button>
+        </div>
+      )}
     </main>
   );
 }
