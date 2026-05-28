@@ -30,23 +30,46 @@ async function syncTours() {
 
         const docFields = {
             title: tour.title,
+            titleJa: tour.title_ja || tour.titleJa || null,
             slug: { _type: 'slug', current: tour.slug },
             category: tour.category,
             shortDescription: tour.shortDescription,
+            shortDescriptionJa: tour.shortDescription_ja || tour.shortDescriptionJa || null,
             longDescription: tour.longDescription,
+            longDescriptionJa: tour.longDescription_ja || tour.longDescriptionJa || null,
             startDate: tour.startDate,
             endDate: tour.endDate,
             durationDays: tour.durationDays,
+            dateDisplay: tour.dateDisplay || null,
+            dateDisplayJa: tour.dateDisplay_ja || tour.dateDisplayJa || null,
             location: tour.location,
+            locationJa: tour.location_ja || tour.locationJa || null,
             priceJPY: tour.priceJPY,
             priceRangeJPY: tour.priceRangeJPY || null,
             seatsLeft: tour.seatsLeft,
             features: tour.features,
-            itinerary: tour.itinerary,
+            featuresJa: tour.features_ja || tour.featuresJa || null,
+            highlightsJa: tour.features_ja || tour.highlightsJa || null, // Map features_ja to highlightsJa as queried by pages
+            itinerary: (tour.itinerary || []).map(day => ({
+                dayNumber: day.dayNumber,
+                title: day.title,
+                titleJa: day.title_ja || day.titleJa || null,
+                details: day.details,
+                detailsJa: day.details_ja || day.detailsJa || null,
+                image: day.image || null
+            })),
             whatToExpect: tour.whatToExpect,
+            whatToExpectJa: tour.whatToExpect_ja || tour.whatToExpectJa || null,
             inclusions: tour.inclusions,
+            inclusionsJa: tour.inclusions_ja || tour.inclusionsJa || null,
             exclusions: tour.exclusions,
-            faq: tour.faq,
+            exclusionsJa: tour.exclusions_ja || tour.exclusionsJa || null,
+            faq: (tour.faq || []).map(item => ({
+                question: item.question,
+                questionJa: item.question_ja || item.questionJa || null,
+                answer: item.answer,
+                answerJa: item.answer_ja || item.answerJa || null
+            })),
             bookingLink: tour.bookingLink,
         };
 
@@ -62,6 +85,20 @@ async function syncTours() {
             }
         } catch (err) {
             console.error(`Error syncing ${tour.title}:`, err.message);
+        }
+    }
+
+    // Delete any tours in Sanity that are no longer in tours.json
+    console.log('\nCleaning up removed tours in Sanity...');
+    const localSlugs = localTours.map(t => t.slug);
+    for (const st of sanityTours) {
+        if (!localSlugs.includes(st.slug)) {
+            try {
+                await client.delete(st._id);
+                console.log(`Deleted removed tour from Sanity: ${st.slug}`);
+            } catch (err) {
+                console.error(`Error deleting tour ${st.slug}:`, err.message);
+            }
         }
     }
 }
@@ -85,7 +122,9 @@ async function syncFAQs() {
 
         const docFields = {
             question: faq.question,
+            questionJa: faq.question_ja || faq.questionJa || null,
             answer: faq.answer,
+            answerJa: faq.answer_ja || faq.answerJa || null,
             order: faq.id,
         };
 
