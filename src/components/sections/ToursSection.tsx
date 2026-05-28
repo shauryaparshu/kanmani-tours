@@ -223,7 +223,7 @@ export default function ToursSection({ tours, cardImages = {}, locale: propLocal
                                             letterSpacing: '0.08em',
                                             marginBottom: '10px'
                                         }}>
-                                            {formatDateRange(tour.startDate, tour.endDate)} | {locale === 'ja' ? (tour.locationJa || tour.location)?.toUpperCase() : tour.location?.toUpperCase()}
+                                            {formatDateRange(tour.startDate, tour.endDate)} | {tour.location?.toUpperCase()}
                                         </div>
                                         
                                         <h3 style={{
@@ -237,7 +237,7 @@ export default function ToursSection({ tours, cardImages = {}, locale: propLocal
                                             marginTop: 0,
                                             fontVariantNumeric: 'lining-nums'
                                         }}>
-                                            {locale === 'ja' ? (tour.titleJa || tour.title) : tour.title}
+                                            {tour.title}
                                         </h3>
                                         
                                         <div className="tour-card-cta">

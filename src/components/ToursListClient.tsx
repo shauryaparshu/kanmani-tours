@@ -173,7 +173,7 @@ function TourCard({ tour, tLabels, categories }: { tour: Tour; tLabels: any, cat
                         transition: 'color 0.3s ease',
                         fontVariantNumeric: 'lining-nums'
                     }}>
-                        {locale === 'ja' ? (tour.titleJa || tour.title) : tour.title}
+                        {tour.title}
                     </span>
                 </h2>
                 <div style={{
@@ -189,7 +189,7 @@ function TourCard({ tour, tLabels, categories }: { tour: Tour; tLabels: any, cat
                     <svg viewBox="0 0 24 24" width="12" height="12" fill="#4a4a4a">
                         <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
                     </svg>
-                    {locale === 'ja' ? (tour.locationJa || tour.location)?.toUpperCase() : tour.location?.toUpperCase()}
+                    {tour.location?.toUpperCase()}
                 </div>
                 
                 {showComingSoon && (
@@ -217,7 +217,7 @@ function TourCard({ tour, tLabels, categories }: { tour: Tour; tLabels: any, cat
                     WebkitBoxOrient: 'vertical',
                     overflow: 'hidden'
                 }}>
-                    {locale === 'ja' ? (tour.shortDescriptionJa || tour.shortDescription) : tour.shortDescription}
+                    {tour.shortDescription}
                 </p>
 
                 {upcoming && tour.seatsLeft > 0 && tour.seatsLeft <= 5 && (
