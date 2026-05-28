@@ -1104,7 +1104,6 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
               }}>
                 {/* LEFT SIDE: Info Box */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                  <div>
                   
                   <p style={{
                     fontFamily: "'Jost', Arial, sans-serif",
