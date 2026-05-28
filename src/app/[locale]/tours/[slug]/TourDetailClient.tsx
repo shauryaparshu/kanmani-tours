@@ -698,86 +698,69 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
         position: 'absolute',
         bottom: '0',
         left: '0',
+        right: '0',
+        width: '100%',
         zIndex: 10,
         backgroundColor: 'rgba(8,5,3,0.85)',
         backdropFilter: 'blur(16px)',
         borderTop: '1px solid rgba(201,147,58,0.5)',
-        borderLeft: '3px solid #C9933A',
-        padding: '0 60px',
-        display: 'inline-block',
-        maxWidth: '850px',
-        minWidth: '480px'
+        padding: '20px 60px',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '8px'
       }}>
+        {/* LINE 1: Title and Category/Seats pill */}
         <div style={{
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          paddingTop: '18px',
-          paddingBottom: '10px',
-          borderBottom: '1px solid rgba(201,147,58,0.15)'
+          width: '100%',
+          flexWrap: 'wrap',
+          gap: '12px'
         }}>
-          <span style={{
-            fontFamily: "'Jost', Arial, sans-serif",
-            fontSize: '12px',
-            fontWeight: '500',
-            letterSpacing: '0.28em',
-            color: '#C9933A',
-            textTransform: 'uppercase'
-          }}>{categoryLabel}</span>
-          <span style={{
-            fontFamily: "'Jost', Arial, sans-serif",
-            fontSize: '11px',
-            fontWeight: '400',
-            letterSpacing: '0.22em',
-            color: '#9A948F',
-            textTransform: 'uppercase'
-          }}>
-            {heroMonthYear}
-          </span>
-        </div>
-        <div style={{ padding: '16px 0 8px 0' }}>
           <h1 style={{
             fontFamily: "'Jost', Arial, sans-serif",
-            fontSize: 'clamp(34px, 4.5vw, 58px)',
+            fontSize: 'clamp(22px, 2.5vw, 36px)',
             fontWeight: '500',
             color: '#FFFFFF',
             letterSpacing: '0.04em',
             lineHeight: '1.2',
-            margin: '0 0 10px 0'
+            margin: '0'
           }}>{tour.title}</h1>
-          {tour.shortDescription && (
-            <p style={{
+          <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+            <span style={{
               fontFamily: "'Jost', Arial, sans-serif",
-              fontSize: 'clamp(15px, 1.4vw, 18px)',
-              fontWeight: '300',
-              color: 'rgba(200,194,188,0.9)',
-              letterSpacing: '0.02em',
-              lineHeight: '1.7',
-              margin: '0',
-              maxWidth: '640px',
-              display: 'block'
-            }}>
-              {(() => {
-                const text = tour.shortDescription || '';
-                if (text.length <= 140) return text;
-                const sentenceEnd = text.search(/[.!?]/);
-                if (sentenceEnd > 40 && sentenceEnd < 180) {
-                  return text.substring(0, sentenceEnd + 1);
-                }
-                const truncated = text.substring(0, 140);
-                const lastSpace = truncated.lastIndexOf(' ');
-                return truncated.substring(0, lastSpace) + '…';
-              })()}
-            </p>
-          )}
+              fontSize: '11px',
+              fontWeight: '500',
+              letterSpacing: '0.28em',
+              color: '#C9933A',
+              textTransform: 'uppercase'
+            }}>{categoryLabel}</span>
+            {!isPast && (
+              <span style={{
+                fontFamily: "'Jost', Arial, sans-serif",
+                fontSize: '10px',
+                fontWeight: '600',
+                letterSpacing: '0.18em',
+                color: '#1C1917',
+                backgroundColor: '#C9933A',
+                padding: '4px 14px',
+                textTransform: 'uppercase',
+                whiteSpace: 'nowrap'
+              }}>{seatsLeftLabel}</span>
+            )}
+          </div>
         </div>
+
+        {/* LINE 2: Dates, Location, and Short Description */}
         <div style={{
           display: 'flex',
           alignItems: 'center',
-          paddingTop: '10px',
-          paddingBottom: '18px',
+          gap: '16px',
+          flexWrap: 'wrap',
+          width: '100%',
           borderTop: '1px solid rgba(201,147,58,0.15)',
-          gap: '0'
+          paddingTop: '8px'
         }}>
           <span style={{
             fontFamily: "'Jost', Arial, sans-serif",
@@ -793,33 +776,42 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
           <span style={{
             display: 'inline-block', width: '4px', height: '4px',
             borderRadius: '50%', backgroundColor: 'rgba(201,147,58,0.45)',
-            margin: '0 16px', flexShrink: 0
+            flexShrink: 0
           }}/>
           <span style={{
             fontFamily: "'Jost', Arial, sans-serif",
             fontSize: '14px', fontWeight: '400',
             color: '#C8C2BC', letterSpacing: '0.08em',
-            textTransform: 'uppercase', whiteSpace: 'normal',
+            textTransform: 'uppercase', whiteSpace: 'nowrap',
             lineHeight: '1.4'
           }}>
             {locationLabel}
           </span>
-          <span style={{
-            display: 'inline-block', width: '4px', height: '4px',
-            borderRadius: '50%', backgroundColor: 'rgba(201,147,58,0.45)',
-            margin: '0 16px', flexShrink: 0
-          }}/>
-          {!isPast && (
-            <span style={{
-              fontFamily: "'Jost', Arial, sans-serif",
-              fontSize: '10px', fontWeight: '600',
-              letterSpacing: '0.18em', color: '#1C1917',
-              backgroundColor: '#C9933A',
-              padding: '4px 14px', textTransform: 'uppercase',
-              whiteSpace: 'nowrap', flexShrink: 0
-            }}>
-              {seatsLeftLabel}
-            </span>
+          {tour.shortDescription && (
+            <>
+              <span style={{
+                display: 'inline-block', width: '4px', height: '4px',
+                borderRadius: '50%', backgroundColor: 'rgba(201,147,58,0.45)',
+                flexShrink: 0
+              }}/>
+              <p style={{
+                fontFamily: "'Jost', Arial, sans-serif",
+                fontSize: '14px',
+                fontWeight: '300',
+                color: 'rgba(200,194,188,0.9)',
+                letterSpacing: '0.02em',
+                lineHeight: '1.4',
+                margin: '0',
+                flexGrow: 1,
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                display: '-webkit-box',
+                WebkitLineClamp: 1,
+                WebkitBoxOrient: 'vertical'
+              }}>
+                {tour.shortDescription}
+              </p>
+            </>
           )}
         </div>
       </div>
