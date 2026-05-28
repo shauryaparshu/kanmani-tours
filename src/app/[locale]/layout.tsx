@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "../globals.css";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
@@ -8,11 +7,6 @@ import { routing } from "@/i18n/routing";
 import BookingWrapper from "@/components/forms/BookingWrapper";
 import { getAllTours } from "@/lib/tours";
 import Navigation from '@/components/layout/Navigation';
-
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: "Kanmani Tours | Exclusive Japan-India Journeys",
@@ -45,12 +39,7 @@ export default async function RootLayout({
 
   return (
     <html lang={locale} style={{ scrollbarWidth: 'thin', scrollbarColor: '#C9933A #1C1917' }}>
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
-      </head>
-      <body className={`${inter.variable}`}>
+      <body>
         <NextIntlClientProvider messages={messages}>
           <BookingWrapper upcomingTours={upcomingTours}>
             <Navigation />

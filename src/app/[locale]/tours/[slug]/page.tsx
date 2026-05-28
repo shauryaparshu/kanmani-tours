@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getAllTours, getTourBySlug } from '@/lib/tours';
-import { getLatestImage } from '@/lib/server-images';
 import Footer from '@/components/layout/FooterSection';
 import TourDetailClient from './TourDetailClient';
 
@@ -26,8 +25,8 @@ export async function generateStaticParams() {
 
 // Dynamic SEO metadata per tour
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-    const { slug } = await params;
-    const tour = await getTourBySlug(slug);
+    const { locale, slug } = await params;
+    const tour = await getTourBySlug(slug, locale);
     if (!tour) return { title: 'Tour Not Found — Srikan Tours' };
 
     const heroImage = tour.coverImage;
@@ -45,26 +44,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function TourDetailPage({ params }: PageProps) {
     const { locale, slug } = await params;
-    const tour = await getTourBySlug(slug, locale);
-    
-    console.log("HERO PANEL DATA CHECK:", JSON.stringify({
-      title: tour?.title,
-      category: tour?.category,
-      startDate: tour?.startDate,
-      endDate: tour?.endDate,
-      dateDisplay: tour?.dateDisplay,
-      isComingSoon: tour?.isComingSoon,
-      shortDescription: tour?.shortDescription,
-      location: tour?.location,
-      seatsLeft: tour?.seatsLeft,
-    }, null, 2))
+    const [tour, allTours] = await Promise.all([
+        getTourBySlug(slug, locale),
+        getAllTours(locale)
+    ]);
 
     if (!tour) notFound();
 
     // Other upcoming tours (exclude current)
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    const allTours = await getAllTours(locale);
     const otherTours = allTours
         .filter(t => {
             const start = new Date(t.startDate);

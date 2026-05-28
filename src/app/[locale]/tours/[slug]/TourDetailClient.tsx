@@ -1,10 +1,8 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
+import { Link } from '@/i18n/routing';
 import type { Tour, TourFaq } from '@/lib/tours';
-import { formatPriceJPY, formatPriceRange } from '@/lib/tours';
-import { useBooking } from '@/context/BookingContext';
 import { useTranslations, useLocale } from 'next-intl';
 import { urlForImage } from '@/sanity/lib/image';
 
@@ -12,6 +10,25 @@ interface TourDetailClientProps {
     tour: Tour;
     otherTours: Tour[];
 }
+
+type DetailTab = 'overview' | 'itinerary' | 'included' | 'faq';
+
+type CategoryTranslator = (key: string) => string;
+type ImageWithAssetUrl = { asset?: { url?: string } };
+
+const CATEGORY_TRANSLATION_KEYS: Record<string, string> = {
+  Cultural: 'cultureTours',
+  Food: 'foodTours',
+  Celebrity: 'celebrityTours',
+  Education: 'educationTours',
+  Industrial: 'industrialTours',
+  Ayurveda: 'ayurvedaTours',
+  Village: 'villageTours',
+  Cooking: 'cookingClasses',
+  Homestay: 'homestay',
+  Temple: 'templeTours',
+  Short: 'shortTours',
+};
 
 function AccordionItem({ question, answer }: TourFaq) {
     const [open, setOpen] = useState(false);
@@ -93,7 +110,7 @@ function ItineraryItem({
       const url = urlForImage(day.image)?.url();
       return url || null;
     } catch {
-      return (day.image as any)?.asset?.url || null;
+      return (day.image as ImageWithAssetUrl)?.asset?.url || null;
     }
   })();
 
@@ -216,7 +233,7 @@ function ItineraryItem({
               }}>
                 <img
                   src={dayImageUrl}
-                  alt={`Day ${day.dayNumber}: ${day.title}`}
+                  alt={`${t('day')} ${day.dayNumber}: ${day.title}`}
                   style={{
                     width: '100%',
                     height: '100%',
@@ -247,7 +264,7 @@ function ItineraryItem({
                     color: '#C9933A',
                     textTransform: 'uppercase'
                   }}>
-                    Day {day.dayNumber}
+                    {t('day')} {day.dayNumber}
                   </span>
                 </div>
               </div>
@@ -575,28 +592,51 @@ function HighlightCard({ index, text }: { index: number; text: string }) {
   );
 }
 
-function getTranslationForDaysLeft(startDate: string, t: any): string {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+function getCategoryLabel(category: string, tTours: CategoryTranslator): string {
+    const key = CATEGORY_TRANSLATION_KEYS[category];
+    return key ? tTours(key) : category;
+}
+
+function getLocaleTag(locale: string): string {
+    return locale === 'ja' ? 'ja-JP' : 'en-US';
+}
+
+function formatMonthYear(date: string, locale: string): string {
+    const formatted = new Intl.DateTimeFormat(getLocaleTag(locale), {
+        month: 'long',
+        year: 'numeric'
+    }).format(new Date(date));
+
+    return locale === 'ja' ? formatted : formatted.toUpperCase();
+}
+
+function formatDateRangeForLocale(startDate: string, endDate: string, locale: string): string {
     const start = new Date(startDate);
-    start.setHours(0, 0, 0, 0);
-    const diff = Math.ceil((start.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
-    if (diff > 0) return t('daysToGo', { count: diff });
-    if (diff === 0) return t('startsToday');
-    return t('inProgress');
+    const end = new Date(endDate);
+    const localeTag = getLocaleTag(locale);
+
+    const formatOptions: Intl.DateTimeFormatOptions = locale === 'ja'
+        ? { year: 'numeric', month: 'long', day: 'numeric' }
+        : { month: 'short', day: 'numeric', year: 'numeric' };
+
+    const startFormatted = new Intl.DateTimeFormat(localeTag, formatOptions).format(start);
+    const endFormatted = new Intl.DateTimeFormat(localeTag, formatOptions).format(end);
+
+    return `${startFormatted} - ${endFormatted}`;
+}
+
+function preserveCaseForLocale(value: string | undefined, locale: string): string {
+    if (!value) return '';
+    return locale === 'ja' ? value : value.toUpperCase();
 }
 
 export default function TourDetailClient({ tour, otherTours }: TourDetailClientProps) {
-    const { openBooking } = useBooking();
     const t = useTranslations('Home');
     const tButtons = useTranslations('Buttons');
-    const tNav = useTranslations('Tours');
+    const tTours = useTranslations('Tours');
+    const tNavigation = useTranslations('Navigation');
     const locale = useLocale();
-    const [activeTab, setActiveTab] = useState('Overview');
-
-    const handleBook = () => openBooking(tour.slug);
-
-    const daysLeftStr = getTranslationForDaysLeft(tour.startDate, t);
+    const [activeTab, setActiveTab] = useState<DetailTab>('overview');
 
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -605,11 +645,23 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
     const isPast = start <= today;
     const showComingSoon = !isPast && tour.isComingSoon;
 
-    const dateOptions: Intl.DateTimeFormatOptions = { month: 'long', day: 'numeric', year: 'numeric' };
-
     // Always provide a non-empty src — empty string causes React to re-fetch the page
     const heroSrc = tour.coverImage ||
         `https://placehold.co/1400x600/1c2331/ffffff?text=${encodeURIComponent(tour.title)}`;
+    const categoryLabel = getCategoryLabel(tour.category, tTours);
+    const heroMonthYear = formatMonthYear(tour.startDate, locale);
+    const formattedDateRange = formatDateRangeForLocale(tour.startDate, tour.endDate, locale);
+    const displayDateRange = showComingSoon && tour.dateDisplay
+        ? preserveCaseForLocale(tour.dateDisplay, locale)
+        : formattedDateRange;
+    const locationLabel = preserveCaseForLocale(tour.location, locale);
+    const seatsLeftLabel = t('seatsLeftPill', { count: tour.seatsLeft });
+    const tabs: { key: DetailTab; label: string }[] = [
+        { key: 'overview', label: t('overviewTab') },
+        { key: 'itinerary', label: t('itinerary') },
+        { key: 'included', label: `${t('included')} / ${t('notIncluded')}` },
+        { key: 'faq', label: tNavigation('faq') }
+    ];
 
     return (
   <>
@@ -671,7 +723,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
             letterSpacing: '0.28em',
             color: '#C9933A',
             textTransform: 'uppercase'
-          }}>{tour.category}</span>
+          }}>{categoryLabel}</span>
           <span style={{
             fontFamily: "'Jost', Arial, sans-serif",
             fontSize: '11px',
@@ -680,9 +732,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
             color: '#9A948F',
             textTransform: 'uppercase'
           }}>
-            {new Date(tour.startDate).toLocaleString('en', 
-              { month: 'long' }).toUpperCase()}{' '}
-            {new Date(tour.startDate).getFullYear()}
+            {heroMonthYear}
           </span>
         </div>
         <div style={{ padding: '16px 0 8px 0' }}>
@@ -738,10 +788,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
             textTransform: 'uppercase',
             whiteSpace: 'nowrap'
           }}>
-            {showComingSoon && tour.dateDisplay
-              ? tour.dateDisplay.toUpperCase()
-              : `${new Date(tour.startDate).toLocaleDateString('en', { month: 'short', day: 'numeric' })} — ${new Date(tour.endDate).toLocaleDateString('en', { month: 'short', day: 'numeric', year: 'numeric' })}`
-            }
+            {displayDateRange}
           </span>
           <span style={{
             display: 'inline-block', width: '4px', height: '4px',
@@ -755,7 +802,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
             textTransform: 'uppercase', whiteSpace: 'normal',
             lineHeight: '1.4'
           }}>
-            {tour.location?.toUpperCase()}
+            {locationLabel}
           </span>
           <span style={{
             display: 'inline-block', width: '4px', height: '4px',
@@ -771,7 +818,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
               padding: '4px 14px', textTransform: 'uppercase',
               whiteSpace: 'nowrap', flexShrink: 0
             }}>
-              {tour.seatsLeft} SEATS LEFT
+              {seatsLeftLabel}
             </span>
           )}
         </div>
@@ -827,7 +874,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
               <rect x="3" y="3" width="18" height="18" rx="2"/>
               <path d="M3 9h18M9 21V9"/>
             </svg>
-            ALL PHOTOS
+            {t('allPhotos')}
           </button>
         </div>
       )}
@@ -845,9 +892,9 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
         letterSpacing: '0.08em',
         display: 'flex', gap: '8px', alignItems: 'center'
       }}>
-        <Link href="/" style={{ color: '#9A948F', textDecoration: 'none' }}>Home</Link>
+        <Link href="/" style={{ color: '#9A948F', textDecoration: 'none' }}>{tTours('breadcrumbHome')}</Link>
         <span style={{ color: '#C9933A' }}>›</span>
-        <Link href="/tours" style={{ color: '#9A948F', textDecoration: 'none' }}>Tours</Link>
+        <Link href="/tours" style={{ color: '#9A948F', textDecoration: 'none' }}>{tTours('breadcrumbTours')}</Link>
         <span style={{ color: '#C9933A' }}>›</span>
         <span style={{ color: '#1C1917' }}>{tour.title}</span>
       </nav>
@@ -873,31 +920,31 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
               overflowX: 'auto',
               whiteSpace: 'nowrap'
             }}>
-              {['Overview', 'Itinerary', 'Included/Not Included', 'FAQ'].map(tab => (
+              {tabs.map(tab => (
                 <button
-                  key={tab}
-                  onClick={() => setActiveTab(tab)}
+                  key={tab.key}
+                  onClick={() => setActiveTab(tab.key)}
                   style={{
                     fontFamily: "'Jost', Arial, sans-serif",
                     fontSize: '17px', fontWeight: '600',
-                    color: activeTab === tab ? '#1a1918' : '#9A948F',
+                    color: activeTab === tab.key ? '#1a1918' : '#9A948F',
                     letterSpacing: '0.1em',
                     textTransform: 'uppercase',
                     padding: '12px 0 16px',
                     border: 'none',
                     backgroundColor: 'transparent',
-                    borderBottom: activeTab === tab ? '2px solid #d49a36' : '2px solid transparent',
+                    borderBottom: activeTab === tab.key ? '2px solid #d49a36' : '2px solid transparent',
                     cursor: 'pointer',
                     transition: 'all 0.3s ease'
                   }}
                 >
-                  {tab}
+                  {tab.label}
                 </button>
               ))}
             </div>
 
             {/* TAB CONTENTS */}
-            {activeTab === 'Overview' && (
+            {activeTab === 'overview' && (
               <div style={{ animation: 'fadeIn 0.5s ease' }}>
                 {/* HIGHLIGHTS */}
                 {(tour.features ?? []).length > 0 && (
@@ -981,13 +1028,13 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
                       marginBottom: '32px'
                     }}>{t('photoGallery')}</h2>
                     <Gallery 
-                      images={(tour.galleryImages ?? []).map((img: any) => {
+                      images={(tour.galleryImages ?? []).map((img) => {
                         if (!img) return null;
                         if (typeof img === 'string') return img;
                         try {
                           return urlForImage(img)?.url() ?? null;
                         } catch {
-                          return img?.asset?.url ?? null;
+                          return (img as ImageWithAssetUrl)?.asset?.url ?? null;
                         }
                       }).filter((url): url is string => Boolean(url))}
                       tourTitle={tour.title} 
@@ -997,7 +1044,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
               </div>
             )}
 
-            {activeTab === 'Itinerary' && (
+            {activeTab === 'itinerary' && (
               <div style={{ 
                 animation: 'fadeIn 0.5s ease',
                 backgroundColor: '#FAFAF7',
@@ -1019,7 +1066,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
               </div>
             )}
 
-            {activeTab === 'Included/Not Included' && (
+            {activeTab === 'included' && (
               <div style={{ animation: 'fadeIn 0.5s ease' }}>
                   <div style={{
                     display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '4rem'
@@ -1030,16 +1077,9 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
                         fontFamily: "'Jost', Arial, sans-serif", fontSize: '14px', fontWeight: '600',
                         color: '#1a1918', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '24px',
                         paddingBottom: '12px', borderBottom: '2px solid #d49a36'
-                      }}>INCLUDED</h3>
+                      }}>{t('included')}</h3>
                       <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-                        {[
-                          "Return airport transfers",
-                          "6 nights accommodation (4-star hotel)",
-                          "All breakfasts and all listed dining experiences",
-                          "Japanese-speaking food guide",
-                          "Workshop materials and recipe cards in Japanese",
-                          "Air-conditioned local transport"
-                        ].map((item, i) => (
+                        {(tour.inclusions ?? []).map((item, i) => (
                           <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem', marginBottom: '16px', fontFamily: "'Jost', Arial, sans-serif", fontSize: '16px', color: '#1a1918', lineHeight: '1.7' }}>
                             <span style={{ color: '#d49a36', fontSize: '18px', flexShrink: 0 }}>✓</span>
                             <span>{item}</span>
@@ -1053,14 +1093,9 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
                         fontFamily: "'Jost', Arial, sans-serif", fontSize: '14px', fontWeight: '600',
                         color: '#1a1918', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '24px',
                         paddingBottom: '12px', borderBottom: '2px solid #d49a36'
-                      }}>NOT INCLUDED</h3>
+                      }}>{t('notIncluded')}</h3>
                       <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-                        {[
-                          "International Flights",
-                          "Travel Insurance",
-                          "Personal beverage orders outside program",
-                          "Any food not listed in the daily program"
-                        ].map((item, i) => (
+                        {(tour.exclusions ?? []).map((item, i) => (
                           <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem', marginBottom: '16px', fontFamily: "'Jost', Arial, sans-serif", fontSize: '16px', color: '#6B6560', lineHeight: '1.7' }}>
                             <span style={{ color: '#9A948F', fontSize: '18px', flexShrink: 0 }}>×</span>
                             <span>{item}</span>
@@ -1072,7 +1107,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
               </div>
             )}
 
-            {activeTab === 'FAQ' && (
+            {activeTab === 'faq' && (
               <div style={{ animation: 'fadeIn 0.5s ease' }}>
                 {(tour.faq ?? []).length > 0 ? (
                   <div>
@@ -1082,7 +1117,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
                   </div>
                 ) : (
                   <p style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '16px', color: '#6B6560', lineHeight: '1.7' }}>
-                    No FAQs available for this tour.
+                    {t('noFaqAvailable')}
                   </p>
                 )}
               </div>
@@ -1090,7 +1125,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
           </div>
 
           {/* RIGHT COLUMN: Sticky Booking Widget (ONLY ON OVERVIEW) */}
-          {activeTab === 'Overview' && (
+          {activeTab === 'overview' && (
             <div className="tour-sticky-widget" style={{ marginTop: '4rem' }}>
               <div style={{
                 backgroundColor: '#1a1918',
@@ -1110,7 +1145,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
                     fontSize: '14px', color: '#faf9f6', margin: 0,
                     fontWeight: '400'
                   }}>
-                    {new Date(tour.startDate).toLocaleDateString('en', { month: 'short', day: 'numeric' })} – {new Date(tour.endDate).toLocaleDateString('en', { month: 'short', day: 'numeric', year: 'numeric' })}
+                    {displayDateRange}
                   </p>
 
                   {!isPast && tour.seatsLeft > 0 && (
@@ -1127,7 +1162,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
                         color: '#d49a36', letterSpacing: '0.08em',
                         textTransform: 'uppercase'
                       }}>
-                        {tour.seatsLeft} Seats Left
+                        {seatsLeftLabel}
                       </span>
                     </div>
                   )}
@@ -1135,23 +1170,6 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
 
                 {/* RIGHT SIDE: Action Buttons */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                  <button
-                    onClick={handleBook}
-                    disabled={isPast}
-                    style={{
-                      fontFamily: "'Jost', Arial, sans-serif",
-                      fontSize: '12px', fontWeight: '600',
-                      letterSpacing: '0.15em', color: '#1a1918',
-                      backgroundColor: isPast ? '#9A948F' : '#d49a36',
-                      border: 'none', padding: '14px 24px',
-                      textTransform: 'uppercase',
-                      cursor: isPast ? 'not-allowed' : 'pointer',
-                      transition: 'opacity 0.3s ease',
-                      whiteSpace: 'nowrap'
-                    }}
-                  >
-                    {isPast ? t('bookingClosed') : tButtons('bookNow')}
-                  </button>
                   <Link
                     href="/contact"
                     style={{
@@ -1234,7 +1252,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
                     fontSize: '11px', fontWeight: '500',
                     letterSpacing: '0.22em', color: '#C9933A',
                     textTransform: 'uppercase'
-                  }}>{tOther.category}</span>
+                  }}>{getCategoryLabel(tOther.category, tTours)}</span>
                   <p style={{
                     fontFamily: "'Cormorant Garamond', Georgia, serif",
                     fontSize: '20px', fontWeight: '500',

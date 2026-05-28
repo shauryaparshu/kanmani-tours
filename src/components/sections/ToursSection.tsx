@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import Link from 'next/link';
+import { Link } from '@/i18n/routing';
 import { useTranslations, useLocale } from 'next-intl';
 import { formatDateRange, type Tour } from '@/lib/tours';
 import { getCategoryColor, getCategoryLabel } from '@/lib/categories';
@@ -223,7 +223,7 @@ export default function ToursSection({ tours, cardImages = {}, locale: propLocal
                                             letterSpacing: '0.08em',
                                             marginBottom: '10px'
                                         }}>
-                                            {formatDateRange(tour.startDate, tour.endDate)} | {tour.location?.toUpperCase()}
+                                            {formatDateRange(tour.startDate, tour.endDate, locale)} | {tour.location?.toUpperCase()}
                                         </div>
                                         
                                         <h3 style={{

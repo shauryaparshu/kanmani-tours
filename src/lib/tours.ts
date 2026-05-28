@@ -29,7 +29,7 @@ export const FAQ_CATEGORIES = [
     { value: 'health', label: 'Safety & Health', star: false },
     { value: 'money', label: 'Money & Practical', star: false },
     { value: 'weather', label: 'Weather & Timing', star: false },
-    { value: 'celebrity', label: 'Celebrity & Special Tours',   star: true },
+    { value: 'celebrity', label: 'Celebrity & Special Tours', star: true },
 ] as const;
 
 interface RawTour {
@@ -95,7 +95,7 @@ function normaliseTour(t: any, locale: string = 'ja'): Tour {
             const diffDays = Math.round(diffMs / (1000 * 60 * 60 * 24));
             return diffDays + 1;
         })(),
-        // Ensure all array fields are never null/undefined — Sanity can return null for unset arrays
+        // Ensure all array fields are never null or undefined because Sanity can return null for unset arrays.
         galleryImages: t.galleryImages ?? [],
         features: (isJa && (t.highlightsJa || t.features_ja)) ? (t.highlightsJa || t.features_ja) : (t.features ?? []),
         itinerary: (t.itinerary ?? []).map((day: any) => ({
@@ -111,14 +111,11 @@ function normaliseTour(t: any, locale: string = 'ja'): Tour {
             question: (isJa && (f.questionJa || f.question_ja)) ? (f.questionJa || f.question_ja) : f.question,
             answer: (isJa && (f.answerJa || f.answer_ja)) ? (f.answerJa || f.answer_ja) : f.answer,
         })),
-        // Resolve cover image
         coverImage: resolveImageUrl(t.coverImage) || (t.galleryImages?.[0] ? resolveImageUrl(t.galleryImages[0]) : ''),
         featured: t.featured || false,
         bookingClosed: t.bookingClosed || false,
     };
 }
-
-// ─── Public API ───────────────────────────────────────────────────────────────
 
 export async function getAllTours(locale: string = 'ja'): Promise<Tour[]> {
     try {
@@ -130,7 +127,6 @@ export async function getAllTours(locale: string = 'ja'): Promise<Tour[]> {
         console.error('Error fetching tours from Sanity:', error);
     }
 
-    // Fallback to JSON
     return (toursData as any[]).map(t => normaliseTour(t, locale)).sort(
         (a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
     );
@@ -153,7 +149,6 @@ export async function getTourBySlug(slug: string, locale: string = 'ja'): Promis
         console.error(`Error fetching tour ${slug} from Sanity:`, error);
     }
 
-    // Fallback to JSON
     const localTour = (toursData as any[]).find(t => t.slug === slug);
     if (localTour) {
         return normaliseTour(localTour, locale);
@@ -161,11 +156,19 @@ export async function getTourBySlug(slug: string, locale: string = 'ja'): Promis
     return undefined;
 }
 
-export function formatDateRange(startDate: string, endDate: string): string {
+function getDateRangeLocaleTag(locale?: string): string {
+    return locale?.startsWith('ja') ? 'ja-JP' : 'en-US';
+}
+
+export function formatDateRange(startDate: string, endDate: string, locale?: string): string {
     const start = new Date(startDate);
     const end = new Date(endDate);
-    const opts: Intl.DateTimeFormatOptions = { month: 'short', day: 'numeric', year: 'numeric' };
-    return `${start.toLocaleDateString('en-US', opts)} — ${end.toLocaleDateString('en-US', opts)}`;
+    const localeTag = getDateRangeLocaleTag(locale);
+    const opts: Intl.DateTimeFormatOptions = localeTag === 'ja-JP'
+        ? { year: 'numeric', month: 'long', day: 'numeric' }
+        : { month: 'short', day: 'numeric', year: 'numeric' };
+    const separator = localeTag === 'ja-JP' ? ' 〜 ' : ' — ';
+    return `${start.toLocaleDateString(localeTag, opts)}${separator}${end.toLocaleDateString(localeTag, opts)}`;
 }
 
 export function formatPriceJPY(price: number): string {
@@ -173,5 +176,5 @@ export function formatPriceJPY(price: number): string {
 }
 
 export function formatPriceRange(range: { min: number; max: number }): string {
-    return `${formatPriceJPY(range.min)} – ${formatPriceJPY(range.max)}`;
+    return `${formatPriceJPY(range.min)} - ${formatPriceJPY(range.max)}`;
 }

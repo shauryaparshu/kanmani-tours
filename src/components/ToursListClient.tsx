@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useMemo, useEffect } from 'react';
-import Link from 'next/link';
+import { Link } from '@/i18n/routing';
 import { useRouter, useSearchParams } from 'next/navigation';
 import type { Tour } from '@/lib/tours';
 import { formatDateRange, formatPriceJPY } from '@/lib/tours';
@@ -160,7 +160,7 @@ function TourCard({ tour, tLabels, categories }: { tour: Tour; tLabels: any, cat
                     letterSpacing: '0.08em',
                     marginBottom: '8px'
                 }}>
-                    {showComingSoon && tour.dateDisplay ? tour.dateDisplay : formatDateRange(tour.startDate, tour.endDate)}
+                    {showComingSoon && tour.dateDisplay ? tour.dateDisplay : formatDateRange(tour.startDate, tour.endDate, locale)}
                 </p>
                 <h2 style={{ marginBottom: '8px' }}>
                     <span style={{
@@ -511,7 +511,7 @@ export default function ToursListClient({ tours, categories }: Props) {
                         onFocus={(e) => e.target.style.borderColor = '#C9933A'}
                         onBlur={(e) => e.target.style.borderColor = '#E8E4DC'}
                     >
-                        <option value="">All Years</option>
+                        <option value="">{t('allYears')}</option>
                         {availableYears.map(y => (
                             <option key={y} value={y}>{y}</option>
                         ))}
