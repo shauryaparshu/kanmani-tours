@@ -707,16 +707,18 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
         padding: '20px 60px',
         display: 'flex',
         flexDirection: 'column',
+        alignItems: 'center',
+        textAlign: 'center',
         gap: '8px'
       }}>
         {/* LINE 1: Title and Category/Seats pill */}
         <div style={{
           display: 'flex',
-          justifyContent: 'space-between',
+          justifyContent: 'center',
           alignItems: 'center',
           width: '100%',
           flexWrap: 'wrap',
-          gap: '12px'
+          gap: '24px'
         }}>
           <h1 style={{
             fontFamily: "'Jost', Arial, sans-serif",
@@ -725,7 +727,8 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
             color: '#FFFFFF',
             letterSpacing: '0.04em',
             lineHeight: '1.2',
-            margin: '0'
+            margin: '0',
+            textAlign: 'center'
           }}>{tour.title}</h1>
           <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
             <span style={{
@@ -755,6 +758,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
         {/* LINE 2: Dates, Location, and Short Description */}
         <div style={{
           display: 'flex',
+          justifyContent: 'center',
           alignItems: 'center',
           gap: '16px',
           flexWrap: 'wrap',
@@ -802,7 +806,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
                 letterSpacing: '0.02em',
                 lineHeight: '1.4',
                 margin: '0',
-                flexGrow: 1,
+                textAlign: 'center',
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
                 display: '-webkit-box',
