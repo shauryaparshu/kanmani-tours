@@ -706,174 +706,185 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
         borderTop: '1px solid rgba(201,147,58,0.5)',
         padding: '20px 60px',
         display: 'flex',
-        flexDirection: 'column',
+        flexDirection: 'row',
         alignItems: 'center',
-        textAlign: 'center',
-        gap: '8px'
+        justifyContent: 'space-between',
+        flexWrap: 'wrap',
+        gap: '24px'
       }}>
-        {/* LINE 1: Title and Category/Seats pill */}
+        {/* LEFT/CENTER BLOCK: Centered text information */}
         <div style={{
           display: 'flex',
-          justifyContent: 'center',
+          flexDirection: 'column',
           alignItems: 'center',
-          width: '100%',
-          flexWrap: 'wrap',
-          gap: '24px'
+          textAlign: 'center',
+          gap: '8px',
+          flex: '1 1 auto',
+          minWidth: '280px'
         }}>
-          <h1 style={{
-            fontFamily: "'Jost', Arial, sans-serif",
-            fontSize: 'clamp(22px, 2.5vw, 36px)',
-            fontWeight: '500',
-            color: '#FFFFFF',
-            letterSpacing: '0.04em',
-            lineHeight: '1.2',
-            margin: '0',
-            textAlign: 'center'
-          }}>{tour.title}</h1>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-            <span style={{
+          {/* LINE 1: Title and Category/Seats pill */}
+          <div style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: '100%',
+            flexWrap: 'wrap',
+            gap: '24px'
+          }}>
+            <h1 style={{
               fontFamily: "'Jost', Arial, sans-serif",
-              fontSize: '11px',
+              fontSize: 'clamp(22px, 2.5vw, 36px)',
               fontWeight: '500',
-              letterSpacing: '0.28em',
-              color: '#C9933A',
-              textTransform: 'uppercase'
-            }}>{categoryLabel}</span>
-            {!isPast && (
+              color: '#FFFFFF',
+              letterSpacing: '0.04em',
+              lineHeight: '1.2',
+              margin: '0',
+              textAlign: 'center'
+            }}>{tour.title}</h1>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
               <span style={{
                 fontFamily: "'Jost', Arial, sans-serif",
-                fontSize: '10px',
-                fontWeight: '600',
-                letterSpacing: '0.18em',
-                color: '#1C1917',
-                backgroundColor: '#C9933A',
-                padding: '4px 14px',
-                textTransform: 'uppercase',
-                whiteSpace: 'nowrap'
-              }}>{seatsLeftLabel}</span>
+                fontSize: '11px',
+                fontWeight: '500',
+                letterSpacing: '0.28em',
+                color: '#C9933A',
+                textTransform: 'uppercase'
+              }}>{categoryLabel}</span>
+              {!isPast && (
+                <span style={{
+                  fontFamily: "'Jost', Arial, sans-serif",
+                  fontSize: '10px',
+                  fontWeight: '600',
+                  letterSpacing: '0.18em',
+                  color: '#1C1917',
+                  backgroundColor: '#C9933A',
+                  padding: '4px 14px',
+                  textTransform: 'uppercase',
+                  whiteSpace: 'nowrap'
+                }}>{seatsLeftLabel}</span>
+              )}
+            </div>
+          </div>
+
+          {/* LINE 2: Dates, Location, and Short Description */}
+          <div style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: '16px',
+            flexWrap: 'wrap',
+            width: '100%',
+            borderTop: '1px solid rgba(201,147,58,0.15)',
+            paddingTop: '8px'
+          }}>
+            <span style={{
+              fontFamily: "'Jost', Arial, sans-serif",
+              fontSize: '14px',
+              fontWeight: '400',
+              color: '#C8C2BC',
+              letterSpacing: '0.08em',
+              textTransform: 'uppercase',
+              whiteSpace: 'nowrap'
+            }}>
+              {displayDateRange}
+            </span>
+            <span style={{
+              display: 'inline-block', width: '4px', height: '4px',
+              borderRadius: '50%', backgroundColor: 'rgba(201,147,58,0.45)',
+              flexShrink: 0
+            }}/>
+            <span style={{
+              fontFamily: "'Jost', Arial, sans-serif",
+              fontSize: '14px', fontWeight: '400',
+              color: '#C8C2BC', letterSpacing: '0.08em',
+              textTransform: 'uppercase', whiteSpace: 'nowrap',
+              lineHeight: '1.4'
+            }}>
+              {locationLabel}
+            </span>
+            {tour.shortDescription && (
+              <>
+                <span style={{
+                  display: 'inline-block', width: '4px', height: '4px',
+                  borderRadius: '50%', backgroundColor: 'rgba(201,147,58,0.45)',
+                  flexShrink: 0
+                }}/>
+                <p style={{
+                  fontFamily: "'Jost', Arial, sans-serif",
+                  fontSize: '14px',
+                  fontWeight: '300',
+                  color: 'rgba(200,194,188,0.9)',
+                  letterSpacing: '0.02em',
+                  lineHeight: '1.4',
+                  margin: '0',
+                  textAlign: 'center',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  display: '-webkit-box',
+                  WebkitLineClamp: 1,
+                  WebkitBoxOrient: 'vertical'
+                }}>
+                  {tour.shortDescription}
+                </p>
+              </>
             )}
           </div>
         </div>
 
-        {/* LINE 2: Dates, Location, and Short Description */}
+        {/* RIGHT BLOCK: Premium Shiny ALL PHOTOS Button */}
         <div style={{
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          gap: '16px',
-          flexWrap: 'wrap',
-          width: '100%',
-          borderTop: '1px solid rgba(201,147,58,0.15)',
-          paddingTop: '8px'
-        }}>
-          <span style={{
-            fontFamily: "'Jost', Arial, sans-serif",
-            fontSize: '14px',
-            fontWeight: '400',
-            color: '#C8C2BC',
-            letterSpacing: '0.08em',
-            textTransform: 'uppercase',
-            whiteSpace: 'nowrap'
-          }}>
-            {displayDateRange}
-          </span>
-          <span style={{
-            display: 'inline-block', width: '4px', height: '4px',
-            borderRadius: '50%', backgroundColor: 'rgba(201,147,58,0.45)',
-            flexShrink: 0
-          }}/>
-          <span style={{
-            fontFamily: "'Jost', Arial, sans-serif",
-            fontSize: '14px', fontWeight: '400',
-            color: '#C8C2BC', letterSpacing: '0.08em',
-            textTransform: 'uppercase', whiteSpace: 'nowrap',
-            lineHeight: '1.4'
-          }}>
-            {locationLabel}
-          </span>
-          {tour.shortDescription && (
-            <>
-              <span style={{
-                display: 'inline-block', width: '4px', height: '4px',
-                borderRadius: '50%', backgroundColor: 'rgba(201,147,58,0.45)',
-                flexShrink: 0
-              }}/>
-              <p style={{
-                fontFamily: "'Jost', Arial, sans-serif",
-                fontSize: '14px',
-                fontWeight: '300',
-                color: 'rgba(200,194,188,0.9)',
-                letterSpacing: '0.02em',
-                lineHeight: '1.4',
-                margin: '0',
-                textAlign: 'center',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                display: '-webkit-box',
-                WebkitLineClamp: 1,
-                WebkitBoxOrient: 'vertical'
-              }}>
-                {tour.shortDescription}
-              </p>
-            </>
-          )}
-        </div>
-      </div>
-      {(tour.galleryImages ?? []).length > 0 && (
-        <div style={{
-          position: 'absolute',
-          top: '80px',
-          right: '32px',
-          zIndex: 50
+          flex: '0 0 auto'
         }}>
           <button
             onClick={() => {
-              const gallerySection = document.getElementById('gallery-section');
-              if (gallerySection) {
-                const offset = gallerySection.offsetTop - 100;
+              const dest = document.getElementById('gallery-section') || document.querySelector('.main-tour-details');
+              if (dest) {
+                const offset = (dest as HTMLElement).offsetTop - 100;
                 window.scrollTo({ top: offset, behavior: 'smooth' });
               }
             }}
             style={{
               fontFamily: "'Jost', Arial, sans-serif",
-              fontSize: '16px',
-              fontWeight: '600',
+              fontSize: '15px',
+              fontWeight: '700',
               letterSpacing: '0.22em',
               color: '#1C1917',
-              backgroundColor: '#C9933A',
-              border: '2px solid #C9933A',
-              padding: '18px 36px',
+              background: 'linear-gradient(135deg, #FFE082 0%, #C9933A 50%, #A17124 100%)',
+              border: '2px solid #FFFFFF',
+              borderRadius: '4px',
+              padding: '16px 36px',
               cursor: 'pointer',
               textTransform: 'uppercase',
               display: 'flex',
               alignItems: 'center',
               gap: '12px',
               transition: 'all 0.3s ease',
-              boxShadow: '0 4px 24px rgba(0,0,0,0.4)',
+              boxShadow: '0 0 25px rgba(201, 147, 58, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.4)',
               whiteSpace: 'nowrap'
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = '#1C1917';
-              e.currentTarget.style.color = '#C9933A';
-              e.currentTarget.style.borderColor = '#C9933A';
+              e.currentTarget.style.background = 'linear-gradient(135deg, #FFF8E1 0%, #E5A93C 50%, #B87F2A 100%)';
               e.currentTarget.style.transform = 'translateY(-2px)';
+              e.currentTarget.style.boxShadow = '0 0 35px rgba(255, 224, 130, 0.95), 0 6px 20px rgba(0,0,0,0.4)';
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = '#C9933A';
-              e.currentTarget.style.color = '#1C1917';
-              e.currentTarget.style.borderColor = '#C9933A';
+              e.currentTarget.style.background = 'linear-gradient(135deg, #FFE082 0%, #C9933A 50%, #A17124 100%)';
               e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = '0 0 25px rgba(201, 147, 58, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.4)';
             }}
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" 
-                 fill="none" stroke="currentColor" strokeWidth="2">
+            <svg width="22" height="22" viewBox="0 0 24 24" 
+                 fill="none" stroke="currentColor" strokeWidth="2.5" style={{ marginRight: '2px' }}>
               <rect x="3" y="3" width="18" height="18" rx="2"/>
               <path d="M3 9h18M9 21V9"/>
             </svg>
-            {t('allPhotos')}
+            ALL PHOTOS
           </button>
         </div>
-      )}
+      </div>
     </div>
 
     {/* ══ BREADCRUMB ══ */}
