@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import type { Tour } from '@/lib/tours';
 import { formatDateRange, formatPriceJPY } from '@/lib/tours';
 import { getCategoryColor, getCategoryLabel } from '@/lib/categories';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 type StatusFilter = 'all' | 'upcoming' | 'past';
@@ -59,6 +59,7 @@ function defaultSort(tours: Tour[]): Tour[] {
 
 // ─── Card ─────────────────────────────────────────────────────────────────────
 function TourCard({ tour, tLabels, categories }: { tour: Tour; tLabels: any, categories: any[] }) {
+    const locale = useLocale();
     const upcoming = isTourUpcoming(tour);
     const showComingSoon = upcoming && tour.isComingSoon;
     const [hovered, setHovered] = useState(false);
@@ -172,7 +173,7 @@ function TourCard({ tour, tLabels, categories }: { tour: Tour; tLabels: any, cat
                         transition: 'color 0.3s ease',
                         fontVariantNumeric: 'lining-nums'
                     }}>
-                        {tour.title}
+                        {locale === 'ja' ? (tour.titleJa || tour.title) : tour.title}
                     </span>
                 </h2>
                 <div style={{
@@ -188,7 +189,7 @@ function TourCard({ tour, tLabels, categories }: { tour: Tour; tLabels: any, cat
                     <svg viewBox="0 0 24 24" width="12" height="12" fill="#4a4a4a">
                         <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
                     </svg>
-                    {tour.location?.toUpperCase()}
+                    {locale === 'ja' ? (tour.locationJa || tour.location)?.toUpperCase() : tour.location?.toUpperCase()}
                 </div>
                 
                 {showComingSoon && (
@@ -216,7 +217,7 @@ function TourCard({ tour, tLabels, categories }: { tour: Tour; tLabels: any, cat
                     WebkitBoxOrient: 'vertical',
                     overflow: 'hidden'
                 }}>
-                    {tour.shortDescription}
+                    {locale === 'ja' ? (tour.shortDescriptionJa || tour.shortDescription) : tour.shortDescription}
                 </p>
 
                 {upcoming && tour.seatsLeft > 0 && tour.seatsLeft <= 5 && (

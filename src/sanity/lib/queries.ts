@@ -3,21 +3,30 @@ import { defineQuery } from 'next-sanity'
 export const TOURS_QUERY = defineQuery(`*[_type == "tour"] | order(startDate asc) {
   _id,
   title,
+  titleJa,
   "slug": slug.current,
   category,
   shortDescription,
+  shortDescriptionJa,
   longDescription,
+  longDescriptionJa,
   startDate,
   endDate,
   location,
+  locationJa,
   priceJPY,
   priceRangeJPY,
   seatsLeft,
+  dateDisplay,
+  dateDisplayJa,
   coverImage,
   galleryImages,
   features,
+  highlightsJa,
   itinerary[] {
     ...,
+    titleJa,
+    detailsJa,
     image {
       asset-> {
         _id,
@@ -28,30 +37,43 @@ export const TOURS_QUERY = defineQuery(`*[_type == "tour"] | order(startDate asc
     }
   },
   whatToExpect,
+  whatToExpectJa,
   inclusions,
+  inclusionsJa,
   exclusions,
+  exclusionsJa,
   faq,
-  bookingLink
+  bookingLink,
+  bookingClosed
 }`)
 
 export const TOUR_BY_SLUG_QUERY = defineQuery(`*[_type == "tour" && slug.current == $slug][0] {
   _id,
   title,
+  titleJa,
   "slug": slug.current,
   category,
   shortDescription,
+  shortDescriptionJa,
   longDescription,
+  longDescriptionJa,
   startDate,
   endDate,
   location,
+  locationJa,
   priceJPY,
   priceRangeJPY,
   seatsLeft,
+  dateDisplay,
+  dateDisplayJa,
   coverImage,
   galleryImages,
   features,
+  highlightsJa,
   itinerary[] {
     ...,
+    titleJa,
+    detailsJa,
     image {
       asset-> {
         _id,
@@ -62,10 +84,14 @@ export const TOUR_BY_SLUG_QUERY = defineQuery(`*[_type == "tour" && slug.current
     }
   },
   whatToExpect,
+  whatToExpectJa,
   inclusions,
+  inclusionsJa,
   exclusions,
+  exclusionsJa,
   faq,
-  bookingLink
+  bookingLink,
+  bookingClosed
 }`)
 
 export const FAQS_QUERY = defineQuery(`
@@ -73,7 +99,9 @@ export const FAQS_QUERY = defineQuery(`
     _id,
     category,
     question,
-    answer
+    questionJa,
+    answer,
+    answerJa
   }
 `)
 
@@ -91,7 +119,7 @@ export const CATEGORIES_QUERY = defineQuery(`*[_type == "tourCategory"] | order(
   title_ja,
   key,
   color,
-}`)
+ }`)
 
 export const GALLERY_QUERY = defineQuery(`
   *[_type == "tour" && defined(startDate) && dateTime(startDate + 'T00:00:00Z') < dateTime(now())] 
@@ -114,5 +142,18 @@ export const GALLERY_QUERY = defineQuery(`
         url
       }
     }
+  }
+`)
+
+export const TESTIMONIALS_QUERY = defineQuery(`
+  *[_type == "testimonial"] | order(orderRank asc) {
+    _id,
+    name,
+    location,
+    locationJa,
+    text,
+    textJa,
+    tourName,
+    tourNameJa
   }
 `)

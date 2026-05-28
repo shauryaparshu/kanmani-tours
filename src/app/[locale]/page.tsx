@@ -46,7 +46,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       <HeroSection
         heroImages={heroImages}
       />
-      <ToursSection tours={upcomingTours} />
+      <ToursSection tours={upcomingTours} locale={locale} />
       <Testimonials customerImages={customerImages} />
       <Footer />
     </main>

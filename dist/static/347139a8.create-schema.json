@@ -1,0 +1,995 @@
+[
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "description": "Japanese translation of the tour title",
+        "name": "titleJa",
+        "type": "string",
+        "title": "タイトル（日本語）/ Title in Japanese"
+      },
+      {
+        "rows": 3,
+        "description": "Write 1-2 sentences max. First sentence appears on the tour hero panel. Keep it under 150 characters for best display.",
+        "name": "shortDescription",
+        "type": "text",
+        "title": "Hero Description (shown on tour panel)"
+      },
+      {
+        "rows": 3,
+        "description": "Japanese translation of the short description",
+        "name": "shortDescriptionJa",
+        "type": "text",
+        "title": "短い説明（日本語）/ Short Description in Japanese"
+      },
+      {
+        "options": {
+          "source": "title",
+          "maxLength": 96
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "slug",
+        "type": "slug"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Culture Tours",
+              "value": "Cultural"
+            },
+            {
+              "title": "Food Tours",
+              "value": "Food"
+            },
+            {
+              "title": "Celebrity-Related Tours",
+              "value": "Celebrity"
+            },
+            {
+              "title": "Short Tours (1–2 days)",
+              "value": "Short"
+            },
+            {
+              "title": "Ayurveda Tours",
+              "value": "Ayurveda"
+            },
+            {
+              "title": "Homestay with Indian Family",
+              "value": "Homestay"
+            },
+            {
+              "title": "Education Tours",
+              "value": "Education"
+            },
+            {
+              "title": "Industrial Tours",
+              "value": "Industrial"
+            },
+            {
+              "title": "Village Tours",
+              "value": "Village"
+            },
+            {
+              "title": "Cooking Classes",
+              "value": "Cooking"
+            },
+            {
+              "title": "Temple Tours",
+              "value": "Temple"
+            }
+          ]
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "valid",
+                "constraint": [
+                  "Cultural",
+                  "Food",
+                  "Celebrity",
+                  "Short",
+                  "Ayurveda",
+                  "Homestay",
+                  "Education",
+                  "Industrial",
+                  "Village",
+                  "Cooking",
+                  "Temple"
+                ]
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "category",
+        "type": "string"
+      },
+      {
+        "rows": 10,
+        "name": "longDescription",
+        "type": "text",
+        "title": "About This Tour"
+      },
+      {
+        "rows": 6,
+        "description": "Japanese translation of the long description",
+        "name": "longDescriptionJa",
+        "type": "text",
+        "title": "詳細説明（日本語）/ Long Description in Japanese"
+      },
+      {
+        "name": "startDate",
+        "type": "date"
+      },
+      {
+        "name": "endDate",
+        "type": "date"
+      },
+      {
+        "description": "Check this if the exact dates are not finalized and you want to show \"Coming Soon\"",
+        "name": "isComingSoon",
+        "type": "boolean"
+      },
+      {
+        "description": "E.g., \"August – October\". Overrides start/end date display if Is Coming Soon is true.",
+        "name": "dateDisplay",
+        "type": "string",
+        "title": "Date Display Text"
+      },
+      {
+        "description": "Japanese translation of the date display text",
+        "name": "dateDisplayJa",
+        "type": "string",
+        "title": "日程表示（日本語）/ Date Display Text in Japanese"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "min",
+                "constraint": 1
+              },
+              {
+                "flag": "max",
+                "constraint": 50
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Maximum number of participants",
+        "name": "maxGroupSize",
+        "type": "number",
+        "title": "Maximum Group Size"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "min",
+                "constraint": 0
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Number of seats currently available",
+        "name": "availableSeats",
+        "type": "number"
+      },
+      {
+        "name": "seatsLeft",
+        "type": "number"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Upcoming",
+              "value": "upcoming"
+            },
+            {
+              "title": "Ongoing",
+              "value": "ongoing"
+            },
+            {
+              "title": "Completed",
+              "value": "completed"
+            },
+            {
+              "title": "Cancelled",
+              "value": "cancelled"
+            }
+          ]
+        },
+        "initialValue": "upcoming",
+        "name": "status",
+        "type": "string"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "min",
+                "constraint": 1
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Total number of days for the tour",
+        "name": "duration",
+        "type": "number",
+        "title": "Duration (Days)"
+      },
+      {
+        "name": "location",
+        "type": "string"
+      },
+      {
+        "description": "Japanese translation of location",
+        "name": "locationJa",
+        "type": "string",
+        "title": "場所（日本語）/ Location in Japanese"
+      },
+      {
+        "name": "priceJPY",
+        "type": "number",
+        "title": "Price (JPY)"
+      },
+      {
+        "fields": [
+          {
+            "name": "min",
+            "type": "number",
+            "title": "Min Price"
+          },
+          {
+            "name": "max",
+            "type": "number",
+            "title": "Max Price"
+          }
+        ],
+        "name": "priceRangeJPY",
+        "type": "object",
+        "title": "Price Range (JPY) - Optional"
+      },
+      {
+        "description": "Tour price in the specified currency",
+        "name": "price",
+        "type": "number"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Japanese Yen (¥)",
+              "value": "JPY"
+            },
+            {
+              "title": "US Dollar ($)",
+              "value": "USD"
+            },
+            {
+              "title": "Indian Rupee (₹)",
+              "value": "INR"
+            }
+          ]
+        },
+        "initialValue": "JPY",
+        "name": "currency",
+        "type": "string"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "description": "Use wide landscape photos minimum 1400px wide. Avoid close-up or portrait photos — they do not look good as full-screen hero backgrounds.",
+        "name": "coverImage",
+        "type": "image",
+        "title": "Hero Photo (use wide landscape photos only)"
+      },
+      {
+        "of": [
+          {
+            "options": {
+              "hotspot": true
+            },
+            "type": "image"
+          }
+        ],
+        "name": "galleryImages",
+        "type": "array"
+      },
+      {
+        "description": "Key highlights and special features of this tour",
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "highlights",
+        "type": "array",
+        "title": "Tour Highlights"
+      },
+      {
+        "description": "Japanese translation of tour highlights",
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "highlightsJa",
+        "type": "array",
+        "title": "ハイライト（日本語）/ Highlights in Japanese"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "name": "dayNumber",
+                "type": "number"
+              },
+              {
+                "name": "title",
+                "type": "string"
+              },
+              {
+                "name": "titleJa",
+                "type": "string",
+                "title": "タイトル（日本語）"
+              },
+              {
+                "name": "details",
+                "type": "text"
+              },
+              {
+                "rows": 4,
+                "name": "detailsJa",
+                "type": "text",
+                "title": "詳細（日本語）"
+              },
+              {
+                "name": "image",
+                "type": "image"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "itinerary",
+        "type": "array"
+      },
+      {
+        "description": "Up to 6 highlights shown as numbered cards (01, 02, 03...) on the tour detail page",
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "features",
+        "type": "array",
+        "title": "Tour Highlights"
+      },
+      {
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "whatToExpect",
+        "type": "array",
+        "title": "What You'll Experience"
+      },
+      {
+        "description": "Japanese translation of What You'll Experience",
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "whatToExpectJa",
+        "type": "array",
+        "title": "体験できること（日本語）/ What You'll Experience in Japanese"
+      },
+      {
+        "description": "What is covered in the tour price",
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "inclusions",
+        "type": "array",
+        "title": "Included"
+      },
+      {
+        "description": "Japanese translation of included items",
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "inclusionsJa",
+        "type": "array",
+        "title": "含まれるもの（日本語）/ Inclusions in Japanese"
+      },
+      {
+        "description": "What guests need to arrange or pay for separately",
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "exclusions",
+        "type": "array",
+        "title": "Not Included"
+      },
+      {
+        "description": "Japanese translation of excluded items",
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "exclusionsJa",
+        "type": "array",
+        "title": "含まれないもの（日本語）/ Exclusions in Japanese"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "name": "question",
+                "type": "string"
+              },
+              {
+                "name": "questionJa",
+                "type": "string",
+                "title": "質問（日本語）/ Question in Japanese"
+              },
+              {
+                "name": "answer",
+                "type": "text"
+              },
+              {
+                "rows": 4,
+                "name": "answerJa",
+                "type": "text",
+                "title": "回答（日本語）/ Answer in Japanese"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "faq",
+        "type": "array",
+        "title": "Tour Specific FAQ"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "If provided, the Book Now button links here. If empty, the booking modal opens instead.",
+        "name": "bookingLink",
+        "type": "url",
+        "title": "External Booking URL (optional)"
+      },
+      {
+        "initialValue": false,
+        "description": "Turn on to feature this tour in the homepage upcoming section",
+        "name": "featured",
+        "type": "boolean",
+        "title": "Feature on Homepage"
+      }
+    ],
+    "name": "tour",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "readOnly": true,
+        "hidden": true,
+        "name": "orderRank",
+        "type": "string"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Booking & Payment",
+              "value": "booking"
+            },
+            {
+              "title": "Visa & Travel Documents",
+              "value": "visa"
+            },
+            {
+              "title": "The Tour Experience",
+              "value": "experience"
+            },
+            {
+              "title": "Safety & Health",
+              "value": "health"
+            },
+            {
+              "title": "Money & Practical",
+              "value": "money"
+            },
+            {
+              "title": "Weather & Timing",
+              "value": "weather"
+            },
+            {
+              "title": "Celebrity & Special Tours",
+              "value": "celebrity"
+            }
+          ]
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "valid",
+                "constraint": [
+                  "booking",
+                  "visa",
+                  "experience",
+                  "health",
+                  "money",
+                  "weather",
+                  "celebrity"
+                ]
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Choose which category this FAQ belongs to. This controls which section it appears under on the website.",
+        "name": "category",
+        "type": "string",
+        "title": "FAQ Category"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "question",
+        "type": "string"
+      },
+      {
+        "description": "Japanese translation of the question",
+        "name": "questionJa",
+        "type": "string",
+        "title": "質問（日本語）/ Question in Japanese"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "answer",
+        "type": "text"
+      },
+      {
+        "rows": 4,
+        "description": "Japanese translation of the answer",
+        "name": "answerJa",
+        "type": "text",
+        "title": "回答（日本語）/ Answer in Japanese"
+      },
+      {
+        "name": "order",
+        "type": "number",
+        "title": "Order (Legacy)"
+      }
+    ],
+    "name": "faq",
+    "type": "document",
+    "title": "FAQ"
+  },
+  {
+    "fields": [
+      {
+        "fields": [
+          {
+            "name": "title",
+            "type": "string"
+          },
+          {
+            "name": "subtitle",
+            "type": "text"
+          },
+          {
+            "name": "image",
+            "type": "image"
+          },
+          {
+            "fields": [
+              {
+                "name": "text",
+                "type": "string"
+              },
+              {
+                "name": "link",
+                "type": "string"
+              }
+            ],
+            "name": "ctaPrimary",
+            "type": "object"
+          },
+          {
+            "fields": [
+              {
+                "name": "text",
+                "type": "string"
+              },
+              {
+                "name": "link",
+                "type": "string"
+              }
+            ],
+            "name": "ctaSecondary",
+            "type": "object"
+          }
+        ],
+        "name": "hero",
+        "type": "object",
+        "title": "Hero Section"
+      },
+      {
+        "fields": [
+          {
+            "name": "title",
+            "type": "string"
+          },
+          {
+            "of": [
+              {
+                "type": "text"
+              }
+            ],
+            "name": "content",
+            "type": "array"
+          },
+          {
+            "name": "image",
+            "type": "image"
+          }
+        ],
+        "name": "story",
+        "type": "object",
+        "title": "Our Story"
+      },
+      {
+        "fields": [
+          {
+            "name": "title",
+            "type": "string"
+          },
+          {
+            "of": [
+              {
+                "fields": [
+                  {
+                    "name": "name",
+                    "type": "string"
+                  },
+                  {
+                    "name": "role",
+                    "type": "string"
+                  },
+                  {
+                    "name": "bio",
+                    "type": "text"
+                  },
+                  {
+                    "name": "photo",
+                    "type": "image"
+                  },
+                  {
+                    "name": "quote",
+                    "type": "string"
+                  }
+                ],
+                "type": "object"
+              }
+            ],
+            "name": "members",
+            "type": "array"
+          }
+        ],
+        "name": "founders",
+        "type": "object",
+        "title": "Team Section"
+      },
+      {
+        "fields": [
+          {
+            "fields": [
+              {
+                "name": "title",
+                "type": "string"
+              },
+              {
+                "name": "text",
+                "type": "text"
+              }
+            ],
+            "name": "mission",
+            "type": "object"
+          },
+          {
+            "fields": [
+              {
+                "name": "title",
+                "type": "string"
+              },
+              {
+                "name": "text",
+                "type": "text"
+              }
+            ],
+            "name": "vision",
+            "type": "object"
+          },
+          {
+            "of": [
+              {
+                "type": "string"
+              }
+            ],
+            "name": "values",
+            "type": "array"
+          }
+        ],
+        "name": "visionMission",
+        "type": "object",
+        "title": "Vision & Mission"
+      }
+    ],
+    "name": "about",
+    "type": "document",
+    "title": "About Page"
+  },
+  {
+    "fields": [
+      {
+        "readOnly": true,
+        "hidden": true,
+        "name": "orderRank",
+        "type": "string"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "name",
+        "type": "string",
+        "title": "Name (English/Default)"
+      },
+      {
+        "name": "name_ja",
+        "type": "string",
+        "title": "Name (Japanese)"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "photo",
+        "type": "image"
+      }
+    ],
+    "name": "celebrity",
+    "type": "document",
+    "title": "Celebrity Poll"
+  },
+  {
+    "fields": [
+      {
+        "readOnly": true,
+        "hidden": true,
+        "name": "orderRank",
+        "type": "string"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string",
+        "title": "Title (English)"
+      },
+      {
+        "name": "title_ja",
+        "type": "string",
+        "title": "Title (Japanese)"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Internal key used for matching (e.g., Cultural, Food)",
+        "name": "key",
+        "type": "string",
+        "title": "Value/Key"
+      },
+      {
+        "description": "Hex color code for the badge (e.g., #2563eb)",
+        "name": "color",
+        "type": "string",
+        "title": "Badge Color"
+      },
+      {
+        "initialValue": false,
+        "description": "Whether to show this category in the primary row/priority list",
+        "name": "priority",
+        "type": "boolean",
+        "title": "Is Priority?"
+      }
+    ],
+    "name": "tourCategory",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "name": "name",
+        "type": "string",
+        "title": "Name / お名前"
+      },
+      {
+        "name": "location",
+        "type": "string",
+        "title": "Location / 場所"
+      },
+      {
+        "name": "locationJa",
+        "type": "string",
+        "title": "場所（日本語）/ Location in Japanese"
+      },
+      {
+        "rows": 5,
+        "name": "text",
+        "type": "text",
+        "title": "Testimonial Text (English)"
+      },
+      {
+        "rows": 5,
+        "name": "textJa",
+        "type": "text",
+        "title": "口コミ（日本語）/ Testimonial in Japanese"
+      },
+      {
+        "name": "tourName",
+        "type": "string",
+        "title": "Tour Name / ツアー名"
+      },
+      {
+        "name": "tourNameJa",
+        "type": "string",
+        "title": "ツアー名（日本語）/ Tour Name in Japanese"
+      },
+      {
+        "name": "orderRank",
+        "type": "number",
+        "title": "Order"
+      }
+    ],
+    "name": "testimonial",
+    "type": "document",
+    "title": "Testimonials"
+  }
+]

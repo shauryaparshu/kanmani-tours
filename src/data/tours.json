@@ -1,361 +1,5 @@
 [
     {
-        "id": 1,
-        "slug": "celebrity-tour-march-2026",
-        "category": "Celebrity",
-        "title": "Celebrity-Related Tour March 2026",
-        "title_ja": "セレブリティ関連ツアー 2026年3月",
-        "shortDescription": "An exclusive celebrity-related fan experience in Chennai. Visit movie-related locations, renowned film studios, and enjoy sessions with industry insiders for a unique look into South Indian cinema.",
-        "shortDescription_ja": "チェンナイでの独占的なセレブリティ関連のファン体験。映画ゆかりの地や有名な映画スタジオを訪れ、業界関係者とのセッションを通じて、南インド映画のユニークな世界を覗いてみましょう。",
-        "longDescription": "Step into the glamorous world of South Indian cinema with our flagship Celebrity-Related Tour. Across five unforgettable days in and around Chennai, you will move beyond the silver screen and into the very heart of the industry. From visiting iconic film studio areas to participating in sessions with cinema critics and industry staff, every moment is crafted to give you a deep perspective that no ordinary tourist ever gets.\\n\\nOur small-group format ensures a premium, personal experience. A dedicated Japanese-speaking guide accompanies you from arrival to departure, managing every logistics detail so you can focus entirely on the experience.",
-        "longDescription_ja": "フラッグシップであるセレブリティ関連ツアーで、南インド映画の華やかな世界に足を踏み入れましょう。チェンナイとその周辺での忘れられない5日間を通して、スクリーンの向こう側、業界の核心部へとご案内します。象徴的な映画スタジオエリアの訪問から、映画批評家や業界スタッフとのセッションまで、すべての瞬間が、通常の観光客では決して得られない深い洞察を提供するために作り上げられています。\\n\\n小グループ制により、プレミアムでパーソナルな体験をお約束します。専属の日本語ガイドが到着から出発まで同行し、すべてのロジスティクスを管理するため、お客様は体験そのものに完全に集中することができます。",
-        "startDate": "2026-03-10",
-        "endDate": "2026-03-14",
-        "durationDays": 5,
-        "location": "Chennai, Polichoalur",
-        "location_ja": "チェンナイ、ポリチョルール",
-        "priceJPY": 250000,
-        "seatsLeft": 4,
-        "coverImage": "/assets/img/tours/celebrity-tour-march-2026/cards/006-whatsapp.jpeg",
-        "galleryImages": [
-            "/assets/img/tours/celebrity-tour-march-2026/gallery/001.jpg",
-            "/assets/img/tours/celebrity-tour-march-2026/gallery/002.jpg",
-            "/assets/img/tours/celebrity-tour-march-2026/gallery/003.jpg"
-        ],
-        "features": [
-            "Cinema industry fan session",
-            "Studio area tour and history",
-            "Dining session with local cinema critics"
-        ],
-        "features_ja": [
-            "映画業界ファンセッション",
-            "スタジオエリアの見学と歴史解説",
-            "地元映画批評家とのディナーセッション"
-        ],
-        "itinerary": [
-            {
-                "dayNumber": 1,
-                "title": "Arrival & Welcome in Chennai",
-                "title_ja": "チェンナイ到着＆ウェルカム",
-                "details": "Airport pickup and transfer to your luxury hotel. Evening welcome dinner at a rooftop restaurant overlooking Marina Beach. Meet your Japanese guide and co-travellers.",
-                "details_ja": "空港でお迎えし、ラグジュアリーホテルへ送迎します。夕食はマリーナビーチを見渡す屋上レストランでウェルカムディナー。日本語ガイドや同行者と顔合わせを行います。",
-                "image": null
-            },
-            {
-                "dayNumber": 2,
-                "title": "Studio Access & Live Set Walk",
-                "title_ja": "スタジオ見学＆ライブセット見学",
-                "details": "Private behind-the-scenes tour of a major Chennai film studio. Watch live shooting in progress and explore costume, prop, and editing departments. Lunch with the production crew.",
-                "details_ja": "チェンナイの主要映画スタジオのプライベートな舞台裏ツアー。進行中のライブ撮影を見学し、衣装、小道具、編集部門を探索します。制作クルーと一緒にランチを楽しみます。",
-                "image": null
-            },
-            {
-                "dayNumber": 3,
-                "title": "Celebrity-Related Fan Session",
-                "title_ja": "セレブリティ関連ファンセッション",
-                "details": "The centrepiece of the tour. A structured session at a celebrity-related location or with industry staff. Learn behind-the-scenes stories, participate in Q&A, and receive a special souvenir from us included.",
-                "details_ja": "ツアーのハイライト。セレブリティゆかりの場所や業界スタッフとの体系的なセッション。舞台裏の話を聞き、Q&Aに参加し、当社特製の記念品を受け取ります。",
-                "image": null
-            },
-            {
-                "dayNumber": 4,
-                "title": "Polichoalur Village & Local Culture",
-                "title_ja": "ポリチョルール村と伝統文化",
-                "details": "Day trip to the historic weaving village of Polichoalur. Traditional silk weaving demonstration, local lunch, and an evening Bharatanatyam cultural performance.",
-                "details_ja": "歴史的な織物の村ポリチョルールへの日帰り旅行。伝統的なシルク織りの実演、地元のランチ、そして夕方のバラタナティヤム文化公演を楽しみます。",
-                "image": null
-            },
-            {
-                "dayNumber": 5,
-                "title": "Farewell & Departure",
-                "title_ja": "お別れ＆出発",
-                "details": "Free morning for last-minute shopping at T. Nagar and Pondy Bazaar. Farewell lunch at a renowned local restaurant. Transfer to Chennai International Airport.",
-                "details_ja": "最終日の午前中はT. ナガルやポンディ・バザールでショッピング。有名な地元レストランでの送別ランチの後、チェンナイ国際空港へお送りします。",
-                "image": null
-            }
-        ],
-        "whatToExpect": [
-            "Fully guided 5-day journey with a Japanese-speaking escort",
-            "Small group of maximum 8 participants for a premium experience",
-            "Both tourist highlights AND deeply exclusive insider access",
-            "All cultural moments interpreted and explained in Japanese",
-            "24/7 emergency support from our Chennai base team"
-        ],
-        "whatToExpect_ja": [
-            "日本人エスコートによる5日間の完全ガイド付きの旅",
-            "プレミアムな体験のための最大8名の小グループ制",
-            "観光のハイライトと、深く独占的なインサイダーアクセスの両方を提供",
-            "すべての文化的な瞬間が日本語で通訳・解説されます",
-            "チェンナイ拠点チームによる24時間年中無休の緊急サポート"
-        ],
-        "inclusions": [
-            "Return airport transfers",
-            "4 nights accommodation (4-star hotel)",
-            "All breakfasts and 3 group dinners",
-            "Japanese-speaking guide for all days",
-            "All studio entry and fan session fees",
-            "Local transport in an air-conditioned van"
-        ],
-        "inclusions_ja": [
-            "往復空港送迎",
-            "宿泊（4つ星ホテル4泊）",
-            "すべての朝食と3回のグループディナー",
-            "全日程の日本語ガイド",
-            "すべてのスタジオ入場料とファンセッション費用",
-            "エアコン付き車両での市内移動"
-        ],
-        "exclusions": [
-            "International flights to/from Chennai",
-            "Personal shopping and souvenirs",
-            "Lunches on days 2–5 (allowance provided)",
-            "Travel insurance (strongly recommended)",
-            "Any optional excursions not listed"
-        ],
-        "exclusions_ja": [
-            "チェンナイへの往復国際航空券",
-            "個人的な買い物や土産物",
-            "2日目〜5日目の昼食（目安額の案内あり）",
-            "海外旅行保険（強く推奨）",
-            "リストにないオプションのエクスカーション"
-        ],
-        "faq": [
-            {
-                "question": "Is Japanese language support available throughout?",
-                "question_ja": "全行程で日本語でのサポートはありますか？",
-                "answer": "Yes. A dedicated Japanese-speaking guide accompanies the group every day throughout the tour.",
-                "answer_ja": "はい。ツアー中、専属の日本語ガイドが毎日グループに同行します。"
-            },
-            {
-                "question": "How are the guest sessions confirmed?",
-                "question_ja": "ゲストセッションはどのように確定しますか？",
-                "answer": "We confirm the industry guest or featured location 2–3 weeks before departure and notify all participants immediately. Availability can occasionally change due to filming or industry schedules.",
-                "answer_ja": "出発の2〜3週間前に業界ゲストや訪問場所を確定し、すべての参加者に直ちにお知らせします。撮影や業界のスケジュールの都合により、急遽変更になる場合があります。"
-            },
-            {
-                "question": "Is this tour suitable for solo female travellers?",
-                "question_ja": "女性の海外一人旅でも大丈夫ですか？",
-                "answer": "Absolutely. Our tours are specifically designed with Japanese solo travellers in mind, with a strong emphasis on safety and group cohesion.",
-                "answer_ja": "もちろんです。当社のツアーは日本の個人旅行者を念頭に設計されており、安全性とグループの一体感を重視しています。"
-            },
-            {
-                "question": "What is the cancellation policy?",
-                "question_ja": "キャンセルポリシーを教えてください。",
-                "answer": "Full refund if cancelled 30+ days before departure. 50% refund 15–29 days before. No refund within 14 days.",
-                "answer_ja": "出発の30日以上前までのキャンセルは全額返金。15〜29日前は50％返金。14日以内は返金不可となります。"
-            }
-        ],
-        "bookingLink": null
-    },
-    {
-        "id": 2,
-        "slug": "food-tour-april-2026",
-        "category": "Food",
-        "title": "Food Tour April 2026",
-        "shortDescription": "A 7-day culinary odyssey through Hyderabad that takes you deep into the city's legendary food culture — from the world-famous Biryani to royal Nizam banquets and historic Irani cafés.",
-        "longDescription": "Hyderabad is one of the world's true food capitals, and this tour gives you the keys to its kitchen. Over seven rich days you will master traditional Hyderabadi Dum Biryani in a hands-on cooking workshop, dine in the restored palaces of the Nizam era, and navigate the centuries-old alleyways of the Old City sampling Irani Chai and Osmania biscuits.\n\nThis is not a simple restaurant tour. You will meet the families who have guarded secret recipes for generations, visit the spice merchants of Laad Bazaar, and understand why Hyderabadi cuisine is considered the ultimate fusion of Mughal and South Indian flavour traditions.",
-        "startDate": "2026-08-01",
-        "endDate": "2026-10-31",
-        "isComingSoon": true,
-        "dateDisplay": "August – October",
-        "durationDays": 7,
-        "location": "Hyderabad, Secunderabad",
-        "priceJPY": 180000,
-        "seatsLeft": 7,
-        "coverImage": "/assets/img/tours/food-tour-april-2026/cards/South-India-Famous-Food.jpg",
-        "galleryImages": [
-            "/assets/img/tours/food-tour-april-2026/gallery/001.jpg",
-            "/assets/img/tours/food-tour-april-2026/gallery/002.jpg"
-        ],
-        "features": [
-            "Traditional Hyderabadi Dum Biryani workshop",
-            "Nizam-style royal dining experience",
-            "Irani Chai & food trail through Old City"
-        ],
-        "itinerary": [
-            {
-                "dayNumber": 1,
-                "title": "Arrival in Hyderabad",
-                "details": "Airport welcome, hotel check-in, and an introductory walk through Secunderabad food market with your guide.",
-                "image": null
-            },
-            {
-                "dayNumber": 2,
-                "title": "Biryani Masterclass",
-                "details": "Full-day hands-on Dum Biryani cooking workshop with a professional Hyderabadi chef. Learn grinding spices, layering, and slow-cooking techniques.",
-                "image": null
-            },
-            {
-                "dayNumber": 3,
-                "title": "Charminar & Old City Food Trail",
-                "details": "Walking food trail through the Old City — Haleem, Paya, kebabs, Irani cafés, and Osmania biscuits with curated tasting stops.",
-                "image": null
-            },
-            {
-                "dayNumber": 4,
-                "title": "Nizam Royal Dining",
-                "details": "An exclusive royal dinner experience in a restored Nizam-era palace, featuring 12-course authentic Hyderabadi cuisine.",
-                "image": null
-            },
-            {
-                "dayNumber": 5,
-                "title": "Spice Market & Home Kitchen Visit",
-                "details": "Morning at Laad Bazaar spice market with a guide. Afternoon visit to a traditional Hyderabadi family home for a private cooking demonstration.",
-                "image": null
-            },
-            {
-                "dayNumber": 6,
-                "title": "Modern Hyderabad Food Scene",
-                "details": "Explore the modern café culture and fusion restaurants of Banjara Hills and Jubilee Hills — a study in how the city's food is evolving.",
-                "image": null
-            },
-            {
-                "dayNumber": 7,
-                "title": "Farewell & Departure",
-                "details": "Morning visit to a local sweet shop to pack traditional mithai as gifts. Farewell lunch. Transfer to Rajiv Gandhi International Airport.",
-                "image": null
-            }
-        ],
-        "whatToExpect": [
-            "Hands-on cooking with professional local chefs",
-            "7 curated food experiences — not just restaurants",
-            "Access to family-run kitchens not open to the public",
-            "Full Japanese language support throughout",
-            "All tastings and workshop ingredients included"
-        ],
-        "inclusions": [
-            "Return airport transfers",
-            "6 nights accommodation (4-star hotel)",
-            "All breakfasts and all listed dining experiences",
-            "Japanese-speaking food guide",
-            "Workshop materials and recipe cards in Japanese",
-            "Air-conditioned local transport"
-        ],
-        "exclusions": [
-            "International flights",
-            "Travel insurance",
-            "Personal beverage orders outside programme",
-            "Any food not listed in the daily programme"
-        ],
-        "faq": [
-            {
-                "question": "Do I need cooking experience?",
-                "answer": "None at all! Our workshops are designed for beginners and each step is guided in both English and Japanese."
-            },
-            {
-                "question": "Can dietary restrictions be accommodated?",
-                "answer": "Yes. Please notify us at booking. Vegetarian, gluten-aware, and allergen-conscious menus can be arranged."
-            }
-        ],
-        "bookingLink": null
-    },
-    {
-        "id": 3,
-        "slug": "cultural-tour-june-2026",
-        "category": "Cultural",
-        "title": "Cultural Tour June 2026",
-        "shortDescription": "An 8-day deep dive into the temples, art, and sacred traditions of Tamil Nadu — featuring private after-hours temple access, live classical Bharatanatyam, and UNESCO World Heritage sites.",
-        "longDescription": "Tamil Nadu is one of humanity's oldest living civilisations, and this tour is your intimate introduction to it. Over eight carefully paced days you will stand inside the Meenakshi Amman Temple in Madurai as a private guide brings its thousand-year history to life, photograph the Shore Temple at Mamallapuram in the golden hour, and witness — or even participate in — a live classical Bharatanatyam dance performance.\n\nThis is the tour for travellers who want to go beyond sightseeing. Every day has been designed to create a genuine cultural encounter, not just a visit.",
-        "startDate": "2026-06-05",
-        "endDate": "2026-06-12",
-        "durationDays": 8,
-        "location": "Madurai, Thanjavur, Mamallapuram",
-        "priceJPY": 320000,
-        "seatsLeft": 2,
-        "coverImage": "/assets/img/tours/cultural-tour-june-2026/cards/001-main.png",
-        "galleryImages": [],
-        "features": [
-            "Meenakshi Temple private architectural tour",
-            "Ancient UNESCO site photography workshop",
-            "Traditional Bharatanatyam performance"
-        ],
-        "itinerary": [
-            {
-                "dayNumber": 1,
-                "title": "Arrival in Madurai",
-                "details": "Arrive at Madurai Airport, transfer to heritage hotel. Evening rooftop viewing of the Meenakshi Temple illuminated at dusk.",
-                "image": null
-            },
-            {
-                "dayNumber": 2,
-                "title": "Meenakshi Amman Temple — Private Tour",
-                "details": "Early-morning private architectural tour of the Meenakshi Temple with a specialist historian guide. Explore the Hall of a Thousand Pillars and the temple tank.",
-                "image": null
-            },
-            {
-                "dayNumber": 3,
-                "title": "Madurai Old City Walk & Craft",
-                "details": "Walking tour of Madurai's bazaars — silk, bronze, and flower markets. Afternoon traditional bronze-casting workshop.",
-                "image": null
-            },
-            {
-                "dayNumber": 4,
-                "title": "Travel to Thanjavur",
-                "details": "Morning drive to Thanjavur. Visit Brihadeeswarar Temple (UNESCO), the Royal Palace Museum, and the ancient Saraswathi Mahal Library.",
-                "image": null
-            },
-            {
-                "dayNumber": 5,
-                "title": "Bharatanatyam — Live Performance & Intro Workshop",
-                "details": "Afternoon private Bharatanatyam performance in a traditional sabha. Optional 90-minute introduction workshop for participants interested in learning basic mudras.",
-                "image": null
-            },
-            {
-                "dayNumber": 6,
-                "title": "Travel to Mamallapuram",
-                "details": "Drive to Mamallapuram along the Coromandel Coast. Arrive at sunset. Check in to beachfront hotel.",
-                "image": null
-            },
-            {
-                "dayNumber": 7,
-                "title": "UNESCO Heritage Sites — Photography Workshop",
-                "details": "Guided photography workshop at Shore Temple, Five Rathas, and Arjuna's Penance. Professional photographer guide included. Small print of your best shot gifted.",
-                "image": null
-            },
-            {
-                "dayNumber": 8,
-                "title": "Farewell & Departure",
-                "details": "Morning beach walk. Farewell brunch. Transfer to Chennai International Airport for onward travel.",
-                "image": null
-            }
-        ],
-        "whatToExpect": [
-            "Private access to sites before regular tourist hours",
-            "Specialist heritage guides at every major site",
-            "A professional photographer guide at Mamallapuram",
-            "Optional participation in classical dance workshop",
-            "Balanced pace — cultural depth without exhaustion"
-        ],
-        "inclusions": [
-            "All internal transfers by air-conditioned van",
-            "7 nights accommodation (heritage and boutique hotels)",
-            "All breakfasts and 4 group dinners",
-            "Japanese-speaking cultural guide",
-            "All entry fees to temples and UNESCO sites",
-            "Professional photography session and print"
-        ],
-        "exclusions": [
-            "International flights",
-            "Personal purchases at craft workshops",
-            "Travel insurance",
-            "Lunches not listed in the programme"
-        ],
-        "faq": [
-            {
-                "question": "Is there a lot of walking involved?",
-                "answer": "Yes — the Meenakshi Temple and Mamallapuram sites involve moderate walking on uneven surfaces. Comfortable shoes are strongly recommended."
-            },
-            {
-                "question": "Are religious sites respectful of non-Hindu visitors?",
-                "answer": "Absolutely. Your guide will brief you on temple etiquette (footwear, dress, photography rules) before every visit."
-            },
-            {
-                "question": "Only 2 seats left — can I book for a group of 4?",
-                "answer": "Please contact us directly. We may be able to arrange a private group departure or reserve seats on our next cultural tour."
-            }
-        ],
-        "bookingLink": null
-    },
-    {
         "id": 4,
         "slug": "celebrity-tour-december-2025",
         "category": "Celebrity",
@@ -478,148 +122,449 @@
         "bookingLink": null
     },
     {
+        "id": 2,
+        "slug": "peddi-movie-premiere-june-2026",
+        "category": "Celebrity",
+        "title": "Peddi Movie Premiere & South India Cultural Tour",
+        "shortDescription": "Experience the Peddi movie premiere, visit celebrity homes, explore ancient temples, and discover the cultural heart of South India over 10 unforgettable days.",
+        "longDescription": "Join us for an exclusive journey combining cinema, culture, and coastal beauty. This tour offers a rare opportunity to attend the premiere screening of the highly anticipated Tamil film Peddi, visit the homes of South Indian cinema legends, and explore UNESCO World Heritage temples. From the vibrant streets of Chennai to the serene beaches of Mahabalipuram and the architectural marvels of Trichy, every day brings new discoveries. Our Japanese-speaking guides ensure seamless communication throughout your journey.",
+        "startDate": "2026-06-02",
+        "endDate": "2026-06-11",
+        "durationDays": 10,
+        "location": "Chennai, Mahabalipuram, Trichy",
+        "priceJPY": 298000,
+        "seatsLeft": 12,
+        "coverImage": null,
+        "galleryImages": [],
+        "features": [
+            "Attend the exclusive premiere of Peddi Tamil movie",
+            "Visit celebrity homes of Rajinikanth, Dhanush, and Vijay",
+            "Explore Mahabalipuram UNESCO World Heritage rock temples",
+            "Experience traditional Chennai food tour and shopping",
+            "Visit ancient temples in Trichy including Kabaleshwar Temple",
+            "Enjoy beach time at Marina Beach and temple town exploration"
+        ],
+        "itinerary": [
+            {
+                "dayNumber": 1,
+                "title": "Arrival in India",
+                "details": "Arrive at Chennai International Airport. Our team will greet you at arrivals and transfer you to your luxury hotel. Evening welcome dinner and tour orientation with your Japanese-speaking guide. Rest and prepare for the exciting journey ahead."
+            },
+            {
+                "dayNumber": 2,
+                "title": "Free Day in Chennai",
+                "details": "Relax and recover from your journey. Optional activities available: explore local markets, visit nearby temples, or simply enjoy your hotel's amenities. Evening briefing about the Peddi movie premiere tomorrow."
+            },
+            {
+                "dayNumber": 3,
+                "title": "Peddi Movie Premiere Event",
+                "details": "The highlight begins! Attend the exclusive premiere screening of Peddi at LB Stadium. Reserved seating arranged for our group. Experience the excitement of a Tamil cinema premiere with fans, media, and special guests. Evening celebration dinner."
+            },
+            {
+                "dayNumber": 4,
+                "title": "Private Premier Show & Celebrity Homes",
+                "details": "Morning private screening with the lead actor in attendance. Afternoon tour visiting the external grounds of celebrity homes including Rajinikanth, Dhanush, and Vijay's residences. Evening free for personal exploration."
+            },
+            {
+                "dayNumber": 5,
+                "title": "Chennai Food & Shopping Tour",
+                "details": "Immerse yourself in Chennai's culinary scene. Visit traditional markets, sample authentic South Indian breakfast, explore shopping districts for silk sarees and handicrafts. Lunch at a heritage restaurant. Evening at leisure."
+            },
+            {
+                "dayNumber": 6,
+                "title": "Mahabalipuram UNESCO Heritage Sites",
+                "details": "Journey to the coastal town of Mahabalipuram. Explore the UNESCO World Heritage rock-cut temples including Shore Temple and Pancha Rathas. Enjoy beach time at pristine Mahabalipuram beach. Overnight in beach resort."
+            },
+            {
+                "dayNumber": 7,
+                "title": "Temples & Cultural Experiences",
+                "details": "Visit ancient temples in the region. Experience traditional cultural activities. Lunch at a local family home for authentic Tamil hospitality. Evening cultural performance showcasing classical South Indian dance and music."
+            },
+            {
+                "dayNumber": 8,
+                "title": "Trichy Temple Trail",
+                "details": "Travel to Trichy. Visit the magnificent Kabaleshwar Temple, Perumallkoil, Varadaraja Temple, and the iconic Tripliken rock fort temple. Explore the spiritual heart of Tamil Nadu with expert guides explaining the rich history and architecture."
+            },
+            {
+                "dayNumber": 9,
+                "title": "Marina Beach & Temple Town",
+                "details": "Return to Chennai. Visit Marina Beach, one of the longest urban beaches in the world. Final temple visits and last-minute shopping. Farewell dinner celebrating the incredible journey. Pack and prepare for departure."
+            },
+            {
+                "dayNumber": 10,
+                "title": "Departure",
+                "details": "Breakfast at the hotel. Check-out and transfer to Chennai International Airport for your flight back to Japan. Depart with unforgettable memories and new friendships."
+            }
+        ],
+        "whatToExpect": [
+            "10 days of immersive celebrity and cultural experiences",
+            "Private film screenings and premiere access",
+            "Full Japanese-speaking escort for all 10 days"
+        ],
+        "inclusions": [
+            "9 nights accommodation in luxury hotels",
+            "All meals (breakfast, lunch, dinner) with vegetarian options",
+            "Private air-conditioned transport throughout",
+            "Peddi movie premiere tickets and reserved seating",
+            "Celebrity homes external viewing tour with expert guide",
+            "All temple entry fees and guided tours",
+            "Airport pickup and drop-off",
+            "Japanese-speaking tour guide throughout",
+            "24/7 emergency support"
+        ],
+        "exclusions": [
+            "International flights to/from India",
+            "Travel insurance (strongly recommended)",
+            "Personal shopping and souvenirs",
+            "Tips for guides and drivers (optional but appreciated)",
+            "Any meals not specified in itinerary"
+        ],
+        "faq": [],
+        "bookingLink": null
+    },
+    {
+        "id": 3,
+        "slug": "jana-nayagan-vijay-june-2026",
+        "category": "Celebrity",
+        "title": "Jana Nayagan Event & Vijay Family Experience",
+        "shortDescription": "An intimate celebrity tour featuring the Jana Nayagan public event, confirmed meeting with Vijay's parents, beach resort stays, and exclusive access to celebrity homes and temples.",
+        "longDescription": "This exclusive tour offers unparalleled access to South Indian cinema culture. Centered around the highly anticipated Jana Nayagan public movie event, this journey includes a confirmed private meeting with superstar Vijay's parents at their home — a rare privilege arranged through Dr. Kanmani's personal connections. Stay at the luxurious Seabreeze Beach Resort, visit celebrity homes, explore ancient temples, and experience traditional Tamil culture including optional customized blouse tailoring. Limited to just 10 guests for a truly personal experience.",
+        "startDate": "2026-06-18",
+        "endDate": "2026-06-26",
+        "durationDays": 9,
+        "location": "Chennai, Beach Resorts, Celebrity Locations",
+        "priceJPY": 345000,
+        "seatsLeft": 10,
+        "coverImage": null,
+        "galleryImages": [],
+        "features": [
+            "Confirmed private meeting with Vijay's parents at their home",
+            "Attend Jana Nayagan public movie event with premium seats",
+            "3 nights at exclusive Seabreeze Beach Resort with beach activities",
+            "Visit celebrity residences with insider access",
+            "Traditional Tamil family homestay experience on June 19th",
+            "Horse riding on the beach and water sports",
+            "Ancient temple exploration with cultural expert guides"
+        ],
+        "itinerary": [
+            {
+                "dayNumber": 1,
+                "title": "Arrival & Welcome",
+                "details": "Land in Chennai. VIP airport reception and transfer to luxury hotel. Welcome dinner and tour briefing. Rest and acclimatize."
+            },
+            {
+                "dayNumber": 2,
+                "title": "Jana Nayagan Public Event",
+                "details": "The main event! Attend the Jana Nayagan public movie screening with premium reserved seating. Experience the electrifying atmosphere of a Tamil cinema event with thousands of fans. Post-event celebration dinner."
+            },
+            {
+                "dayNumber": 3,
+                "title": "Meeting Vijay's Parents",
+                "details": "A once-in-a-lifetime experience. Private arranged meeting at the home of superstar Vijay's parents. Spend quality time in conversation, hear stories about Vijay's journey, and enjoy traditional Tamil hospitality. This meeting is confirmed and exclusive to our group."
+            },
+            {
+                "dayNumber": 4,
+                "title": "Movie Screenings & Food Exploration",
+                "details": "Private film screenings of recent Tamil cinema hits. Afternoon food tour exploring Chennai's culinary treasures. Evening shopping at traditional silk markets."
+            },
+            {
+                "dayNumber": 5,
+                "title": "Tamil Family Homestay Experience",
+                "details": "Spend the day with a traditional Tamil family. Learn cooking, participate in daily rituals, experience authentic South Indian home life. This cultural immersion offers insights no hotel can provide."
+            },
+            {
+                "dayNumber": 6,
+                "title": "Beach Resort & Activities",
+                "details": "Transfer to the stunning Seabreeze Beach Resort. Check into your oceanfront room. Afternoon horse riding on the beach, beach volleyball, and water sports. Sunset dinner by the ocean."
+            },
+            {
+                "dayNumber": 7,
+                "title": "Celebrity Homes & Temples",
+                "details": "Morning visit to celebrity residences (external viewing tour). Afternoon temple exploration including historic sites and architectural marvels. Evening cultural performance at the resort."
+            },
+            {
+                "dayNumber": 8,
+                "title": "Beach Activities & Customization Workshop",
+                "details": "Full day at leisure at Seabreeze Resort. Optional activities: traditional Rangula Ratnam blouse stitching workshop (view the process or opt for customized blouse making service). Beach time, resort amenities, and relaxation. Vijay's birthday celebration event in the evening (June 22nd special observance)."
+            },
+            {
+                "dayNumber": 9,
+                "title": "Departure",
+                "details": "Final breakfast overlooking the ocean. Check-out and transfer to Chennai airport. Depart with memories, friendships, and stories to last a lifetime."
+            }
+        ],
+        "whatToExpect": [
+            "Confirmed private meeting with Vijay's parents at their home",
+            "Attend Jana Nayagan public movie event with premium seats",
+            "3 nights at Seabreeze Beach Resort",
+            "Full Japanese language support"
+        ],
+        "inclusions": [
+            "8 nights luxury accommodation (5-star hotels + Seabreeze Beach Resort)",
+            "All meals throughout the tour with special dietary accommodations",
+            "Jana Nayagan public event tickets with premium seating",
+            "Confirmed private meeting with Vijay's parents at their residence",
+            "Celebrity homes tour (Rajinikanth, Dhanush, Vijay)",
+            "Beach resort activities: horse riding, beach volleyball, water sports",
+            "Temple visits with expert guides and all entry fees",
+            "Traditional Rangula Ratnam blouse stitching demonstration",
+            "Private air-conditioned luxury transport",
+            "Japanese-speaking guide throughout",
+            "Airport transfers and 24/7 support"
+        ],
+        "exclusions": [
+            "International flights",
+            "Travel insurance",
+            "Customized blouse making (available as optional paid activity ¥12,000)",
+            "Personal expenses and shopping",
+            "Tips (optional)"
+        ],
+        "faq": [],
+        "bookingLink": null
+    },
+    {
+        "id": 4,
+        "slug": "ntr-fan-meet-november-2026",
+        "category": "Celebrity",
+        "title": "NTR Fan Meet & Telugu Cinema Experience",
+        "shortDescription": "An exclusive 6-day celebrity tour centered around a confirmed NTR fan meet event, exploring the heart of Telugu cinema culture in Hyderabad and surrounding regions.",
+        "longDescription": "Experience the magic of Telugu cinema with this exclusive tour built around a confirmed NTR (Jr. NTR) fan meet event. Hyderabad, the powerhouse of Telugu film industry, serves as our base as we explore film studios, visit iconic locations from blockbuster movies, and immerse ourselves in the vibrant culture of Andhra Pradesh and Telangana. This shorter intensive tour packs maximum celebrity access and cultural experiences into 6 action-packed days, all guided by our expert Japanese-speaking team with insider connections to the Telugu film industry.",
+        "startDate": "2026-11-23",
+        "endDate": "2026-11-28",
+        "durationDays": 6,
+        "location": "Hyderabad, Vijayawada, Telugu Film Locations",
+        "priceJPY": 285000,
+        "seatsLeft": 12,
+        "coverImage": null,
+        "galleryImages": [],
+        "features": [
+            "Confirmed NTR fan meet event with close interaction",
+            "Behind-the-scenes tour of major Telugu film studios",
+            "Visit iconic movie locations from recent blockbusters",
+            "Explore Hyderabad's film district and production houses",
+            "Golconda Fort sunset experience",
+            "Traditional Andhra cuisine cooking class and feast"
+        ],
+        "itinerary": [
+            {
+                "dayNumber": 1,
+                "title": "Arrival in Hyderabad",
+                "details": "Arrive at Rajiv Gandhi International Airport, Hyderabad. VIP meet-and-greet and transfer to luxury hotel in the heart of the city. Evening welcome dinner featuring authentic Hyderabadi biryani and traditional Andhra delicacies. Tour orientation and NTR event briefing."
+            },
+            {
+                "dayNumber": 2,
+                "title": "NTR Fan Meet Event",
+                "details": "The main highlight! Attend the exclusive NTR fan meet event with premium access arranged through our industry connections. Experience close interaction with Jr. NTR, photo opportunities, Q&A session, and an unforgettable celebration of Telugu cinema. Evening group celebration dinner."
+            },
+            {
+                "dayNumber": 3,
+                "title": "Film Studio & Production Tour",
+                "details": "Full-day behind-the-scenes tour of a major Telugu film studio (Ramoji Film City or active production facility). Witness live shooting if schedules permit, explore elaborate sets, costume departments, and post-production facilities. Learn about the making of Telugu blockbusters from industry professionals. Lunch at the studio cafeteria."
+            },
+            {
+                "dayNumber": 4,
+                "title": "Iconic Movie Locations Tour",
+                "details": "Visit famous filming locations from recent Telugu blockbusters. Recreate iconic scenes, take photos at recognizable spots, and hear insider stories about the productions. Afternoon visit to film district where production houses and celebrity offices are located. Evening cultural performance showcasing traditional Kuchipudi dance."
+            },
+            {
+                "dayNumber": 5,
+                "title": "Heritage & Culture Day",
+                "details": "Morning visit to the magnificent Golconda Fort with its incredible acoustics and panoramic views. Afternoon explore the historic Charminar and surrounding bazaars for traditional shopping (pearls, bangles, textiles). Participate in an Andhra cooking class followed by a traditional feast. Sunset at Hussain Sagar Lake."
+            },
+            {
+                "dayNumber": 6,
+                "title": "Departure",
+                "details": "Final breakfast at the hotel. Last-minute shopping at modern malls for Telugu cinema merchandise and souvenirs. Check-out and transfer to Hyderabad airport for your return flight to Japan. Depart with exclusive memories and insider stories from the world of Telugu cinema."
+            }
+        ],
+        "whatToExpect": [
+            "Confirmed NTR fan meet event with close interaction",
+            "Behind-the-scenes tour of major Telugu film studios",
+            "Full Japanese language support"
+        ],
+        "inclusions": [
+            "5 nights luxury hotel accommodation in Hyderabad",
+            "All meals (breakfast, lunch, dinner) with North and South Indian options",
+            "Confirmed NTR fan meet event with premium access",
+            "Film studio tour at Ramoji Film City or similar",
+            "Private visits to iconic Telugu movie filming locations",
+            "Golconda Fort and Charminar guided tours",
+            "Traditional Andhra cultural performance evening",
+            "Private air-conditioned luxury transport",
+            "Japanese-speaking guide throughout",
+            "Airport transfers and 24/7 support"
+        ],
+        "exclusions": [
+            "International flights to/from India",
+            "Travel insurance (highly recommended)",
+            "Personal shopping and souvenirs",
+            "Optional activities not listed in itinerary",
+            "Tips for guides and drivers (optional)"
+        ],
+        "faq": [],
+        "bookingLink": null
+    },
+    {
         "id": 5,
-        "slug": "short-tour-chennai",
-        "category": "Short",
-        "title": "Chennai Weekend Explorer",
-        "shortDescription": "A compact 2-day tour of Chennai covering Marina Beach, Kapaleeshwarar Temple, and authentic South Indian cuisine.",
-        "longDescription": "Not everyone has a full week to spare, and that is exactly why we created this focused weekend tour of Chennai. In just two days you will experience the city's most iconic highlights — from the historic Mylapore neighbourhood to the vibrant colours of Marina Beach at sunrise.",
-        "startDate": "2026-05-10",
-        "endDate": "2026-05-11",
-        "durationDays": 2,
-        "location": "Chennai",
-        "priceJPY": 45000,
+        "slug": "test-bilingual-golden-triangle-2026",
+        "category": "Cultural",
+        "title": "Golden Triangle & Taj Mahal Discovery Tour",
+        "title_ja": "ゴールデントライアングルとタージ・マハル発見ツアー",
+        "shortDescription": "Discover the magnificent Taj Mahal, the forts of Agra and Jaipur, and the timeless spirit of Delhi on this iconic 7-day tour.",
+        "shortDescription_ja": "壮大なタージ・マハル、アグラとジャイプールの城塞、装置でデリーの永遠の精神を、この象徴的な7日間のツアーで発見してください。",
+        "longDescription": "This is a test tour created to verify bilingual language switching functionality on the Kanmani Tours website. All content in this tour exists in both English and Japanese.\n\nThe Golden Triangle is India's most iconic travel circuit, connecting three extraordinary cities — Delhi, Agra, and Jaipur. Each city tells a different chapter of India's magnificent history, and together they offer an unforgettable introduction to the country's culture, architecture, and way of life.\n\nDelhi, the capital, blends ancient Mughal grandeur with modern Indian energy. Agra is home to the Taj Mahal, one of the seven wonders of the world. Jaipur, the Pink City, dazzles with its royal palaces and vibrant bazaars. Your Japanese-speaking guide will bring each destination to life with stories, context, and insider access that no guidebook can provide.",
+        "longDescription_ja": "このツアーは、カンマニ・ツアーズのウェブサイトでバイリンガル言語切り替え機能を確認するために作成されたテストツアーです。このツアーのすべてのコンテンツは英語と日本語の両方で存在します。\n\nゴールデントライアングルはインド最も象徴的な旅行ルートで、3つの素晴らしい都市—デリー、アグラ、ジャイプール—を結んでいます。それぞれの都市はインドの壮大な歴史の異なる章を語り、合わせてインドの文化、建築、生活様式への忘れられない入門を提供します。\n\n首都デリーは、古代ムガール帝国の壮大さと現代インドのエネルギーが融合しています。アグラは世界七不思議の一つ、タージ・マハルの本拠地です。ピンクシティのジャイプールは、その王宮と活気あふれるバザールで目を見張ります。日本語を話すガイドが、ガイドブックでは得られないストーリー、背景、そして特別なアクセスで各目的地に命を吹き込みます。",
+        "startDate": "2026-09-15",
+        "endDate": "2026-09-21",
+        "durationDays": 7,
+        "location": "Delhi, Agra, Jaipur",
+        "location_ja": "デリー、アグラ、ジャイプール",
         "priceRangeJPY": {
-            "min": 35000,
-            "max": 55000
+            "min": 280000,
+            "max": 320000
         },
         "seatsLeft": 10,
         "coverImage": null,
         "galleryImages": [],
         "features": [
-            "Marina Beach sunrise walk",
-            "Kapaleeshwarar Temple guided visit",
-            "T. Nagar shopping with local guide"
+            "Japanese-speaking guide throughout all 7 days",
+            "Maximum 10 guests for an intimate experience",
+            "All entry fees and permits included",
+            "Luxury heritage hotels at each destination",
+            "Private air-conditioned transport",
+            "Dr. Kanmani personally oversees the itinerary"
+        ],
+        "features_ja": [
+            "7日間を通じた日本語スピーキングガイド",
+            "親密な体験のために最大10名のゲスト",
+            "全入場料と許可証を含む",
+            "各目的地の豪華なヘリテージホテル",
+            "プライベートエアコン付き交通",
+            "Dr.カンマニが個人的に旅程を監督"
         ],
         "itinerary": [
             {
                 "dayNumber": 1,
-                "title": "Arrival & Chennai Highlights",
-                "details": "Morning arrival and transfer. Visit Kapaleeshwarar Temple and explore T. Nagar. Evening Marina Beach sunset walk.",
-                "image": null
+                "title": "Arrival in Delhi",
+                "title_ja": "デリー到着",
+                "details": "Arrive at Indira Gandhi International Airport. Our Japanese-speaking team will greet you at the arrivals hall with a name board. Transfer to your heritage hotel in central Delhi. Evening welcome dinner featuring authentic North Indian cuisine. Tour briefing and introduction to your guide.",
+                "details_ja": "インディラ・ガンジー国際空港に到着。日本語を話すチームが到着ホールでネームボードを持ってお迎えします。デリー中心部のヘリテージホテルへ送迎。本格的な北インド料理 of ウェルカムディナー。ツアーのブリーフィングとガイドとの顔合わせ。"
             },
             {
                 "dayNumber": 2,
-                "title": "Culture & Departure",
-                "details": "Early-morning Marina Beach sunrise. Visit the Government Museum. Farewell brunch and transfer to airport.",
-                "image": null
+                "title": "Old and New Delhi",
+                "title_ja": "オールドデリーとニューデリー",
+                "details": "Morning cycle rickshaw ride through the narrow lanes of Old Delhi. Visit Jama Masjid, Chandni Chowk spice market, and the Red Fort. Street food tasting with your Japanese guide explaining every dish. Afternoon: India Gate, Humayun's Tomb, and Qutub Minar. Evening free for personal exploration.",
+                "details_ja": "午前中はオールドデリーの細い路地をサイクルリキシャで巡ります。ジャマー・マスジド、チャンドニー・チョークのスパイス市場、レッド・フォートを訪問。日本語ガイドが各料理を説明しながらストリートフードを試食。午後はインド門、フマーユーン廟、クトゥブ・ミナールを訪問。夕方は自由時間。"
+            },
+            {
+                "dayNumber": 3,
+                "title": "Delhi to Agra — Afternoon at Agra Fort",
+                "title_ja": "デリーからアグラへ—アグラ城での午後",
+                "details": "Morning drive to Agra (approximately 3 hours by private vehicle). Lunch at a rooftop restaurant with a view of the Taj Mahal. Afternoon guided tour of Agra Fort, a UNESCO World Heritage Site. Evening stroll along the Yamuna River bank at sunset. Overnight in Agra.",
+                "details_ja": "午前中にアグラへドライブ（プライベート車で約3時間）。タージ・マハルの眺望がある屋上レストランでランチ。午後はユネスコ世界遺産のアグラ城ガイドツアー。夕暮れ時にヤムナー川沿いを散策。アグラに宿泊。"
+            },
+            {
+                "dayNumber": 4,
+                "title": "Sunrise at the Taj Mahal",
+                "title_ja": "タージ・マハルでの日の出",
+                "details": "Wake up at 5:00am for the most magical experience of the tour. Private sunrise viewing of the Taj Mahal as the first light of dawn illuminates the white marble. Your guide will share the extraordinary love story of Emperor Shah Jahan and Mumtaz Mahal. Visit Fatehpur Sikri in the afternoon — a ghost city abandoned 400 years ago. Return to hotel for evening at leisure.",
+                "details_ja": "ツアー最も魔法的な体験のために朝5時に起床。夜明けの最初の光が白大理石を照らす中、タージ・マハルでのプライベート日の出観覧。ガイドがシャー・ジャハーン皇帝とムムターズ・マハルの特別な愛の物語を語ります。午後は400年前に廃棄されたゴーストシティ、ファテープル・シークリーを訪問。ホテルに戻り夕方は自由時間。"
+            },
+            {
+                "dayNumber": 5,
+                "title": "Agra to Jaipur — The Pink City",
+                "title_ja": "アグラからジャイプールへ—ピンクシティ",
+                "details": "Scenic drive from Agra to Jaipur (approximately 4 hours) with a stop at Abhaneri stepwell — one of India's most stunning ancient structures. Check into a heritage haveli in the old city of Jaipur. Evening walking tour of the Pink City markets and bazaars. Traditional Rajasthani dinner with folk music performance.",
+                "details_ja": "アグラからジャイプールへの景観ドライブ（約4時間）。インド最も素晴らしい古代建造物の一つ、アバネリの階段井戸に立ち寄ります。ジャイプール旧市街のヘリテージハヴェリにチェックイン。ピンクシティの市場とバザールのイブニングウォーキングツアー。民族音楽の演奏付きの伝統的なラジャスタンディナー。"
+            },
+            {
+                "dayNumber": 6,
+                "title": "Jaipur — Palaces, Elephants & Artisans",
+                "title_ja": "ジャイプール—宮殿、ゾウ、職人",
+                "details": "Morning visit to Amber Fort — a breathtaking hilltop palace complex. Ethical elephant sanctuary visit (no riding — interaction, feeding, and bathing observation only). City Palace and Jantar Mantar astronomical observatory. Afternoon block printing workshop with a local artisan family. Optional: gem and jewelry district shopping tour.",
+                "details_ja": "午前中は息を呑む丘の上の宮殿複合施設、アンベール城を訪問。倫理的なゾウ保護区訪問（乗馬なし—触れ合い、餌やり、入浴観察のみ）。シティパレスとジャンタル・マンタル天文台。地元の職人家族によるブロックプリントワークショップ。オプション：宝石とジュエリー地区のショッピングツアー。"
+            },
+            {
+                "dayNumber": 7,
+                "title": "Departure",
+                "title_ja": "出発",
+                "details": "Final morning at leisure. Optional last-minute visit to local markets for souvenirs. Transfer to Jaipur Airport or Delhi Airport depending on your return flight. Farewell from your Kanmani Tours guide. Depart with memories of India's most iconic landmarks and the warmth of its people.",
+                "details_ja": "最後の午前は自由時間。お土産のための地元市場への最後の訪問もオプションです。帰りの便によってジャイプール空港またはデリー空港へ送迎。カンマニ・ツアーズガイドとのお別れ。インド最も象徴的なランドマークとその人々の温かさの思い出とともに出発。"
             }
         ],
         "whatToExpect": [
-            "Compact 2-day itinerary",
-            "Japanese-speaking guide",
-            "Authentic local food"
+            "A seamless blend of history, culture, and personal discovery",
+            "Authentic Indian home-cooked meals arranged by Dr. Kanmani",
+            "Sunrise and golden hour visits to avoid tourist crowds",
+            "Local artisan workshops and handicraft demonstrations",
+            "Stories and context that bring India's history to life"
+        ],
+        "whatToExpect_ja": [
+            "歴史、文化、個人的な発見のシームレスな融合",
+            "Dr.カンマニが手配した本格的なインド家庭料理",
+            "観光客の混雑を避けた日の出とゴールデンアワー訪問",
+            "地元の職人ワークショップと工芸品のデモンストレーション",
+            "インドの歴史に命を吹き込むストーリーと背景"
         ],
         "inclusions": [
-            "Airport transfers",
-            "1 night accommodation",
-            "Japanese-speaking guide"
+            "6 nights accommodation in luxury heritage hotels",
+            "All breakfasts, lunches, and dinners as per itinerary",
+            "Private air-conditioned vehicle throughout",
+            "Japanese-speaking expert guide for all 7 days",
+            "All monument entry fees (including Taj Mahal)",
+            "Cycle rickshaw in Old Delhi",
+            "Ethical elephant sanctuary experience",
+            "Block printing artisan workshop",
+            "Airport pickup and drop-off",
+            "24/7 emergency support from Dr. Kanmani's team"
+        ],
+        "inclusions_ja": [
+            "豪華ヘリテージホテルでの6泊",
+            "旅程に記載の全朝食・昼食・夕食",
+            "専用エアコン付き車両",
+            "全7日間の日本語スピーキングエキスパートガイド",
+            "全モニュメント入場料（タージ・マハル含む）",
+            "オールドデリーのサイクルリキシャ",
+            "倫理的なゾウ保護区体験",
+            "ブロックプリント職人ワークショップ",
+            "空港送迎",
+            "Dr.カンマニのチームによる24時間緊急サポート"
         ],
         "exclusions": [
-            "International flights"
+            "International flights to/from India",
+            "Travel insurance (strongly recommended)",
+            "Personal shopping and souvenirs",
+            "Optional activities not listed in the itinerary",
+            "Tips for guides and drivers (appreciated but optional)"
         ],
-        "faq": [],
-        "bookingLink": null
-    },
-    {
-        "id": 6,
-        "slug": "short-tour-madurai",
-        "category": "Short",
-        "title": "Madurai Temple Express",
-        "shortDescription": "A focused 2-day pilgrimage and cultural tour of Madurai.",
-        "longDescription": "Madurai is one of the oldest continuously inhabited cities in the world. This short tour is designed for travellers who want to experience the spiritual and cultural heart of Tamil Nadu without committing to a week-long journey.",
-        "startDate": "2026-06-14",
-        "endDate": "2026-06-15",
-        "durationDays": 2,
-        "location": "Madurai",
-        "priceJPY": 40000,
-        "priceRangeJPY": {
-            "min": 30000,
-            "max": 50000
-        },
-        "seatsLeft": 8,
-        "coverImage": null,
-        "galleryImages": [],
-        "features": [
-            "Private early-morning Meenakshi Temple tour",
-            "Ancient bazaar walking trail"
+        "exclusions_ja": [
+            "インドへの/からの国際線航空券",
+            "旅行保険（強く推奨）",
+            "個人的なショッピングとお土産",
+            "旅程に記載されていないオプション活動",
+            "ガイドやドライバーへのチップ（感謝されますがオプション）"
         ],
-        "itinerary": [
+        "faq": [
             {
-                "dayNumber": 1,
-                "title": "Arrival & Temple Immersion",
-                "details": "Arrive at Madurai Airport. Afternoon guided tour of Meenakshi Amman Temple. Evening ceremony viewing.",
-                "image": null
+                "question": "Is this tour suitable for first-time visitors to India?",
+                "question_ja": "このツアーはインド初訪問者に適していますか？",
+                "answer": "Yes, absolutely. The Golden Triangle is the ideal introduction to India. All logistics are handled by our team, your Japanese-speaking guide is with you every step of the way, and the hotels are carefully selected for comfort and safety.",
+                "answer_ja": "はい、もちろんです。ゴールデントライアングルはインドへの理想的な入門です。全ての物流は私たちのチームが担当し、日本語を話すガイドが一歩一歩あなたに寄り添い、ホテルは快適さと安全性を考慮して慎重に選ばれています。"
             },
             {
-                "dayNumber": 2,
-                "title": "Bazaars & Departure",
-                "details": "Morning flower and banana markets. Visit Thirumalai Nayakkar Palace. Transfer to airport.",
-                "image": null
-            }
-        ],
-        "whatToExpect": [
-            "Expert historian guide",
-            "Japanese interpretation"
-        ],
-        "inclusions": [
-            "Airport transfers",
-            "1 night accommodation"
-        ],
-        "exclusions": [],
-        "faq": [],
-        "bookingLink": null
-    },
-    {
-        "id": 7,
-        "slug": "short-tour-hyderabad",
-        "category": "Short",
-        "title": "Hyderabad Heritage Quick Tour",
-        "shortDescription": "A 1-day intensive tour of Hyderabad's most iconic landmarks.",
-        "longDescription": "Hyderabad packs centuries of royal history into a single, vibrant city. This one-day intensive tour is perfect for transit travellers.",
-        "startDate": "2026-07-05",
-        "endDate": "2026-07-05",
-        "durationDays": 1,
-        "location": "Hyderabad",
-        "priceJPY": 25000,
-        "priceRangeJPY": {
-            "min": 20000,
-            "max": 35000
-        },
-        "seatsLeft": 12,
-        "coverImage": null,
-        "galleryImages": [],
-        "features": [
-            "Charminar & Laad Bazaar guided walk",
-            "Golconda Fort tour"
-        ],
-        "itinerary": [
+                "question": "What is the best time of year for this tour?",
+                "question_ja": "このツアーに最適な時期はいつですか？",
+                "answer": "September and October are excellent — the monsoon has passed, temperatures are pleasant (25–32°C), and the landscapes are lush and green. We avoid December–January as the northern Indian cold can be uncomfortable for some guests.",
+                "answer_ja": "9月と10月は素晴らしい時期です—モンスーンが過ぎ、気温は心地よく（25〜32°C）、景色は豊かで緑豊かです。北インドの寒さが一部のゲストに不快な場合があるため、12月〜1月は避けています。"
+            },
             {
-                "dayNumber": 1,
-                "title": "Full-Day Hyderabad Highlights",
-                "details": "Morning pickup. Visit Charminar and Laad Bazaar. Authentic Biryani lunch. Afternoon tour of Golconda Fort. Evening drop-off.",
-                "image": null
+                "question": "How physically demanding is this tour?",
+                "question_ja": "このツアーはどのくらい体力を要しますか？",
+                "answer": "This tour involves moderate walking — approximately 3 to 5 kilometres per day on uneven surfaces at heritage sites. There are no strenuous climbs. Comfortable walking shoes are essential. Please inform us of any mobility concerns before booking.",
+                "answer_ja": "このツアーは中程度のウォーキングを含みます—ヘリテージサイトの不均一な表面を1日約3〜5キロメートル。激しい登山はありません。快適なウォーキングシューズが必須です。予約前に移動に関する懸念事項をお知らせください。"
             }
         ],
-        "whatToExpect": [
-            "Fast-paced single-day itinerary",
-            "Japanese-speaking guide"
-        ],
-        "inclusions": [
-            "Hotel/airport pickup and drop-off"
-        ],
-        "exclusions": [],
-        "faq": [],
         "bookingLink": null
     }
 ]

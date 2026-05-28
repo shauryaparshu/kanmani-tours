@@ -114,10 +114,13 @@ export default function HeroSection({ heroImages, pollImages, initialCelebrities
             maxWidth: 'none',
             borderRadius: '0'
         }}>
-            <div className="hero-content" style={{ width: '100%', height: '100vh', position: 'relative', overflowX: 'hidden', maxWidth: '100%', borderRadius: '0' }}>
+            <div className="hero-content" style={{ width: '100%', position: 'relative', overflowX: 'hidden', maxWidth: '100%', borderRadius: '0' }}>
                 {/* Slideshow */}
                 <HeroSlideshow images={heroImages} altPrefix="Srikan Tours">
                     <style dangerouslySetInnerHTML={{ __html: `
+                        .hero-content {
+                            height: 75vh !important;
+                        }
                         .hero-cta-btn {
                             font-family: 'Jost', Arial, sans-serif;
                             font-size: 15px;
@@ -125,7 +128,7 @@ export default function HeroSection({ heroImages, pollImages, initialCelebrities
                             letter-spacing: 2px;
                             color: #1a1918 !important;
                             background-color: #d49a36;
-                            padding: 1.2rem 3.5rem;
+                            padding: 20px 56px;
                             text-decoration: none;
                             text-transform: uppercase;
                             display: inline-flex;
@@ -149,6 +152,22 @@ export default function HeroSection({ heroImages, pollImages, initialCelebrities
                         }
                         .hero-cta-btn:hover .cta-arrow {
                             transform: translateX(4px);
+                        }
+                        @media (max-width: 1024px) {
+                            .hero-content {
+                                height: 60vh !important;
+                            }
+                            .hero-cta-btn {
+                                padding: 16px 44px;
+                            }
+                        }
+                        @media (max-width: 768px) {
+                            .hero-content {
+                                height: 50vh !important;
+                            }
+                            .hero-cta-btn {
+                                padding: 14px 32px;
+                            }
                         }
                     `}} />
                     <a href="/tours" className="hero-cta-btn">

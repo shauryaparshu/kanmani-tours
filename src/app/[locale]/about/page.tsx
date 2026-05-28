@@ -1,11 +1,23 @@
 "use client";
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Navigation from '@/components/layout/Navigation';
 import Footer from '@/components/layout/FooterSection';
 import AboutKanmaniHoverLink from '@/components/ui/AboutKanmaniHoverLink';
 
 export default function AboutPage() {
+  const [windowWidth, setWindowWidth] = useState(1200);
+  useEffect(() => {
+    setWindowWidth(window.innerWidth);
+    const handler = () => setWindowWidth(window.innerWidth);
+    window.addEventListener('resize', handler);
+    return () => window.removeEventListener('resize', handler);
+  }, []);
+
+  const isMobile = windowWidth < 768;
+  const isTablet = windowWidth >= 768 && windowWidth < 1024;
+
   return (
     <>
       <Navigation />
@@ -61,8 +73,8 @@ export default function AboutPage() {
             {/* INTEGRATED STATS */}
             <div style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(4, 1fr)',
-              gap: '40px',
+              gridTemplateColumns: isMobile || isTablet ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)',
+              gap: isMobile ? '24px' : '40px',
               borderTop: '1px solid rgba(201,147,58,0.15)',
               paddingTop: '48px'
             }}>
@@ -75,7 +87,7 @@ export default function AboutPage() {
                 <div key={label}>
                   <div style={{
                     fontFamily: "'Jost', Arial, sans-serif",
-                    fontSize: 'clamp(32px, 3.5vw, 48px)',
+                    fontSize: isMobile ? '36px' : '56px',
                     fontWeight: '300',
                     color: '#C9933A',
                     letterSpacing: '0.04em',
@@ -98,14 +110,14 @@ export default function AboutPage() {
         {/* WHAT WE ARE SECTION */}
         <div style={{
           backgroundColor: '#FAFAF7',
-          padding: '80px 60px'
+          padding: isMobile ? '48px 20px' : '80px 60px'
         }}>
           <div style={{
             maxWidth: '1300px',
             margin: '0 auto',
             display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
-            gap: '80px',
+            gridTemplateColumns: isMobile || isTablet ? '1fr' : '1fr 1fr',
+            gap: isMobile ? '40px' : '80px',
             alignItems: 'center'
           }}>
             <div>
@@ -229,15 +241,15 @@ export default function AboutPage() {
         {/* FOUNDER SECTION */}
         <div style={{
           backgroundColor: '#1C1917',
-          padding: '80px 60px',
+          padding: isMobile ? '48px 20px' : '80px 60px',
           borderTop: '1px solid rgba(201,147,58,0.2)'
         }}>
           <div style={{
             maxWidth: '1300px',
             margin: '0 auto',
             display: 'grid',
-            gridTemplateColumns: '320px 1fr',
-            gap: '72px',
+            gridTemplateColumns: isMobile || isTablet ? '1fr' : '320px 1fr',
+            gap: isMobile ? '40px' : '72px',
             alignItems: 'center'
           }}>
             {/* Founder image placeholder */}
@@ -371,7 +383,7 @@ export default function AboutPage() {
         {/* VALUES SECTION */}
         <div style={{
           backgroundColor: '#FAFAF7',
-          padding: '80px 60px',
+          padding: isMobile ? '48px 20px' : '80px 60px',
           borderTop: '1px solid rgba(201,147,58,0.15)'
         }}>
           <div style={{ maxWidth: '1300px', margin: '0 auto' }}>
@@ -398,8 +410,8 @@ export default function AboutPage() {
             }}/>
             <div style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(3, 1fr)',
-              gap: '2px'
+              gridTemplateColumns: isMobile ? '1fr' : isTablet ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)',
+              gap: isMobile ? '16px' : '2px'
             }}>
               {[
                 {

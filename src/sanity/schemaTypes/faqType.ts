@@ -33,10 +33,23 @@ export const faqType = defineType({
             validation: (Rule) => Rule.required(),
         }),
         defineField({
+            name: 'questionJa',
+            title: '質問（日本語）/ Question in Japanese',
+            type: 'string',
+            description: 'Japanese translation of the question'
+        }),
+        defineField({
             name: 'answer',
             title: 'Answer',
             type: 'text',
             validation: (Rule) => Rule.required(),
+        }),
+        defineField({
+            name: 'answerJa',
+            title: '回答（日本語）/ Answer in Japanese',
+            type: 'text',
+            rows: 4,
+            description: 'Japanese translation of the answer'
         }),
         defineField({
             name: 'order',

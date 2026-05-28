@@ -2,8 +2,12 @@
 
 import React from 'react';
 import Link from 'next/link';
+import { useLocale } from 'next-intl';
 
 export default function FooterSection() {
+  const locale = useLocale();
+  const isJa = locale === 'ja';
+
   return (
     <footer style={{
       backgroundColor: '#111010',
@@ -47,8 +51,6 @@ export default function FooterSection() {
             </svg>
           </Link>
 
-
-
           <div style={{
             width: '40px',
             height: '1px',
@@ -59,7 +61,7 @@ export default function FooterSection() {
           <div>
             <div style={{ fontSize: '13px', color: '#FFFFFF', marginBottom: '12px' }}>+91 95977-16664</div>
             <div style={{ fontSize: '13px', color: '#FFFFFF', marginBottom: '12px' }}>kanmanitours@gmail.com</div>
-            <div style={{ fontSize: '13px', color: '#FFFFFF', marginBottom: '12px' }}>Chennai, India</div>
+            <div style={{ fontSize: '13px', color: '#FFFFFF', marginBottom: '12px' }}>{isJa ? "インド、チェンナイ" : "Chennai, India"}</div>
           </div>
 
           <div style={{ display: 'flex', gap: '12px', marginTop: '24px' }}>
@@ -146,7 +148,7 @@ export default function FooterSection() {
             textTransform: 'uppercase',
             marginBottom: '20px'
           }}>
-            Our Tours
+            {isJa ? "ツアー紹介" : "Our Tours"}
           </h3>
           <div style={{
             width: '32px',
@@ -155,12 +157,12 @@ export default function FooterSection() {
             marginBottom: '24px'
           }} />
           {[
-            { label: 'Celebrity Tours', href: '/tours' },
-            { label: 'Cultural Tours', href: '/tours' },
-            { label: 'Food Tours', href: '/tours' },
-            { label: 'Short Tours', href: '/tours' },
-            { label: 'Village Tours', href: '/tours' },
-            { label: 'View All Tours', href: '/tours', highlight: true }
+            { label: isJa ? 'セレブリティ関連ツアー' : 'Celebrity Tours', href: '/tours' },
+            { label: isJa ? '文化ツアー' : 'Cultural Tours', href: '/tours' },
+            { label: isJa ? 'フードツアー' : 'Food Tours', href: '/tours' },
+            { label: isJa ? 'ショートツアー' : 'Short Tours', href: '/tours' },
+            { label: isJa ? '農村・ビレッジツアー' : 'Village Tours', href: '/tours' },
+            { label: isJa ? 'すべてのツアーを見る' : 'View All Tours', href: '/tours', highlight: true }
           ].map(link => (
             <Link
               key={link.label}
@@ -193,7 +195,7 @@ export default function FooterSection() {
             textTransform: 'uppercase',
             marginBottom: '20px'
           }}>
-            Quick Links
+            {isJa ? "クイックリンク" : "Quick Links"}
           </h3>
           <div style={{
             width: '32px',
@@ -202,13 +204,13 @@ export default function FooterSection() {
             marginBottom: '24px'
           }} />
           {[
-            { label: 'Home', href: '/' },
-            { label: 'About Us', href: '/about' },
-            { label: 'Gallery', href: '/gallery' },
-            { label: 'FAQ', href: '/faq' },
-            { label: 'Contact', href: '/contact' },
-            { label: 'Services', href: '/services' },
-            { label: 'About Kanmani', href: '/about-kanmani' }
+            { label: isJa ? 'ホーム' : 'Home', href: '/' },
+            { label: isJa ? '会社概要' : 'About Us', href: '/about' },
+            { label: isJa ? 'ギャラリー' : 'Gallery', href: '/gallery' },
+            { label: isJa ? 'よくある質問' : 'FAQ', href: '/faq' },
+            { label: isJa ? 'お問い合わせ' : 'Contact', href: '/contact' },
+            { label: isJa ? 'サービス' : 'Services', href: '/services' },
+            { label: isJa ? 'Kanmaniについて' : 'About Kanmani', href: '/about-kanmani' }
           ].map(link => (
             <Link
               key={link.label}
@@ -240,7 +242,7 @@ export default function FooterSection() {
             textTransform: 'uppercase',
             marginBottom: '20px'
           }}>
-            Visit Us
+            {isJa ? "オフィス案内" : "Visit Us"}
           </h3>
           <div style={{
             width: '32px',
@@ -252,14 +254,12 @@ export default function FooterSection() {
           {/* Block 1 */}
           <div>
             <div style={{ fontSize: '10px', letterSpacing: '0.2em', color: '#C9933A', marginBottom: '6px' }}>
-              INDIA OFFICE
+              {isJa ? "インドオフィス" : "INDIA OFFICE"}
             </div>
-            <div style={{ fontSize: '13px', color: '#FFFFFF' }}>Anna Nagar</div>
-            <div style={{ fontSize: '13px', color: '#FFFFFF' }}>Chennai, India</div>
-            <div style={{ fontSize: '11px', color: '#FFFFFF', marginTop: '4px' }}>Mon–Sat · 9:00–18:00 IST</div>
+            <div style={{ fontSize: '13px', color: '#FFFFFF' }}>{isJa ? "アンナ・ナガル" : "Anna Nagar"}</div>
+            <div style={{ fontSize: '13px', color: '#FFFFFF' }}>{isJa ? "インド、チェンナイ" : "Chennai, India"}</div>
+            <div style={{ fontSize: '11px', color: '#FFFFFF', marginTop: '4px' }}>{isJa ? "月〜土 · 9:00〜18:00（インド標準時）" : "Mon–Sat · 9:00–18:00 IST"}</div>
           </div>
-
-
 
           {/* Contact CTA */}
           <div style={{
@@ -274,14 +274,14 @@ export default function FooterSection() {
               color: '#F5F1EB',
               marginBottom: '6px'
             }}>
-              Need help planning?
+              {isJa ? "ツアー計画でお困りですか？" : "Need help planning?"}
             </div>
             <div style={{
               fontSize: '11px',
               color: '#FFFFFF',
               marginBottom: '12px'
             }}>
-              Our team responds in Japanese
+              {isJa ? "日本語で丁寧に対応いたします" : "Our team responds in Japanese"}
             </div>
             <Link href="/contact" style={{
               fontSize: '11px',
@@ -296,7 +296,7 @@ export default function FooterSection() {
             onMouseEnter={(e) => e.currentTarget.style.color = '#F5F1EB'}
             onMouseLeave={(e) => e.currentTarget.style.color = '#C9933A'}
             >
-              GET IN TOUCH →
+              {isJa ? "お問い合わせはこちら →" : "GET IN TOUCH →"}
             </Link>
           </div>
 
@@ -324,17 +324,17 @@ export default function FooterSection() {
           color: '#FFFFFF',
           letterSpacing: '0.04em'
         }}>
-          © 2026 Kanmani Tours. All rights reserved.
+          {isJa ? "© 2026 Kanmani Tours. 無断転載を禁じます。" : "© 2026 Kanmani Tours. All rights reserved."}
         </div>
         
         <div style={{ display: 'flex', gap: '24px' }}>
           {[
-            { label: 'Privacy Policy', href: '/privacy' },
-            { label: 'Terms of Service', href: '/terms' },
-            { label: 'Cookie Policy', href: '/cookies' }
+            { label: isJa ? 'プライバシーポリシー' : 'Privacy Policy', href: '/privacy' },
+            { label: isJa ? '利用規約' : 'Terms of Service', href: '/terms' },
+            { label: isJa ? 'クッキーポリシー' : 'Cookie Policy', href: '/cookies' }
           ].map(link => (
             <Link
-              key={link.label}
+              key={link.href}
               href={link.href}
               style={{
                 fontSize: '12px',

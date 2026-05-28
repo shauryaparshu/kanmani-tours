@@ -1,6 +1,33 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
+/* ─── RESPONSIVE FOUNDATION ─────────────────────── */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  overflow-x: hidden;
+  min-width: 320px;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Responsive typography scale */
 :root {
+  --font-scale: clamp(0.85rem, 2vw, 1rem);
   --primary: #f67139;
   /* Orange */
   --primary-hover: #e05e26;
@@ -17,6 +44,57 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+/* ─── RESPONSIVE UTILITIES ───────────────────────── */
+
+.r-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 40px;
+}
+
+.r-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+.r-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.r-padding {
+  padding: 80px 60px;
+}
+
+.r-padding-sm {
+  padding: 48px 32px;
+}
+
+/* ─── TABLET (max-width: 1024px) ─────────────────── */
+@media (max-width: 1024px) {
+  .r-grid-2 { grid-template-columns: 1fr; gap: 32px; }
+  .r-grid-3 { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  .r-grid-4 { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .r-padding { padding: 60px 40px; }
+}
+
+/* ─── MOBILE (max-width: 768px) ──────────────────── */
+@media (max-width: 768px) {
+  .r-grid-2 { grid-template-columns: 1fr; gap: 24px; }
+  .r-grid-3 { grid-template-columns: 1fr; gap: 20px; }
+  .r-grid-4 { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .r-padding { padding: 48px 20px; }
+  .r-padding-sm { padding: 32px 20px; }
+}
+
+/* ─── SMALL MOBILE (max-width: 480px) ────────────── */
+@media (max-width: 480px) {
+  .r-grid-4 { grid-template-columns: 1fr; gap: 12px; }
+  .r-padding { padding: 40px 16px; }
 }
 
 /* ============================================================
@@ -695,7 +773,7 @@ button {
 }
 
 .hero-title {
-  font-size: 3rem;
+  font-size: clamp(48px, 6vw, 88px);
   font-weight: 800;
   margin-bottom: 15px;
   line-height: 1.1;
@@ -703,9 +781,24 @@ button {
 }
 
 .hero-subtitle {
-  font-size: 1.1rem;
+  font-size: 18px;
   max-width: 600px;
   opacity: 0.9;
+}
+
+@media (max-width: 1024px) {
+  .hero-title {
+    font-size: 44px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 32px;
+  }
+  .hero-subtitle {
+    font-size: 14px;
+  }
 }
 
 /* Vote Card */
@@ -1149,9 +1242,15 @@ button {
 
 /* Happy Clients Section */
 .testimonials-section {
-  padding: 100px 0;
+  padding: 80px 60px;
   background-color: #fbfcfe;
   overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .testimonials-section {
+    padding: 48px 20px;
+  }
 }
 
 .testimonials-container {
@@ -1355,13 +1454,19 @@ button {
 }
 
 .testimonial-text-new {
-  font-size: 0.95rem;
+  font-size: 18px;
   line-height: 1.7;
   color: #475569;
   margin-bottom: 20px;
   flex-grow: 1;
   position: relative;
   z-index: 1;
+}
+
+@media (max-width: 768px) {
+  .testimonial-text-new {
+    font-size: 16px;
+  }
 }
 
 .read-more-link {
@@ -3957,4 +4062,57 @@ button {
 .PhoneInputCountrySelectArrow {
   opacity: 0.6 !important;
   margin-left: 4px !important;
+}
+
+/* Japanese language text wrapping fixes */
+:lang(ja),
+[lang="ja"],
+.locale-ja,
+:lang(ja) *,
+[lang="ja"] *,
+.locale-ja * {
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  line-break: strict;
+}
+
+/* Prevent Japanese text from breaking inside words */
+* {
+  -webkit-hyphens: none;
+  hyphens: none;
+}
+
+.nav-desktop {
+  display: flex !important;
+}
+.nav-mobile {
+  display: none !important;
+}
+.nav-mobile-spacer {
+  display: none !important;
+  height: 0 !important;
+}
+@media screen and (max-width: 1280px) {
+  .nav-desktop {
+    display: none !important;
+  }
+  .nav-mobile {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 0 20px !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: 64px !important;
+    z-index: 9999 !important;
+  }
+  .nav-mobile-spacer {
+    display: block !important;
+    height: 64px !important;
+    width: 100% !important;
+  }
 }

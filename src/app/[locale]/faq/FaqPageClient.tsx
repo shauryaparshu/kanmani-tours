@@ -2,12 +2,15 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import { useLocale } from 'next-intl';
 
 interface FaqItem {
   _id: string;
   category: string;
   question: string;
+  questionJa?: string;
   answer: string;
+  answerJa?: string;
 }
 
 const FAQ_CATEGORIES = [
@@ -90,6 +93,7 @@ function AccordionItem({ question, answer }: { question: string; answer: string 
 }
 
 export default function FaqPageClient({ faqs }: { faqs: FaqItem[] }) {
+  const locale = useLocale();
   const [activeCategory, setActiveCategory] = useState('booking');
   const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
   const sectionRefs = useRef<{ [key: string]: HTMLElement | null }>({});
@@ -408,8 +412,8 @@ export default function FaqPageClient({ faqs }: { faqs: FaqItem[] }) {
                     {categoryFaqs.map((faq) => (
                       <AccordionItem
                         key={faq._id}
-                        question={faq.question}
-                        answer={faq.answer}
+                        question={locale === 'ja' ? (faq.questionJa || faq.question) : faq.question}
+                        answer={locale === 'ja' ? (faq.answerJa || faq.answer) : faq.answer}
                       />
                     ))}
                   </div>

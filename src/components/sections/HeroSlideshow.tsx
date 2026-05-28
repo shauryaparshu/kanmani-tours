@@ -43,7 +43,47 @@ export default function HeroSlideshow({
     }
 
     return (
-        <div className="hero-banner" style={{ position: 'relative', width: '100%', height: '100vh', overflow: 'hidden' }}>
+        <div className="hero-banner" style={{ position: 'relative', width: '100%', overflow: 'hidden' }}>
+            <style dangerouslySetInnerHTML={{ __html: `
+                .hero-banner {
+                    height: 75vh !important;
+                }
+                .hero-thumbnails-container {
+                    padding: 12px 24px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 8px;
+                    overflow-x: auto;
+                    scrollbar-width: none;
+                    width: 100%;
+                    background-color: transparent;
+                }
+                .hero-dots-container {
+                    display: none;
+                    gap: 8px;
+                    margin-bottom: 16px;
+                    justify-content: center;
+                    z-index: 25;
+                }
+                @media (max-width: 1024px) {
+                    .hero-banner {
+                        height: 60vh !important;
+                    }
+                }
+                @media (max-width: 768px) {
+                    .hero-banner {
+                        height: 50vh !important;
+                    }
+                    .hero-thumbnails-container {
+                        display: none !important;
+                    }
+                    .hero-dots-container {
+                        display: flex !important;
+                    }
+                }
+            `}} />
+
             {/* Main Image Container */}
             <div style={{ position: 'absolute', inset: 0 }}>
                 {images.map((src, i) => (
@@ -96,7 +136,7 @@ export default function HeroSlideshow({
                 left: 0,
                 right: 0,
                 zIndex: 20,
-                paddingBottom: '50px',
+                paddingBottom: '24px',
                 background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 50%, transparent 100%)',
                 display: 'flex',
                 flexDirection: 'column',
@@ -105,17 +145,7 @@ export default function HeroSlideshow({
             }}>
                 {/* Thumbnail strip */}
                 {images.length > 1 && (
-                    <div style={{
-                        padding: '12px 24px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        gap: '8px',
-                        overflowX: 'auto',
-                        scrollbarWidth: 'none',
-                        width: '100%',
-                        backgroundColor: 'transparent'
-                    }}>
+                    <div className="hero-thumbnails-container">
                         {images.map((image, index) => (
                             <div
                                 key={index}
@@ -154,6 +184,28 @@ export default function HeroSlideshow({
                                     }} />
                                 )}
                             </div>
+                        ))}
+                    </div>
+                )}
+
+                {/* Dot indicators (only visible on mobile) */}
+                {images.length > 1 && (
+                    <div className="hero-dots-container">
+                        {images.map((_, index) => (
+                            <button
+                                key={index}
+                                onClick={() => setCurrent(index)}
+                                style={{
+                                    width: '8px',
+                                    height: '8px',
+                                    borderRadius: '50%',
+                                    backgroundColor: current === index ? '#C9933A' : 'rgba(255, 255, 255, 0.4)',
+                                    border: 'none',
+                                    padding: 0,
+                                    cursor: 'pointer',
+                                    transition: 'background-color 0.3s ease'
+                                }}
+                            />
                         ))}
                     </div>
                 )}

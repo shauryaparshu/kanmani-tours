@@ -2,13 +2,14 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { formatDateRange, type Tour } from '@/lib/tours';
 import { getCategoryColor, getCategoryLabel } from '@/lib/categories';
 
 interface ToursSectionProps {
     tours: Tour[];
     cardImages?: Record<number | string, string | null>;
+    locale?: string;
 }
 
 function getRemainingDays(startDate: string): string {
@@ -24,7 +25,9 @@ function getRemainingDays(startDate: string): string {
 
 const catBg = (cat: string) => getCategoryColor(cat);
 
-export default function ToursSection({ tours, cardImages = {} }: ToursSectionProps) {
+export default function ToursSection({ tours, cardImages = {}, locale: propLocale }: ToursSectionProps) {
+    const defaultLocale = useLocale();
+    const locale = propLocale || defaultLocale;
     const t = useTranslations('Home');
 
     if (!tours || tours.length === 0) return null;
@@ -32,6 +35,19 @@ export default function ToursSection({ tours, cardImages = {} }: ToursSectionPro
     return (
         <section id="tours" style={{ backgroundColor: '#FAFAF7', overflow: 'hidden' }}>
             <style dangerouslySetInnerHTML={{ __html: `
+                .upcoming-tours-container {
+                    max-width: 1200px;
+                    margin: 0 auto;
+                    padding: 80px 60px;
+                }
+                .upcoming-tours-heading {
+                    font-family: 'Cormorant Garamond', Georgia, serif;
+                    font-size: 46px;
+                    font-weight: 500;
+                    color: #1a1918;
+                    letter-spacing: 0.04em;
+                    margin: 0;
+                }
                 .upcoming-tours-grid {
                     display: grid;
                     grid-template-columns: repeat(3, 1fr);
@@ -42,6 +58,7 @@ export default function ToursSection({ tours, cardImages = {} }: ToursSectionPro
                     text-decoration: none;
                     color: inherit;
                     display: block;
+                    width: 100%;
                 }
                 .tour-card-image-wrap {
                     aspect-ratio: 4 / 3;
@@ -73,23 +90,25 @@ export default function ToursSection({ tours, cardImages = {} }: ToursSectionPro
                 .tour-card-link:hover .tour-card-cta {
                     transform: translateX(4px);
                 }
-                @media (max-width: 992px) {
+                @media (max-width: 1024px) {
                     .upcoming-tours-grid {
                         grid-template-columns: repeat(2, 1fr);
                     }
                 }
-                @media (max-width: 640px) {
+                @media (max-width: 768px) {
+                    .upcoming-tours-container {
+                        padding: 48px 20px;
+                    }
+                    .upcoming-tours-heading {
+                        font-size: 28px;
+                    }
                     .upcoming-tours-grid {
                         grid-template-columns: 1fr;
                     }
                 }
             `}} />
             
-            <div style={{
-                maxWidth: '1200px',
-                margin: '0 auto',
-                padding: '5rem 2rem'
-            }}>
+            <div className="upcoming-tours-container">
                 {/* Section Header */}
                 <div style={{
                     display: 'flex',
@@ -100,14 +119,7 @@ export default function ToursSection({ tours, cardImages = {} }: ToursSectionPro
                     paddingBottom: '2rem'
                 }}>
                     <div style={{ textAlign: 'left' }}>
-                        <h2 style={{
-                            fontFamily: "'Cormorant Garamond', Georgia, serif",
-                            fontSize: 'clamp(32px, 4vw, 44px)',
-                            fontWeight: '500',
-                            color: '#1a1918',
-                            letterSpacing: '0.04em',
-                            margin: 0
-                        }}>
+                        <h2 className="upcoming-tours-heading">
                             Upcoming Tours
                         </h2>
                         <p style={{
@@ -211,7 +223,7 @@ export default function ToursSection({ tours, cardImages = {} }: ToursSectionPro
                                             letterSpacing: '0.08em',
                                             marginBottom: '10px'
                                         }}>
-                                            {formatDateRange(tour.startDate, tour.endDate)} | {tour.location?.toUpperCase()}
+                                            {formatDateRange(tour.startDate, tour.endDate)} | {locale === 'ja' ? (tour.locationJa || tour.location)?.toUpperCase() : tour.location?.toUpperCase()}
                                         </div>
                                         
                                         <h3 style={{
@@ -225,7 +237,7 @@ export default function ToursSection({ tours, cardImages = {} }: ToursSectionPro
                                             marginTop: 0,
                                             fontVariantNumeric: 'lining-nums'
                                         }}>
-                                            {tour.title}
+                                            {locale === 'ja' ? (tour.titleJa || tour.title) : tour.title}
                                         </h3>
                                         
                                         <div className="tour-card-cta">

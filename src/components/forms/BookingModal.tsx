@@ -154,8 +154,8 @@ export default function BookingModal({ upcomingTours }: BookingModalProps) {
                                 >
                                     <option value="">— Choose a tour —</option>
                                     {upcomingTours.map(t => (
-                                        <option key={t.slug} value={t.slug}>
-                                            {t.title} · {new Date(t.startDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })} · {t.seatsLeft} seats left
+                                        <option key={t.slug} value={t.slug} disabled={(t as any).bookingClosed}>
+                                            {t.title} · {new Date(t.startDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}{(t as any).bookingClosed ? ' (Booking Closed)' : ''}
                                         </option>
                                     ))}
                                 </select>

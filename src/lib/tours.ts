@@ -59,6 +59,7 @@ interface RawTour {
     faq: TourFaq[];
     bookingLink: string | null;
     featured?: boolean;
+    bookingClosed?: boolean;
 }
 
 export interface Tour extends Omit<RawTour, 'coverImage'> {
@@ -80,12 +81,12 @@ function normaliseTour(t: any, locale: string = 'ja'): Tour {
 
     return {
         ...t,
-        title: (isJa && t.title_ja) ? t.title_ja : t.title,
-        shortDescription: (isJa && t.shortDescription_ja) ? t.shortDescription_ja : t.shortDescription,
-        longDescription: (isJa && t.longDescription_ja) ? t.longDescription_ja : t.longDescription,
-        location: (isJa && t.location_ja) ? t.location_ja : t.location,
+        title: (isJa && (t.titleJa || t.title_ja)) ? (t.titleJa || t.title_ja) : t.title,
+        shortDescription: (isJa && (t.shortDescriptionJa || t.shortDescription_ja)) ? (t.shortDescriptionJa || t.shortDescription_ja) : t.shortDescription,
+        longDescription: (isJa && (t.longDescriptionJa || t.longDescription_ja)) ? (t.longDescriptionJa || t.longDescription_ja) : t.longDescription,
+        location: (isJa && (t.locationJa || t.location_ja)) ? (t.locationJa || t.location_ja) : t.location,
         isComingSoon: t.isComingSoon || false,
-        dateDisplay: (isJa && t.dateDisplay_ja) ? t.dateDisplay_ja : (t.dateDisplay || ''),
+        dateDisplay: (isJa && (t.dateDisplayJa || t.dateDisplay_ja)) ? (t.dateDisplayJa || t.dateDisplay_ja) : (t.dateDisplay || ''),
         durationDays: (() => {
             if (!t.startDate || !t.endDate) return 0;
             const start = new Date(t.startDate);
@@ -96,23 +97,24 @@ function normaliseTour(t: any, locale: string = 'ja'): Tour {
         })(),
         // Ensure all array fields are never null/undefined — Sanity can return null for unset arrays
         galleryImages: t.galleryImages ?? [],
-        features: (isJa && t.features_ja) ? t.features_ja : (t.features ?? []),
+        features: (isJa && (t.highlightsJa || t.features_ja)) ? (t.highlightsJa || t.features_ja) : (t.features ?? []),
         itinerary: (t.itinerary ?? []).map((day: any) => ({
             ...day,
-            title: (isJa && day.title_ja) ? day.title_ja : day.title,
-            details: (isJa && day.details_ja) ? day.details_ja : day.details,
+            title: (isJa && (day.titleJa || day.title_ja)) ? (day.titleJa || day.title_ja) : day.title,
+            details: (isJa && (day.detailsJa || day.details_ja)) ? (day.detailsJa || day.details_ja) : day.details,
             image: day.image ?? null,
         })),
-        whatToExpect: (isJa && t.whatToExpect_ja) ? t.whatToExpect_ja : (t.whatToExpect ?? []),
-        inclusions: (isJa && t.inclusions_ja) ? t.inclusions_ja : (t.inclusions ?? []),
-        exclusions: (isJa && t.exclusions_ja) ? t.exclusions_ja : (t.exclusions ?? []),
+        whatToExpect: (isJa && (t.whatToExpectJa || t.whatToExpect_ja)) ? (t.whatToExpectJa || t.whatToExpect_ja) : (t.whatToExpect ?? []),
+        inclusions: (isJa && (t.inclusionsJa || t.inclusions_ja)) ? (t.inclusionsJa || t.inclusions_ja) : (t.inclusions ?? []),
+        exclusions: (isJa && (t.exclusionsJa || t.exclusions_ja)) ? (t.exclusionsJa || t.exclusions_ja) : (t.exclusions ?? []),
         faq: (t.faq ?? []).map((f: any) => ({
-            question: (isJa && f.question_ja) ? f.question_ja : f.question,
-            answer: (isJa && f.answer_ja) ? f.answer_ja : f.answer,
+            question: (isJa && (f.questionJa || f.question_ja)) ? (f.questionJa || f.question_ja) : f.question,
+            answer: (isJa && (f.answerJa || f.answer_ja)) ? (f.answerJa || f.answer_ja) : f.answer,
         })),
         // Resolve cover image
         coverImage: resolveImageUrl(t.coverImage) || (t.galleryImages?.[0] ? resolveImageUrl(t.galleryImages[0]) : ''),
         featured: t.featured || false,
+        bookingClosed: t.bookingClosed || false,
     };
 }
 
