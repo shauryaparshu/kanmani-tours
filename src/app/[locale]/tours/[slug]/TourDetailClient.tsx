@@ -1104,19 +1104,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
               }}>
                 {/* LEFT SIDE: Info Box */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                  <div style={{
-                    fontFamily: "'Jost', Inter, Lato, sans-serif",
-                    fontSize: 'clamp(28px, 3vw, 36px)',
-                    fontWeight: '400', color: '#d49a36',
-                    lineHeight: '1'
-                  }}>
-                    {tour.priceRangeJPY ? formatPriceRange(tour.priceRangeJPY) : formatPriceJPY(tour.priceJPY)}
-                    <span style={{
-                      fontFamily: "'Jost', Arial, sans-serif",
-                      fontSize: '13px', color: '#cccccc', marginLeft: '6px',
-                      fontWeight: '400', letterSpacing: '0.05em'
-                    }}>per person</span>
-                  </div>
+                  <div>
                   
                   <p style={{
                     fontFamily: "'Jost', Arial, sans-serif",
@@ -1254,13 +1242,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
                     color: '#1C1917', margin: '8px 0 10px',
                     lineHeight: '1.3'
                   }}>{tOther.title}</p>
-                  <p style={{
-                    fontFamily: "'Jost', Arial, sans-serif",
-                    fontSize: '15px', color: '#C9933A',
-                    fontWeight: '400', marginTop: 'auto'
-                  }}>
-                    {t('from')} {formatPriceJPY(tOther.priceJPY)}
-                  </p>
+
                 </div>
               </Link>
             ))}
