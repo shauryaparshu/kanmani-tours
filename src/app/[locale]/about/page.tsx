@@ -14,6 +14,68 @@ export default function AboutPage() {
     return () => window.removeEventListener('resize', handler);
   }, []);
 
+  // Premium, customized slower scroll physics for relaxed reading pace
+  useEffect(() => {
+    let targetScrollY = window.scrollY;
+    let isScrolling = false;
+    
+    // Intensity settings:
+    // deltaY is scaled down to 45% of original (speedMultiplier = 0.45)
+    // Easing factor is set to 0.08 to create a silky, smooth drag momentum
+    const speedMultiplier = 0.45;
+    const easingFactor = 0.08;
+    
+    const handleWheel = (e: WheelEvent) => {
+      // Allow standard scrolling behavior inside scrollable elements like lightbox or modal
+      if (document.body.style.overflow === 'hidden') return;
+      
+      e.preventDefault();
+      
+      // Calculate new target scroll Y
+      targetScrollY += e.deltaY * speedMultiplier;
+      
+      // Boundary check
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      targetScrollY = Math.max(0, Math.min(targetScrollY, maxScroll));
+      
+      if (!isScrolling) {
+        isScrolling = true;
+        requestAnimationFrame(updateScroll);
+      }
+    };
+
+    const updateScroll = () => {
+      const currentScrollY = window.scrollY;
+      const difference = targetScrollY - currentScrollY;
+      
+      // Interpolate position with smooth easing step
+      const step = difference * easingFactor;
+      
+      if (Math.abs(step) > 0.5) {
+        window.scrollTo(0, currentScrollY + step);
+        requestAnimationFrame(updateScroll);
+      } else {
+        window.scrollTo(0, targetScrollY);
+        isScrolling = false;
+      }
+    };
+
+    // Track real window scroll on manual user intervention (e.g. dragging scrollbar)
+    const handleScrollSync = () => {
+      if (!isScrolling) {
+        targetScrollY = window.scrollY;
+      }
+    };
+
+    window.addEventListener('wheel', handleWheel, { passive: false });
+    window.addEventListener('scroll', handleScrollSync);
+    
+    return () => {
+      window.removeEventListener('wheel', handleWheel);
+      window.removeEventListener('scroll', handleScrollSync);
+    };
+  }, []);
+
   const isMobile = windowWidth < 768;
   const isTablet = windowWidth >= 768 && windowWidth < 1024;
 
