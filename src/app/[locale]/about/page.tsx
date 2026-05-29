@@ -19,61 +19,7 @@ export default function AboutPage() {
   const isMobile = windowWidth < 768;
   const isTablet = windowWidth >= 768 && windowWidth < 1024;
 
-  // Premium smooth scrolling momentum physics (90% speed, completely jitter-free)
-  useEffect(() => {
-    let targetScrollY = window.scrollY;
-    let isScrolling = false;
-    
-    // Intensity settings (90% standard speed):
-    // speedMultiplier = 0.9
-    // easingFactor = 0.2 (extremely fast, reactive, eliminating jitter completely while keeping it smooth)
-    const speedMultiplier = 0.9;
-    const easingFactor = 0.2;
-    
-    const handleWheel = (e: WheelEvent) => {
-      if (document.body.style.overflow === 'hidden') return;
-      
-      e.preventDefault();
-      
-      targetScrollY += e.deltaY * speedMultiplier;
-      
-      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-      targetScrollY = Math.max(0, Math.min(targetScrollY, maxScroll));
-      
-      if (!isScrolling) {
-        isScrolling = true;
-        requestAnimationFrame(updateScroll);
-      }
-    };
 
-    const updateScroll = () => {
-      const currentScrollY = window.scrollY;
-      const difference = targetScrollY - currentScrollY;
-      const step = difference * easingFactor;
-      
-      if (Math.abs(step) > 0.5) {
-        window.scrollTo(0, currentScrollY + step);
-        requestAnimationFrame(updateScroll);
-      } else {
-        window.scrollTo(0, targetScrollY);
-        isScrolling = false;
-      }
-    };
-
-    const handleScrollSync = () => {
-      if (!isScrolling) {
-        targetScrollY = window.scrollY;
-      }
-    };
-
-    window.addEventListener('wheel', handleWheel, { passive: false });
-    window.addEventListener('scroll', handleScrollSync);
-    
-    return () => {
-      window.removeEventListener('wheel', handleWheel);
-      window.removeEventListener('scroll', handleScrollSync);
-    };
-  }, []);
 
   // ScrollSpy to sync active tab with section in view
   useEffect(() => {
