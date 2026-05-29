@@ -54,16 +54,16 @@ export default function AboutPage() {
         {/* Two-column layout container */}
         <div style={{
           display: 'flex',
-          maxWidth: '1400px',
+          maxWidth: '1600px',
           margin: '0 auto',
           position: 'relative'
         }}>
           {/* LEFT SIDEBAR: Sticky Tabs (Hidden on Mobile) */}
           {!isMobile && (
             <div style={{
-              width: '280px',
+              width: '200px',
               flexShrink: 0,
-              padding: '80px 40px',
+              padding: '80px 24px 80px 0',
               position: 'sticky',
               top: '80px',
               height: 'calc(100vh - 80px)',
@@ -73,16 +73,6 @@ export default function AboutPage() {
               borderRight: '1px solid #E8E4DC',
               zIndex: 90
             }}>
-              <div style={{
-                fontFamily: "'Jost', Arial, sans-serif",
-                fontSize: '11px',
-                fontWeight: '600',
-                letterSpacing: '0.28em',
-                color: '#C9933A',
-                textTransform: 'uppercase',
-                marginBottom: '12px'
-              }}>Category</div>
-              
               {[
                 { id: 'founder', label: 'About Founder', targetId: 'about-founder' },
                 { id: 'company', label: 'About Company', targetId: 'about-company' }
@@ -124,7 +114,7 @@ export default function AboutPage() {
           {/* MAIN CONTENT AREA */}
           <div style={{
             flexGrow: 1,
-            width: isMobile ? '100%' : 'calc(100% - 280px)',
+            width: isMobile ? '100%' : 'calc(100% - 200px)',
             position: 'relative'
           }}>
             {/* Mobile Sticky Tab bar at top */}
