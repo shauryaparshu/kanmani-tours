@@ -551,5 +551,299 @@
             }
         ],
         "bookingLink": null
+    },
+    {
+        "id": 8,
+        "slug": "meeting-sj-suryah-december-2025",
+        "category": "Celebrity",
+        "title": "A Private Meeting with S.J. Suryah",
+        "title_ja": "S.J.スーリャとのプライベート面会",
+        "shortDescription": "A one-day exclusive meeting with Tamil actor S.J. Suryah, arranged through Dr. Kanmani's personal connections.",
+        "shortDescription_ja": "カンマニ博士の個人的なつながりにより実現した、タミル俳優S.J.スーリャとの1日限りの独占面会。",
+        "longDescription": "S.J. Suryah is one of Tamil cinema's most distinctive talents — an actor, director, and producer whose work spans two decades and multiple industries. This one-day event offers a small group of guests a private meeting with him, made possible through Dr. Kanmani's personal relationship with the Tamil film industry.\n\nThe meeting is designed to be intimate and unhurried. Guests will have the opportunity to spend time with S.J. Suryah directly, ask questions, and experience a side of Tamil cinema that no public event can offer. The format and location will be confirmed closer to the date.\n\nThis event is for guests who want genuine access to Tamil cinema, not a stage appearance or a brief photo opportunity. Dr. Kanmani personally oversees all arrangements. The group is limited to 10 guests to ensure the experience remains personal and meaningful.",
+        "longDescription_ja": "S.J.スーリャは、タミル映画界で最も個性的な才能の持ち主の一人です。俳優、監督、プロデューサーとして20年以上にわたり複数の映画産業で活躍してきました。この1日イベントは、カンマニ博士のタミル映画業界との個人的な関係により実現した、少人数のゲストによるプライベート面会です。\n\nこの面会は親密でゆったりとした形式で行われます。ゲストはS.J.スーリャと直接時間を過ごし、質問をし、どの公開イベントでも体験できないタミル映画の一面に触れることができます。形式と場所は日程に近づいた時点で確定します。\n\nこのイベントは、ステージ上の出演や短い写真撮影ではなく、タミル映画への本物のアクセスを求めるゲストのために設計されています。カンマニ博士がすべての手配を個人的に監督します。グループは最大10名に限定されます。",
+        "startDate": "2025-12-05",
+        "endDate": "2025-12-05",
+        "dateDisplay": "December 5, 2025",
+        "dateDisplay_ja": "2025年12月5日",
+        "durationDays": 1,
+        "location": "Chennai",
+        "location_ja": "チェンナイ",
+        "priceJPY": 45000,
+        "seatsLeft": 10,
+        "coverImage": null,
+        "galleryImages": [],
+        "features": [
+            "Private meeting not open to the general public",
+            "Maximum 10 guests for an intimate experience",
+            "Arranged through Dr. Kanmani's personal network",
+            "Japanese-speaking guide throughout the day",
+            "Dr. Kanmani personally oversees all arrangements"
+        ],
+        "features_ja": [
+            "一般公開されていないプライベート面会",
+            "親密な体験のための最大10名",
+            "カンマニ博士の個人的なネットワークにより手配",
+            "終日日本語ガイド同行",
+            "カンマニ博士がすべての手配を個人的に監督"
+        ],
+        "itinerary": [
+            {
+                "dayNumber": 1,
+                "title": "Meeting with S.J. Suryah",
+                "title_ja": "S.J.スーリャとの面会",
+                "details": "Arrive in Chennai and transfer to your hotel. Private meeting with S.J. Suryah in the afternoon, followed by a farewell dinner in the evening.",
+                "details_ja": "チェンナイに到着しホテルへ移動。午後にS.J.スーリャとのプライベート面会、夜はお別れディナー。"
+            }
+        ],
+        "whatToExpect": [
+            "A private and personal meeting with S.J. Suryah",
+            "A small, intimate group setting",
+            "Full support from Dr. Kanmani's team throughout the day",
+            "An experience not available through any public channel"
+        ],
+        "whatToExpect_ja": [
+            "S.J.スーリャとのプライベートで個人的な面会",
+            "少人数の親密なグループ設定",
+            "終日カンマニ博士チームによる全面サポート",
+            "公開チャンネルでは入手できない体験"
+        ],
+        "inclusions": [
+            "Accommodation for the night",
+            "Japanese-speaking guide throughout",
+            "Airport pickup and drop-off",
+            "24-hour emergency support from Dr. Kanmani's team"
+        ],
+        "inclusions_ja": [
+            "1泊宿泊",
+            "全行程を通じた日本語ガイド",
+            "空港送迎",
+            "カンマニ博士チームによる24時間緊急サポート"
+        ],
+        "exclusions": [
+            "International flights to and from India",
+            "Travel insurance (strongly recommended)",
+            "All meals (guests pay for their own)",
+            "Personal shopping and souvenirs",
+            "Tips for guides and drivers (appreciated but optional)"
+        ],
+        "exclusions_ja": [
+            "インドへの往復国際線航空券",
+            "旅行保険（強く推奨）",
+            "全食事代（ゲスト各自が負担）",
+            "個人的なショッピングとお土産",
+            "ガイドやドライバーへのチップ（任意）"
+        ],
+        "faq": [
+            {
+                "question": "Is the meeting with S.J. Suryah confirmed?",
+                "question_ja": "S.J.スーリャとの面会は確定していますか？",
+                "answer": "The meeting is confirmed through Dr. Kanmani's personal relationship with the Tamil film industry. In the rare event of a cancellation, a meaningful alternative will be arranged and each guest informed individually.",
+                "answer_ja": "面会はカンマニ博士のタミル映画業界との個人的な関係を通じて確定しています。万一のキャンセルの場合は代替案を手配し、各ゲストに個別にご連絡します。"
+            },
+            {
+                "question": "How long will the meeting last?",
+                "question_ja": "面会はどのくらいの時間ですか？",
+                "answer": "The duration will be confirmed closer to the date. The format is designed to be relaxed and unhurried rather than a brief appearance.",
+                "answer_ja": "時間は日程に近づいた時点で確定します。形式は短い出演ではなく、リラックスしてゆったりとしたものになるよう設計されています。"
+            }
+        ],
+        "bookingLink": null
+    },
+    {
+        "id": 9,
+        "slug": "meeting-karthik-subbaraj-december-2025",
+        "category": "Celebrity",
+        "title": "A Private Meeting with Director Karthik Subbaraj",
+        "title_ja": "監督カルティク・スッバラージとのプライベート面会",
+        "shortDescription": "A one-day exclusive meeting with Tamil director Karthik Subbaraj, one of the most celebrated filmmakers in contemporary South Indian cinema.",
+        "shortDescription_ja": "現代南インド映画界で最も評価の高い映画監督の一人、カルティク・スッバラージとの1日限りの独占面会。",
+        "longDescription": "Karthik Subbaraj is widely regarded as one of the most original voices in Tamil cinema today. Known for films that blend sharp writing with bold visual style, his work has earned both critical praise and a devoted international following. This one-day event offers guests a rare private meeting with him, made possible through Dr. Kanmani's connections within the industry.\n\nThe meeting is intended to be a genuine conversation — not a press event or a public appearance. Guests will have the opportunity to speak directly with Karthik Subbaraj, ask about his films and creative process, and experience the kind of access that no standard tour can provide. The format and location will be confirmed closer to the date.\n\nThis event is suited to guests with a serious interest in Tamil cinema and filmmaking. Dr. Kanmani personally oversees all arrangements, and the group is limited to 10 guests to keep the meeting intimate and meaningful.",
+        "longDescription_ja": "カルティク・スッバラージは、現在のタミル映画界で最も独創的な声の持ち主の一人として広く認められています。鋭い脚本と大胆なビジュアルスタイルを融合させた作品で知られ、批評家からの絶賛と熱狂的な国際的ファンを獲得しています。この1日イベントは、カンマニ博士の業界内のコネクションにより実現した、ゲストによる貴重なプライベート面会です。\n\nこの面会は、記者会見や公開出演ではなく、本物の会話を目的としています。ゲストはカルティク・スッバラージと直接話す機会を持ち、彼の映画や創作プロセスについて質問し、通常のツアーでは得られないアクセスを体験することができます。形式と場所は日程に近づいた時点で確定します。\n\nこのイベントは、タミル映画と映画制作に真剣な関心を持つゲストに適しています。カンマニ博士がすべての手配を個人的に監督し、グループは最大10名に限定されます。",
+        "startDate": "2025-12-06",
+        "endDate": "2025-12-06",
+        "dateDisplay": "December 6, 2025",
+        "dateDisplay_ja": "2025年12月6日",
+        "durationDays": 1,
+        "location": "Chennai",
+        "location_ja": "チェンナイ",
+        "priceJPY": 45000,
+        "seatsLeft": 10,
+        "coverImage": null,
+        "galleryImages": [],
+        "features": [
+            "Private meeting not open to the general public",
+            "Maximum 10 guests for an intimate experience",
+            "Arranged through Dr. Kanmani's personal network",
+            "Japanese-speaking guide throughout the day",
+            "Dr. Kanmani personally oversees all arrangements"
+        ],
+        "features_ja": [
+            "一般公開されていないプライベート面会",
+            "親密な体験のための最大10名",
+            "カンマニ博士の個人的なネットワークにより手配",
+            "終日日本語ガイド同行",
+            "カンマニ博士がすべての手配を個人的に監督"
+        ],
+        "itinerary": [
+            {
+                "dayNumber": 1,
+                "title": "Meeting with Karthik Subbaraj",
+                "title_ja": "カルティク・スッバラージとの面会",
+                "details": "Arrive in Chennai and transfer to your hotel. Private meeting with director Karthik Subbaraj in the afternoon, followed by a farewell dinner in the evening.",
+                "details_ja": "チェンナイに到着しホテルへ移動。午後に監督カルティク・スッバラージとのプライベート面会、夜はお別れディナー。"
+            }
+        ],
+        "whatToExpect": [
+            "A private and personal meeting with director Karthik Subbaraj",
+            "A relaxed conversation about Tamil cinema and his creative work",
+            "A small, intimate group setting",
+            "Full support from Dr. Kanmani's team throughout the day"
+        ],
+        "whatToExpect_ja": [
+            "監督カルティク・スッバラージとのプライベートで個人的な面会",
+            "タミル映画と彼の創作活動についてのリラックスした会話",
+            "少人数の親密なグループ設定",
+            "終日カンマニ博士チームによる全面サポート"
+        ],
+        "inclusions": [
+            "Accommodation for the night",
+            "Japanese-speaking guide throughout",
+            "Airport pickup and drop-off",
+            "24-hour emergency support from Dr. Kanmani's team"
+        ],
+        "inclusions_ja": [
+            "1泊宿泊",
+            "全行程を通じた日本語ガイド",
+            "空港送迎",
+            "カンマニ博士チームによる24時間緊急サポート"
+        ],
+        "exclusions": [
+            "International flights to and from India",
+            "Travel insurance (strongly recommended)",
+            "All meals (guests pay for their own)",
+            "Personal shopping and souvenirs",
+            "Tips for guides and drivers (appreciated but optional)"
+        ],
+        "exclusions_ja": [
+            "インドへの往復国際線航空券",
+            "旅行保険（強く推奨）",
+            "全食事代（ゲスト各自が負担）",
+            "個人的なショッピングとお土産",
+            "ガイドやドライバーへのチップ（任意）"
+        ],
+        "faq": [
+            {
+                "question": "Is the meeting with Karthik Subbaraj confirmed?",
+                "question_ja": "カルティク・スッバラージとの面会は確定していますか？",
+                "answer": "The meeting is confirmed through Dr. Kanmani's personal relationship with the Tamil film industry. In the rare event of a cancellation, a meaningful alternative will be arranged and each guest informed individually.",
+                "answer_ja": "面会はカンマニ博士のタミル映画業界との個人的な関係を通じて確定しています。万一のキャンセルの場合は代替案を手配し、各ゲストに個別にご連絡します。"
+            },
+            {
+                "question": "Do I need to know his films before attending?",
+                "question_ja": "参加前に彼の映画を知っている必要がありますか？",
+                "answer": "It is helpful but not required. A brief guide to Karthik Subbaraj's work will be sent to all guests before the event so that everyone can arrive with some background and make the most of the conversation.",
+                "answer_ja": "知っていると役立ちますが、必須ではありません。イベント前にカルティク・スッバラージの作品についての簡単なガイドをすべてのゲストにお送りします。"
+            }
+        ],
+        "bookingLink": null
+    },
+    {
+        "id": 10,
+        "slug": "meeting-ram-charan-tej-december-2025",
+        "category": "Celebrity",
+        "title": "A Private Meeting with Ram Charan Tej",
+        "title_ja": "ラム・チャラン・テージとのプライベート面会",
+        "shortDescription": "A one-day exclusive meeting with Telugu actor Ram Charan Tej, one of the biggest stars in Indian cinema today.",
+        "shortDescription_ja": "現在インド映画界最大のスターの一人、テルグ俳優ラム・チャラン・テージとの1日限りの独占面会。",
+        "longDescription": "Ram Charan Tej is one of the most recognised names in Indian cinema. From his early Telugu blockbusters to his global breakthrough with RRR, he has built a following that extends far beyond South India, including a large and devoted audience in Japan. This one-day event offers guests a private meeting with him, arranged through Dr. Kanmani's personal connections.\n\nThe meeting is designed to be a direct and personal experience, not a staged event or a large fan gathering. Guests will have the opportunity to meet Ram Charan Tej in a small group setting, with time to speak and connect. The format and location will be confirmed closer to the date.\n\nThis event is for guests who want a genuine and personal encounter with one of Indian cinema's biggest names. Dr. Kanmani personally oversees all arrangements, and the group is limited to 10 guests to ensure the experience is intimate and well-managed.",
+        "longDescription_ja": "ラム・チャラン・テージはインド映画界で最も知名度の高い名前の一つです。初期のテルグ語大作から『RRR』での世界的なブレイクスルーまで、南インドをはるかに超えたファン層を築き上げており、日本にも多くの熱狂的なファンがいます。この1日イベントは、カンマニ博士の個人的なコネクションにより実現した、ゲストによるプライベート面会です。\n\nこの面会は、演出されたイベントや大規模なファン集会ではなく、直接的で個人的な体験として設計されています。ゲストは少人数のグループ設定でラム・チャラン・テージと会い、話し、交流する時間を持つことができます。形式と場所は日程に近づいた時点で確定します。\n\nこのイベントは、インド映画界最大の名前の一人との本物で個人的な出会いを求めるゲストのために設計されています。カンマニ博士がすべての手配を個人的に監督し、グループは最大10名に限定されます。",
+        "startDate": "2025-12-09",
+        "endDate": "2025-12-09",
+        "dateDisplay": "December 9, 2025",
+        "dateDisplay_ja": "2025年12月9日",
+        "durationDays": 1,
+        "location": "Hyderabad",
+        "location_ja": "ハイデラバード",
+        "priceJPY": 50000,
+        "seatsLeft": 10,
+        "coverImage": null,
+        "galleryImages": [],
+        "features": [
+            "Private meeting not open to the general public",
+            "Maximum 10 guests for an intimate experience",
+            "Arranged through Dr. Kanmani's personal network",
+            "Japanese-speaking guide throughout the day",
+            "Dr. Kanmani personally oversees all arrangements"
+        ],
+        "features_ja": [
+            "一般公開されていないプライベート面会",
+            "親密な体験のための最大10名",
+            "カンマニ博士の個人的なネットワークにより手配",
+            "終日日本語ガイド同行",
+            "カンマニ博士がすべての手配を個人的に監督"
+        ],
+        "itinerary": [
+            {
+                "dayNumber": 1,
+                "title": "Meeting with Ram Charan Tej",
+                "title_ja": "ラム・チャラン・テージとの面会",
+                "details": "Arrive in Hyderabad and transfer to your hotel. Private meeting with Ram Charan Tej in the afternoon, followed by a farewell dinner in the evening.",
+                "details_ja": "ハイデラバードに到着しホテルへ移動。午後にラム・チャラン・テージとのプライベート面会、夜はお別れディナー。"
+            }
+        ],
+        "whatToExpect": [
+            "A private and personal meeting with Ram Charan Tej",
+            "A small, intimate group setting with time to speak and connect",
+            "Full support from Dr. Kanmani's team throughout the day",
+            "An experience not available through any public or commercial channel"
+        ],
+        "whatToExpect_ja": [
+            "ラム・チャラン・テージとのプライベートで個人的な面会",
+            "話し、交流する時間のある少人数の親密なグループ設定",
+            "終日カンマニ博士チームによる全面サポート",
+            "公開または商業チャンネルでは入手できない体験"
+        ],
+        "inclusions": [
+            "Accommodation for the night",
+            "Japanese-speaking guide throughout",
+            "Airport pickup and drop-off",
+            "24-hour emergency support from Dr. Kanmani's team"
+        ],
+        "inclusions_ja": [
+            "1泊宿泊",
+            "全行程を通じた日本語ガイド",
+            "空港送迎",
+            "カンマニ博士チームによる24時間緊急サポート"
+        ],
+        "exclusions": [
+            "International flights to and from India",
+            "Travel insurance (strongly recommended)",
+            "All meals (guests pay for their own)",
+            "Personal shopping and souvenirs",
+            "Tips for guides and drivers (appreciated but optional)"
+        ],
+        "exclusions_ja": [
+            "インドへの往復国際線航空券",
+            "旅行保険（強く推奨）",
+            "全食事代（ゲスト各自が負担）",
+            "個人的なショッピングとお土産",
+            "ガイドやドライバーへのチップ（任意）"
+        ],
+        "faq": [
+            {
+                "question": "Is the meeting with Ram Charan Tej confirmed?",
+                "question_ja": "ラム・チャラン・テージとの面会は確定していますか？",
+                "answer": "The meeting is confirmed through Dr. Kanmani's personal connections. In the rare event of a cancellation, a meaningful alternative will be arranged and each guest informed individually.",
+                "answer_ja": "面会はカンマニ博士の個人的なコネクションを通じて確定しています。万一のキャンセルの場合は代替案を手配し、各ゲストに個別にご連絡します。"
+            },
+            {
+                "question": "Do I need to be familiar with his films before attending?",
+                "question_ja": "参加前に彼の映画を知っている必要がありますか？",
+                "answer": "It is helpful but not required. A brief introduction to Ram Charan Tej's career and films will be sent to all guests before the event.",
+                "answer_ja": "参加前に彼の映画を知っていると役立ちますが、必須ではありません。イベント前にラム・チャラン・テージのキャリアと映画についての簡単な紹介をすべてのゲストにお送りします。"
+            }
+        ],
+        "bookingLink": null
     }
 ]
