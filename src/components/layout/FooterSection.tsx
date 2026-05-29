@@ -209,8 +209,7 @@ export default function FooterSection() {
             { label: isJa ? 'ギャラリー' : 'Gallery', href: '/gallery' },
             { label: isJa ? 'よくある質問' : 'FAQ', href: '/faq' },
             { label: isJa ? 'お問い合わせ' : 'Contact', href: '/contact' },
-            { label: isJa ? 'サービス' : 'Services', href: '/services' },
-            { label: isJa ? 'Kanmaniについて' : 'About Kanmani', href: '/about-kanmani' }
+            { label: isJa ? 'サービス' : 'Services', href: '/services' }
           ].map(link => (
             <Link
               key={link.label}

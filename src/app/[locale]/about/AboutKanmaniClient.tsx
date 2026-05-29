@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import Link from 'next/link';
 
 const timelineEvents = [
   {
@@ -115,7 +114,7 @@ export default function AboutKanmaniClient() {
   }, [lightboxIndex]);
 
   return (
-    <main>
+    <>
       {/* HERO — Full bleed dark */}
       <div style={{
         backgroundColor: '#1C1917',
@@ -147,21 +146,6 @@ export default function AboutKanmaniClient() {
         }}/>
 
         <div style={{ maxWidth: '800px', position: 'relative', zIndex: 1 }}>
-          <Link href="/about" style={{
-            fontFamily: "'Jost', Arial, sans-serif",
-            fontSize: '11px',
-            fontWeight: '400',
-            letterSpacing: '0.22em',
-            color: '#6B6560',
-            textDecoration: 'none',
-            textTransform: 'uppercase',
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '8px',
-            marginBottom: '32px'
-          }}>
-            ← Back to About
-          </Link>
           <p style={{
             fontFamily: "'Jost', Arial, sans-serif",
             fontSize: '11px',
@@ -225,9 +209,8 @@ export default function AboutKanmaniClient() {
           gap: '80px',
           alignItems: 'start'
         }}>
-          {/* LEFT — large portrait + secondary image */}
+          {/* LEFT — large portrait */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            {/* Main portrait */}
             <div style={{
               width: '100%',
               height: '520px',
@@ -678,67 +661,6 @@ export default function AboutKanmaniClient() {
         </div>
       </div>
 
-      {/* CLOSING CTA */}
-      <div style={{
-        backgroundColor: '#1C1917',
-        padding: '80px 60px',
-        textAlign: 'center',
-        borderTop: '1px solid rgba(201,147,58,0.2)'
-      }}>
-        <p style={{
-          fontFamily: "'Jost', Arial, sans-serif",
-          fontSize: '11px',
-          fontWeight: '500',
-          letterSpacing: '0.32em',
-          color: '#C9933A',
-          textTransform: 'uppercase',
-          marginBottom: '16px'
-        }}>BEGIN YOUR JOURNEY</p>
-        <h2 style={{
-          fontFamily: "'Cormorant Garamond', Georgia, serif",
-          fontSize: 'clamp(28px, 4vw, 52px)',
-          fontWeight: '400',
-          fontStyle: 'italic',
-          color: '#F5F1EB',
-          letterSpacing: '0.05em',
-          marginBottom: '32px',
-          maxWidth: '700px',
-          margin: '0 auto 32px'
-        }}>
-          Ready to experience India the way Kanmani does?
-        </h2>
-        <div style={{
-          display: 'flex',
-          gap: '16px',
-          justifyContent: 'center',
-          flexWrap: 'wrap'
-        }}>
-          <Link href="/tours" style={{
-            fontFamily: "'Jost', Arial, sans-serif",
-            fontSize: '12px',
-            fontWeight: '600',
-            letterSpacing: '0.28em',
-            color: '#1C1917',
-            backgroundColor: '#C9933A',
-            padding: '18px 48px',
-            textDecoration: 'none',
-            textTransform: 'uppercase'
-          }}>Explore Tours</Link>
-          <Link href="/contact" style={{
-            fontFamily: "'Jost', Arial, sans-serif",
-            fontSize: '12px',
-            fontWeight: '600',
-            letterSpacing: '0.28em',
-            color: '#F5F1EB',
-            backgroundColor: 'transparent',
-            border: '1px solid rgba(201,147,58,0.4)',
-            padding: '18px 48px',
-            textDecoration: 'none',
-            textTransform: 'uppercase'
-          }}>Contact Us</Link>
-        </div>
-      </div>
-
       {/* LIGHTBOX */}
       {lightboxIndex !== null && (
         <div
@@ -865,6 +787,6 @@ export default function AboutKanmaniClient() {
           >›</button>
         </div>
       )}
-    </main>
+    </>
   );
 }
