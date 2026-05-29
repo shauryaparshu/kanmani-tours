@@ -709,7 +709,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        flexWrap: 'wrap',
+        flexWrap: 'nowrap',
         gap: '24px'
       }}>
         {/* LEFT/CENTER BLOCK: Centered text information */}
@@ -720,7 +720,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
           textAlign: 'center',
           gap: '8px',
           flex: '1 1 auto',
-          minWidth: '280px'
+          minWidth: 0
         }}>
           {/* LINE 1: Title and Category/Seats pill */}
           <div style={{
