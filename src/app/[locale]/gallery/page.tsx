@@ -4,6 +4,7 @@ import { GALLERY_QUERY } from '@/sanity/lib/queries';
 import Navigation from '@/components/layout/Navigation';
 import FooterSection from '@/components/layout/FooterSection';
 import GalleryPageClient from './GalleryPageClient';
+import { galleryImageUrl } from '@/sanity/lib/image';
 
 export const metadata: Metadata = {
     title: 'Tour Gallery — Srikan Tours',
@@ -14,16 +15,44 @@ export default async function GalleryPage() {
     const rawTours = await client.fetch(GALLERY_QUERY);
 
     const processedTours = rawTours.map((tour: any) => {
-        const images: string[] = [];
+        const images: { url: string; lqip?: string }[] = [];
         
-        if (tour.coverImage?.asset?.url) {
-            images.push(tour.coverImage.asset.url);
+        if (tour.coverImage) {
+            try {
+                const url = galleryImageUrl(tour.coverImage);
+                if (url) {
+                    images.push({ 
+                        url, 
+                        lqip: tour.coverImage.asset?.metadata?.lqip 
+                    });
+                }
+            } catch {
+                if (tour.coverImage.asset?.url) {
+                    images.push({ 
+                        url: tour.coverImage.asset.url, 
+                        lqip: tour.coverImage.asset?.metadata?.lqip 
+                    });
+                }
+            }
         }
         
         if (Array.isArray(tour.galleryImages)) {
             tour.galleryImages.forEach((img: any) => {
-                if (img?.asset?.url) {
-                    images.push(img.asset.url);
+                try {
+                    const url = galleryImageUrl(img);
+                    if (url) {
+                        images.push({ 
+                            url, 
+                            lqip: img?.asset?.metadata?.lqip 
+                        });
+                    }
+                } catch {
+                    if (img?.asset?.url) {
+                        images.push({ 
+                            url: img.asset.url, 
+                            lqip: img?.asset?.metadata?.lqip 
+                        });
+                    }
                 }
             });
         }

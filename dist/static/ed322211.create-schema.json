@@ -23,20 +23,6 @@
         "title": "タイトル（日本語）/ Title in Japanese"
       },
       {
-        "rows": 3,
-        "description": "Write 1-2 sentences max. First sentence appears on the tour hero panel. Keep it under 150 characters for best display.",
-        "name": "shortDescription",
-        "type": "text",
-        "title": "Hero Description (shown on tour panel)"
-      },
-      {
-        "rows": 3,
-        "description": "Japanese translation of the short description",
-        "name": "shortDescriptionJa",
-        "type": "text",
-        "title": "短い説明（日本語）/ Short Description in Japanese"
-      },
-      {
         "options": {
           "source": "title",
           "maxLength": 96
@@ -138,17 +124,31 @@
         "type": "string"
       },
       {
+        "rows": 3,
+        "description": "Write 1-2 sentences max. First sentence appears on the tour hero panel. Keep it under 150 characters for best display.",
+        "name": "shortDescription",
+        "type": "text",
+        "title": "Hero Description (shown on tour panel)"
+      },
+      {
+        "rows": 3,
+        "description": "Japanese translation of the hero description",
+        "name": "shortDescriptionJa",
+        "type": "text",
+        "title": "短い説明（日本語）/ Hero Description in Japanese"
+      },
+      {
         "rows": 10,
         "name": "longDescription",
         "type": "text",
         "title": "About This Tour"
       },
       {
-        "rows": 6,
-        "description": "Japanese translation of the long description",
+        "rows": 10,
+        "description": "Japanese translation of the full tour description",
         "name": "longDescriptionJa",
         "type": "text",
-        "title": "詳細説明（日本語）/ Long Description in Japanese"
+        "title": "詳細説明（日本語）/ About This Tour in Japanese"
       },
       {
         "name": "startDate",
@@ -269,54 +269,6 @@
         "title": "場所（日本語）/ Location in Japanese"
       },
       {
-        "name": "priceJPY",
-        "type": "number",
-        "title": "Price (JPY)"
-      },
-      {
-        "fields": [
-          {
-            "name": "min",
-            "type": "number",
-            "title": "Min Price"
-          },
-          {
-            "name": "max",
-            "type": "number",
-            "title": "Max Price"
-          }
-        ],
-        "name": "priceRangeJPY",
-        "type": "object",
-        "title": "Price Range (JPY) - Optional"
-      },
-      {
-        "description": "Tour price in the specified currency",
-        "name": "price",
-        "type": "number"
-      },
-      {
-        "options": {
-          "list": [
-            {
-              "title": "Japanese Yen (¥)",
-              "value": "JPY"
-            },
-            {
-              "title": "US Dollar ($)",
-              "value": "USD"
-            },
-            {
-              "title": "Indian Rupee (₹)",
-              "value": "INR"
-            }
-          ]
-        },
-        "initialValue": "JPY",
-        "name": "currency",
-        "type": "string"
-      },
-      {
         "options": {
           "hotspot": true
         },
@@ -338,7 +290,7 @@
         "type": "array"
       },
       {
-        "description": "Key highlights and special features of this tour",
+        "description": "Key highlights shown as a bullet list on the tour page",
         "of": [
           {
             "type": "string"
@@ -357,48 +309,10 @@
         ],
         "name": "highlightsJa",
         "type": "array",
-        "title": "ハイライト（日本語）/ Highlights in Japanese"
+        "title": "ハイライト（日本語）/ Tour Highlights in Japanese"
       },
       {
-        "of": [
-          {
-            "fields": [
-              {
-                "name": "dayNumber",
-                "type": "number"
-              },
-              {
-                "name": "title",
-                "type": "string"
-              },
-              {
-                "name": "titleJa",
-                "type": "string",
-                "title": "タイトル（日本語）"
-              },
-              {
-                "name": "details",
-                "type": "text"
-              },
-              {
-                "rows": 4,
-                "name": "detailsJa",
-                "type": "text",
-                "title": "詳細（日本語）"
-              },
-              {
-                "name": "image",
-                "type": "image"
-              }
-            ],
-            "type": "object"
-          }
-        ],
-        "name": "itinerary",
-        "type": "array"
-      },
-      {
-        "description": "Up to 6 highlights shown as numbered cards (01, 02, 03...) on the tour detail page",
+        "description": "Up to 6 features shown as numbered cards (01, 02, 03...) on the tour detail page",
         "of": [
           {
             "type": "string"
@@ -406,7 +320,18 @@
         ],
         "name": "features",
         "type": "array",
-        "title": "Tour Highlights"
+        "title": "Tour Feature Cards"
+      },
+      {
+        "description": "Japanese translation of the numbered feature cards",
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "featuresJa",
+        "type": "array",
+        "title": "ツアーの特徴（日本語）/ Tour Feature Cards in Japanese"
       },
       {
         "of": [
@@ -428,6 +353,51 @@
         "name": "whatToExpectJa",
         "type": "array",
         "title": "体験できること（日本語）/ What You'll Experience in Japanese"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "name": "dayNumber",
+                "type": "number"
+              },
+              {
+                "name": "title",
+                "type": "string",
+                "title": "Day Title (English)"
+              },
+              {
+                "name": "titleJa",
+                "type": "string",
+                "title": "タイトル（日本語）/ Day Title in Japanese"
+              },
+              {
+                "rows": 4,
+                "name": "details",
+                "type": "text",
+                "title": "Day Details (English)"
+              },
+              {
+                "rows": 4,
+                "name": "detailsJa",
+                "type": "text",
+                "title": "詳細（日本語）/ Day Details in Japanese"
+              },
+              {
+                "options": {
+                  "hotspot": true
+                },
+                "name": "image",
+                "type": "image",
+                "title": "Day Image"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "itinerary",
+        "type": "array"
       },
       {
         "description": "What is covered in the tour price",
@@ -479,7 +449,8 @@
             "fields": [
               {
                 "name": "question",
-                "type": "string"
+                "type": "string",
+                "title": "Question (English)"
               },
               {
                 "name": "questionJa",
@@ -487,8 +458,10 @@
                 "title": "質問（日本語）/ Question in Japanese"
               },
               {
+                "rows": 4,
                 "name": "answer",
-                "type": "text"
+                "type": "text",
+                "title": "Answer (English)"
               },
               {
                 "rows": 4,
@@ -503,6 +476,13 @@
         "name": "faq",
         "type": "array",
         "title": "Tour Specific FAQ"
+      },
+      {
+        "initialValue": false,
+        "description": "When toggled on, the Book Now button will be greyed out/disabled across the site.",
+        "name": "bookingClosed",
+        "type": "boolean",
+        "title": "Close Booking (Booking Close Toggle)"
       },
       {
         "validation": [
@@ -991,5 +971,130 @@
     "name": "testimonial",
     "type": "document",
     "title": "Testimonials"
+  },
+  {
+    "fields": [
+      {
+        "options": {
+          "hotspot": true
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "image",
+        "type": "image",
+        "title": "Photo"
+      },
+      {
+        "description": "One line describing what is happening in this photo",
+        "name": "caption",
+        "type": "string",
+        "title": "Caption (English)"
+      },
+      {
+        "name": "captionJa",
+        "type": "string",
+        "title": "キャプション（日本語）/ Caption in Japanese"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Student Life in Japan (1998–2004)",
+              "value": "student"
+            },
+            {
+              "title": "PhD & Academic Life (2001–2006)",
+              "value": "phd"
+            },
+            {
+              "title": "Humanitarian & UN Work (2004–2010)",
+              "value": "humanitarian"
+            },
+            {
+              "title": "Expeditions & Adventures",
+              "value": "expeditions"
+            },
+            {
+              "title": "Early Tours (2006–2012)",
+              "value": "early-tours"
+            },
+            {
+              "title": "Celebrity & Cultural Connections",
+              "value": "celebrity"
+            },
+            {
+              "title": "International Conferences",
+              "value": "conferences"
+            },
+            {
+              "title": "Recent Years (2020–Present)",
+              "value": "recent"
+            }
+          ]
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "valid",
+                "constraint": [
+                  "student",
+                  "phd",
+                  "humanitarian",
+                  "expeditions",
+                  "early-tours",
+                  "celebrity",
+                  "conferences",
+                  "recent"
+                ]
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "era",
+        "type": "string",
+        "title": "Era / Album"
+      },
+      {
+        "description": "Approximate year the photo was taken",
+        "name": "year",
+        "type": "number",
+        "title": "Year (approximate)"
+      },
+      {
+        "description": "City or country where photo was taken",
+        "name": "location",
+        "type": "string"
+      },
+      {
+        "initialValue": false,
+        "description": "Turn on to show this photo as the representative photo in the timeline section",
+        "name": "featured",
+        "type": "boolean",
+        "title": "Feature in Timeline"
+      },
+      {
+        "description": "Lower numbers appear first within the same era",
+        "name": "orderRank",
+        "type": "number",
+        "title": "Order within Era"
+      }
+    ],
+    "name": "founderPhoto",
+    "type": "document"
   }
 ]

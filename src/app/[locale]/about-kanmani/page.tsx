@@ -2,9 +2,9 @@ import { client } from '@/sanity/lib/client';
 import { FOUNDER_PHOTOS_QUERY } from '@/sanity/lib/queries';
 import Navigation from '@/components/layout/Navigation';
 import Footer from '@/components/layout/FooterSection';
-import AboutKanmaniClient from './AboutKanmaniClient';
+import FounderPageClient from './FounderPageClient';
 
-export default async function AboutPage({
+export default async function AboutKanmaniPage({
   params
 }: {
   params: Promise<{ locale: string }>
@@ -15,7 +15,9 @@ export default async function AboutPage({
   return (
     <>
       <Navigation />
-      <AboutKanmaniClient locale={locale} photos={founderPhotos} />
+      <main>
+        <FounderPageClient locale={locale} photos={founderPhotos} />
+      </main>
       <Footer />
     </>
   );

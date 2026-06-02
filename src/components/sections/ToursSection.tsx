@@ -5,6 +5,7 @@ import { Link } from '@/i18n/routing';
 import { useTranslations, useLocale } from 'next-intl';
 import { formatDateRange, type Tour } from '@/lib/tours';
 import { getCategoryColor, getCategoryLabel } from '@/lib/categories';
+import LazyImage from '@/components/ui/LazyImage';
 
 interface ToursSectionProps {
     tours: Tour[];
@@ -170,10 +171,11 @@ export default function ToursSection({ tours, cardImages = {}, locale: propLocal
                                 <article style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
                                     <div className="tour-card-image-wrap">
                                         {imagePath ? (
-                                            <img 
+                                            <LazyImage 
                                                 src={imagePath}
                                                 alt={tour.title}
                                                 className="tour-card-img"
+                                                lqip={tour.coverImageLqip}
                                             />
                                         ) : (
                                             <div style={{

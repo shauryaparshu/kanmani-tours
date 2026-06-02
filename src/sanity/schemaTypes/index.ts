@@ -6,7 +6,16 @@ import { aboutType } from './aboutType'
 import { celebrityType } from './celebrityType'
 import { categoryType } from './categoryType'
 import testimonialType from './testimonialType'
+import { founderPhotoType } from './founderPhotoType'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-    types: [tourType, faqType, aboutType, celebrityType, categoryType, testimonialType],
+    types: [
+        tourType,
+        faqType,
+        aboutType,
+        celebrityType,
+        categoryType,
+        testimonialType,
+        founderPhotoType,
+    ],
 }

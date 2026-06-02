@@ -1,7 +1,7 @@
 import toursData from '@/data/tours.json';
 import { client } from '@/sanity/lib/client';
 import { TOURS_QUERY, TOUR_BY_SLUG_QUERY } from '@/sanity/lib/queries';
-import { urlForImage } from '@/sanity/lib/image';
+import { cardImageUrl, heroImageUrl } from '@/sanity/lib/image';
 
 export interface TourItineraryDay {
     dayNumber: number;
@@ -64,16 +64,31 @@ interface RawTour {
 
 export interface Tour extends Omit<RawTour, 'coverImage'> {
     coverImage: string;
+    coverImageLqip?: string;
 }
 
 function resolveImageUrl(image: any): string {
     if (!image) return '';
     if (typeof image === 'string') return image;
     try {
-        return urlForImage(image)?.url() || '';
+        return cardImageUrl(image) || '';
     } catch (e) {
         return '';
     }
+}
+
+function resolveHeroImageUrl(image: any): string {
+    if (!image) return '';
+    if (typeof image === 'string') return image;
+    try {
+        return heroImageUrl(image) || '';
+    } catch (e) {
+        return '';
+    }
+}
+
+function resolveLqip(image: any): string {
+    return image?.asset?.metadata?.lqip || '';
 }
 
 function normaliseTour(t: any, locale: string = 'ja'): Tour {
@@ -111,7 +126,8 @@ function normaliseTour(t: any, locale: string = 'ja'): Tour {
             question: (isJa && (f.questionJa || f.question_ja)) ? (f.questionJa || f.question_ja) : f.question,
             answer: (isJa && (f.answerJa || f.answer_ja)) ? (f.answerJa || f.answer_ja) : f.answer,
         })),
-        coverImage: resolveImageUrl(t.coverImage) || (t.galleryImages?.[0] ? resolveImageUrl(t.galleryImages[0]) : ''),
+        coverImage: resolveHeroImageUrl(t.coverImage) || (t.galleryImages?.[0] ? resolveHeroImageUrl(t.galleryImages[0]) : ''),
+        coverImageLqip: resolveLqip(t.coverImage) || (t.galleryImages?.[0] ? resolveLqip(t.galleryImages[0]) : ''),
         featured: t.featured || false,
         bookingClosed: t.bookingClosed || false,
     };

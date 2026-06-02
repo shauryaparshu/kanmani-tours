@@ -19,8 +19,22 @@ export const TOURS_QUERY = defineQuery(`*[_type == "tour"] | order(startDate asc
   seatsLeft,
   dateDisplay,
   dateDisplayJa,
-  coverImage,
-  galleryImages,
+  coverImage {
+    ...,
+    asset-> {
+      _id,
+      url,
+      metadata { lqip }
+    }
+  },
+  galleryImages[] {
+    ...,
+    asset-> {
+      _id,
+      url,
+      metadata { lqip }
+    }
+  },
   features,
   highlightsJa,
   itinerary[] {
@@ -30,7 +44,8 @@ export const TOURS_QUERY = defineQuery(`*[_type == "tour"] | order(startDate asc
     image {
       asset-> {
         _id,
-        url
+        url,
+        metadata { lqip }
       },
       hotspot,
       crop
@@ -66,8 +81,22 @@ export const TOUR_BY_SLUG_QUERY = defineQuery(`*[_type == "tour" && slug.current
   seatsLeft,
   dateDisplay,
   dateDisplayJa,
-  coverImage,
-  galleryImages,
+  coverImage {
+    ...,
+    asset-> {
+      _id,
+      url,
+      metadata { lqip }
+    }
+  },
+  galleryImages[] {
+    ...,
+    asset-> {
+      _id,
+      url,
+      metadata { lqip }
+    }
+  },
   features,
   highlightsJa,
   itinerary[] {
@@ -77,7 +106,8 @@ export const TOUR_BY_SLUG_QUERY = defineQuery(`*[_type == "tour" && slug.current
     image {
       asset-> {
         _id,
-        url
+        url,
+        metadata { lqip }
       },
       hotspot,
       crop
@@ -109,7 +139,14 @@ export const CELEBRITIES_QUERY = defineQuery(`*[_type == "celebrity"] | order(or
   _id,
   name,
   name_ja,
-  photo,
+  photo {
+    ...,
+    asset-> {
+      _id,
+      url,
+      metadata { lqip }
+    }
+  },
   orderRank
 }`)
 
@@ -133,13 +170,15 @@ export const GALLERY_QUERY = defineQuery(`
     coverImage {
       asset-> {
         _id,
-        url
+        url,
+        metadata { lqip }
       }
     },
     galleryImages[] {
       asset-> {
         _id,
-        url
+        url,
+        metadata { lqip }
       }
     }
   }
@@ -155,5 +194,48 @@ export const TESTIMONIALS_QUERY = defineQuery(`
     textJa,
     tourName,
     tourNameJa
+  }
+`)
+
+export const FOUNDER_PHOTOS_QUERY = defineQuery(`
+  *[_type == "founderPhoto"] | order(era asc, orderRank asc, year asc) {
+    _id,
+    caption,
+    captionJa,
+    era,
+    year,
+    location,
+    featured,
+    orderRank,
+    image {
+      asset-> {
+        _id,
+        url,
+        metadata { lqip }
+      },
+      hotspot,
+      crop
+    }
+  }
+`)
+
+export const FOUNDER_FEATURED_PHOTOS_QUERY = defineQuery(`
+  *[_type == "founderPhoto" && featured == true] 
+  | order(year asc) {
+    _id,
+    caption,
+    captionJa,
+    era,
+    year,
+    location,
+    image {
+      asset-> {
+        _id,
+        url,
+        metadata { lqip }
+      },
+      hotspot,
+      crop
+    }
   }
 `)

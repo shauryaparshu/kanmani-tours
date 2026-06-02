@@ -1,6 +1,6 @@
 import { client } from '@/sanity/lib/client';
 import { CELEBRITIES_QUERY } from '@/sanity/lib/queries';
-import { urlForImage } from '@/sanity/lib/image';
+import { cardImageUrl } from '@/sanity/lib/image';
 
 export interface Celebrity {
     id: string;
@@ -13,7 +13,7 @@ function resolveImageUrl(image: any): string {
     if (!image) return '';
     if (typeof image === 'string') return image;
     try {
-        const url = urlForImage(image)?.url();
+        const url = cardImageUrl(image);
         return url || '';
     } catch (e) {
         return '';

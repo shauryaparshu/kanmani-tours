@@ -7,6 +7,7 @@ import type { Tour } from '@/lib/tours';
 import { formatDateRange, formatPriceJPY } from '@/lib/tours';
 import { getCategoryColor, getCategoryLabel } from '@/lib/categories';
 import { useTranslations, useLocale } from 'next-intl';
+import LazyImage from '@/components/ui/LazyImage';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 type StatusFilter = 'all' | 'upcoming' | 'past';
@@ -85,9 +86,10 @@ function TourCard({ tour, tLabels, categories }: { tour: Tour; tLabels: any, cat
         >
                 <div style={{ width: '100%', aspectRatio: '4/3', overflow: 'hidden', position: 'relative', backgroundColor: '#1a1918' }}>
                     {tour.coverImage ? (
-                        <img
+                        <LazyImage
                             src={tour.coverImage}
                             alt={tour.title}
+                            lqip={tour.coverImageLqip}
                             style={{
                                 width: '100%', height: '100%', objectFit: 'cover', display: 'block',
                                 transition: 'transform 0.5s ease',

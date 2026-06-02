@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import LazyImage from '@/components/ui/LazyImage';
 
 interface TourGalleryData {
   id: string;
@@ -9,7 +10,7 @@ interface TourGalleryData {
   slug: string;
   category: string;
   startDate: string;
-  images: string[];
+  images: { url: string; lqip?: string }[];
 }
 
 interface Props {
@@ -289,7 +290,7 @@ export default function GalleryPageClient({ tours }: Props) {
                     gridTemplateColumns: 'repeat(4, 1fr)',
                     gap: '4px'
                   }}>
-                    {imagesToShow.map((imgUrl, i) => (
+                    {imagesToShow.map((imgData, i) => (
                       <div 
                         key={i}
                         onClick={() => {
@@ -304,8 +305,9 @@ export default function GalleryPageClient({ tours }: Props) {
                           backgroundColor: '#E8E4DC'
                         }}
                       >
-                        <img
-                          src={imgUrl}
+                        <LazyImage
+                          src={imgData.url}
+                          lqip={imgData.lqip}
                           alt={`${tour.title} photo ${i + 1}`}
                           style={{
                             width: '100%',
@@ -314,12 +316,6 @@ export default function GalleryPageClient({ tours }: Props) {
                             objectPosition: 'center',
                             transition: 'transform 0.4s ease',
                             display: 'block'
-                          }}
-                          onMouseEnter={(e) => {
-                            (e.currentTarget as HTMLImageElement).style.transform = 'scale(1.06)';
-                          }}
-                          onMouseLeave={(e) => {
-                            (e.currentTarget as HTMLImageElement).style.transform = 'scale(1)';
                           }}
                         />
                       </div>
@@ -408,8 +404,9 @@ export default function GalleryPageClient({ tours }: Props) {
             justifyContent: 'center',
             padding: '80px 24px' // padding to avoid overlap with top bar and bottom strip
           }}>
-            <img
-              src={activeTourObj.images[lightboxIndex]}
+            <LazyImage
+              src={activeTourObj.images[lightboxIndex].url}
+              lqip={activeTourObj.images[lightboxIndex].lqip}
               alt="Lightbox"
               style={{
                 maxWidth: '88vw',
@@ -500,11 +497,9 @@ export default function GalleryPageClient({ tours }: Props) {
               zIndex: 10
             }}
           >
-            {activeTourObj.images.map((thumbUrl, idx) => (
-              <img
+            {activeTourObj.images.map((thumbData, idx) => (
+              <div
                 key={idx}
-                src={thumbUrl}
-                alt={`Thumbnail ${idx + 1}`}
                 onClick={(e) => {
                   e.stopPropagation();
                   setLightboxIndex(idx);
@@ -512,12 +507,24 @@ export default function GalleryPageClient({ tours }: Props) {
                 style={{
                   width: '48px',
                   height: '36px',
-                  objectFit: 'cover',
                   cursor: 'pointer',
                   border: lightboxIndex === idx ? '2px solid #C9933A' : '2px solid transparent',
-                  flexShrink: 0
+                  flexShrink: 0,
+                  overflow: 'hidden'
                 }}
-              />
+              >
+                <LazyImage
+                  src={thumbData.url}
+                  lqip={thumbData.lqip}
+                  alt={`Thumbnail ${idx + 1}`}
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    display: 'block'
+                  }}
+                />
+              </div>
             ))}
           </div>
         </div>

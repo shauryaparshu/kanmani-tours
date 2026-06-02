@@ -4,7 +4,8 @@ import React, { useState, useEffect } from 'react';
 import { Link } from '@/i18n/routing';
 import type { Tour, TourFaq } from '@/lib/tours';
 import { useTranslations, useLocale } from 'next-intl';
-import { urlForImage } from '@/sanity/lib/image';
+import { cardImageUrl, galleryImageUrl } from '@/sanity/lib/image';
+import LazyImage from '@/components/ui/LazyImage';
 
 interface TourDetailClientProps {
     tour: Tour;
@@ -107,11 +108,16 @@ function ItineraryItem({
     if (!day.image) return null;
     if (typeof day.image === 'string') return day.image;
     try {
-      const url = urlForImage(day.image)?.url();
+      const url = cardImageUrl(day.image);
       return url || null;
     } catch {
       return (day.image as ImageWithAssetUrl)?.asset?.url || null;
     }
+  })();
+
+  const dayLqip = (() => {
+    if (!day.image || typeof day.image === 'string') return undefined;
+    return (day.image as any)?.asset?.metadata?.lqip;
   })();
 
   return (
@@ -231,9 +237,10 @@ function ItineraryItem({
                 overflow: 'hidden',
                 minHeight: '320px'
               }}>
-                <img
+                <LazyImage
                   src={dayImageUrl}
                   alt={`${t('day')} ${day.dayNumber}: ${day.title}`}
+                  lqip={dayLqip}
                   style={{
                     width: '100%',
                     height: '100%',
@@ -297,7 +304,7 @@ function ItineraryItem({
 }
 
 function Gallery({ images, tourTitle }: { 
-  images: string[]; 
+  images: { url: string; lqip?: string }[]; 
   tourTitle: string 
 }) {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
@@ -335,7 +342,7 @@ function Gallery({ images, tourTitle }: {
         gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
         gap: '8px'
       }}>
-        {images.map((src, i) => (
+        {images.map((imgData, i) => (
           <button
             key={i}
             onClick={() => openLightbox(i)}
@@ -349,8 +356,9 @@ function Gallery({ images, tourTitle }: {
               backgroundColor: '#1C1917'
             }}
           >
-            <img
-              src={src}
+            <LazyImage
+              src={imgData.url}
+              lqip={imgData.lqip}
               alt={`${tourTitle} — photo ${i + 1}`}
               style={{
                 width: '100%',
@@ -358,12 +366,6 @@ function Gallery({ images, tourTitle }: {
                 objectFit: 'cover',
                 display: 'block',
                 transition: 'transform 0.4s ease'
-              }}
-              onMouseEnter={(e) => {
-                (e.currentTarget as HTMLImageElement).style.transform = 'scale(1.05)';
-              }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLImageElement).style.transform = 'scale(1)';
               }}
             />
           </button>
@@ -454,10 +456,10 @@ function Gallery({ images, tourTitle }: {
           )}
 
           {/* Main image */}
-          <img
-            src={images[lightboxIndex]}
+          <LazyImage
+            src={images[lightboxIndex].url}
+            lqip={images[lightboxIndex].lqip}
             alt={`${tourTitle} — photo ${lightboxIndex + 1}`}
-            onClick={(e) => e.stopPropagation()}
             style={{
               maxWidth: '88vw',
               maxHeight: '85vh',
@@ -515,7 +517,7 @@ function Gallery({ images, tourTitle }: {
             overflowX: 'auto',
             scrollbarWidth: 'none'
           }}>
-            {images.map((src, i) => (
+            {images.map((imgData, i) => (
               <button
                 key={i}
                 onClick={(e) => {
@@ -536,8 +538,9 @@ function Gallery({ images, tourTitle }: {
                   transition: 'border-color 0.2s ease'
                 }}
               >
-                <img
-                  src={src}
+                <LazyImage
+                  src={imgData.url}
+                  lqip={imgData.lqip}
                   alt=""
                   style={{
                     width: '100%',
@@ -674,9 +677,10 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
       minHeight: '500px',
       overflow: 'hidden'
     }}>
-      <img
+      <LazyImage
         src={heroSrc}
         alt={tour.title}
+        lqip={tour.coverImageLqip}
         style={{
           width: '100%',
           height: '100%',
@@ -1035,15 +1039,24 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
                       marginBottom: '32px'
                     }}>{t('photoGallery')}</h2>
                     <Gallery 
-                      images={(tour.galleryImages ?? []).map((img) => {
-                        if (!img) return null;
-                        if (typeof img === 'string') return img;
-                        try {
-                          return urlForImage(img)?.url() ?? null;
-                        } catch {
-                          return (img as ImageWithAssetUrl)?.asset?.url ?? null;
-                        }
-                      }).filter((url): url is string => Boolean(url))}
+                      images={(tour.galleryImages ?? [])
+                        .map((img) => {
+                          if (!img) return null;
+                          let url = null;
+                          if (typeof img === 'string') {
+                            url = img;
+                          } else {
+                            try {
+                              url = galleryImageUrl(img);
+                            } catch {
+                              url = (img as ImageWithAssetUrl)?.asset?.url ?? null;
+                            }
+                          }
+                          if (!url) return null;
+                          const lqip = typeof img !== 'string' ? (img as any)?.asset?.metadata?.lqip : undefined;
+                          return { url, lqip };
+                        })
+                        .filter((item) => item !== null) as { url: string; lqip?: string }[]}
                       tourTitle={tour.title} 
                     />
                   </section>

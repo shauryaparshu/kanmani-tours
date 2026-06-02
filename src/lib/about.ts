@@ -1,6 +1,6 @@
 import aboutData from '@/data/about.json';
 import { client } from '@/sanity/lib/client';
-import { urlForImage } from '@/sanity/lib/image';
+import { cardImageUrl } from '@/sanity/lib/image';
 
 export async function getAboutData() {
     try {
@@ -8,7 +8,7 @@ export async function getAboutData() {
         if (sanityAbout) {
             // Process images
             if (sanityAbout.story?.image) {
-                sanityAbout.story.image = urlForImage(sanityAbout.story.image)?.url();
+                sanityAbout.story.image = cardImageUrl(sanityAbout.story.image);
             }
             // ... process other images as needed
             return sanityAbout;
