@@ -771,7 +771,7 @@ export default function FounderPageClient({ locale, photos }: FounderPageClientP
                         <div style={{ aspectRatio: '16/9', backgroundColor: '#2C2420', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', border: '1px solid #4A4540', position: 'relative', overflow: 'hidden' }}>
                           {url ? (
                             <>
-                              <LazyImage src={url} alt={event.title} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                              <LazyImage src={url} alt={event.title} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 80%' }} />
                               <button 
                                 onClick={() => handleEraClick(event.era)}
                                 style={{
