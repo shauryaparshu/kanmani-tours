@@ -687,11 +687,15 @@ export default function FounderPageClient({ locale, photos }: FounderPageClientP
             >‹</button>
             
             <div style={{ maxWidth: '1400px', maxHeight: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <LazyImage 
+              <img 
                 src={galleryImageUrl(lightboxPhoto.image)} 
-                lqip={lightboxPhoto.image?.asset?.metadata?.lqip}
-                alt="Fullscreen" 
-                style={{ maxWidth: '100%', maxHeight: '70vh', objectFit: 'contain' }}
+                alt={isJa ? lightboxPhoto.captionJa || 'Fullscreen' : lightboxPhoto.caption || 'Fullscreen'} 
+                style={{ 
+                  maxWidth: '100%', 
+                  maxHeight: '70vh', 
+                  objectFit: 'contain',
+                  display: 'block' 
+                }} 
               />
               <div style={{ marginTop: '24px', textAlign: 'center', maxWidth: '800px' }}>
                 <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: '20px', color: '#FFFFFF', marginBottom: '8px' }}>
