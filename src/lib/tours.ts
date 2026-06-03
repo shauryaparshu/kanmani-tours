@@ -63,7 +63,7 @@ interface RawTour {
     bookingClosed?: boolean;
 }
 
-export interface Tour extends Omit<RawTour, 'coverImage'> {
+export interface Tour extends Omit<RawTour, 'coverImage' | 'country'> {
     coverImage: string;
     coverImageLqip?: string;
     country?: { label: string; key: string };

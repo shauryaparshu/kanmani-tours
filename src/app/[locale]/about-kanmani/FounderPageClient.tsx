@@ -50,6 +50,12 @@ export default function FounderPageClient({ locale, photos }: FounderPageClientP
     return photos.filter(photo => photo.era === eraId);
   };
 
+  const getEraPhoto = (eraId: string) => {
+    const eraPhotos = photos.filter(p => p.era === eraId);
+    const featured = eraPhotos.find(p => p.featured);
+    return featured || eraPhotos[0];
+  };
+
   // Lightbox navigation
   const openLightbox = (photo: FounderPhoto, eraId: string, index: number) => {
     setCurrentEraPhotos(getPhotosByEra(eraId));
@@ -365,12 +371,32 @@ export default function FounderPageClient({ locale, photos }: FounderPageClientP
             </div>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-            <div style={{ aspectRatio: '4/3', backgroundColor: '#E8E4DC', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #D4CFC9' }}>
-              <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '12px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Student Life Era</span>
-            </div>
-            <div style={{ aspectRatio: '4/3', backgroundColor: '#E8E4DC', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #D4CFC9' }}>
-              <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '12px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em' }}>PhD Era</span>
-            </div>
+            {(() => {
+              const photo = getEraPhoto('student');
+              const url = photo ? galleryImageUrl(photo.image) : null;
+              return (
+                <div style={{ aspectRatio: '4/3', backgroundColor: '#E8E4DC', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #D4CFC9', position: 'relative', overflow: 'hidden' }}>
+                  {url ? (
+                    <LazyImage src={url} alt="Student Life" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  ) : (
+                    <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '12px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Student Life Era</span>
+                  )}
+                </div>
+              );
+            })()}
+            {(() => {
+              const photo = getEraPhoto('phd');
+              const url = photo ? galleryImageUrl(photo.image) : null;
+              return (
+                <div style={{ aspectRatio: '4/3', backgroundColor: '#E8E4DC', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #D4CFC9', position: 'relative', overflow: 'hidden' }}>
+                  {url ? (
+                    <LazyImage src={url} alt="PhD" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  ) : (
+                    <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '12px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em' }}>PhD Era</span>
+                  )}
+                </div>
+              );
+            })()}
           </div>
         </div>
 
@@ -384,12 +410,32 @@ export default function FounderPageClient({ locale, photos }: FounderPageClientP
             </div>
           </div>
           <div style={{ order: 1, display: 'flex', flexDirection: 'column', gap: '16px' }}>
-            <div style={{ aspectRatio: '4/3', backgroundColor: '#E8E4DC', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #D4CFC9' }}>
-              <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '12px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Humanitarian Era</span>
-            </div>
-            <div style={{ aspectRatio: '4/3', backgroundColor: '#E8E4DC', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #D4CFC9' }}>
-              <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '12px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Conferences Era</span>
-            </div>
+            {(() => {
+              const photo = getEraPhoto('humanitarian');
+              const url = photo ? galleryImageUrl(photo.image) : null;
+              return (
+                <div style={{ aspectRatio: '4/3', backgroundColor: '#E8E4DC', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #D4CFC9', position: 'relative', overflow: 'hidden' }}>
+                  {url ? (
+                    <LazyImage src={url} alt="Humanitarian" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  ) : (
+                    <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '12px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Humanitarian Era</span>
+                  )}
+                </div>
+              );
+            })()}
+            {(() => {
+              const photo = getEraPhoto('conferences');
+              const url = photo ? galleryImageUrl(photo.image) : null;
+              return (
+                <div style={{ aspectRatio: '4/3', backgroundColor: '#E8E4DC', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #D4CFC9', position: 'relative', overflow: 'hidden' }}>
+                  {url ? (
+                    <LazyImage src={url} alt="Conferences" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  ) : (
+                    <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '12px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Conferences Era</span>
+                  )}
+                </div>
+              );
+            })()}
           </div>
         </div>
 
@@ -403,12 +449,32 @@ export default function FounderPageClient({ locale, photos }: FounderPageClientP
             </div>
           </div>
           <div style={{ order: 1, display: 'flex', flexDirection: 'column', gap: '16px' }}>
-            <div style={{ aspectRatio: '4/3', backgroundColor: '#E8E4DC', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #D4CFC9' }}>
-              <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '12px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Tours Era</span>
-            </div>
-            <div style={{ aspectRatio: '4/3', backgroundColor: '#E8E4DC', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #D4CFC9' }}>
-              <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '12px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Celebrity Era</span>
-            </div>
+            {(() => {
+              const photo = getEraPhoto('tours');
+              const url = photo ? galleryImageUrl(photo.image) : null;
+              return (
+                <div style={{ aspectRatio: '4/3', backgroundColor: '#E8E4DC', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #D4CFC9', position: 'relative', overflow: 'hidden' }}>
+                  {url ? (
+                    <LazyImage src={url} alt="Tours" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  ) : (
+                    <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '12px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Tours Era</span>
+                  )}
+                </div>
+              );
+            })()}
+            {(() => {
+              const photo = getEraPhoto('celebrity');
+              const url = photo ? galleryImageUrl(photo.image) : null;
+              return (
+                <div style={{ aspectRatio: '4/3', backgroundColor: '#E8E4DC', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #D4CFC9', position: 'relative', overflow: 'hidden' }}>
+                  {url ? (
+                    <LazyImage src={url} alt="Celebrity" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  ) : (
+                    <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '12px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Celebrity Era</span>
+                  )}
+                </div>
+              );
+            })()}
           </div>
         </div>
       </section>
@@ -440,10 +506,28 @@ export default function FounderPageClient({ locale, photos }: FounderPageClientP
                     <p style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '15px', color: '#9A948F', lineHeight: '1.6' }}>{event.desc}</p>
                   </div>
                   <div>
-                    <div style={{ aspectRatio: '16/9', backgroundColor: '#2C2420', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', border: '1px solid #4A4540' }} onClick={() => setActiveEra(event.era)}>
-                      <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '12px', color: '#C9933A', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '8px' }}>{event.era} Era</span>
-                      <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '10px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Photos from this era available in gallery below</span>
-                    </div>
+                    {(() => {
+                      const photo = getEraPhoto(event.era);
+                      const url = photo ? galleryImageUrl(photo.image) : null;
+                      return (
+                        <div style={{ aspectRatio: '16/9', backgroundColor: '#2C2420', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', border: '1px solid #4A4540', position: 'relative', overflow: 'hidden' }} onClick={() => setActiveEra(event.era)}>
+                          {url ? (
+                            <>
+                              <LazyImage src={url} alt={event.title} style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.6 }} />
+                              <div style={{ position: 'absolute', inset: 0, backgroundColor: 'rgba(0,0,0,0.5)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '16px', textAlign: 'center' }}>
+                                <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '12px', color: '#C9933A', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '4px' }}>{event.era} Era</span>
+                                <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '9px', color: '#F5F1EB', textTransform: 'uppercase', letterSpacing: '0.05em' }}>View Era Gallery</span>
+                              </div>
+                            </>
+                          ) : (
+                            <div style={{ padding: '16px', textAlign: 'center' }}>
+                              <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '12px', color: '#C9933A', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '8px' }}>{event.era} Era</span>
+                              <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '10px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Photos from this era available in gallery below</span>
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })()}
                   </div>
                 </div>
               </div>

@@ -34,7 +34,7 @@ export const founderPhotoType = defineType({
           { title: 'Student Life in Japan (1998–2004)', value: 'student' },
           { title: 'PhD & Academic Life (2001–2006)', value: 'phd' },
           { title: 'Humanitarian & UN Work (2004–2010)', value: 'humanitarian' },
-          { title: 'Early Tours (2006–2012)', value: 'early-tours' },
+          { title: 'Tours & Journeys (2008–Present)', value: 'tours' },
           { title: 'Celebrity & Cultural Connections', value: 'celebrity' },
           { title: 'International Conferences', value: 'conferences' },
           { title: 'Recent Years (2020–Present)', value: 'recent' },
