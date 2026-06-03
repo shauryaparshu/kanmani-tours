@@ -111,9 +111,7 @@ export default function Navigation() {
                         display: 'flex',
                         alignItems: 'center',
                         flexWrap: 'nowrap',
-                        gap: isJa ? '19px' : '24px',
-                        overflowX: 'auto',
-                        scrollbarWidth: 'none'
+                        gap: isJa ? '19px' : '24px'
                     }}>
                         {navLinks.map((link, index) => {
                             const isActive = pathname === link.href || (link.href !== '/' && pathname?.startsWith(link.href));
