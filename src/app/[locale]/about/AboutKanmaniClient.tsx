@@ -584,7 +584,7 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
               color: '#C9933A',
               lineHeight: 1.8,
               marginBottom: '36px'
-            }}>PhD SCHOLAR · INTERPRETER · HUMANITARIAN · FOUNDER</p>
+            }}>PhD SCHOLAR · HUMANITARIAN · FOUNDER</p>
 
             {/* Divider */}
             <div style={{
@@ -602,7 +602,7 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
             }}>
               {[
                 { num: '28', label: 'Years in Japan' },
-                { num: '41', label: 'Countries' },
+                { num: '41', label: 'Countries Travelled' },
                 { num: '4', label: 'Languages' },
                 { num: 'PhD', label: 'Nagoya University' }
               ].map((stat, idx) => (

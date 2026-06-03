@@ -537,7 +537,7 @@ export default function FounderPageClient({ locale, photos }: FounderPageClientP
             color: '#C9933A',
             textTransform: 'uppercase',
             marginBottom: '40px'
-          }}>PHD SCHOLAR · INTERPRETER · HUMANITARIAN · FOUNDER</p>
+          }}>PHD SCHOLAR · HUMANITARIAN · FOUNDER</p>
 
           <div style={{
             width: '80px',
@@ -565,7 +565,7 @@ export default function FounderPageClient({ locale, photos }: FounderPageClientP
             {/* Stat 2 */}
             <div style={{ textAlign: 'center' }}>
               <div style={{ fontFamily: "'Jost', Arial, sans-serif", fontWeight: 300, fontSize: 'clamp(32px, 4vw, 48px)', color: '#F5F1EB', lineHeight: '1.2' }}>41</div>
-              <div style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '11px', letterSpacing: '0.2em', color: '#9A948F', textTransform: 'uppercase', marginTop: '4px' }}>Countries</div>
+              <div style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '11px', letterSpacing: '0.2em', color: '#9A948F', textTransform: 'uppercase', marginTop: '4px' }}>Countries Travelled</div>
             </div>
 
             <div style={{ width: '1px', height: '40px', backgroundColor: 'rgba(201,147,58,0.2)' }} />
