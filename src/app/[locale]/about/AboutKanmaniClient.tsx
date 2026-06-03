@@ -909,7 +909,7 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
 
             {/* CHAPTER 4 — PHOTO GALLERY */}
             <section id="founder-gallery" style={{ padding: '80px 20px', maxWidth: '1400px', margin: '0 auto' }}>
-              <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: '42px', textAlign: 'center', marginBottom: '48px', color: '#1C1917' }}>A Life in Pictures</h2>
+              <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: '42px', textAlign: 'center', marginBottom: '48px', color: '#1C1917' }}>Kanmani's Life in Pictures</h2>
               
               {/* Era Filters */}
               <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '8px', marginBottom: '48px' }}>
