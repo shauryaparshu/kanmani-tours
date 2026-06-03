@@ -56,6 +56,14 @@ export default function FounderPageClient({ locale, photos }: FounderPageClientP
     return featured || eraPhotos[0];
   };
 
+  const handleEraClick = (eraId: string) => {
+    setActiveEra(eraId);
+    const gallerySection = document.getElementById('founder-gallery');
+    if (gallerySection) {
+      gallerySection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   // Lightbox navigation
   const openLightbox = (photo: FounderPhoto, eraId: string, index: number) => {
     setCurrentEraPhotos(getPhotosByEra(eraId));
@@ -510,17 +518,46 @@ export default function FounderPageClient({ locale, photos }: FounderPageClientP
                       const photo = getEraPhoto(event.era);
                       const url = photo ? galleryImageUrl(photo.image) : null;
                       return (
-                        <div style={{ aspectRatio: '16/9', backgroundColor: '#2C2420', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', border: '1px solid #4A4540', position: 'relative', overflow: 'hidden' }} onClick={() => setActiveEra(event.era)}>
+                        <div style={{ aspectRatio: '16/9', backgroundColor: '#2C2420', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', border: '1px solid #4A4540', position: 'relative', overflow: 'hidden' }}>
                           {url ? (
                             <>
-                              <LazyImage src={url} alt={event.title} style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.6 }} />
-                              <div style={{ position: 'absolute', inset: 0, backgroundColor: 'rgba(0,0,0,0.5)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '16px', textAlign: 'center' }}>
-                                <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '12px', color: '#C9933A', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '4px' }}>{event.era} Era</span>
-                                <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '9px', color: '#F5F1EB', textTransform: 'uppercase', letterSpacing: '0.05em' }}>View Era Gallery</span>
-                              </div>
+                              <LazyImage src={url} alt={event.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                              <button 
+                                onClick={() => handleEraClick(event.era)}
+                                style={{
+                                  position: 'absolute',
+                                  top: '12px',
+                                  left: '12px',
+                                  backgroundColor: 'rgba(28, 25, 23, 0.85)',
+                                  border: '1px solid rgba(201, 147, 58, 0.4)',
+                                  color: '#C9933A',
+                                  fontFamily: "'Jost', Arial, sans-serif",
+                                  fontSize: '10px',
+                                  fontWeight: 500,
+                                  letterSpacing: '0.08em',
+                                  textTransform: 'uppercase',
+                                  padding: '6px 12px',
+                                  borderRadius: '20px',
+                                  cursor: 'pointer',
+                                  transition: 'all 0.3s ease',
+                                  zIndex: 10,
+                                }}
+                                onMouseOver={(e) => {
+                                  e.currentTarget.style.backgroundColor = '#C9933A';
+                                  e.currentTarget.style.color = '#1C1917';
+                                  e.currentTarget.style.borderColor = '#C9933A';
+                                }}
+                                onMouseOut={(e) => {
+                                  e.currentTarget.style.backgroundColor = 'rgba(28, 25, 23, 0.85)';
+                                  e.currentTarget.style.color = '#C9933A';
+                                  e.currentTarget.style.borderColor = 'rgba(201, 147, 58, 0.4)';
+                                }}
+                              >
+                                View Gallery
+                              </button>
                             </>
                           ) : (
-                            <div style={{ padding: '16px', textAlign: 'center' }}>
+                            <div style={{ padding: '16px', textAlign: 'center', cursor: 'pointer' }} onClick={() => handleEraClick(event.era)}>
                               <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '12px', color: '#C9933A', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '8px' }}>{event.era} Era</span>
                               <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '10px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Photos from this era available in gallery below</span>
                             </div>
@@ -537,7 +574,7 @@ export default function FounderPageClient({ locale, photos }: FounderPageClientP
       </section>
 
       {/* CHAPTER 4 — PHOTO GALLERY */}
-      <section style={{ padding: '120px 20px', maxWidth: '1400px', margin: '0 auto' }}>
+      <section id="founder-gallery" style={{ padding: '120px 20px', maxWidth: '1400px', margin: '0 auto' }}>
         <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: '48px', textAlign: 'center', marginBottom: '64px', color: '#1C1917' }}>A Life in Pictures</h2>
         
         {/* Era Filters */}
