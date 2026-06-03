@@ -339,14 +339,13 @@ interface AboutKanmaniClientProps {
 
 const ERAS = [
   { id: 'all', label: 'All Photos' },
-  { id: 'student', label: 'Student Life' },
-  { id: 'phd', label: 'PhD & Academic' },
-  { id: 'humanitarian', label: 'Humanitarian' },
-  { id: 'tours', label: 'Tours' },
   { id: 'celebrity', label: 'Celebrity' },
-  { id: 'conferences', label: 'Conferences' },
-  { id: 'recent', label: 'Recent' },
-  { id: 'news-media', label: 'News & Media' }
+  { id: 'news-media', label: 'News Media' },
+  { id: 'achievements', label: 'Achievements' },
+  { id: 'student-phd', label: 'Student Life and PhD' },
+  { id: 'world-travel', label: 'World Travel' },
+  { id: 'arts', label: 'Arts' },
+  { id: 'others', label: 'Others' }
 ];
 
 export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClientProps) {
@@ -398,10 +397,13 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
     return photos.filter(photo => photo.era === eraId);
   };
 
-  const getEraPhoto = (eraId: string) => {
+  const getEraPhoto = (eraId: string, skip: number = 0) => {
     const eraPhotos = photos.filter(p => p.era === eraId);
-    const featured = eraPhotos.find(p => p.featured);
-    return featured || eraPhotos[0];
+    if (eraPhotos.length === 0) return null;
+    const featured = eraPhotos.filter(p => p.featured);
+    if (featured.length > skip) return featured[skip];
+    if (eraPhotos.length > skip) return eraPhotos[skip];
+    return eraPhotos[0];
   };
 
   const handleEraClick = (eraId: string) => {
@@ -584,7 +586,7 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
               color: '#C9933A',
               lineHeight: 1.8,
               marginBottom: '36px'
-            }}>PhD SCHOLAR · HUMANITARIAN · FOUNDER</p>
+            }}>PhD SCHOLAR · HUMANITARIAN · ENTREPRENEUR</p>
 
             {/* Divider */}
             <div style={{
@@ -604,7 +606,7 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
                 { num: '28', label: 'Years in Japan' },
                 { num: '41', label: 'Countries Travelled' },
                 { num: '4', label: 'Languages' },
-                { num: 'PhD', label: 'Nagoya University' }
+                { num: 'PhD', label: 'Nagoya Uni, Japan' }
               ].map((stat, idx) => (
                 <div key={idx} style={{
                   padding: '24px 28px',
@@ -710,7 +712,7 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
                 </div>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
                   {(() => {
-                    const photo = getEraPhoto('student');
+                    const photo = getEraPhoto('student-phd', 0);
                     const url = photo ? galleryImageUrl(photo.image) : null;
                     return (
                       <div style={{ aspectRatio: '1/1', backgroundColor: '#E8E4DC', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #D4CFC9', position: 'relative', overflow: 'hidden' }}>
@@ -723,7 +725,7 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
                     );
                   })()}
                   {(() => {
-                    const photo = getEraPhoto('phd');
+                    const photo = getEraPhoto('student-phd', 1);
                     const url = photo ? galleryImageUrl(photo.image) : null;
                     return (
                       <div style={{ aspectRatio: '1/1', backgroundColor: '#E8E4DC', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #D4CFC9', position: 'relative', overflow: 'hidden' }}>
@@ -749,27 +751,27 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
                 </div>
                 <div style={{ order: isMobile ? 2 : 1, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
                   {(() => {
-                    const photo = getEraPhoto('humanitarian');
+                    const photo = getEraPhoto('achievements', 0);
                     const url = photo ? galleryImageUrl(photo.image) : null;
                     return (
                       <div style={{ aspectRatio: '1/1', backgroundColor: '#E8E4DC', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #D4CFC9', position: 'relative', overflow: 'hidden' }}>
                         {url ? (
-                          <LazyImage src={url} alt="Humanitarian" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                          <LazyImage src={url} alt="Achievements" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                         ) : (
-                          <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '11px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em', textAlign: 'center' }}>Humanitarian Era</span>
+                          <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '11px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em', textAlign: 'center' }}>Achievements</span>
                         )}
                       </div>
                     );
                   })()}
                   {(() => {
-                    const photo = getEraPhoto('conferences');
+                    const photo = getEraPhoto('news-media', 0);
                     const url = photo ? galleryImageUrl(photo.image) : null;
                     return (
                       <div style={{ aspectRatio: '1/1', backgroundColor: '#E8E4DC', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #D4CFC9', position: 'relative', overflow: 'hidden' }}>
                         {url ? (
-                          <LazyImage src={url} alt="Conferences" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                          <LazyImage src={url} alt="News Media" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                         ) : (
-                          <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '11px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em', textAlign: 'center' }}>Conferences Era</span>
+                          <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '11px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em', textAlign: 'center' }}>News Media</span>
                         )}
                       </div>
                     );
@@ -788,20 +790,20 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
                 </div>
                 <div style={{ order: isMobile ? 2 : 1, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
                   {(() => {
-                    const photo = getEraPhoto('tours');
+                    const photo = getEraPhoto('world-travel', 0);
                     const url = photo ? galleryImageUrl(photo.image) : null;
                     return (
                       <div style={{ aspectRatio: '1/1', backgroundColor: '#E8E4DC', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #D4CFC9', position: 'relative', overflow: 'hidden' }}>
                         {url ? (
-                          <LazyImage src={url} alt="Tours" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                          <LazyImage src={url} alt="World Travel" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                         ) : (
-                          <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '11px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em', textAlign: 'center' }}>Tours Era</span>
+                          <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '11px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em', textAlign: 'center' }}>World Travel</span>
                         )}
                       </div>
                     );
                   })()}
                   {(() => {
-                    const photo = getEraPhoto('celebrity');
+                    const photo = getEraPhoto('celebrity', 0);
                     const url = photo ? galleryImageUrl(photo.image) : null;
                     return (
                       <div style={{ aspectRatio: '1/1', backgroundColor: '#E8E4DC', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #D4CFC9', position: 'relative', overflow: 'hidden' }}>
@@ -826,16 +828,16 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
                 
                 <div style={{ position: 'relative', borderLeft: '2px solid rgba(201,147,58,0.3)', paddingLeft: '32px', marginLeft: '16px' }}>
                   {[
-                    { year: '1998', title: 'Arrived in Japan for postgraduate studies', desc: 'The beginning of a 28-year journey.', era: 'student' },
-                    { year: '2001', title: 'Began PhD research at Nagoya University', desc: 'Immersing in academia and cross-cultural studies.', era: 'phd' },
-                    { year: '2004', title: 'JICA Tsunami Relief Coordinator, Sri Lanka', desc: 'Managing critical on-the-ground disaster recovery.', era: 'humanitarian' },
-                    { year: '2006', title: 'Completed PhD, Nagoya University', desc: 'Achieving the highest academic milestone in Japan.', era: 'phd' },
-                    { year: '2008', title: 'Founded Kanmani Tours', desc: 'Creating the ultimate bridge between Japan and India.', era: 'tours' },
+                    { year: '1998', title: 'Arrived in Japan for postgraduate studies', desc: 'The beginning of a 28-year journey.', era: 'student-phd' },
+                    { year: '2001', title: 'Began PhD research at Nagoya University', desc: 'Immersing in academia and cross-cultural studies.', era: 'student-phd' },
+                    { year: '2004', title: 'JICA Tsunami Relief Coordinator, Sri Lanka', desc: 'Managing critical on-the-ground disaster recovery.', era: 'achievements' },
+                    { year: '2006', title: 'Completed PhD, Nagoya University', desc: 'Achieving the highest academic milestone in Japan.', era: 'student-phd' },
+                    { year: '2008', title: 'Founded Kanmani Tours', desc: 'Creating the ultimate bridge between Japan and India.', era: 'world-travel' },
                     { year: '2012', title: 'First celebrity fan tour to South India', desc: 'Opening new avenues for cultural exchange.', era: 'celebrity' },
-                    { year: '2015', title: 'International conference speaker alongside Dr. M.S. Swaminathan', desc: 'Discussing global agricultural and climate challenges.', era: 'conferences' },
-                    { year: '2019', title: 'Expanded tours, 500+ Japanese guests served', desc: 'Growing the community of India-Japan travelers.', era: 'tours' },
-                    { year: '2022', title: 'Post-pandemic revival of Japan-India travel', desc: 'Welcoming guests back to the heart of India.', era: 'recent' },
-                    { year: '2026', title: 'Continuing the journey', desc: 'Looking ahead to the next chapter of connection.', era: 'recent' }
+                    { year: '2015', title: 'International conference speaker alongside Dr. M.S. Swaminathan', desc: 'Discussing global agricultural and climate challenges.', era: 'news-media' },
+                    { year: '2019', title: 'Expanded tours, 500+ Japanese guests served', desc: 'Growing the community of India-Japan travelers.', era: 'world-travel' },
+                    { year: '2022', title: 'Post-pandemic revival of Japan-India travel', desc: 'Welcoming guests back to the heart of India.', era: 'others' },
+                    { year: '2026', title: 'Continuing the journey', desc: 'Looking ahead to the next chapter of connection.', era: 'others' }
                   ].map((event, i) => (
                     <div key={i} style={{ position: 'relative', marginBottom: '48px' }}>
                       <div style={{ position: 'absolute', left: '-41px', top: '8px', width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#C9933A' }}></div>

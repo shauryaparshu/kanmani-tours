@@ -339,14 +339,13 @@ interface FounderPageClientProps {
 
 const ERAS = [
   { id: 'all', label: 'All Photos' },
-  { id: 'student', label: 'Student Life' },
-  { id: 'phd', label: 'PhD & Academic' },
-  { id: 'humanitarian', label: 'Humanitarian' },
-  { id: 'tours', label: 'Tours' },
   { id: 'celebrity', label: 'Celebrity' },
-  { id: 'conferences', label: 'Conferences' },
-  { id: 'recent', label: 'Recent' },
-  { id: 'news-media', label: 'News & Media' }
+  { id: 'news-media', label: 'News Media' },
+  { id: 'achievements', label: 'Achievements' },
+  { id: 'student-phd', label: 'Student Life and PhD' },
+  { id: 'world-travel', label: 'World Travel' },
+  { id: 'arts', label: 'Arts' },
+  { id: 'others', label: 'Others' }
 ];
 
 export default function FounderPageClient({ locale, photos }: FounderPageClientProps) {
@@ -367,10 +366,13 @@ export default function FounderPageClient({ locale, photos }: FounderPageClientP
     return photos.filter(photo => photo.era === eraId);
   };
 
-  const getEraPhoto = (eraId: string) => {
+  const getEraPhoto = (eraId: string, skip: number = 0) => {
     const eraPhotos = photos.filter(p => p.era === eraId);
-    const featured = eraPhotos.find(p => p.featured);
-    return featured || eraPhotos[0];
+    if (eraPhotos.length === 0) return null;
+    const featured = eraPhotos.filter(p => p.featured);
+    if (featured.length > skip) return featured[skip];
+    if (eraPhotos.length > skip) return eraPhotos[skip];
+    return eraPhotos[0];
   };
 
   const handleEraClick = (eraId: string) => {
@@ -537,7 +539,7 @@ export default function FounderPageClient({ locale, photos }: FounderPageClientP
             color: '#C9933A',
             textTransform: 'uppercase',
             marginBottom: '40px'
-          }}>PHD SCHOLAR · HUMANITARIAN · FOUNDER</p>
+          }}>PHD SCHOLAR · HUMANITARIAN · ENTREPRENEUR</p>
 
           <div style={{
             width: '80px',
@@ -581,7 +583,7 @@ export default function FounderPageClient({ locale, photos }: FounderPageClientP
             {/* Stat 4 */}
             <div style={{ textAlign: 'center' }}>
               <div style={{ fontFamily: "'Jost', Arial, sans-serif", fontWeight: 300, fontSize: 'clamp(32px, 4vw, 48px)', color: '#F5F1EB', lineHeight: '1.2' }}>PhD</div>
-              <div style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '11px', letterSpacing: '0.2em', color: '#9A948F', textTransform: 'uppercase', marginTop: '4px' }}>Nagoya University</div>
+              <div style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '11px', letterSpacing: '0.2em', color: '#9A948F', textTransform: 'uppercase', marginTop: '4px' }}>Nagoya Uni, Japan</div>
             </div>
           </div>
         </div>
@@ -628,34 +630,34 @@ export default function FounderPageClient({ locale, photos }: FounderPageClientP
               <p>Choosing to pursue her PhD at Nagoya University rather than returning home, she immersed herself in academic life and cultural nuances. Over 28 years, she meticulously built a life between two worlds—bridging her Indian heritage with her chosen Japanese home, laying the foundation for a unique intercultural perspective.</p>
             </div>
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-            {(() => {
-              const photo = getEraPhoto('student');
-              const url = photo ? galleryImageUrl(photo.image) : null;
-              return (
-                <div style={{ aspectRatio: '4/3', backgroundColor: '#E8E4DC', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #D4CFC9', position: 'relative', overflow: 'hidden' }}>
-                  {url ? (
-                    <LazyImage src={url} alt="Student Life" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
-                  ) : (
-                    <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '12px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Student Life Era</span>
-                  )}
-                </div>
-              );
-            })()}
-            {(() => {
-              const photo = getEraPhoto('phd');
-              const url = photo ? galleryImageUrl(photo.image) : null;
-              return (
-                <div style={{ aspectRatio: '4/3', backgroundColor: '#E8E4DC', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #D4CFC9', position: 'relative', overflow: 'hidden' }}>
-                  {url ? (
-                    <LazyImage src={url} alt="PhD" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
-                  ) : (
-                    <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '12px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em' }}>PhD Era</span>
-                  )}
-                </div>
-              );
-            })()}
-          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+              {(() => {
+                const photo = getEraPhoto('student-phd', 0);
+                const url = photo ? galleryImageUrl(photo.image) : null;
+                return (
+                  <div style={{ aspectRatio: '1/1', backgroundColor: '#F0EBE1', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #E6DFD3', position: 'relative', overflow: 'hidden' }}>
+                    {url ? (
+                      <LazyImage src={url} alt="Student Life" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                    ) : (
+                      <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '12px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Student Life Era</span>
+                    )}
+                  </div>
+                );
+              })()}
+              {(() => {
+                const photo = getEraPhoto('student-phd', 1);
+                const url = photo ? galleryImageUrl(photo.image) : null;
+                return (
+                  <div style={{ aspectRatio: '1/1', backgroundColor: '#F0EBE1', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #E6DFD3', position: 'relative', overflow: 'hidden' }}>
+                    {url ? (
+                      <LazyImage src={url} alt="PhD" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                    ) : (
+                      <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '12px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em' }}>PhD Era</span>
+                    )}
+                  </div>
+                );
+              })()}
+            </div>
         </div>
 
         {/* Section B */}
@@ -667,34 +669,34 @@ export default function FounderPageClient({ locale, photos }: FounderPageClientP
               <p>For over two decades, she has been a trusted voice in high-stakes environments—working as an interpreter for the Refugee Assistance Headquarters in Tokyo on sensitive legal and child protection proceedings, leading VIP diplomatic delegations, and presenting research alongside the legendary Dr. M.S. Swaminathan at international conferences worldwide.</p>
             </div>
           </div>
-          <div style={{ order: 1, display: 'flex', flexDirection: 'column', gap: '16px' }}>
-            {(() => {
-              const photo = getEraPhoto('humanitarian');
-              const url = photo ? galleryImageUrl(photo.image) : null;
-              return (
-                <div style={{ aspectRatio: '4/3', backgroundColor: '#E8E4DC', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #D4CFC9', position: 'relative', overflow: 'hidden' }}>
-                  {url ? (
-                    <LazyImage src={url} alt="Humanitarian" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
-                  ) : (
-                    <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '12px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Humanitarian Era</span>
-                  )}
-                </div>
-              );
-            })()}
-            {(() => {
-              const photo = getEraPhoto('conferences');
-              const url = photo ? galleryImageUrl(photo.image) : null;
-              return (
-                <div style={{ aspectRatio: '4/3', backgroundColor: '#E8E4DC', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #D4CFC9', position: 'relative', overflow: 'hidden' }}>
-                  {url ? (
-                    <LazyImage src={url} alt="Conferences" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
-                  ) : (
-                    <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '12px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Conferences Era</span>
-                  )}
-                </div>
-              );
-            })()}
-          </div>
+          <div style={{ order: 1, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+              {(() => {
+                const photo = getEraPhoto('achievements', 0);
+                const url = photo ? galleryImageUrl(photo.image) : null;
+                return (
+                  <div style={{ aspectRatio: '1/1', backgroundColor: '#F0EBE1', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #E6DFD3', position: 'relative', overflow: 'hidden' }}>
+                    {url ? (
+                      <LazyImage src={url} alt="Achievements" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                    ) : (
+                      <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '12px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Achievements</span>
+                    )}
+                  </div>
+                );
+              })()}
+              {(() => {
+                const photo = getEraPhoto('news-media', 0);
+                const url = photo ? galleryImageUrl(photo.image) : null;
+                return (
+                  <div style={{ aspectRatio: '1/1', backgroundColor: '#F0EBE1', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #E6DFD3', position: 'relative', overflow: 'hidden' }}>
+                    {url ? (
+                      <LazyImage src={url} alt="News Media" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                    ) : (
+                      <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '12px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em' }}>News Media</span>
+                    )}
+                  </div>
+                );
+              })()}
+            </div>
         </div>
 
         {/* Section C */}
@@ -706,34 +708,34 @@ export default function FounderPageClient({ locale, photos }: FounderPageClientP
               <p>Her philosophy is rooted in providing “not borrowed wisdom but lived proof.” As a motivational speaker and tour director, she ensures that every itinerary crafted by Kanmani Tours serves as a bridge, allowing travelers to experience the profound spiritual, historical, and daily realities of India through the lens of someone who intimately understands both cultures.</p>
             </div>
           </div>
-          <div style={{ order: 1, display: 'flex', flexDirection: 'column', gap: '16px' }}>
-            {(() => {
-              const photo = getEraPhoto('tours');
-              const url = photo ? galleryImageUrl(photo.image) : null;
-              return (
-                <div style={{ aspectRatio: '4/3', backgroundColor: '#E8E4DC', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #D4CFC9', position: 'relative', overflow: 'hidden' }}>
-                  {url ? (
-                    <LazyImage src={url} alt="Tours" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
-                  ) : (
-                    <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '12px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Tours Era</span>
-                  )}
-                </div>
-              );
-            })()}
-            {(() => {
-              const photo = getEraPhoto('celebrity');
-              const url = photo ? galleryImageUrl(photo.image) : null;
-              return (
-                <div style={{ aspectRatio: '4/3', backgroundColor: '#E8E4DC', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #D4CFC9', position: 'relative', overflow: 'hidden' }}>
-                  {url ? (
-                    <LazyImage src={url} alt="Celebrity" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
-                  ) : (
-                    <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '12px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Celebrity Era</span>
-                  )}
-                </div>
-              );
-            })()}
-          </div>
+          <div style={{ order: 1, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+              {(() => {
+                const photo = getEraPhoto('world-travel', 0);
+                const url = photo ? galleryImageUrl(photo.image) : null;
+                return (
+                  <div style={{ aspectRatio: '1/1', backgroundColor: '#F0EBE1', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #E6DFD3', position: 'relative', overflow: 'hidden' }}>
+                    {url ? (
+                      <LazyImage src={url} alt="World Travel" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                    ) : (
+                      <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '12px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em' }}>World Travel</span>
+                    )}
+                  </div>
+                );
+              })()}
+              {(() => {
+                const photo = getEraPhoto('celebrity', 0);
+                const url = photo ? galleryImageUrl(photo.image) : null;
+                return (
+                  <div style={{ aspectRatio: '1/1', backgroundColor: '#F0EBE1', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #E6DFD3', position: 'relative', overflow: 'hidden' }}>
+                    {url ? (
+                      <LazyImage src={url} alt="Celebrity" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                    ) : (
+                      <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '12px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Celebrity Era</span>
+                    )}
+                  </div>
+                );
+              })()}
+            </div>
         </div>
       </section>
 
@@ -744,16 +746,16 @@ export default function FounderPageClient({ locale, photos }: FounderPageClientP
           
           <div style={{ position: 'relative', borderLeft: '2px solid rgba(201,147,58,0.3)', paddingLeft: '40px', marginLeft: '20px' }}>
             {[
-              { year: '1998', title: 'Arrived in Japan for postgraduate studies', desc: 'The beginning of a 28-year journey.', era: 'student' },
-              { year: '2001', title: 'Began PhD research at Nagoya University', desc: 'Immersing in academia and cross-cultural studies.', era: 'phd' },
-              { year: '2004', title: 'JICA Tsunami Relief Coordinator, Sri Lanka', desc: 'Managing critical on-the-ground disaster recovery.', era: 'humanitarian' },
-              { year: '2006', title: 'Completed PhD, Nagoya University', desc: 'Achieving the highest academic milestone in Japan.', era: 'phd' },
-              { year: '2008', title: 'Founded Kanmani Tours', desc: 'Creating the ultimate bridge between Japan and India.', era: 'tours' },
+              { year: '1998', title: 'Arrived in Japan for postgraduate studies', desc: 'The beginning of a 28-year journey.', era: 'student-phd' },
+              { year: '2001', title: 'Began PhD research at Nagoya University', desc: 'Immersing in academia and cross-cultural studies.', era: 'student-phd' },
+              { year: '2004', title: 'JICA Tsunami Relief Coordinator, Sri Lanka', desc: 'Managing critical on-the-ground disaster recovery.', era: 'achievements' },
+              { year: '2006', title: 'Completed PhD, Nagoya University', desc: 'Achieving the highest academic milestone in Japan.', era: 'student-phd' },
+              { year: '2008', title: 'Founded Kanmani Tours', desc: 'Creating the ultimate bridge between Japan and India.', era: 'world-travel' },
               { year: '2012', title: 'First celebrity fan tour to South India', desc: 'Opening new avenues for cultural exchange.', era: 'celebrity' },
-              { year: '2015', title: 'International conference speaker alongside Dr. M.S. Swaminathan', desc: 'Discussing global agricultural and climate challenges.', era: 'conferences' },
-              { year: '2019', title: 'Expanded tours, 500+ Japanese guests served', desc: 'Growing the community of India-Japan travelers.', era: 'tours' },
-              { year: '2022', title: 'Post-pandemic revival of Japan-India travel', desc: 'Welcoming guests back to the heart of India.', era: 'recent' },
-              { year: '2026', title: 'Continuing the journey', desc: 'Looking ahead to the next chapter of connection.', era: 'recent' }
+              { year: '2015', title: 'International conference speaker alongside Dr. M.S. Swaminathan', desc: 'Discussing global agricultural and climate challenges.', era: 'news-media' },
+              { year: '2019', title: 'Expanded tours, 500+ Japanese guests served', desc: 'Growing the community of India-Japan travelers.', era: 'world-travel' },
+              { year: '2022', title: 'Post-pandemic revival of Japan-India travel', desc: 'Welcoming guests back to the heart of India.', era: 'others' },
+              { year: '2026', title: 'Continuing the journey', desc: 'Looking ahead to the next chapter of connection.', era: 'others' }
             ].map((event, i) => (
               <div key={i} style={{ position: 'relative', marginBottom: '64px' }}>
                 <div style={{ position: 'absolute', left: '-49px', top: '0', width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#C9933A' }}></div>
