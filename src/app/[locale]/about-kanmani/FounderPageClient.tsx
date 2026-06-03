@@ -16,6 +16,322 @@ interface FounderPhoto {
   image: any;
 }
 
+// FlipImageCard manages the 3D flip animation of a single slot when its photo prop updates.
+interface FlipImageCardProps {
+  photo: FounderPhoto;
+  onClick: () => void;
+  isJa: boolean;
+}
+
+function FlipImageCard({ photo, onClick, isJa }: FlipImageCardProps) {
+  const [frontPhoto, setFrontPhoto] = useState<FounderPhoto>(photo);
+  const [backPhoto, setBackPhoto] = useState<FounderPhoto | null>(photo);
+  const [isFlipped, setIsFlipped] = useState(false);
+
+  useEffect(() => {
+    const currentVisiblePhoto = isFlipped ? backPhoto : frontPhoto;
+    if (!currentVisiblePhoto || photo._id === currentVisiblePhoto._id) return;
+
+    if (isFlipped) {
+      setFrontPhoto(photo);
+      setIsFlipped(false);
+    } else {
+      setBackPhoto(photo);
+      setIsFlipped(true);
+    }
+  }, [photo, isFlipped, frontPhoto, backPhoto]);
+
+  const frontUrl = galleryImageUrl(frontPhoto.image);
+  const backUrl = backPhoto ? galleryImageUrl(backPhoto.image) : '';
+
+  return (
+    <div 
+      onClick={onClick}
+      style={{
+        aspectRatio: '1 / 1',
+        backgroundColor: '#E8E4DC',
+        position: 'relative',
+        cursor: 'pointer',
+        perspective: '1000px',
+        overflow: 'visible'
+      }}
+    >
+      <div 
+        style={{
+          width: '100%',
+          height: '100%',
+          position: 'relative',
+          transformStyle: 'preserve-3d',
+          transition: 'transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
+          transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)'
+        }}
+      >
+        {/* Front Face */}
+        <div style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          backfaceVisibility: 'hidden',
+          WebkitBackfaceVisibility: 'hidden',
+          backgroundColor: '#E8E4DC',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          overflow: 'hidden'
+        }}>
+          {frontUrl && (
+            <LazyImage 
+              src={frontUrl} 
+              lqip={frontPhoto.image?.asset?.metadata?.lqip}
+              alt={isJa ? frontPhoto.captionJa || '' : frontPhoto.caption || ''} 
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                objectPosition: 'center 80%'
+              }}
+            />
+          )}
+        </div>
+
+        {/* Back Face */}
+        <div style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          backfaceVisibility: 'hidden',
+          WebkitBackfaceVisibility: 'hidden',
+          transform: 'rotateY(180deg)',
+          backgroundColor: '#E8E4DC',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          overflow: 'hidden'
+        }}>
+          {backUrl && (
+            <LazyImage 
+              src={backUrl} 
+              lqip={backPhoto?.image?.asset?.metadata?.lqip}
+              alt={isJa ? backPhoto?.captionJa || '' : backPhoto?.caption || ''} 
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                objectPosition: 'center 80%'
+              }}
+            />
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// EraGallery manages the visible photos, timers, and layout of a single era section.
+interface EraGalleryProps {
+  eraId: string;
+  eraLabel: string;
+  eraPhotos: FounderPhoto[];
+  isExpanded: boolean;
+  onToggleExpand: () => void;
+  openLightbox: (photo: FounderPhoto, eraId: string, index: number) => void;
+  isJa: boolean;
+}
+
+function EraGallery({
+  eraId,
+  eraLabel,
+  eraPhotos,
+  isExpanded,
+  onToggleExpand,
+  openLightbox,
+  isJa
+}: EraGalleryProps) {
+  const [visiblePhotos, setVisiblePhotos] = useState<FounderPhoto[]>([]);
+
+  useEffect(() => {
+    setVisiblePhotos(eraPhotos.slice(0, 5));
+  }, [eraPhotos]);
+
+  useEffect(() => {
+    if (isExpanded || eraPhotos.length <= 5) return;
+
+    const interval = setInterval(() => {
+      setVisiblePhotos(currentVisible => {
+        const visibleIds = new Set(currentVisible.map(p => p._id));
+        const pool = eraPhotos.filter(p => !visibleIds.has(p._id));
+
+        if (pool.length === 0) return currentVisible;
+
+        // Choose 5 photos including all pool (hidden) ones
+        let selected: FounderPhoto[] = [...pool];
+        if (selected.length >= 5) {
+          const shuffledPool = [...pool].sort(() => Math.random() - 0.5);
+          selected = shuffledPool.slice(0, 5);
+        } else {
+          const remainingCount = 5 - selected.length;
+          const shuffledVisible = [...currentVisible].sort(() => Math.random() - 0.5);
+          selected = [...selected, ...shuffledVisible.slice(0, remainingCount)];
+        }
+
+        // Shuffle up to 100 times to guarantee that no slot receives the same photo it currently has
+        let nextVisible = selected;
+        let attempts = 0;
+        while (attempts < 100) {
+          nextVisible = [...selected].sort(() => Math.random() - 0.5);
+          const hasDuplicateSlot = nextVisible.some((p, idx) => p._id === currentVisible[idx]?._id);
+          if (!hasDuplicateSlot) {
+            break;
+          }
+          attempts++;
+        }
+
+        return nextVisible;
+      });
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [isExpanded, eraPhotos]);
+
+  const handlePhotoClick = (photo: FounderPhoto, displayIndex: number) => {
+    const fullIndex = eraPhotos.findIndex(p => p._id === photo._id);
+    openLightbox(photo, eraId, fullIndex >= 0 ? fullIndex : displayIndex);
+  };
+
+  return (
+    <div style={{ marginBottom: '64px' }}>
+      <div style={{ display: 'flex', alignItems: 'baseline', gap: '16px', marginBottom: '24px' }}>
+        <h3 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: '32px', color: '#1C1917' }}>{eraLabel}</h3>
+        <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '12px', color: '#9A948F', backgroundColor: '#E8E4DC', padding: '4px 12px', borderRadius: '12px' }}>
+          {eraPhotos.length} photos
+        </span>
+      </div>
+
+      {isExpanded ? (
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+          gap: '16px'
+        }}>
+          {eraPhotos.map((photo, index) => {
+            const url = galleryImageUrl(photo.image);
+            return (
+              <div 
+                key={photo._id} 
+                onClick={() => openLightbox(photo, eraId, index)}
+                style={{
+                  aspectRatio: '1 / 1',
+                  backgroundColor: '#E8E4DC',
+                  position: 'relative',
+                  cursor: 'pointer',
+                  overflow: 'hidden'
+                }}
+              >
+                {url && (
+                  <LazyImage 
+                    src={url} 
+                    lqip={photo.image?.asset?.metadata?.lqip}
+                    alt={isJa ? photo.captionJa || '' : photo.caption || ''} 
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      objectPosition: 'center 80%',
+                      transition: 'transform 0.5s ease'
+                    }}
+                  />
+                )}
+              </div>
+            );
+          })}
+        </div>
+      ) : (
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(5, 1fr)',
+          gap: '16px',
+          width: '100%'
+        }}>
+          {visiblePhotos.map((photo, index) => (
+            <FlipImageCard 
+              key={index} 
+              photo={photo}
+              onClick={() => handlePhotoClick(photo, index)}
+              isJa={isJa}
+            />
+          ))}
+        </div>
+      )}
+
+      {!isExpanded && eraPhotos.length > 5 && (
+        <div style={{ textAlign: 'center', marginTop: '32px' }}>
+          <button 
+            onClick={onToggleExpand}
+            style={{
+              fontFamily: "'Jost', Arial, sans-serif",
+              fontSize: '14px',
+              fontWeight: '500',
+              letterSpacing: '0.1em',
+              textTransform: 'uppercase',
+              color: '#1C1917',
+              backgroundColor: 'transparent',
+              border: '1px solid #1C1917',
+              padding: '12px 32px',
+              cursor: 'pointer',
+              transition: 'all 0.3s ease'
+            }}
+            onMouseOver={(e) => {
+              e.currentTarget.style.backgroundColor = '#1C1917';
+              e.currentTarget.style.color = '#FFFFFF';
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.backgroundColor = 'transparent';
+              e.currentTarget.style.color = '#1C1917';
+            }}
+          >
+            View all {eraPhotos.length} photos
+          </button>
+        </div>
+      )}
+
+      {isExpanded && eraPhotos.length > 5 && (
+        <div style={{ textAlign: 'center', marginTop: '32px' }}>
+          <button 
+            onClick={onToggleExpand}
+            style={{
+              fontFamily: "'Jost', Arial, sans-serif",
+              fontSize: '14px',
+              fontWeight: '500',
+              letterSpacing: '0.1em',
+              textTransform: 'uppercase',
+              color: '#1C1917',
+              backgroundColor: 'transparent',
+              border: '1px solid #1C1917',
+              padding: '12px 32px',
+              cursor: 'pointer',
+              transition: 'all 0.3s ease'
+            }}
+            onMouseOver={(e) => {
+              e.currentTarget.style.backgroundColor = '#1C1917';
+              e.currentTarget.style.color = '#FFFFFF';
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.backgroundColor = 'transparent';
+              e.currentTarget.style.color = '#1C1917';
+            }}
+          >
+            Show Less
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+
 interface FounderPageClientProps {
   locale: string;
   photos: FounderPhoto[];
@@ -130,85 +446,18 @@ export default function FounderPageClient({ locale, photos }: FounderPageClientP
     if (eraPhotos.length === 0) return null;
 
     const isExpanded = expandedEras.has(eraId) || eraId === 'all';
-    const displayPhotos = isExpanded ? eraPhotos : eraPhotos.slice(0, 8);
 
     return (
-      <div key={eraId} style={{ marginBottom: '64px' }}>
-        <div style={{ display: 'flex', alignItems: 'baseline', gap: '16px', marginBottom: '24px' }}>
-          <h3 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: '32px', color: '#1C1917' }}>{eraLabel}</h3>
-          <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '12px', color: '#9A948F', backgroundColor: '#E8E4DC', padding: '4px 12px', borderRadius: '12px' }}>
-            {eraPhotos.length} photos
-          </span>
-        </div>
-
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
-          gap: '16px'
-        }}>
-          {displayPhotos.map((photo, index) => {
-            const url = galleryImageUrl(photo.image);
-            return (
-              <div 
-                key={photo._id} 
-                onClick={() => openLightbox(photo, eraId, index)}
-                style={{
-                  aspectRatio: '1 / 1',
-                  backgroundColor: '#E8E4DC',
-                  position: 'relative',
-                  cursor: 'pointer',
-                  overflow: 'hidden'
-                }}
-              >
-                {url && (
-                  <LazyImage 
-                    src={url} 
-                    alt={isJa ? photo.captionJa || '' : photo.caption || ''}
-                    lqip={photo.image?.asset?.metadata?.lqip}
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'contain',
-                      transition: 'transform 0.5s ease'
-                    }}
-                  />
-                )}
-              </div>
-            );
-          })}
-        </div>
-
-        {!isExpanded && eraPhotos.length > 8 && (
-          <div style={{ textAlign: 'center', marginTop: '32px' }}>
-            <button 
-              onClick={() => toggleExpandEra(eraId)}
-              style={{
-                fontFamily: "'Jost', Arial, sans-serif",
-                fontSize: '14px',
-                fontWeight: '500',
-                letterSpacing: '0.1em',
-                textTransform: 'uppercase',
-                color: '#1C1917',
-                backgroundColor: 'transparent',
-                border: '1px solid #1C1917',
-                padding: '12px 32px',
-                cursor: 'pointer',
-                transition: 'all 0.3s ease'
-              }}
-              onMouseOver={(e) => {
-                e.currentTarget.style.backgroundColor = '#1C1917';
-                e.currentTarget.style.color = '#FFFFFF';
-              }}
-              onMouseOut={(e) => {
-                e.currentTarget.style.backgroundColor = 'transparent';
-                e.currentTarget.style.color = '#1C1917';
-              }}
-            >
-              View all {eraPhotos.length} photos
-            </button>
-          </div>
-        )}
-      </div>
+      <EraGallery
+        key={eraId}
+        eraId={eraId}
+        eraLabel={eraLabel}
+        eraPhotos={eraPhotos}
+        isExpanded={isExpanded}
+        onToggleExpand={() => toggleExpandEra(eraId)}
+        openLightbox={openLightbox}
+        isJa={isJa}
+      />
     );
   };
 
