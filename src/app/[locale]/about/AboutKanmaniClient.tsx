@@ -29,7 +29,8 @@ const ERAS = [
   { id: 'tours', label: 'Tours' },
   { id: 'celebrity', label: 'Celebrity' },
   { id: 'conferences', label: 'Conferences' },
-  { id: 'recent', label: 'Recent' }
+  { id: 'recent', label: 'Recent' },
+  { id: 'news-media', label: 'News & Media' }
 ];
 
 export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClientProps) {
