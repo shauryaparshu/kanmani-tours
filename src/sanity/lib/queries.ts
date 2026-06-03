@@ -12,6 +12,7 @@ export const TOURS_QUERY = defineQuery(`*[_type == "tour"] | order(startDate asc
   longDescriptionJa,
   startDate,
   endDate,
+  country->{title, title_ja, key},
   location,
   locationJa,
   priceJPY,
@@ -74,6 +75,7 @@ export const TOUR_BY_SLUG_QUERY = defineQuery(`*[_type == "tour" && slug.current
   longDescriptionJa,
   startDate,
   endDate,
+  country->{title, title_ja, key},
   location,
   locationJa,
   priceJPY,
@@ -157,6 +159,13 @@ export const CATEGORIES_QUERY = defineQuery(`*[_type == "tourCategory"] | order(
   key,
   color,
  }`)
+
+export const COUNTRIES_QUERY = defineQuery(`*[_type == "country"] | order(title asc) {
+  _id,
+  title,
+  title_ja,
+  key
+}`)
 
 export const GALLERY_QUERY = defineQuery(`
   *[_type == "tour" && defined(startDate) && dateTime(startDate + 'T00:00:00Z') < dateTime(now())] 

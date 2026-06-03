@@ -15,6 +15,7 @@ type StatusFilter = 'all' | 'upcoming' | 'past';
 interface Filters {
     year: string;
     categories: string[];
+    country: string;
     status: StatusFilter;
     search: string;
 }
@@ -22,6 +23,7 @@ interface Filters {
 interface Props {
     tours: Tour[];
     categories: any[];
+    countries: any[];
 }
 
 const catBg = (c: string, cats: any[]) => getCategoryColor(c, cats);
@@ -263,7 +265,7 @@ function TourCard({ tour, tLabels, categories }: { tour: Tour; tLabels: any, cat
 }
 
 // ─── Main client component ────────────────────────────────────────────────────
-export default function ToursListClient({ tours, categories }: Props) {
+export default function ToursListClient({ tours, categories, countries }: Props) {
     const router = useRouter();
     const searchParams = useSearchParams();
     const t = useTranslations('Tours');
@@ -272,6 +274,7 @@ export default function ToursListClient({ tours, categories }: Props) {
     const [filters, setFilters] = useState<Filters>({
         year: '',
         categories: [],
+        country: '',
         status: 'all',
         search: '',
     });
@@ -279,17 +282,27 @@ export default function ToursListClient({ tours, categories }: Props) {
     // Sync from URL on load
     useEffect(() => {
         const cat = searchParams?.get('category');
-        if (cat) {
-            setFilters(prev => ({ ...prev, categories: [cat] }));
-        }
+        const country = searchParams?.get('country');
+        
+        setFilters(prev => {
+            const next = { ...prev };
+            if (cat) next.categories = [cat];
+            if (country) next.country = country;
+            return next;
+        });
     }, [searchParams]);
 
-    const updateUrl = (cats: string[]) => {
+    const updateUrl = (cats: string[], country: string) => {
         const params = new URLSearchParams(searchParams?.toString() || '');
         if (cats.length > 0) {
             params.set('category', cats[0]); // Simple single-category URL sync for now as per shared patterns
         } else {
             params.delete('category');
+        }
+        if (country) {
+            params.set('country', country);
+        } else {
+            params.delete('country');
         }
         router.push(`?${params.toString()}`, { scroll: false });
     };
@@ -334,6 +347,11 @@ export default function ToursListClient({ tours, categories }: Props) {
         // Category
         if (filters.categories.length > 0) {
             result = result.filter(t => filters.categories.includes(t.category));
+        }
+
+        // Country
+        if (filters.country) {
+            result = result.filter(t => t.country?.key === filters.country);
         }
 
         // Status
@@ -383,7 +401,7 @@ export default function ToursListClient({ tours, categories }: Props) {
     );
 
     const clearFilters = () =>
-        setFilters({ year: '', categories: [], status: 'all', search: '' });
+        setFilters({ year: '', categories: [], status: 'all', search: '', country: '' });
 
     const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const cat = e.target.value;
@@ -392,7 +410,16 @@ export default function ToursListClient({ tours, categories }: Props) {
             ...prev,
             categories: nextCats,
         }));
-        updateUrl(nextCats);
+        updateUrl(nextCats, filters.country);
+    };
+
+    const handleCountryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const country = e.target.value;
+        setFilters(prev => ({
+            ...prev,
+            country,
+        }));
+        updateUrl(filters.categories, country);
     };
 
     return (
@@ -438,6 +465,36 @@ export default function ToursListClient({ tours, categories }: Props) {
                             </option>
                         ))}
                     </select>
+
+                    {/* Country Select */}
+                    <select
+                        className="tlc-country-select"
+                        style={{
+                            fontFamily: "'Jost', Arial, sans-serif",
+                            fontSize: '13px',
+                            fontWeight: '400',
+                            letterSpacing: '0.08em',
+                            color: '#1C1917',
+                            backgroundColor: '#FFFFFF',
+                            border: '1px solid #E8E4DC',
+                            padding: '10px 16px',
+                            outline: 'none',
+                            cursor: 'pointer',
+                            minWidth: '220px'
+                        }}
+                        value={filters.country}
+                        onChange={handleCountryChange}
+                        onFocus={(e) => e.target.style.borderColor = '#C9933A'}
+                        onBlur={(e) => e.target.style.borderColor = '#E8E4DC'}
+                    >
+                        <option value="">All Countries</option>
+                        {countries?.map(c => (
+                            <option key={c.key} value={c.key}>
+                                {c.label}
+                            </option>
+                        ))}
+                    </select>
+
 
                     {/* Search Input */}
                     <div style={{ position: 'relative', width: '280px' }}>

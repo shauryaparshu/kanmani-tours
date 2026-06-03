@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getAllTours } from '@/lib/tours';
 import { getAllCategories } from '@/lib/categories';
+import { getAllCountries } from '@/lib/countries';
 import Footer from '@/components/layout/FooterSection';
 import ToursListClient from '@/components/ToursListClient';
 import { getTranslations } from 'next-intl/server';
@@ -16,9 +17,10 @@ export const metadata: Metadata = {
 export default async function ToursPage({ params }: { params: Promise<{ locale: string }> }) {
     const { locale } = await params;
 
-    const [rawTours, categories] = await Promise.all([
+    const [rawTours, categories, countries] = await Promise.all([
         getAllTours(locale),
-        getAllCategories(locale)
+        getAllCategories(locale),
+        getAllCountries(locale)
     ]);
 
     const t = await getTranslations('Tours');
@@ -88,7 +90,7 @@ export default async function ToursPage({ params }: { params: Promise<{ locale: 
 
                 {/* Client-side filter + card grid */}
                 <Suspense fallback={<div className="container" style={{ padding: '60px 20px' }}>{t('loading')}</div>}>
-                    <ToursListClient tours={tours} categories={categories} />
+                    <ToursListClient tours={tours} categories={categories} countries={countries} />
                 </Suspense>
             </main>
             <Footer />

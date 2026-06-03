@@ -152,6 +152,13 @@ export const tourType = defineType({
 
         // ─── LOCATION & PRICING ──────────────────────────────────────
         defineField({
+            name: 'country',
+            title: 'Country',
+            type: 'reference',
+            to: [{ type: 'country' }],
+            description: 'Select the country for this tour',
+        }),
+        defineField({
             name: 'location',
             title: 'Location',
             type: 'string',

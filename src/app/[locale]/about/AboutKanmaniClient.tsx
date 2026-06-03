@@ -26,7 +26,6 @@ const ERAS = [
   { id: 'student', label: 'Student Life' },
   { id: 'phd', label: 'PhD & Academic' },
   { id: 'humanitarian', label: 'Humanitarian' },
-  { id: 'expeditions', label: 'Expeditions' },
   { id: 'tours', label: 'Tours' },
   { id: 'celebrity', label: 'Celebrity' },
   { id: 'conferences', label: 'Conferences' },
@@ -321,7 +320,7 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
               color: '#C9933A',
               lineHeight: 1.8,
               marginBottom: '36px'
-            }}>PhD SCHOLAR · EXPEDITION LEADER · INTERPRETER · HUMANITARIAN · FOUNDER</p>
+            }}>PhD SCHOLAR · INTERPRETER · HUMANITARIAN · FOUNDER</p>
 
             {/* Divider */}
             <div style={{
@@ -476,25 +475,6 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
 
               {/* Section C */}
               <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '48px', alignItems: 'center', marginBottom: '80px' }}>
-                <div>
-                  <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: '36px', color: '#1C1917', marginBottom: '20px' }}>The Adventurer</h2>
-                  <div style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: '18px', color: '#4A4540', lineHeight: '1.8' }}>
-                    <p style={{ marginBottom: '20px' }}>Beyond academia and diplomacy, an insatiable adventurous spirit drives her. She boldly led the first Indian Women's Everest Base Camp Expedition from Tamil Nadu, undertaking rigorous training at the Himalayan Mountaineering Institute. Her athletic prowess also earned her the honor of carrying the Indian national flag as the Flag Bearer at the Asian Games.</p>
-                    <p>An avid explorer, she has backpacked independently across 41 countries spanning four continents. Whether she is living with indigenous tribal communities in deep-reserve forests during academic field research, spiking on the volleyball court as a state-level player, skiing down alpine slopes, or freediving in coastal waters, she embraces life with unmatched vitality.</p>
-                  </div>
-                </div>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
-                  <div style={{ aspectRatio: '1/1', backgroundColor: '#E8E4DC', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #D4CFC9' }}>
-                    <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '11px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em', textAlign: 'center' }}>Expeditions Era</span>
-                  </div>
-                  <div style={{ aspectRatio: '1/1', backgroundColor: '#E8E4DC', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #D4CFC9' }}>
-                    <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '11px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em', textAlign: 'center' }}>Recent Era</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Section D */}
-              <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '48px', alignItems: 'center' }}>
                 <div style={{ order: isMobile ? 1 : 2 }}>
                   <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: '36px', color: '#1C1917', marginBottom: '20px' }}>Building the Bridge</h2>
                   <div style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: '18px', color: '#4A4540', lineHeight: '1.8' }}>
@@ -511,6 +491,8 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
                   </div>
                 </div>
               </div>
+
+
             </section>
 
             {/* CHAPTER 3 — TIMELINE */}
@@ -524,9 +506,7 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
                     { year: '2001', title: 'Began PhD research at Nagoya University', desc: 'Immersing in academia and cross-cultural studies.', era: 'phd' },
                     { year: '2004', title: 'JICA Tsunami Relief Coordinator, Sri Lanka', desc: 'Managing critical on-the-ground disaster recovery.', era: 'humanitarian' },
                     { year: '2006', title: 'Completed PhD, Nagoya University', desc: 'Achieving the highest academic milestone in Japan.', era: 'phd' },
-                    { year: '2007', title: 'Led First Indian Women\'s Everest Base Camp Expedition', desc: 'Sponsored by CM Jayalalitha.', era: 'expeditions' },
                     { year: '2008', title: 'Founded Kanmani Tours', desc: 'Creating the ultimate bridge between Japan and India.', era: 'tours' },
-                    { year: '2010', title: 'Asian Games Flag Bearer for India', desc: 'Carrying the national pride on the international stage.', era: 'expeditions' },
                     { year: '2012', title: 'First celebrity fan tour to South India', desc: 'Opening new avenues for cultural exchange.', era: 'celebrity' },
                     { year: '2015', title: 'International conference speaker alongside Dr. M.S. Swaminathan', desc: 'Discussing global agricultural and climate challenges.', era: 'conferences' },
                     { year: '2019', title: 'Expanded tours, 500+ Japanese guests served', desc: 'Growing the community of India-Japan travelers.', era: 'tours' },

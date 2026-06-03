@@ -45,6 +45,7 @@ interface RawTour {
     durationDays: number;
     isComingSoon?: boolean;
     dateDisplay?: string;
+    country?: { title: string; title_ja?: string; key: string };
     location: string;
     priceJPY: number;
     priceRangeJPY?: { min: number; max: number };
@@ -65,6 +66,7 @@ interface RawTour {
 export interface Tour extends Omit<RawTour, 'coverImage'> {
     coverImage: string;
     coverImageLqip?: string;
+    country?: { label: string; key: string };
 }
 
 function resolveImageUrl(image: any): string {
@@ -99,6 +101,10 @@ function normaliseTour(t: any, locale: string = 'ja'): Tour {
         title: (isJa && (t.titleJa || t.title_ja)) ? (t.titleJa || t.title_ja) : t.title,
         shortDescription: (isJa && (t.shortDescriptionJa || t.shortDescription_ja)) ? (t.shortDescriptionJa || t.shortDescription_ja) : t.shortDescription,
         longDescription: (isJa && (t.longDescriptionJa || t.longDescription_ja)) ? (t.longDescriptionJa || t.longDescription_ja) : t.longDescription,
+        country: t.country ? {
+            label: isJa && t.country.title_ja ? t.country.title_ja : t.country.title,
+            key: t.country.key,
+        } : undefined,
         location: (isJa && (t.locationJa || t.location_ja)) ? (t.locationJa || t.location_ja) : t.location,
         isComingSoon: t.isComingSoon || false,
         dateDisplay: (isJa && (t.dateDisplayJa || t.dateDisplay_ja)) ? (t.dateDisplayJa || t.dateDisplay_ja) : (t.dateDisplay || ''),
