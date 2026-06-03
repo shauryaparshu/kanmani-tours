@@ -259,6 +259,16 @@
         "title": "Duration (Days)"
       },
       {
+        "description": "Select the country for this tour",
+        "to": [
+          {
+            "type": "country"
+          }
+        ],
+        "name": "country",
+        "type": "reference"
+      },
+      {
         "name": "location",
         "type": "string"
       },
@@ -1020,10 +1030,6 @@
               "value": "humanitarian"
             },
             {
-              "title": "Expeditions & Adventures",
-              "value": "expeditions"
-            },
-            {
               "title": "Early Tours (2006–2012)",
               "value": "early-tours"
             },
@@ -1050,7 +1056,6 @@
                   "student",
                   "phd",
                   "humanitarian",
-                  "expeditions",
                   "early-tours",
                   "celebrity",
                   "conferences",
@@ -1095,6 +1100,50 @@
       }
     ],
     "name": "founderPhoto",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string",
+        "title": "Title (English)"
+      },
+      {
+        "name": "title_ja",
+        "type": "string",
+        "title": "Title (Japanese)"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Internal key used for matching (e.g., india, japan, sri-lanka)",
+        "name": "key",
+        "type": "string",
+        "title": "Value/Key"
+      }
+    ],
+    "name": "country",
     "type": "document"
   }
 ]
