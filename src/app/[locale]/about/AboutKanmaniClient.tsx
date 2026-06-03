@@ -197,7 +197,7 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
                     style={{
                       width: '100%',
                       height: '100%',
-                      objectFit: 'cover',
+                      objectFit: 'contain',
                       transition: 'transform 0.5s ease'
                     }}
                   />
@@ -466,7 +466,7 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
                     return (
                       <div style={{ aspectRatio: '1/1', backgroundColor: '#E8E4DC', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #D4CFC9', position: 'relative', overflow: 'hidden' }}>
                         {url ? (
-                          <LazyImage src={url} alt="Student Life" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                          <LazyImage src={url} alt="Student Life" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                         ) : (
                           <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '11px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em', textAlign: 'center' }}>Student Life Era</span>
                         )}
@@ -479,7 +479,7 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
                     return (
                       <div style={{ aspectRatio: '1/1', backgroundColor: '#E8E4DC', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #D4CFC9', position: 'relative', overflow: 'hidden' }}>
                         {url ? (
-                          <LazyImage src={url} alt="PhD" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                          <LazyImage src={url} alt="PhD" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                         ) : (
                           <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '11px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em', textAlign: 'center' }}>PhD Era</span>
                         )}
@@ -505,7 +505,7 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
                     return (
                       <div style={{ aspectRatio: '1/1', backgroundColor: '#E8E4DC', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #D4CFC9', position: 'relative', overflow: 'hidden' }}>
                         {url ? (
-                          <LazyImage src={url} alt="Humanitarian" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                          <LazyImage src={url} alt="Humanitarian" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                         ) : (
                           <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '11px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em', textAlign: 'center' }}>Humanitarian Era</span>
                         )}
@@ -518,7 +518,7 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
                     return (
                       <div style={{ aspectRatio: '1/1', backgroundColor: '#E8E4DC', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #D4CFC9', position: 'relative', overflow: 'hidden' }}>
                         {url ? (
-                          <LazyImage src={url} alt="Conferences" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                          <LazyImage src={url} alt="Conferences" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                         ) : (
                           <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '11px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em', textAlign: 'center' }}>Conferences Era</span>
                         )}
@@ -544,7 +544,7 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
                     return (
                       <div style={{ aspectRatio: '1/1', backgroundColor: '#E8E4DC', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #D4CFC9', position: 'relative', overflow: 'hidden' }}>
                         {url ? (
-                          <LazyImage src={url} alt="Tours" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                          <LazyImage src={url} alt="Tours" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                         ) : (
                           <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '11px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em', textAlign: 'center' }}>Tours Era</span>
                         )}
@@ -557,7 +557,7 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
                     return (
                       <div style={{ aspectRatio: '1/1', backgroundColor: '#E8E4DC', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #D4CFC9', position: 'relative', overflow: 'hidden' }}>
                         {url ? (
-                          <LazyImage src={url} alt="Celebrity" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                          <LazyImage src={url} alt="Celebrity" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                         ) : (
                           <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '11px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em', textAlign: 'center' }}>Celebrity Era</span>
                         )}
@@ -604,7 +604,7 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
                               <div style={{ aspectRatio: '16/9', backgroundColor: '#2C2420', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', border: '1px solid #4A4540', position: 'relative', overflow: 'hidden' }}>
                                 {url ? (
                                   <>
-                                    <LazyImage src={url} alt={event.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                    <LazyImage src={url} alt={event.title} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                                     <button 
                                       onClick={() => handleEraClick(event.era)}
                                       style={{

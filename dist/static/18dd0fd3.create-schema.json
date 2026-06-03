@@ -1018,32 +1018,36 @@
         "options": {
           "list": [
             {
-              "title": "Student Life in Japan (1998–2004)",
+              "title": "Student Life",
               "value": "student"
             },
             {
-              "title": "PhD & Academic Life (2001–2006)",
+              "title": "PhD & Academic",
               "value": "phd"
             },
             {
-              "title": "Humanitarian & UN Work (2004–2010)",
+              "title": "Humanitarian",
               "value": "humanitarian"
             },
             {
-              "title": "Early Tours (2006–2012)",
-              "value": "early-tours"
+              "title": "Tours",
+              "value": "tours"
             },
             {
-              "title": "Celebrity & Cultural Connections",
+              "title": "Celebrity",
               "value": "celebrity"
             },
             {
-              "title": "International Conferences",
+              "title": "Conferences",
               "value": "conferences"
             },
             {
-              "title": "Recent Years (2020–Present)",
+              "title": "Recent",
               "value": "recent"
+            },
+            {
+              "title": "News & Media",
+              "value": "news-media"
             }
           ]
         },
@@ -1056,10 +1060,11 @@
                   "student",
                   "phd",
                   "humanitarian",
-                  "early-tours",
+                  "tours",
                   "celebrity",
                   "conferences",
-                  "recent"
+                  "recent",
+                  "news-media"
                 ]
               },
               {
