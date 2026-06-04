@@ -8,7 +8,8 @@ export default function LazyImage({
   lqip,
   style,
   className,
-  onError
+  onError,
+  mode = 'fill'
 }: { 
   src: string; 
   alt: string; 
@@ -16,12 +17,25 @@ export default function LazyImage({
   style?: React.CSSProperties;
   className?: string;
   onError?: (e: React.SyntheticEvent<HTMLImageElement, Event>) => void;
+  mode?: 'fill' | 'natural';
 }) {
   const [loaded, setLoaded] = useState(false);
-  const { objectFit, objectPosition, ...containerStyle } = style || {};
+  const { objectFit, objectPosition, width, height, ...containerStyle } = style || {};
+  const isNatural = mode === 'natural';
+  const resolvedObjectFit: React.CSSProperties['objectFit'] = objectFit ?? (isNatural ? 'contain' : 'cover');
 
   return (
-    <div className={className} style={{ position: 'relative', overflow: 'hidden', ...containerStyle }}>
+    <div
+      className={className}
+      style={{
+        position: 'relative',
+        overflow: isNatural ? 'visible' : 'hidden',
+        display: isNatural ? 'inline-block' : 'block',
+        width: isNatural ? 'fit-content' : width,
+        height: isNatural ? 'fit-content' : height,
+        ...containerStyle
+      }}
+    >
       {lqip && !loaded && (
         <img
           src={lqip}
@@ -30,9 +44,11 @@ export default function LazyImage({
           style={{
             position: 'absolute',
             inset: 0,
-            width: '100%',
-            height: '100%',
-            objectFit: (objectFit as any) || 'cover',
+            width: isNatural ? 'auto' : '100%',
+            height: isNatural ? 'auto' : '100%',
+            maxWidth: '100%',
+            maxHeight: '100%',
+            objectFit: resolvedObjectFit,
             objectPosition: objectPosition,
             filter: 'blur(20px)',
             transform: 'scale(1.1)',
@@ -47,9 +63,11 @@ export default function LazyImage({
         onLoad={() => setLoaded(true)}
         onError={onError}
         style={{
-          width: '100%',
-          height: '100%',
-          objectFit: (objectFit as any) || 'cover',
+          width: isNatural ? 'auto' : '100%',
+          height: isNatural ? 'auto' : '100%',
+          maxWidth: '100%',
+          maxHeight: '100%',
+          objectFit: resolvedObjectFit,
           objectPosition: objectPosition,
           opacity: loaded ? 1 : 0,
           transition: 'opacity 0.5s ease',

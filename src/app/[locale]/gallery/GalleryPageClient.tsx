@@ -42,14 +42,18 @@ function FlipGalleryCard({ imgData, alt, onClick }: FlipGalleryCardProps) {
     const currentVisible = isFlipped ? backImg : frontImg;
     if (!currentVisible || imgData.url === currentVisible.url) return;
 
-    if (isFlipped) {
-      setFrontImg(imgData);
-      setIsFlipped(false);
-    } else {
-      setBackImg(imgData);
-      setIsFlipped(true);
-    }
-  }, [imgData]); // eslint-disable-line react-hooks/exhaustive-deps
+    const timer = window.setTimeout(() => {
+      if (isFlipped) {
+        setFrontImg(imgData);
+        setIsFlipped(false);
+      } else {
+        setBackImg(imgData);
+        setIsFlipped(true);
+      }
+    }, 0);
+
+    return () => window.clearTimeout(timer);
+  }, [imgData, isFlipped, frontImg, backImg]);
 
   return (
     <div
@@ -131,14 +135,13 @@ function FlipGalleryCard({ imgData, alt, onClick }: FlipGalleryCardProps) {
 
 // ─── Flip Grid for a Tour's Images ───────────────────────────────────────────
 interface FlipGridProps {
-  tourId: string;
   images: { url: string; lqip?: string }[];
   tourTitle: string;
   onImageClick: (index: number) => void;
   isExpanded: boolean;
 }
 
-function FlipGrid({ tourId, images, tourTitle, onImageClick, isExpanded }: FlipGridProps) {
+function FlipGrid({ images, tourTitle, onImageClick, isExpanded }: FlipGridProps) {
   const [visibleImages, setVisibleImages] = useState<{ url: string; lqip?: string }[]>([]);
 
   useEffect(() => {
@@ -247,27 +250,19 @@ export default function GalleryPageClient({ tours }: Props) {
   const [lightboxTour, setLightboxTour] = useState<string | null>(null);
   const [lightboxIndex, setLightboxIndex] = useState<number>(0);
   const [expandedTours, setExpandedTours] = useState<Set<string>>(new Set());
+  const [isHoveringLightbox, setIsHoveringLightbox] = useState(false);
   const thumbnailStripRef = useRef<HTMLDivElement>(null);
-
-  // Keyboard navigation
-  useEffect(() => {
-    if (!lightboxTour) return;
-
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        setLightboxTour(null);
-      } else if (e.key === 'ArrowRight') {
-        handleNextImage();
-      } else if (e.key === 'ArrowLeft') {
-        handlePrevImage();
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [lightboxTour, lightboxIndex]);
+  const lightboxTimerRef = useRef<number | null>(null);
 
   const activeTourObj = tours.find(t => t.id === lightboxTour);
+  const closeLightbox = () => {
+    setLightboxTour(null);
+    setIsHoveringLightbox(false);
+    if (lightboxTimerRef.current !== null) {
+      window.clearTimeout(lightboxTimerRef.current);
+      lightboxTimerRef.current = null;
+    }
+  };
 
   const handleNextImage = () => {
     if (activeTourObj) {
@@ -281,6 +276,29 @@ export default function GalleryPageClient({ tours }: Props) {
     }
   };
 
+  // Keyboard navigation
+  useEffect(() => {
+    if (!lightboxTour || !activeTourObj) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setLightboxTour(null);
+        setIsHoveringLightbox(false);
+        if (lightboxTimerRef.current !== null) {
+          window.clearTimeout(lightboxTimerRef.current);
+          lightboxTimerRef.current = null;
+        }
+      } else if (e.key === 'ArrowRight') {
+        setLightboxIndex((prev) => (prev + 1) % activeTourObj.images.length);
+      } else if (e.key === 'ArrowLeft') {
+        setLightboxIndex((prev) => (prev - 1 + activeTourObj.images.length) % activeTourObj.images.length);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [lightboxTour, activeTourObj, isHoveringLightbox]);
+
   useEffect(() => {
     // Auto-scroll active thumbnail into view
     if (thumbnailStripRef.current && activeTourObj) {
@@ -290,6 +308,27 @@ export default function GalleryPageClient({ tours }: Props) {
       }
     }
   }, [lightboxIndex, activeTourObj]);
+
+  useEffect(() => {
+    if (!lightboxTour || !activeTourObj || activeTourObj.images.length <= 1 || isHoveringLightbox) {
+      if (lightboxTimerRef.current !== null) {
+        window.clearTimeout(lightboxTimerRef.current);
+        lightboxTimerRef.current = null;
+      }
+      return;
+    }
+
+    lightboxTimerRef.current = window.setTimeout(() => {
+      setLightboxIndex((prev) => (prev + 1) % activeTourObj.images.length);
+    }, 5000);
+
+    return () => {
+      if (lightboxTimerRef.current !== null) {
+        window.clearTimeout(lightboxTimerRef.current);
+        lightboxTimerRef.current = null;
+      }
+    };
+  }, [lightboxTour, activeTourObj, lightboxIndex, isHoveringLightbox]);
 
   const toggleExpand = (id: string) => {
     setExpandedTours(prev => {
@@ -523,7 +562,6 @@ export default function GalleryPageClient({ tours }: Props) {
 
                   {/* B — FLIP PHOTO GRID */}
                   <FlipGrid
-                    tourId={tour.id}
                     images={tour.images}
                     tourTitle={tour.title}
                     onImageClick={(i) => {
@@ -551,7 +589,10 @@ export default function GalleryPageClient({ tours }: Props) {
 
       {/* SECTION 4 — LIGHTBOX */}
       {lightboxTour && activeTourObj && (
-        <div style={{
+        <div
+          onMouseEnter={() => setIsHoveringLightbox(true)}
+          onMouseLeave={() => setIsHoveringLightbox(false)}
+          style={{
           position: 'fixed',
           top: 0,
           left: 0,
@@ -581,14 +622,24 @@ export default function GalleryPageClient({ tours }: Props) {
             </div>
             <div style={{
               fontFamily: "'Jost', Arial, sans-serif",
-              fontSize: '12px',
-              color: '#9A948F',
-              letterSpacing: '0.1em'
+              fontSize: 'clamp(18px, 2vw, 26px)',
+              color: '#FFF7E8',
+              letterSpacing: '0.2em',
+              background: 'linear-gradient(180deg, rgba(33,25,19,0.9), rgba(10,8,7,0.76))',
+              border: '1px solid rgba(201,147,58,0.3)',
+              padding: '8px 16px',
+              borderRadius: '999px',
+              fontWeight: '600',
+              minWidth: '96px',
+              textAlign: 'center',
+              boxShadow: '0 14px 28px rgba(0,0,0,0.32), inset 0 1px 0 rgba(255,255,255,0.08)',
+              backdropFilter: 'blur(10px)',
+              WebkitBackdropFilter: 'blur(10px)'
             }}>
               {lightboxIndex + 1} / {activeTourObj.images.length}
             </div>
             <button
-              onClick={() => setLightboxTour(null)}
+              onClick={closeLightbox}
               style={{
                 width: '44px',
                 height: '44px',
@@ -607,25 +658,156 @@ export default function GalleryPageClient({ tours }: Props) {
             </button>
           </div>
 
-          {/* Center Image */}
-          <div style={{
-            flex: 1,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: '80px 24px'
-          }}>
-            <LazyImage
-              src={activeTourObj.images[lightboxIndex].url}
-              lqip={activeTourObj.images[lightboxIndex].lqip}
-              alt="Lightbox"
-              style={{
-                maxWidth: '88vw',
-                maxHeight: '80vh',
-                objectFit: 'contain'
-              }}
-            />
-          </div>
+            {/* Center Image */}
+            <div style={{
+              flex: 1,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: '110px clamp(120px, 14vw, 240px) 80px'
+            }}>
+              <div
+                key={lightboxIndex}
+                style={{
+                  width: '72vw',
+                  height: '80vh',
+                  maxWidth: '72vw',
+                  maxHeight: '80vh',
+                  animation: 'premiumLightboxFade 760ms cubic-bezier(0.16, 1, 0.3, 1) both',
+                  borderRadius: '12px',
+                  overflow: 'hidden',
+                  border: '2px solid rgba(255,255,255,0.92)',
+                  boxShadow: '0 0 0 1px rgba(255,255,255,0.32), 0 0 24px rgba(255,255,255,0.16), 0 24px 80px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.3)',
+                  background: 'rgba(255,255,255,0.02)'
+                }}
+              >
+                <LazyImage
+                  src={activeTourObj.images[lightboxIndex].url}
+                  lqip={activeTourObj.images[lightboxIndex].lqip}
+                  alt="Lightbox"
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'contain',
+                    display: 'block'
+                  }}
+                />
+              </div>
+            </div>
+
+            {activeTourObj.images.length > 1 && (
+              <>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handlePrevImage();
+                  }}
+                  style={{
+                    position: 'absolute',
+                    left: '96px',
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    width: 'clamp(96px, 12vw, 170px)',
+                    padding: '8px',
+                    border: '1px solid rgba(201,147,58,0.28)',
+                    background: 'rgba(10,8,7,0.7)',
+                    backdropFilter: 'blur(10px)',
+                    WebkitBackdropFilter: 'blur(10px)',
+                    cursor: 'pointer',
+                    zIndex: 10,
+                    boxShadow: '0 18px 40px rgba(0,0,0,0.35)',
+                    transition: 'transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.borderColor = '#C9933A';
+                    e.currentTarget.style.transform = 'translateY(-50%) scale(1.03)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.borderColor = 'rgba(201,147,58,0.28)';
+                    e.currentTarget.style.transform = 'translateY(-50%) scale(1)';
+                  }}
+                >
+                  <div style={{ position: 'relative', width: '100%', aspectRatio: '4 / 3', overflow: 'hidden' }}>
+                    <LazyImage
+                      src={activeTourObj.images[(lightboxIndex - 1 + activeTourObj.images.length) % activeTourObj.images.length].url}
+                      lqip={activeTourObj.images[(lightboxIndex - 1 + activeTourObj.images.length) % activeTourObj.images.length].lqip}
+                      alt="Previous photo preview"
+                      style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                    />
+                    <div style={{
+                      position: 'absolute',
+                      inset: 0,
+                      background: 'linear-gradient(to top, rgba(5,3,2,0.55), transparent 60%)'
+                    }} />
+                  </div>
+                  <div style={{
+                    marginTop: '8px',
+                    fontFamily: "'Jost', Arial, sans-serif",
+                    fontSize: '11px',
+                    letterSpacing: '0.22em',
+                    textTransform: 'uppercase',
+                    color: '#FFF7E8'
+                  }}>
+                    Prev
+                  </div>
+                </button>
+
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleNextImage();
+                  }}
+                  style={{
+                    position: 'absolute',
+                    right: '96px',
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    width: 'clamp(96px, 12vw, 170px)',
+                    padding: '8px',
+                    border: '1px solid rgba(201,147,58,0.28)',
+                    background: 'rgba(10,8,7,0.7)',
+                    backdropFilter: 'blur(10px)',
+                    WebkitBackdropFilter: 'blur(10px)',
+                    cursor: 'pointer',
+                    zIndex: 10,
+                    boxShadow: '0 18px 40px rgba(0,0,0,0.35)',
+                    transition: 'transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.borderColor = '#C9933A';
+                    e.currentTarget.style.transform = 'translateY(-50%) scale(1.03)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.borderColor = 'rgba(201,147,58,0.28)';
+                    e.currentTarget.style.transform = 'translateY(-50%) scale(1)';
+                  }}
+                >
+                  <div style={{ position: 'relative', width: '100%', aspectRatio: '4 / 3', overflow: 'hidden' }}>
+                    <LazyImage
+                      src={activeTourObj.images[(lightboxIndex + 1) % activeTourObj.images.length].url}
+                      lqip={activeTourObj.images[(lightboxIndex + 1) % activeTourObj.images.length].lqip}
+                      alt="Next photo preview"
+                      style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                    />
+                    <div style={{
+                      position: 'absolute',
+                      inset: 0,
+                      background: 'linear-gradient(to top, rgba(5,3,2,0.55), transparent 60%)'
+                    }} />
+                  </div>
+                  <div style={{
+                    marginTop: '8px',
+                    fontFamily: "'Jost', Arial, sans-serif",
+                    fontSize: '11px',
+                    letterSpacing: '0.22em',
+                    textTransform: 'uppercase',
+                    color: '#FFF7E8'
+                  }}>
+                    Next
+                  </div>
+                </button>
+              </>
+            )}
 
           {/* Left Arrow */}
           <button
@@ -740,6 +922,20 @@ export default function GalleryPageClient({ tours }: Props) {
           </div>
         </div>
       )}
+      <style jsx global>{`
+        @keyframes premiumLightboxFade {
+          0% {
+            opacity: 0;
+            transform: scale(1.08);
+            filter: saturate(0.88) brightness(0.86);
+          }
+          100% {
+            opacity: 1;
+            transform: scale(1);
+            filter: saturate(1) brightness(1);
+          }
+        }
+      `}</style>
 
       {/* SECTION 5 — BOTTOM CTA */}
       <section style={{

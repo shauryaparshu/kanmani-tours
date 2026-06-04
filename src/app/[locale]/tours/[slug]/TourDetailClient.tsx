@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from '@/i18n/routing';
 import type { Tour, TourFaq } from '@/lib/tours';
 import { useTranslations, useLocale } from 'next-intl';
@@ -308,18 +308,28 @@ function Gallery({ images, tourTitle }: {
   tourTitle: string 
 }) {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const [isHoveringLightbox, setIsHoveringLightbox] = useState(false);
+  const lightboxTimerRef = useRef<number | null>(null);
 
-  const openLightbox = (index: number) => setLightboxIndex(index);
-  const closeLightbox = () => setLightboxIndex(null);
+  const openLightbox = (index: number) => {
+    setLightboxIndex(index);
+    setIsHoveringLightbox(false);
+  };
+  const closeLightbox = () => {
+    setLightboxIndex(null);
+    setIsHoveringLightbox(false);
+    if (lightboxTimerRef.current !== null) {
+      window.clearTimeout(lightboxTimerRef.current);
+      lightboxTimerRef.current = null;
+    }
+  };
   const goNext = () => {
     if (lightboxIndex === null) return;
-    setLightboxIndex((lightboxIndex + 1) % images.length);
+    setLightboxIndex(prev => (prev === null ? prev : (prev + 1) % images.length));
   };
   const goPrev = () => {
     if (lightboxIndex === null) return;
-    setLightboxIndex(
-      (lightboxIndex - 1 + images.length) % images.length
-    );
+    setLightboxIndex(prev => (prev === null ? prev : (prev - 1 + images.length) % images.length));
   };
 
   useEffect(() => {
@@ -332,6 +342,27 @@ function Gallery({ images, tourTitle }: {
     window.addEventListener('keydown', handleKey);
     return () => window.removeEventListener('keydown', handleKey);
   }, [lightboxIndex]);
+
+  useEffect(() => {
+    if (lightboxIndex === null || images.length <= 1 || isHoveringLightbox) {
+      if (lightboxTimerRef.current !== null) {
+        window.clearTimeout(lightboxTimerRef.current);
+        lightboxTimerRef.current = null;
+      }
+      return;
+    }
+
+    lightboxTimerRef.current = window.setTimeout(() => {
+      setLightboxIndex(prev => (prev === null ? prev : (prev + 1) % images.length));
+    }, 5000);
+
+    return () => {
+      if (lightboxTimerRef.current !== null) {
+        window.clearTimeout(lightboxTimerRef.current);
+        lightboxTimerRef.current = null;
+      }
+    };
+  }, [lightboxIndex, images.length, isHoveringLightbox]);
 
   if (images.length === 0) return null;
 
@@ -375,6 +406,8 @@ function Gallery({ images, tourTitle }: {
       {lightboxIndex !== null && (
         <div
           onClick={closeLightbox}
+          onMouseEnter={() => setIsHoveringLightbox(true)}
+          onMouseLeave={() => setIsHoveringLightbox(false)}
           style={{
             position: 'fixed',
             inset: 0,
@@ -410,14 +443,23 @@ function Gallery({ images, tourTitle }: {
           {/* Image counter */}
           <div style={{
             position: 'absolute',
-            top: '28px',
+            top: '18px',
             left: '50%',
             transform: 'translateX(-50%)',
             fontFamily: "'Jost', Arial, sans-serif",
-            fontSize: '12px',
-            fontWeight: '400',
-            letterSpacing: '0.18em',
-            color: '#9A948F'
+            fontSize: 'clamp(18px, 2vw, 26px)',
+            fontWeight: '600',
+            letterSpacing: '0.2em',
+            color: '#FFF7E8',
+            background: 'linear-gradient(180deg, rgba(33,25,19,0.9), rgba(10,8,7,0.76))',
+            border: '1px solid rgba(201,147,58,0.3)',
+            padding: '8px 16px',
+            borderRadius: '999px',
+            minWidth: '96px',
+            textAlign: 'center',
+            boxShadow: '0 14px 28px rgba(0,0,0,0.32), inset 0 1px 0 rgba(255,255,255,0.08)',
+            backdropFilter: 'blur(10px)',
+            WebkitBackdropFilter: 'blur(10px)'
           }}>
             {lightboxIndex + 1} / {images.length}
           </div>
@@ -455,19 +497,144 @@ function Gallery({ images, tourTitle }: {
             >←</button>
           )}
 
+          {images.length > 1 && (
+            <>
+              <button
+                onClick={(e) => { e.stopPropagation(); setLightboxIndex((lightboxIndex - 1 + images.length) % images.length); }}
+                style={{
+                  position: 'absolute',
+                  left: '96px',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  width: 'clamp(96px, 12vw, 170px)',
+                  padding: '8px',
+                  border: '1px solid rgba(201,147,58,0.28)',
+                  background: 'rgba(10,8,7,0.7)',
+                  backdropFilter: 'blur(10px)',
+                  WebkitBackdropFilter: 'blur(10px)',
+                  cursor: 'pointer',
+                  zIndex: 10000,
+                  boxShadow: '0 18px 40px rgba(0,0,0,0.35)',
+                  transition: 'transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = '#C9933A';
+                  e.currentTarget.style.transform = 'translateY(-50%) scale(1.03)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = 'rgba(201,147,58,0.28)';
+                  e.currentTarget.style.transform = 'translateY(-50%) scale(1)';
+                }}
+              >
+                <div style={{ position: 'relative', width: '100%', aspectRatio: '4 / 3', overflow: 'hidden' }}>
+                  <LazyImage
+                    src={images[(lightboxIndex - 1 + images.length) % images.length].url}
+                    lqip={images[(lightboxIndex - 1 + images.length) % images.length].lqip}
+                    alt="Previous photo preview"
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                  />
+                  <div style={{
+                    position: 'absolute',
+                    inset: 0,
+                    background: 'linear-gradient(to top, rgba(5,3,2,0.55), transparent 60%)'
+                  }} />
+                </div>
+                <div style={{
+                  marginTop: '8px',
+                  fontFamily: "'Jost', Arial, sans-serif",
+                  fontSize: '11px',
+                  letterSpacing: '0.22em',
+                  textTransform: 'uppercase',
+                  color: '#FFF7E8'
+                }}>
+                  Prev
+                </div>
+              </button>
+
+              <button
+                onClick={(e) => { e.stopPropagation(); setLightboxIndex((lightboxIndex + 1) % images.length); }}
+                style={{
+                  position: 'absolute',
+                  right: '96px',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  width: 'clamp(96px, 12vw, 170px)',
+                  padding: '8px',
+                  border: '1px solid rgba(201,147,58,0.28)',
+                  background: 'rgba(10,8,7,0.7)',
+                  backdropFilter: 'blur(10px)',
+                  WebkitBackdropFilter: 'blur(10px)',
+                  cursor: 'pointer',
+                  zIndex: 10000,
+                  boxShadow: '0 18px 40px rgba(0,0,0,0.35)',
+                  transition: 'transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = '#C9933A';
+                  e.currentTarget.style.transform = 'translateY(-50%) scale(1.03)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = 'rgba(201,147,58,0.28)';
+                  e.currentTarget.style.transform = 'translateY(-50%) scale(1)';
+                }}
+              >
+                <div style={{ position: 'relative', width: '100%', aspectRatio: '4 / 3', overflow: 'hidden' }}>
+                  <LazyImage
+                    src={images[(lightboxIndex + 1) % images.length].url}
+                    lqip={images[(lightboxIndex + 1) % images.length].lqip}
+                    alt="Next photo preview"
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                  />
+                  <div style={{
+                    position: 'absolute',
+                    inset: 0,
+                    background: 'linear-gradient(to top, rgba(5,3,2,0.55), transparent 60%)'
+                  }} />
+                </div>
+                <div style={{
+                  marginTop: '8px',
+                  fontFamily: "'Jost', Arial, sans-serif",
+                  fontSize: '11px',
+                  letterSpacing: '0.22em',
+                  textTransform: 'uppercase',
+                  color: '#FFF7E8'
+                }}>
+                  Next
+                </div>
+              </button>
+            </>
+          )}
+
           {/* Main image */}
-          <LazyImage
-            src={images[lightboxIndex].url}
-            lqip={images[lightboxIndex].lqip}
-            alt={`${tourTitle} — photo ${lightboxIndex + 1}`}
+          <div
+            key={lightboxIndex}
             style={{
-              maxWidth: '88vw',
+              marginTop: '44px',
+              width: '72vw',
+              height: '85vh',
+              maxWidth: '72vw',
               maxHeight: '85vh',
-              objectFit: 'contain',
-              display: 'block',
-              boxShadow: '0 24px 80px rgba(0,0,0,0.6)'
+              animation: 'premiumLightboxFade 760ms cubic-bezier(0.16, 1, 0.3, 1) both',
+              borderRadius: '12px',
+              overflow: 'hidden',
+              border: '2px solid rgba(255,255,255,0.92)',
+              boxShadow: '0 0 0 1px rgba(255,255,255,0.32), 0 0 24px rgba(255,255,255,0.16), 0 24px 80px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.3)',
+              background: 'rgba(255,255,255,0.02)'
             }}
-          />
+          >
+            <LazyImage
+              mode="natural"
+              src={images[lightboxIndex].url}
+              lqip={images[lightboxIndex].lqip}
+              alt={`${tourTitle} — photo ${lightboxIndex + 1}`}
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'contain',
+                display: 'block'
+              }}
+            />
+          </div>
 
           {/* Right arrow */}
           {images.length > 1 && (
@@ -554,6 +721,20 @@ function Gallery({ images, tourTitle }: {
           </div>
         </div>
       )}
+      <style jsx global>{`
+        @keyframes premiumLightboxFade {
+          0% {
+            opacity: 0;
+            transform: scale(1.08);
+            filter: saturate(0.88) brightness(0.86);
+          }
+          100% {
+            opacity: 1;
+            transform: scale(1);
+            filter: saturate(1) brightness(1);
+          }
+        }
+      `}</style>
     </>
   );
 }
