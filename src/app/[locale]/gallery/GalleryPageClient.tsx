@@ -26,6 +26,222 @@ const CATEGORIES = [
   { label: 'Village Tours', value: 'Village' }
 ];
 
+// ─── Flip Image Card ──────────────────────────────────────────────────────────
+interface FlipGalleryCardProps {
+  imgData: { url: string; lqip?: string };
+  alt: string;
+  onClick: () => void;
+}
+
+function FlipGalleryCard({ imgData, alt, onClick }: FlipGalleryCardProps) {
+  const [frontImg, setFrontImg] = useState<{ url: string; lqip?: string }>(imgData);
+  const [backImg, setBackImg] = useState<{ url: string; lqip?: string } | null>(imgData);
+  const [isFlipped, setIsFlipped] = useState(false);
+
+  useEffect(() => {
+    const currentVisible = isFlipped ? backImg : frontImg;
+    if (!currentVisible || imgData.url === currentVisible.url) return;
+
+    if (isFlipped) {
+      setFrontImg(imgData);
+      setIsFlipped(false);
+    } else {
+      setBackImg(imgData);
+      setIsFlipped(true);
+    }
+  }, [imgData]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  return (
+    <div
+      onClick={onClick}
+      style={{
+        aspectRatio: '1 / 1',
+        backgroundColor: '#E8E4DC',
+        position: 'relative',
+        cursor: 'pointer',
+        perspective: '1000px',
+        overflow: 'visible'
+      }}
+    >
+      <div
+        style={{
+          width: '100%',
+          height: '100%',
+          position: 'relative',
+          transformStyle: 'preserve-3d',
+          transition: 'transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
+          transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)'
+        }}
+      >
+        {/* Front Face */}
+        <div style={{
+          position: 'absolute',
+          top: 0, left: 0,
+          width: '100%', height: '100%',
+          backfaceVisibility: 'hidden',
+          WebkitBackfaceVisibility: 'hidden',
+          backgroundColor: '#E8E4DC',
+          overflow: 'hidden'
+        }}>
+          <LazyImage
+            src={frontImg.url}
+            lqip={frontImg.lqip}
+            alt={alt}
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              objectPosition: 'center',
+              transition: 'transform 0.4s ease',
+              display: 'block'
+            }}
+          />
+        </div>
+
+        {/* Back Face */}
+        <div style={{
+          position: 'absolute',
+          top: 0, left: 0,
+          width: '100%', height: '100%',
+          backfaceVisibility: 'hidden',
+          WebkitBackfaceVisibility: 'hidden',
+          transform: 'rotateY(180deg)',
+          backgroundColor: '#E8E4DC',
+          overflow: 'hidden'
+        }}>
+          {backImg && (
+            <LazyImage
+              src={backImg.url}
+              lqip={backImg.lqip}
+              alt={alt}
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                objectPosition: 'center',
+                display: 'block'
+              }}
+            />
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Flip Grid for a Tour's Images ───────────────────────────────────────────
+interface FlipGridProps {
+  tourId: string;
+  images: { url: string; lqip?: string }[];
+  tourTitle: string;
+  onImageClick: (index: number) => void;
+  isExpanded: boolean;
+}
+
+function FlipGrid({ tourId, images, tourTitle, onImageClick, isExpanded }: FlipGridProps) {
+  const [visibleImages, setVisibleImages] = useState<{ url: string; lqip?: string }[]>([]);
+
+  useEffect(() => {
+    setVisibleImages(images.slice(0, 4));
+  }, [images]);
+
+  useEffect(() => {
+    if (isExpanded || images.length <= 4) return;
+
+    const interval = setInterval(() => {
+      setVisibleImages(currentVisible => {
+        const visibleUrls = new Set(currentVisible.map(img => img.url));
+        const pool = images.filter(img => !visibleUrls.has(img.url));
+
+        if (pool.length === 0) return currentVisible;
+
+        let selected: { url: string; lqip?: string }[] = [...pool];
+        if (selected.length >= 4) {
+          const shuffledPool = [...pool].sort(() => Math.random() - 0.5);
+          selected = shuffledPool.slice(0, 4);
+        } else {
+          const remainingCount = 4 - selected.length;
+          const shuffledVisible = [...currentVisible].sort(() => Math.random() - 0.5);
+          selected = [...selected, ...shuffledVisible.slice(0, remainingCount)];
+        }
+
+        // Shuffle until no slot has the same image as before (up to 100 attempts)
+        let nextVisible = selected;
+        let attempts = 0;
+        while (attempts < 100) {
+          nextVisible = [...selected].sort(() => Math.random() - 0.5);
+          const hasDuplicate = nextVisible.some((img, idx) => img.url === currentVisible[idx]?.url);
+          if (!hasDuplicate) break;
+          attempts++;
+        }
+
+        return nextVisible;
+      });
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [isExpanded, images]);
+
+  if (isExpanded) {
+    return (
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(4, 1fr)',
+        gap: '4px'
+      }}>
+        {images.map((imgData, i) => (
+          <div
+            key={i}
+            onClick={() => onImageClick(i)}
+            style={{
+              aspectRatio: '1 / 1',
+              overflow: 'hidden',
+              cursor: 'pointer',
+              position: 'relative',
+              backgroundColor: '#E8E4DC'
+            }}
+          >
+            <LazyImage
+              src={imgData.url}
+              lqip={imgData.lqip}
+              alt={`${tourTitle} photo ${i + 1}`}
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                objectPosition: 'center',
+                transition: 'transform 0.4s ease',
+                display: 'block'
+              }}
+            />
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  return (
+    <div style={{
+      display: 'grid',
+      gridTemplateColumns: 'repeat(4, 1fr)',
+      gap: '4px'
+    }}>
+      {visibleImages.map((imgData, i) => {
+        const originalIndex = images.findIndex(img => img.url === imgData.url);
+        return (
+          <FlipGalleryCard
+            key={i}
+            imgData={imgData}
+            alt={`${tourTitle} photo ${i + 1}`}
+            onClick={() => onImageClick(originalIndex >= 0 ? originalIndex : i)}
+          />
+        );
+      })}
+    </div>
+  );
+}
+
+// ─── Main Gallery Page Client ─────────────────────────────────────────────────
 export default function GalleryPageClient({ tours }: Props) {
   const [activeCategory, setActiveCategory] = useState<string>('all');
   const [lightboxTour, setLightboxTour] = useState<string | null>(null);
@@ -216,7 +432,6 @@ export default function GalleryPageClient({ tours }: Props) {
           ) : (
             filteredTours.map((tour, index) => {
               const isExpanded = expandedTours.has(tour.id);
-              const imagesToShow = isExpanded ? tour.images : tour.images.slice(0, 4);
               const hasMore = tour.images.length > 4;
 
               return (
@@ -268,15 +483,24 @@ export default function GalleryPageClient({ tours }: Props) {
                         onClick={() => toggleExpand(tour.id)}
                         style={{
                           fontFamily: "'Jost', Arial, sans-serif",
-                          fontSize: '11px',
+                          fontSize: '12px',
                           fontWeight: '600',
-                          letterSpacing: '0.18em',
-                          color: '#C9933A',
-                          border: '1px solid #C9933A',
+                          letterSpacing: '0.22em',
+                          color: '#d49a36',
+                          border: '1px solid #d49a36',
                           backgroundColor: 'transparent',
-                          padding: '8px 20px',
+                          padding: '14px 32px',
                           cursor: 'pointer',
-                          textTransform: 'uppercase'
+                          textTransform: 'uppercase',
+                          transition: 'all 0.3s ease'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.backgroundColor = '#d49a36';
+                          e.currentTarget.style.color = '#FFFFFF';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.backgroundColor = 'transparent';
+                          e.currentTarget.style.color = '#d49a36';
                         }}
                       >
                         {isExpanded ? 'COLLAPSE PHOTOS' : `VIEW ALL PHOTOS (${tour.images.length})`}
@@ -284,43 +508,17 @@ export default function GalleryPageClient({ tours }: Props) {
                     )}
                   </div>
 
-                  {/* B — PHOTO GRID */}
-                  <div style={{
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(4, 1fr)',
-                    gap: '4px'
-                  }}>
-                    {imagesToShow.map((imgData, i) => (
-                      <div 
-                        key={i}
-                        onClick={() => {
-                          setLightboxTour(tour.id);
-                          setLightboxIndex(i);
-                        }}
-                        style={{
-                          aspectRatio: '1 / 1',
-                          overflow: 'hidden',
-                          cursor: 'pointer',
-                          position: 'relative',
-                          backgroundColor: '#E8E4DC'
-                        }}
-                      >
-                        <LazyImage
-                          src={imgData.url}
-                          lqip={imgData.lqip}
-                          alt={`${tour.title} photo ${i + 1}`}
-                          style={{
-                            width: '100%',
-                            height: '100%',
-                            objectFit: 'cover',
-                            objectPosition: 'center',
-                            transition: 'transform 0.4s ease',
-                            display: 'block'
-                          }}
-                        />
-                      </div>
-                    ))}
-                  </div>
+                  {/* B — FLIP PHOTO GRID */}
+                  <FlipGrid
+                    tourId={tour.id}
+                    images={tour.images}
+                    tourTitle={tour.title}
+                    onImageClick={(i) => {
+                      setLightboxTour(tour.id);
+                      setLightboxIndex(i);
+                    }}
+                    isExpanded={isExpanded}
+                  />
 
                   {/* C — DIVIDER */}
                   {index < filteredTours.length - 1 && (
@@ -402,7 +600,7 @@ export default function GalleryPageClient({ tours }: Props) {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            padding: '80px 24px' // padding to avoid overlap with top bar and bottom strip
+            padding: '80px 24px'
           }}>
             <LazyImage
               src={activeTourObj.images[lightboxIndex].url}

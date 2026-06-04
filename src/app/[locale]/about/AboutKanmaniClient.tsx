@@ -154,11 +154,11 @@ function EraGallery({
   const [visiblePhotos, setVisiblePhotos] = useState<FounderPhoto[]>([]);
 
   useEffect(() => {
-    setVisiblePhotos(eraPhotos.slice(0, 5));
+    setVisiblePhotos(eraPhotos.slice(0, 4));
   }, [eraPhotos]);
 
   useEffect(() => {
-    if (isExpanded || eraPhotos.length <= 5) return;
+    if (isExpanded || eraPhotos.length <= 4) return;
 
     const interval = setInterval(() => {
       setVisiblePhotos(currentVisible => {
@@ -167,13 +167,13 @@ function EraGallery({
 
         if (pool.length === 0) return currentVisible;
 
-        // Choose 5 photos including all pool (hidden) ones
+        // Choose 4 photos including all pool (hidden) ones
         let selected: FounderPhoto[] = [...pool];
-        if (selected.length >= 5) {
+        if (selected.length >= 4) {
           const shuffledPool = [...pool].sort(() => Math.random() - 0.5);
-          selected = shuffledPool.slice(0, 5);
+          selected = shuffledPool.slice(0, 4);
         } else {
-          const remainingCount = 5 - selected.length;
+          const remainingCount = 4 - selected.length;
           const shuffledVisible = [...currentVisible].sort(() => Math.random() - 0.5);
           selected = [...selected, ...shuffledVisible.slice(0, remainingCount)];
         }
@@ -252,7 +252,7 @@ function EraGallery({
       ) : (
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(5, 1fr)',
+          gridTemplateColumns: 'repeat(4, 1fr)',
           gap: '12px',
           width: '100%'
         }}>
@@ -267,64 +267,64 @@ function EraGallery({
         </div>
       )}
 
-      {!isExpanded && eraPhotos.length > 5 && (
+      {!isExpanded && eraPhotos.length > 4 && (
         <div style={{ textAlign: 'center', marginTop: '24px' }}>
           <button 
             onClick={onToggleExpand}
             style={{
               fontFamily: "'Jost', Arial, sans-serif",
               fontSize: '12px',
-              fontWeight: '500',
-              letterSpacing: '0.1em',
+              fontWeight: '600',
+              letterSpacing: '0.22em',
               textTransform: 'uppercase',
-              color: '#1C1917',
+              color: '#d49a36',
               backgroundColor: 'transparent',
-              border: '1px solid #1C1917',
-              padding: '8px 24px',
+              border: '1px solid #d49a36',
+              padding: '14px 32px',
               cursor: 'pointer',
               transition: 'all 0.3s ease'
             }}
             onMouseOver={(e) => {
-              e.currentTarget.style.backgroundColor = '#1C1917';
+              e.currentTarget.style.backgroundColor = '#d49a36';
               e.currentTarget.style.color = '#FFFFFF';
             }}
             onMouseOut={(e) => {
               e.currentTarget.style.backgroundColor = 'transparent';
-              e.currentTarget.style.color = '#1C1917';
+              e.currentTarget.style.color = '#d49a36';
             }}
           >
-            View all {eraPhotos.length} photos
+            VIEW ALL {eraPhotos.length} PHOTOS
           </button>
         </div>
       )}
 
-      {isExpanded && eraPhotos.length > 5 && (
+      {isExpanded && eraPhotos.length > 4 && (
         <div style={{ textAlign: 'center', marginTop: '24px' }}>
           <button 
             onClick={onToggleExpand}
             style={{
               fontFamily: "'Jost', Arial, sans-serif",
               fontSize: '12px',
-              fontWeight: '500',
-              letterSpacing: '0.1em',
+              fontWeight: '600',
+              letterSpacing: '0.22em',
               textTransform: 'uppercase',
-              color: '#1C1917',
+              color: '#d49a36',
               backgroundColor: 'transparent',
-              border: '1px solid #1C1917',
-              padding: '8px 24px',
+              border: '1px solid #d49a36',
+              padding: '14px 32px',
               cursor: 'pointer',
               transition: 'all 0.3s ease'
             }}
             onMouseOver={(e) => {
-              e.currentTarget.style.backgroundColor = '#1C1917';
+              e.currentTarget.style.backgroundColor = '#d49a36';
               e.currentTarget.style.color = '#FFFFFF';
             }}
             onMouseOut={(e) => {
               e.currentTarget.style.backgroundColor = 'transparent';
-              e.currentTarget.style.color = '#1C1917';
+              e.currentTarget.style.color = '#d49a36';
             }}
           >
-            Show Less
+            SHOW LESS
           </button>
         </div>
       )}
