@@ -9,18 +9,26 @@ export default function TopBar() {
     const [hoveredItem, setHoveredItem] = useState<string | null>(null);
 
     const baseStyle: React.CSSProperties = {
-        color: '#F5F1EB',
-        transition: 'color 0.2s ease',
-        display: 'flex',
+        color: '#FFF3D8',
+        transition: 'all 0.2s ease',
+        display: 'inline-flex',
         alignItems: 'center',
-        gap: '6px',
+        gap: '8px',
         fontSize: '0.85rem',
-        textDecoration: 'none'
+        textDecoration: 'none',
+        padding: '8px 14px',
+        borderRadius: '999px',
+        backgroundColor: 'rgba(201, 147, 58, 0.18)',
+        border: '1px solid rgba(201, 147, 58, 0.35)',
+        boxShadow: 'inset 0 1px 0 rgba(255, 255, 255, 0.08)',
+        whiteSpace: 'nowrap'
     };
 
     const hoverStyle: React.CSSProperties = {
         ...baseStyle,
-        color: '#C9933A'
+        color: '#FFFFFF',
+        backgroundColor: 'rgba(201, 147, 58, 0.28)',
+        borderColor: 'rgba(255, 224, 130, 0.55)'
     };
 
     return (

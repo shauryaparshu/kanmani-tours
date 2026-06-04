@@ -15,7 +15,6 @@ export default function Navigation() {
     const [snsOpen, setSnsOpen] = useState(false);
     const [servicesOpen, setServicesOpen] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
-    const [isMobile, setIsMobile] = useState(false);
     const [servicesExpanded, setServicesExpanded] = useState(false);
 
     useEffect(() => {
@@ -24,13 +23,6 @@ export default function Navigation() {
         };
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
-
-    useEffect(() => {
-        const check = () => setIsMobile(window.innerWidth < 1024);
-        check();
-        window.addEventListener('resize', check);
-        return () => window.removeEventListener('resize', check);
     }, []);
 
     useEffect(() => {
@@ -58,28 +50,93 @@ export default function Navigation() {
         { name: t('contact'), href: '/contact' },
     ];
 
+    const contactChipStyle: React.CSSProperties = {
+        display: 'inline-flex',
+        alignItems: 'center',
+        gap: '8px',
+        padding: '9px 16px',
+        borderRadius: '14px',
+        background: 'linear-gradient(135deg, #35281d 0%, #241c18 46%, #43311f 100%)',
+        border: '1px solid rgba(201, 147, 58, 0.28)',
+        color: '#FFF5E7',
+        textDecoration: 'none',
+        transition: 'all 0.25s ease',
+        boxShadow: 'inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 6px 14px rgba(0, 0, 0, 0.16)',
+        whiteSpace: 'nowrap',
+        fontFamily: "'Cormorant Garamond', Georgia, serif",
+        fontSize: '16px',
+        fontWeight: '500',
+        letterSpacing: '0.09em',
+        fontVariantNumeric: 'lining-nums',
+        fontFeatureSettings: '"lnum" 1'
+    };
+
+    const utilityButtonStyle: React.CSSProperties = {
+        fontFamily: "'Cormorant Garamond', Georgia, serif",
+        fontSize: isJa ? '12px' : '15px',
+        fontWeight: '400',
+        letterSpacing: '0.1em',
+        color: '#F7F0E4',
+        background: 'linear-gradient(135deg, #2F241B 0%, #1D1917 52%, #3A2A1A 100%)',
+        border: '1px solid rgba(201,147,58,0.20)',
+        borderRadius: '14px',
+        padding: isJa ? '7px 12px' : '8px 14px',
+        cursor: 'pointer',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '6px',
+        transition: 'all 0.25s ease',
+        whiteSpace: 'nowrap',
+        flexShrink: 0,
+        boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04), 0 6px 14px rgba(0, 0, 0, 0.15)'
+    };
+
+    const premiumDropdownStyle: React.CSSProperties = {
+        position: 'absolute',
+        top: 'calc(100% + 10px)',
+        background: 'linear-gradient(180deg, rgba(27, 22, 18, 0.985) 0%, rgba(18, 15, 12, 0.99) 100%)',
+        border: '1px solid rgba(201,147,58,0.24)',
+        borderTop: '2px solid rgba(255, 224, 130, 0.9)',
+        borderRadius: '14px',
+        zIndex: 4000,
+        paddingTop: '10px',
+        paddingBottom: '10px',
+        boxShadow: '0 24px 48px rgba(0,0,0,0.42), inset 0 1px 0 rgba(255,255,255,0.05)',
+        backdropFilter: 'blur(18px)',
+        WebkitBackdropFilter: 'blur(18px)'
+    };
+
     return (
         <>
             <nav className="nav-desktop" style={{
                     width: '100%',
-                    backgroundColor: scrolled ? 'rgba(28, 25, 23, 0.97)' : '#1C1917',
-                    backdropFilter: scrolled ? 'blur(12px)' : 'none',
+                    background: 'linear-gradient(135deg, #2F241B 0%, #1D1917 52%, #3A2A1A 100%)',
                     alignItems: 'center',
                     justifyContent: 'space-between',
-                    padding: '0 40px',
-                    height: scrolled ? '64px' : '72px',
+                    padding: '0 18px',
+                    height: '76px',
                     position: 'fixed',
                     top: '0',
                     left: '0',
                     right: '0',
-                    zIndex: 1000,
-                    borderBottom: scrolled 
-                        ? '1px solid rgba(201, 147, 58, 0.3)' 
-                        : '1px solid rgba(201, 147, 58, 0.15)',
+                    zIndex: 3000,
+                    border: 'none',
+                    borderRadius: '0',
+                    overflow: 'visible',
+                    boxShadow: scrolled
+                        ? '0 16px 30px rgba(0, 0, 0, 0.34), inset 0 -1px 0 rgba(201,147,58,0.16)'
+                        : '0 18px 36px rgba(0, 0, 0, 0.30), inset 0 -1px 0 rgba(201,147,58,0.16)',
                     transition: 'all 0.4s ease'
                 }}>
                     {/* LEFT COLUMN — Logo */}
-                    <div style={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}>
+                    <div style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        flexShrink: 0,
+                        padding: '0 16px 0 4px',
+                        height: '76px',
+                        borderRight: '1px solid rgba(201,147,58,0.18)'
+                    }}>
                         <Link href="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
                             <svg xmlns="http://www.w3.org/2000/svg" width="220" height="52" viewBox="0 0 200 52" aria-label="Kanmani Tours">
                                 <g transform="translate(22, 29) scale(1.2)">
@@ -111,7 +168,11 @@ export default function Navigation() {
                         display: 'flex',
                         alignItems: 'center',
                         flexWrap: 'nowrap',
-                        gap: isJa ? '19px' : '24px'
+                        gap: isJa ? '10px' : '12px',
+                        justifyContent: 'center',
+                        minWidth: 0,
+                        padding: '0 18px',
+                        height: '76px'
                     }}>
                         {navLinks.map((link, index) => {
                             const isActive = pathname === link.href || (link.href !== '/' && pathname?.startsWith(link.href));
@@ -119,39 +180,47 @@ export default function Navigation() {
                                 <div key={link.href} style={{
                                     display: 'flex',
                                     alignItems: 'center',
-                                    gap: isJa ? '19px' : '24px',
+                                    gap: isJa ? '12px' : '16px',
                                     flexShrink: 0
                                 }}>
                                     {link.name === 'Transfers' ? (
                                         <div
-                                          style={{ position: 'relative', height: '100%', display: 'flex', alignItems: 'center' }}
+                                          style={{ position: 'relative', height: '100%', display: 'flex', alignItems: 'center', zIndex: 2 }}
                                           onMouseEnter={() => setServicesOpen(true)}
                                           onMouseLeave={() => setServicesOpen(false)}
                                         >
                                           <button style={{
                                             fontFamily: "'Cormorant Garamond', Georgia, serif",
                                             fontSize: isJa ? '13px' : '16px',
-                                            fontWeight: '500',
-                                            letterSpacing: '0.08em',
+                                            fontWeight: '400',
+                                            letterSpacing: '0.1em',
                                             color: '#F5F1EB',
-                                            backgroundColor: 'transparent',
-                                            border: 'none',
+                                            background: 'transparent',
+                                            border: '1px solid transparent',
                                             cursor: 'pointer',
                                             display: 'flex',
                                             alignItems: 'center',
-                                            gap: '4px',
-                                            padding: '0',
-                                            transition: 'color 0.3s ease',
+                                            justifyContent: 'center',
+                                            gap: '6px',
+                                            padding: '8px 10px 7px',
+                                            lineHeight: '1',
+                                            transition: 'color 0.3s ease, background-color 0.25s ease, border-color 0.25s ease',
                                             whiteSpace: 'nowrap',
-                                            flexShrink: 0
+                                            flexShrink: 0,
+                                            borderRadius: '0',
+                                            textTransform: 'uppercase'
                                           }}
                                           onMouseEnter={(e) => {
-                                            e.currentTarget.style.color = '#C9933A';
-                                          }}
-                                          onMouseLeave={(e) => {
-                                            e.currentTarget.style.color = '#F5F1EB';
-                                          }}
-                                          >
+                                             e.currentTarget.style.color = '#C9933A';
+                                               e.currentTarget.style.backgroundColor = 'rgba(201,147,58,0.08)';
+                                               e.currentTarget.style.borderColor = 'rgba(201,147,58,0.16)';
+                                            }}
+                                           onMouseLeave={(e) => {
+                                              e.currentTarget.style.color = '#F5F1EB';
+                                              e.currentTarget.style.backgroundColor = 'transparent';
+                                              e.currentTarget.style.borderColor = 'transparent';
+                                           }}
+                                           >
                                             {isJa ? 'サービス' : 'Services'}
                                             <span style={{
                                               fontSize: '8px',
@@ -162,21 +231,18 @@ export default function Navigation() {
                                             }}>▼</span>
                                           </button>
 
-                                          {servicesOpen && (
+                                            {servicesOpen && (
                                             <div style={{
-                                              position: 'absolute',
-                                              top: '100%',
+                                              ...premiumDropdownStyle,
                                               left: '50%',
                                               transform: 'translateX(-50%)',
-                                              backgroundColor: '#1C1917',
-                                              border: '1px solid rgba(201,147,58,0.2)',
-                                              borderTop: '2px solid #C9933A',
+                                              top: 'calc(100% - 1px)',
                                               minWidth: '240px',
-                                              zIndex: 1001,
-                                              paddingTop: '8px',
-                                              paddingBottom: '8px',
-                                              boxShadow: '0 8px 32px rgba(0,0,0,0.5)'
-                                            }}>
+                                              pointerEvents: 'auto'
+                                            }}
+                                            onMouseEnter={() => setServicesOpen(true)}
+                                            onMouseLeave={() => setServicesOpen(false)}
+                                            >
                                               {[
                                                 {
                                                   label: isJa ? '空港送迎' : 'Airport Transfers',
@@ -209,11 +275,13 @@ export default function Navigation() {
                                                       ? '1px solid rgba(201,147,58,0.15)'
                                                       : 'none',
                                                     transition: 'background-color 0.2s ease',
-                                                    whiteSpace: 'nowrap'
+                                                    whiteSpace: 'nowrap',
+                                                    borderRadius: '10px',
+                                                    margin: '0 8px'
                                                   }}
                                                   onMouseEnter={(e) => {
                                                     e.currentTarget.style.backgroundColor =
-                                                      'rgba(201,147,58,0.06)';
+                                                      'rgba(201,147,58,0.08)';
                                                   }}
                                                   onMouseLeave={(e) => {
                                                     e.currentTarget.style.backgroundColor = 'transparent';
@@ -243,42 +311,57 @@ export default function Navigation() {
                                           )}
                                         </div>
                                     ) : (
-                                        <Link
+                                                <Link
                                             href={link.href}
                                             style={{
                                                 fontFamily: "'Cormorant Garamond', Georgia, serif",
                                                 fontSize: isJa ? '13px' : '16px',
-                                                fontWeight: '500',
-                                                letterSpacing: '0.08em',
+                                                fontWeight: '400',
+                                                letterSpacing: '0.1em',
                                                 color: isActive ? '#C9933A' : '#F5F1EB',
                                                 textDecoration: 'none',
                                                 opacity: '1',
-                                                transition: 'color 0.3s ease, opacity 0.3s ease',
+                                                transition: 'color 0.3s ease, opacity 0.3s ease, background-color 0.25s ease, box-shadow 0.25s ease',
                                                 cursor: 'pointer',
-                                                borderBottom: isActive ? '1px solid #C9933A' : 'none',
-                                                paddingBottom: isActive ? '2px' : '0',
+                                                border: '1px solid transparent',
+                                                padding: '8px 10px',
                                                 whiteSpace: 'nowrap',
-                                                flexShrink: 0
+                                                flexShrink: 0,
+                                                borderRadius: '0',
+                                                textTransform: 'uppercase',
+                                                backgroundColor: isActive ? 'rgba(201,147,58,0.08)' : 'transparent',
+                                                boxShadow: isActive ? 'inset 0 0 0 1px rgba(255,224,130,0.15)' : 'none'
                                             }}
                                             onMouseEnter={(e) => {
-                                                if (!isActive) e.currentTarget.style.color = '#C9933A';
+                                                if (!isActive) {
+                                                    e.currentTarget.style.color = '#C9933A';
+                                                    e.currentTarget.style.backgroundColor = 'rgba(201,147,58,0.08)';
+                                                    e.currentTarget.style.borderColor = 'rgba(201,147,58,0.14)';
+                                                }
                                             }}
                                             onMouseLeave={(e) => {
-                                                if (!isActive) e.currentTarget.style.color = '#F5F1EB';
+                                                if (!isActive) {
+                                                    e.currentTarget.style.color = '#F5F1EB';
+                                                    e.currentTarget.style.backgroundColor = 'transparent';
+                                                    e.currentTarget.style.borderColor = 'transparent';
+                                                }
                                             }}
                                         >
                                             {link.name}
                                         </Link>
                                     )}
                                     {index < navLinks.length - 1 && (
-                                        <span style={{
-                                            color: 'rgba(201, 147, 58, 0.6)',
-                                            fontSize: '14px',
-                                            userSelect: 'none',
-                                            pointerEvents: 'none'
-                                        }}>
-                                            |
-                                        </span>
+                                        <span
+                                            aria-hidden="true"
+                                            style={{
+                                                width: '1px',
+                                                height: '18px',
+                                                background: '#C9933A',
+                                                opacity: 0.9,
+                                                pointerEvents: 'none',
+                                                flexShrink: 0
+                                            }}
+                                        />
                                     )}
                                 </div>
                             );
@@ -289,74 +372,56 @@ export default function Navigation() {
                     <div style={{
                         display: 'flex',
                         alignItems: 'center',
-                        gap: '20px',
+                        gap: '10px',
                         flexShrink: 0,
-                        whiteSpace: 'nowrap'
+                        whiteSpace: 'nowrap',
+                        padding: '0 0 0 14px',
+                        height: '76px',
+                        borderLeft: '1px solid rgba(201,147,58,0.18)'
                     }}>
                         <a href="tel:+919597716664" style={{
-                            fontFamily: "'Cormorant Garamond', Georgia, serif",
-                            fontSize: '17px',
-                            fontWeight: '500',
-                            letterSpacing: '0.12em',
-                            color: '#F5F1EB',
-                            textDecoration: 'none',
-                            fontVariantNumeric: 'lining-nums',
-                            fontFeatureSettings: '"lnum" 1',
-                            transition: 'color 0.3s ease, border-color 0.3s ease',
-                            cursor: 'pointer',
-                            borderBottom: '1px solid transparent',
-                            paddingBottom: '2px'
+                            ...contactChipStyle
                         }}
                             onMouseEnter={(e) => {
-                                e.currentTarget.style.color = '#C9933A';
-                                e.currentTarget.style.borderBottomColor = '#C9933A';
+                                e.currentTarget.style.background = 'linear-gradient(135deg, rgba(171, 116, 28, 0.76) 0%, rgba(201,147,58,0.42) 48%, rgba(92, 62, 20, 0.82) 100%)';
+                                e.currentTarget.style.borderColor = 'rgba(255, 224, 130, 0.62)';
+                                e.currentTarget.style.color = '#FFFFFF';
+                                e.currentTarget.style.transform = 'translateY(-1px) scale(1.01)';
                             }}
                             onMouseLeave={(e) => {
-                                e.currentTarget.style.color = '#F5F1EB';
-                                e.currentTarget.style.borderBottomColor = 'transparent';
+                                e.currentTarget.style.background = 'linear-gradient(135deg, rgba(128, 86, 24, 0.62) 0%, rgba(201, 147, 58, 0.26) 48%, rgba(74, 53, 24, 0.74) 100%)';
+                                e.currentTarget.style.borderColor = 'rgba(201, 147, 58, 0.35)';
+                                e.currentTarget.style.color = '#FFF7E8';
+                                e.currentTarget.style.transform = 'translateY(0) scale(1)';
                             }}
                         >
                             +91 95977-16664
                         </a>
-                        <span style={{ color: 'rgba(201,147,58,0.6)', fontSize: '14px' }}>|</span>
+                        <span style={{ width: '1px', height: '24px', background: 'linear-gradient(180deg, transparent, rgba(201,147,58,0.45), transparent)' }} />
                         <a href="mailto:kanmanitours@gmail.com" style={{
-                            fontFamily: "'Cormorant Garamond', Georgia, serif",
-                            fontSize: '17px',
-                            fontWeight: '500',
-                            letterSpacing: '0.08em',
-                            color: '#F5F1EB',
-                            textDecoration: 'none',
-                            transition: 'color 0.3s ease, border-color 0.3s ease',
-                            cursor: 'pointer',
-                            borderBottom: '1px solid transparent',
-                            paddingBottom: '2px'
+                            ...contactChipStyle
                         }}
                             onMouseEnter={(e) => {
-                                e.currentTarget.style.color = '#C9933A';
-                                e.currentTarget.style.borderBottomColor = '#C9933A';
+                                e.currentTarget.style.background = 'linear-gradient(135deg, rgba(171, 116, 28, 0.76) 0%, rgba(201,147,58,0.42) 48%, rgba(92, 62, 20, 0.82) 100%)';
+                                e.currentTarget.style.borderColor = 'rgba(255, 224, 130, 0.62)';
+                                e.currentTarget.style.color = '#FFFFFF';
+                                e.currentTarget.style.transform = 'translateY(-1px) scale(1.01)';
                             }}
                             onMouseLeave={(e) => {
-                                e.currentTarget.style.color = '#F5F1EB';
-                                e.currentTarget.style.borderBottomColor = 'transparent';
+                                e.currentTarget.style.background = 'linear-gradient(135deg, rgba(128, 86, 24, 0.62) 0%, rgba(201, 147, 58, 0.26) 48%, rgba(74, 53, 24, 0.74) 100%)';
+                                e.currentTarget.style.borderColor = 'rgba(201, 147, 58, 0.35)';
+                                e.currentTarget.style.color = '#FFF7E8';
+                                e.currentTarget.style.transform = 'translateY(0) scale(1)';
                             }}
                         >
                             kanmanitours@gmail.com
                         </a>
-                        <span style={{ color: 'rgba(201,147,58,0.3)', fontSize: '14px' }}>|</span>
+                        <span style={{ width: '1px', height: '24px', background: 'linear-gradient(180deg, transparent, rgba(201,147,58,0.45), transparent)' }} />
                         <div style={{ display: 'flex', alignItems: 'center' }}>
                             <select
                                 value={locale}
                                 onChange={(e) => changeLanguage(e.target.value)}
-                                style={{
-                                    padding: '4px 8px',
-                                    borderRadius: '0',
-                                    border: '1px solid rgba(201,147,58,0.3)',
-                                    backgroundColor: 'transparent',
-                                    color: '#D4CFC9',
-                                    fontSize: isJa ? '11px' : '15px',
-                                    cursor: 'pointer',
-                                    fontFamily: "'Cormorant Garamond', Georgia, serif"
-                                }}
+                                style={utilityButtonStyle}
                             >
                                 <option value="ja" style={{ backgroundColor: '#1C1917' }}>日本語</option>
                                 <option value="en" style={{ backgroundColor: '#1C1917' }}>English</option>
@@ -369,28 +434,19 @@ export default function Navigation() {
                             onMouseLeave={() => setSnsOpen(false)}
                         >
                             <button style={{
+                                ...utilityButtonStyle,
                                 fontFamily: isJa ? "'Noto Sans JP', sans-serif" : "'Jost', Arial, sans-serif",
-                                fontSize: isJa ? '11px' : '15px',
-                                fontWeight: '500',
                                 letterSpacing: '0.18em',
-                                color: '#F5F1EB',
-                                backgroundColor: 'transparent',
-                                border: '1px solid rgba(201,147,58,0.3)',
-                                padding: '6px 12px',
-                                cursor: 'pointer',
                                 textTransform: 'uppercase',
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: '6px',
-                                transition: 'border-color 0.3s ease',
-                                whiteSpace: 'nowrap',
-                                flexShrink: 0
+                                fontWeight: '400'
                             }}
                                 onMouseEnter={(e) => {
                                     e.currentTarget.style.borderColor = '#C9933A';
+                                    e.currentTarget.style.background = 'linear-gradient(180deg, rgba(201,147,58,0.12), rgba(201,147,58,0.06))';
                                 }}
                                 onMouseLeave={(e) => {
-                                    e.currentTarget.style.borderColor = 'rgba(201,147,58,0.3)';
+                                    e.currentTarget.style.borderColor = 'rgba(201,147,58,0.24)';
+                                    e.currentTarget.style.background = 'linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0.01))';
                                 }}
                             >
                                 {isJa ? 'エスエヌエス' : 'SNS'}
@@ -405,16 +461,9 @@ export default function Navigation() {
 
                             {snsOpen && (
                                 <div style={{
-                                    position: 'absolute',
-                                    top: '100%',
+                                    ...premiumDropdownStyle,
                                     right: '0',
-                                    backgroundColor: '#1C1917',
-                                    border: '1px solid rgba(201,147,58,0.2)',
-                                    borderTop: '2px solid #C9933A',
                                     minWidth: '160px',
-                                    zIndex: 1001,
-                                    paddingTop: '8px',
-                                    paddingBottom: '8px'
                                 }}>
                                     {[
                                         {
@@ -480,11 +529,13 @@ export default function Navigation() {
                                                 textDecoration: 'none',
                                                 letterSpacing: '0.06em',
                                                 transition: 'color 0.2s ease, backgroundColor 0.2s ease',
-                                                whiteSpace: 'nowrap'
+                                                whiteSpace: 'nowrap',
+                                                borderRadius: '10px',
+                                                margin: '0 8px'
                                             }}
                                             onMouseEnter={(e) => {
                                                 e.currentTarget.style.color = '#C9933A';
-                                                e.currentTarget.style.backgroundColor = 'rgba(201,147,58,0.06)';
+                                                e.currentTarget.style.backgroundColor = 'rgba(201,147,58,0.08)';
                                             }}
                                             onMouseLeave={(e) => {
                                                 e.currentTarget.style.color = '#D4CFC9';
@@ -502,7 +553,6 @@ export default function Navigation() {
                         </div>
                     </div>
                 </nav>
-
                 {/* MOBILE TOP BAR */}
                 <div className="nav-mobile" style={{
                         backgroundColor: 'rgba(28,25,23,0.97)',
@@ -902,21 +952,50 @@ export default function Navigation() {
                                 borderTop: '1px solid rgba(201,147,58,0.1)',
                                 flexShrink: 0
                             }}>
-                                <p style={{
-                                    fontFamily: "'Jost', Arial, sans-serif",
-                                    fontSize: '13px',
-                                    color: '#6B6560',
-                                    marginBottom: '6px'
-                                }}>
-                                    <a href="tel:+919597716664" style={{ color: 'inherit', textDecoration: 'none' }}>+91 95977-16664</a>
-                                </p>
-                                <p style={{
-                                    fontFamily: "'Jost', Arial, sans-serif",
-                                    fontSize: '13px',
-                                    color: '#6B6560'
-                                }}>
-                                    <a href="mailto:kanmanitours@gmail.com" style={{ color: 'inherit', textDecoration: 'none' }}>kanmanitours@gmail.com</a>
-                                </p>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                                    <a
+                                        href="tel:+919597716664"
+                                        style={{
+                                            display: 'inline-flex',
+                                            alignItems: 'center',
+                                            gap: '8px',
+                                            padding: '8px 14px',
+                                            borderRadius: '999px',
+                                            backgroundColor: 'rgba(201, 147, 58, 0.18)',
+                                            border: '1px solid rgba(201, 147, 58, 0.35)',
+                                            color: '#FFF3D8',
+                                            textDecoration: 'none',
+                                            transition: 'all 0.25s ease',
+                                            boxShadow: 'inset 0 1px 0 rgba(255, 255, 255, 0.08)',
+                                            whiteSpace: 'nowrap',
+                                            fontFamily: "'Jost', Arial, sans-serif",
+                                            fontSize: '13px'
+                                        }}
+                                    >
+                                        +91 95977-16664
+                                    </a>
+                                    <a
+                                        href="mailto:kanmanitours@gmail.com"
+                                        style={{
+                                            display: 'inline-flex',
+                                            alignItems: 'center',
+                                            gap: '8px',
+                                            padding: '8px 14px',
+                                            borderRadius: '999px',
+                                            backgroundColor: 'rgba(201, 147, 58, 0.18)',
+                                            border: '1px solid rgba(201, 147, 58, 0.35)',
+                                            color: '#FFF3D8',
+                                            textDecoration: 'none',
+                                            transition: 'all 0.25s ease',
+                                            boxShadow: 'inset 0 1px 0 rgba(255, 255, 255, 0.08)',
+                                            whiteSpace: 'nowrap',
+                                            fontFamily: "'Jost', Arial, sans-serif",
+                                            fontSize: '13px'
+                                        }}
+                                    >
+                                        kanmanitours@gmail.com
+                                    </a>
+                                </div>
                             </div>
 
                             {/* SOCIAL ICONS */}

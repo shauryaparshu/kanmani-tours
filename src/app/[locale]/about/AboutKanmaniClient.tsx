@@ -729,27 +729,39 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
                   }}
                   style={{
                     fontFamily: "'Jost', Arial, sans-serif",
-                    fontSize: '12px',
-                    fontWeight: '600',
+                    fontSize: '15px',
+                    fontWeight: '700',
                     letterSpacing: '0.22em',
-                    color: '#d49a36',
-                    backgroundColor: 'transparent',
-                    border: '1px solid #d49a36',
-                    padding: '14px 32px',
+                    color: '#1C1917',
+                    background: 'linear-gradient(135deg, #FFE082 0%, #C9933A 50%, #A17124 100%)',
+                    border: '2px solid #FFFFFF',
+                    borderRadius: '4px',
+                    padding: '16px 36px',
                     cursor: 'pointer',
                     textTransform: 'uppercase',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '12px',
                     transition: 'all 0.3s ease',
+                    boxShadow: '0 0 25px rgba(201, 147, 58, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.4)',
                     whiteSpace: 'nowrap'
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor = '#d49a36';
-                    e.currentTarget.style.color = '#FFFFFF';
+                    e.currentTarget.style.background = 'linear-gradient(135deg, #FFF8E1 0%, #E5A93C 50%, #B87F2A 100%)';
+                    e.currentTarget.style.transform = 'translateY(-2px)';
+                    e.currentTarget.style.boxShadow = '0 0 35px rgba(255, 224, 130, 0.95), 0 6px 20px rgba(0,0,0,0.4)';
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor = 'transparent';
-                    e.currentTarget.style.color = '#d49a36';
+                    e.currentTarget.style.background = 'linear-gradient(135deg, #FFE082 0%, #C9933A 50%, #A17124 100%)';
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = '0 0 25px rgba(201, 147, 58, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.4)';
                   }}
                 >
+                  <svg width="22" height="22" viewBox="0 0 24 24"
+                       fill="none" stroke="currentColor" strokeWidth="2.5" style={{ marginRight: '2px' }}>
+                    <rect x="3" y="3" width="18" height="18" rx="2" />
+                    <path d="M3 9h18M9 21V9" />
+                  </svg>
                   VIEW GALLERY
                 </button>
               </div>
@@ -968,30 +980,41 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
                                         top: '12px',
                                         left: '12px',
                                         backgroundColor: 'rgba(28, 25, 23, 0.85)',
-                                        border: '1px solid rgba(201, 147, 58, 0.4)',
-                                        color: '#C9933A',
                                         fontFamily: "'Jost', Arial, sans-serif",
-                                        fontSize: '10px',
-                                        fontWeight: 500,
-                                        letterSpacing: '0.08em',
+                                        fontSize: '15px',
+                                        fontWeight: '700',
+                                        letterSpacing: '0.22em',
+                                        color: '#1C1917',
+                                        background: 'linear-gradient(135deg, #FFE082 0%, #C9933A 50%, #A17124 100%)',
+                                        border: '2px solid #FFFFFF',
+                                        borderRadius: '4px',
+                                        padding: '16px 36px',
                                         textTransform: 'uppercase',
-                                        padding: '6px 12px',
-                                        borderRadius: '20px',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        gap: '12px',
                                         cursor: 'pointer',
                                         zIndex: 10,
                                         transition: 'all 0.3s ease',
+                                        boxShadow: '0 0 25px rgba(201, 147, 58, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.4)',
+                                        whiteSpace: 'nowrap'
                                       }}
                                       onMouseOver={(e) => {
-                                        e.currentTarget.style.backgroundColor = '#C9933A';
-                                        e.currentTarget.style.color = '#1C1917';
-                                        e.currentTarget.style.borderColor = '#C9933A';
+                                        e.currentTarget.style.background = 'linear-gradient(135deg, #FFF8E1 0%, #E5A93C 50%, #B87F2A 100%)';
+                                        e.currentTarget.style.transform = 'translateY(-2px)';
+                                        e.currentTarget.style.boxShadow = '0 0 35px rgba(255, 224, 130, 0.95), 0 6px 20px rgba(0,0,0,0.4)';
                                       }}
                                       onMouseOut={(e) => {
-                                        e.currentTarget.style.backgroundColor = 'rgba(28, 25, 23, 0.85)';
-                                        e.currentTarget.style.color = '#C9933A';
-                                        e.currentTarget.style.borderColor = 'rgba(201, 147, 58, 0.4)';
+                                        e.currentTarget.style.background = 'linear-gradient(135deg, #FFE082 0%, #C9933A 50%, #A17124 100%)';
+                                        e.currentTarget.style.transform = 'translateY(0)';
+                                        e.currentTarget.style.boxShadow = '0 0 25px rgba(201, 147, 58, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.4)';
                                       }}
                                     >
+                                      <svg width="22" height="22" viewBox="0 0 24 24"
+                                           fill="none" stroke="currentColor" strokeWidth="2.5" style={{ marginRight: '2px' }}>
+                                        <rect x="3" y="3" width="18" height="18" rx="2" />
+                                        <path d="M3 9h18M9 21V9" />
+                                      </svg>
                                       View Gallery
                                     </button>
                                   </>

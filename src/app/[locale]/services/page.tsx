@@ -1,11 +1,9 @@
-import Navigation from '@/components/layout/Navigation';
 import Footer from '@/components/layout/FooterSection';
 import MoreDetailsButton from '@/components/ui/MoreDetailsButton';
 
 export default function ServicesPage() {
   return (
     <>
-      <Navigation />
       <main>
 
         {/* HERO */}

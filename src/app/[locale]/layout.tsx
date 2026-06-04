@@ -25,7 +25,7 @@ export default async function RootLayout({
   params: Promise<{ locale: string; }>;
 }>) {
   const { locale } = await params;
-  if (!routing.locales.includes(locale as any)) {
+  if (!routing.locales.includes(locale as (typeof routing.locales)[number])) {
     notFound();
   }
   const messages = await getMessages();
@@ -43,6 +43,7 @@ export default async function RootLayout({
         <NextIntlClientProvider messages={messages}>
           <BookingWrapper upcomingTours={upcomingTours}>
             <Navigation />
+            <div className="nav-desktop-spacer" aria-hidden="true" />
             {children}
           </BookingWrapper>
         </NextIntlClientProvider>

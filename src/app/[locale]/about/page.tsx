@@ -1,6 +1,5 @@
 import { client } from '@/sanity/lib/client';
 import { FOUNDER_PHOTOS_QUERY } from '@/sanity/lib/queries';
-import Navigation from '@/components/layout/Navigation';
 import Footer from '@/components/layout/FooterSection';
 import AboutKanmaniClient from './AboutKanmaniClient';
 
@@ -14,7 +13,6 @@ export default async function AboutPage({
 
   return (
     <>
-      <Navigation />
       <AboutKanmaniClient locale={locale} photos={founderPhotos} />
       <Footer />
     </>

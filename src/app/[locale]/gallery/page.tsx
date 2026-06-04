@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { client } from '@/sanity/lib/client';
 import { GALLERY_QUERY } from '@/sanity/lib/queries';
-import Navigation from '@/components/layout/Navigation';
 import FooterSection from '@/components/layout/FooterSection';
 import GalleryPageClient from './GalleryPageClient';
 import { galleryImageUrl } from '@/sanity/lib/image';
@@ -67,9 +66,8 @@ export default async function GalleryPage() {
         };
     }).filter((tour: any) => tour.images.length > 0);
 
-    return (
-        <>
-            <Navigation />
+  return (
+    <>
             <main>
                 <GalleryPageClient tours={processedTours} />
             </main>

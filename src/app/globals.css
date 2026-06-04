@@ -4084,6 +4084,11 @@ button {
 .nav-desktop {
   display: flex !important;
 }
+.nav-desktop-spacer {
+  display: block !important;
+  width: 100% !important;
+  height: 76px !important;
+}
 .nav-mobile {
   display: none !important;
 }
@@ -4094,6 +4099,10 @@ button {
 @media screen and (max-width: 1280px) {
   .nav-desktop {
     display: none !important;
+  }
+  .nav-desktop-spacer {
+    display: none !important;
+    height: 0 !important;
   }
   .nav-mobile {
     display: flex !important;

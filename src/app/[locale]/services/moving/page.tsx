@@ -1,11 +1,9 @@
-import Navigation from '@/components/layout/Navigation';
 import Footer from '@/components/layout/FooterSection';
 import Link from 'next/link';
 
 export default function MovingToIndiaPage() {
   return (
     <>
-      <Navigation />
       <main>
         {/* HERO */}
         <div style={{
