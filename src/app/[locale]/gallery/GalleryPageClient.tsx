@@ -177,7 +177,7 @@ function FlipGrid({ tourId, images, tourTitle, onImageClick, isExpanded }: FlipG
 
         return nextVisible;
       });
-    }, 3000);
+    }, 4000);
 
     return () => clearInterval(interval);
   }, [isExpanded, images]);
