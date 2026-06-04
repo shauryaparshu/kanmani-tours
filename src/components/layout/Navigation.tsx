@@ -296,24 +296,50 @@ export default function Navigation() {
                         <a href="tel:+919597716664" style={{
                             fontFamily: "'Cormorant Garamond', Georgia, serif",
                             fontSize: '17px',
-                            fontWeight: '600',
+                            fontWeight: '500',
                             letterSpacing: '0.12em',
                             color: '#F5F1EB',
                             textDecoration: 'none',
                             fontVariantNumeric: 'lining-nums',
-                            fontFeatureSettings: '"lnum" 1'
-                        }}>
+                            fontFeatureSettings: '"lnum" 1',
+                            transition: 'color 0.3s ease, border-color 0.3s ease',
+                            cursor: 'pointer',
+                            borderBottom: '1px solid transparent',
+                            paddingBottom: '2px'
+                        }}
+                            onMouseEnter={(e) => {
+                                e.currentTarget.style.color = '#C9933A';
+                                e.currentTarget.style.borderBottomColor = '#C9933A';
+                            }}
+                            onMouseLeave={(e) => {
+                                e.currentTarget.style.color = '#F5F1EB';
+                                e.currentTarget.style.borderBottomColor = 'transparent';
+                            }}
+                        >
                             +91 95977-16664
                         </a>
                         <span style={{ color: 'rgba(201,147,58,0.6)', fontSize: '14px' }}>|</span>
                         <a href="mailto:kanmanitours@gmail.com" style={{
                             fontFamily: "'Cormorant Garamond', Georgia, serif",
                             fontSize: '17px',
-                            fontWeight: '600',
+                            fontWeight: '500',
                             letterSpacing: '0.08em',
                             color: '#F5F1EB',
-                            textDecoration: 'none'
-                        }}>
+                            textDecoration: 'none',
+                            transition: 'color 0.3s ease, border-color 0.3s ease',
+                            cursor: 'pointer',
+                            borderBottom: '1px solid transparent',
+                            paddingBottom: '2px'
+                        }}
+                            onMouseEnter={(e) => {
+                                e.currentTarget.style.color = '#C9933A';
+                                e.currentTarget.style.borderBottomColor = '#C9933A';
+                            }}
+                            onMouseLeave={(e) => {
+                                e.currentTarget.style.color = '#F5F1EB';
+                                e.currentTarget.style.borderBottomColor = 'transparent';
+                            }}
+                        >
                             kanmanitours@gmail.com
                         </a>
                         <span style={{ color: 'rgba(201,147,58,0.3)', fontSize: '14px' }}>|</span>

@@ -351,6 +351,51 @@ const ERAS = [
 export default function FounderPageClient({ locale, photos }: FounderPageClientProps) {
   const isJa = locale === 'ja';
   
+  // Layout state
+  const [windowWidth, setWindowWidth] = useState(1200);
+  const [activeBioIndex, setActiveBioIndex] = useState<number>(-1);
+
+  useEffect(() => {
+    setWindowWidth(window.innerWidth);
+    const handler = () => setWindowWidth(window.innerWidth);
+    window.addEventListener('resize', handler);
+    return () => window.removeEventListener('resize', handler);
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = ['bio-section-0', 'bio-section-1', 'bio-section-2'];
+      let currentActive = -1;
+      let minDistance = Infinity;
+      
+      sections.forEach((id, idx) => {
+        const el = document.getElementById(id);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          const elementCenter = rect.top + rect.height / 2;
+          const viewportCenter = window.innerHeight / 2;
+          const distance = Math.abs(elementCenter - viewportCenter);
+          
+          const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+          
+          if (isVisible && distance < minDistance) {
+            minDistance = distance;
+            currentActive = idx;
+          }
+        }
+      });
+      
+      setActiveBioIndex(currentActive);
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const isMobile = windowWidth < 768;
+  const isTablet = windowWidth >= 768 && windowWidth < 1024;
+  
   // State for gallery
   const [activeEra, setActiveEra] = useState<string>('all');
   const [expandedEras, setExpandedEras] = useState<Set<string>>(new Set());
@@ -482,7 +527,7 @@ export default function FounderPageClient({ locale, photos }: FounderPageClientP
             width: '100%',
             height: '85vh',
             objectFit: 'cover',
-            objectPosition: 'center top',
+            objectPosition: 'center 15%',
             display: 'block'
           }}
           onError={(e) => {
@@ -533,13 +578,14 @@ export default function FounderPageClient({ locale, photos }: FounderPageClientP
 
           <p style={{
             fontFamily: "'Jost', Arial, sans-serif",
-            fontSize: '12px',
+            fontSize: 'clamp(9px, 1.2vw, 12px)',
             fontWeight: 400,
-            letterSpacing: '0.28em',
+            letterSpacing: '0.18em',
             color: '#C9933A',
             textTransform: 'uppercase',
-            marginBottom: '40px'
-          }}>PHD SCHOLAR · HUMANITARIAN · ENTREPRENEUR</p>
+            marginBottom: '40px',
+            whiteSpace: 'nowrap'
+          }}>PHD SCHOLAR · ENTREPRENEUR · HUMANITARIAN</p>
 
           <div style={{
             width: '80px',
@@ -559,7 +605,7 @@ export default function FounderPageClient({ locale, photos }: FounderPageClientP
             {/* Stat 1 */}
             <div style={{ textAlign: 'center' }}>
               <div style={{ fontFamily: "'Jost', Arial, sans-serif", fontWeight: 300, fontSize: 'clamp(32px, 4vw, 48px)', color: '#F5F1EB', lineHeight: '1.2' }}>28</div>
-              <div style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '11px', letterSpacing: '0.2em', color: '#9A948F', textTransform: 'uppercase', marginTop: '4px' }}>Years in Japan</div>
+              <div style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '11px', letterSpacing: '0.2em', color: '#9A948F', textTransform: 'uppercase', marginTop: '4px', whiteSpace: 'nowrap' }}>Years in Japan</div>
             </div>
 
             <div style={{ width: '1px', height: '40px', backgroundColor: 'rgba(201,147,58,0.2)' }} />
@@ -567,23 +613,23 @@ export default function FounderPageClient({ locale, photos }: FounderPageClientP
             {/* Stat 2 */}
             <div style={{ textAlign: 'center' }}>
               <div style={{ fontFamily: "'Jost', Arial, sans-serif", fontWeight: 300, fontSize: 'clamp(32px, 4vw, 48px)', color: '#F5F1EB', lineHeight: '1.2' }}>41</div>
-              <div style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '11px', letterSpacing: '0.2em', color: '#9A948F', textTransform: 'uppercase', marginTop: '4px' }}>Countries Travelled</div>
+              <div style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '11px', letterSpacing: '0.2em', color: '#9A948F', textTransform: 'uppercase', marginTop: '4px', whiteSpace: 'nowrap' }}>Countries Travelled</div>
             </div>
 
             <div style={{ width: '1px', height: '40px', backgroundColor: 'rgba(201,147,58,0.2)' }} />
 
             {/* Stat 3 */}
             <div style={{ textAlign: 'center' }}>
-              <div style={{ fontFamily: "'Jost', Arial, sans-serif", fontWeight: 300, fontSize: 'clamp(32px, 4vw, 48px)', color: '#F5F1EB', lineHeight: '1.2' }}>4</div>
-              <div style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '11px', letterSpacing: '0.2em', color: '#9A948F', textTransform: 'uppercase', marginTop: '4px' }}>Languages</div>
+              <div style={{ fontFamily: "'Jost', Arial, sans-serif", fontWeight: 300, fontSize: 'clamp(32px, 4vw, 48px)', color: '#F5F1EB', lineHeight: '1.2' }}>PhD</div>
+              <div style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '11px', letterSpacing: '0.2em', color: '#9A948F', textTransform: 'uppercase', marginTop: '4px', whiteSpace: 'nowrap' }}>Nagoya Uni, Japan</div>
             </div>
 
             <div style={{ width: '1px', height: '40px', backgroundColor: 'rgba(201,147,58,0.2)' }} />
 
             {/* Stat 4 */}
             <div style={{ textAlign: 'center' }}>
-              <div style={{ fontFamily: "'Jost', Arial, sans-serif", fontWeight: 300, fontSize: 'clamp(32px, 4vw, 48px)', color: '#F5F1EB', lineHeight: '1.2' }}>PhD</div>
-              <div style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '11px', letterSpacing: '0.2em', color: '#9A948F', textTransform: 'uppercase', marginTop: '4px' }}>Nagoya Uni, Japan</div>
+              <div style={{ fontFamily: "'Jost', Arial, sans-serif", fontWeight: 300, fontSize: 'clamp(32px, 4vw, 48px)', color: '#F5F1EB', lineHeight: '1.2' }}>4</div>
+              <div style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '11px', letterSpacing: '0.2em', color: '#9A948F', textTransform: 'uppercase', marginTop: '4px', whiteSpace: 'nowrap' }}>Languages</div>
             </div>
           </div>
         </div>
@@ -605,7 +651,7 @@ export default function FounderPageClient({ locale, photos }: FounderPageClientP
           maxWidth: '800px',
           margin: '0 auto 24px'
         }}>
-          "I came to Japan carrying one suitcase and a curiosity about the world. Twenty-eight years later, I carry two countries in my heart."
+          "Born in India, shaped by 28 years in Japan, and inspired by both— I walk forward as a bridge between the two cultures that live within me."
         </p>
         <p style={{
           fontFamily: "'Jost', Arial, sans-serif",
@@ -622,120 +668,167 @@ export default function FounderPageClient({ locale, photos }: FounderPageClientP
       <section style={{ padding: '120px 20px', maxWidth: '1200px', margin: '0 auto' }}>
         
         {/* Section A */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '64px', alignItems: 'center', marginBottom: '120px' }}>
-          <div>
-            <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: '42px', color: '#1C1917', marginBottom: '24px' }}>The Student Who Stayed</h2>
-            <div style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: '20px', color: '#4A4540', lineHeight: '1.8' }}>
-              <p style={{ marginBottom: '24px' }}>Arriving in Japan in 1998 for postgraduate studies, Dr. Kanmani experienced a profound culture shock that quickly transformed into a deep, enduring love for the country and its people. The meticulous attention to detail, the unspoken understanding in omotenashi (hospitality), and the resilience of the Japanese spirit resonated with her own values.</p>
-              <p>Choosing to pursue her PhD at Nagoya University rather than returning home, she immersed herself in academic life and cultural nuances. Over 28 years, she meticulously built a life between two worlds—bridging her Indian heritage with her chosen Japanese home, laying the foundation for a unique intercultural perspective.</p>
+        <div 
+          id="bio-section-0"
+          style={{
+            padding: isMobile ? '24px 16px' : '40px 48px',
+            borderRadius: '12px',
+            backgroundColor: activeBioIndex === 0 ? '#F3EDE2' : 'transparent',
+            borderLeft: `4px solid ${activeBioIndex === 0 ? '#C9933A' : 'transparent'}`,
+            boxShadow: activeBioIndex === 0 ? '0 10px 30px rgba(0,0,0,0.04)' : 'none',
+            transition: 'all 0.4s ease-in-out',
+            marginBottom: '60px'
+          }}
+        >
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '64px', alignItems: 'center' }}>
+            <div>
+              <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: '42px', color: '#1C1917', marginBottom: '24px' }}>The Student Who Stayed</h2>
+              <div style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '16px', color: '#4A4540', lineHeight: '1.7' }}>
+                <p style={{ marginBottom: '24px', textAlign: 'justify' }}>I landed in Japan in 1998 — a young woman from Tamil Nadu with one suitcase, a scholarship, and a fire that refused to stay small.</p>
+                <p style={{ marginBottom: '24px', textAlign: 'justify' }}>My parents gave me one thing for this journey — a one-way ticket. Just one. Everything after that was mine to earn.</p>
+                <p style={{ marginBottom: '24px', textAlign: 'justify' }}>I didn't speak Japanese. I didn't know many people. The city was vast, the silence was loud, and the loneliness was real. But I didn't come this far to turn back.</p>
+                <p style={{ marginBottom: '24px', textAlign: 'justify' }}>I learned Japanese — not from textbooks, but from the streets, the people, and over <strong>40 part-time jobs</strong> that taught me more than any classroom ever could. I spoke before I was ready. I failed before I succeeded. And every single time I fell, I got up speaking better, standing taller, and believing harder.</p>
+                <p style={{ textAlign: 'justify' }}>Japan didn't hand me anything on a silver plate. I struggled for it. I fought for it. I earned it — <strong>word by word, year by year, trust by trust.</strong></p>
+              </div>
             </div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '16px', maxWidth: '400px', margin: '0 auto', width: '100%' }}>
+                {(() => {
+                  const photo = getEraPhoto('student-phd', 0);
+                  const url = photo ? galleryImageUrl(photo.image) : null;
+                  return (
+                    <div style={{ aspectRatio: '1/1', backgroundColor: '#F0EBE1', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #E6DFD3', position: 'relative', overflow: 'hidden' }}>
+                      {url ? (
+                        <LazyImage src={url} alt="Student Life" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                      ) : (
+                        <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '12px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Student Life Era</span>
+                      )}
+                    </div>
+                  );
+                })()}
+                {(() => {
+                  const photo = getEraPhoto('student-phd', 1);
+                  const url = photo ? galleryImageUrl(photo.image) : null;
+                  return (
+                    <div style={{ aspectRatio: '1/1', backgroundColor: '#F0EBE1', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #E6DFD3', position: 'relative', overflow: 'hidden' }}>
+                      {url ? (
+                        <LazyImage src={url} alt="PhD" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                      ) : (
+                        <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '12px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em' }}>PhD Era</span>
+                      )}
+                    </div>
+                  );
+                })()}
+              </div>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
-              {(() => {
-                const photo = getEraPhoto('student-phd', 0);
-                const url = photo ? galleryImageUrl(photo.image) : null;
-                return (
-                  <div style={{ aspectRatio: '1/1', backgroundColor: '#F0EBE1', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #E6DFD3', position: 'relative', overflow: 'hidden' }}>
-                    {url ? (
-                      <LazyImage src={url} alt="Student Life" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
-                    ) : (
-                      <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '12px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Student Life Era</span>
-                    )}
-                  </div>
-                );
-              })()}
-              {(() => {
-                const photo = getEraPhoto('student-phd', 1);
-                const url = photo ? galleryImageUrl(photo.image) : null;
-                return (
-                  <div style={{ aspectRatio: '1/1', backgroundColor: '#F0EBE1', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #E6DFD3', position: 'relative', overflow: 'hidden' }}>
-                    {url ? (
-                      <LazyImage src={url} alt="PhD" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
-                    ) : (
-                      <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '12px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em' }}>PhD Era</span>
-                    )}
-                  </div>
-                );
-              })()}
-            </div>
         </div>
 
         {/* Section B */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '64px', alignItems: 'center', marginBottom: '120px' }}>
-          <div style={{ order: 2 }}>
-            <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: '42px', color: '#1C1917', marginBottom: '24px' }}>A Career Built on Trust</h2>
-            <div style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: '20px', color: '#4A4540', lineHeight: '1.8' }}>
-              <p style={{ marginBottom: '24px' }}>Dr. Kanmani’s professional trajectory is a testament to her linguistic mastery and humanitarian commitment. Serving as a Programme Coordinator at the United Nations University (UNU) in Tokyo, she tackled complex global issues from climate resilience to human mobility. During the devastating 2004 Indian Ocean Tsunami, she operated as a Disaster Relief Coordinator for JICA and the Government of Sri Lanka, managing critical on-the-ground recovery efforts.</p>
-              <p>For over two decades, she has been a trusted voice in high-stakes environments—working as an interpreter for the Refugee Assistance Headquarters in Tokyo on sensitive legal and child protection proceedings, leading VIP diplomatic delegations, and presenting research alongside the legendary Dr. M.S. Swaminathan at international conferences worldwide.</p>
+        <div 
+          id="bio-section-1"
+          style={{
+            padding: isMobile ? '24px 16px' : '40px 48px',
+            borderRadius: '12px',
+            backgroundColor: activeBioIndex === 1 ? '#F3EDE2' : 'transparent',
+            borderLeft: `4px solid ${activeBioIndex === 1 ? '#C9933A' : 'transparent'}`,
+            boxShadow: activeBioIndex === 1 ? '0 10px 30px rgba(0,0,0,0.04)' : 'none',
+            transition: 'all 0.4s ease-in-out',
+            marginBottom: '60px'
+          }}
+        >
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '64px', alignItems: 'center' }}>
+            <div style={{ order: 2 }}>
+              <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: '42px', color: '#1C1917', marginBottom: '24px' }}>A Career Built on Trust</h2>
+              <div style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '16px', color: '#4A4540', lineHeight: '1.7' }}>
+                <p style={{ marginBottom: '24px', textAlign: 'justify' }}>I was accepted into <strong>Nagoya University — home to</strong> seven Nobel laureates — and pursued my PhD. I worked with the <strong>United Nations University</strong> in Tokyo on issues that shape the future of nations. When the <strong>2004 Tsunami</strong> struck, I wasn't watching from a distance — I was on the ground, coordinating disaster relief with <strong>JICA</strong>, translating not just languages, but life-or-death urgency. I interpreted for the <strong>Refugee Assistance Headquarters</strong> in Tokyo — proceedings where a single sentence could save a family.</p>
+                <p style={{ marginBottom: '24px', textAlign: 'justify' }}>I led <strong>India's first Women's Everest Base Camp Expedition</strong> from Tamil Nadu — sponsored by then Chief Minister <strong>Dr. J. Jayalalitha</strong>. I carried <strong>India's flag at the Asian Games</strong>. I presented research alongside <strong>Dr. M.S. Swaminathan</strong> — the father of India's Green Revolution — at international conferences across the world. I was a state-level volleyball player, a striker in Tamil Nadu.</p>
+                <p style={{ textAlign: 'justify' }}><strong>None of it was given. All of it was built — with bare hands and an unbreakable will.</strong></p>
+              </div>
             </div>
+            <div style={{ order: 1, display: 'grid', gridTemplateColumns: '1fr', gap: '16px', maxWidth: '400px', margin: '0 auto', width: '100%' }}>
+                {(() => {
+                  const photo = getEraPhoto('achievements', 0);
+                  const url = photo ? galleryImageUrl(photo.image) : null;
+                  return (
+                    <div style={{ aspectRatio: '1/1', backgroundColor: '#F0EBE1', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #E6DFD3', position: 'relative', overflow: 'hidden' }}>
+                      {url ? (
+                        <LazyImage src={url} alt="Achievements" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                      ) : (
+                        <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '12px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Achievements</span>
+                      )}
+                    </div>
+                  );
+                })()}
+                {(() => {
+                  const photo = getEraPhoto('news-media', 0);
+                  const url = photo ? galleryImageUrl(photo.image) : null;
+                  return (
+                    <div style={{ aspectRatio: '1/1', backgroundColor: '#F0EBE1', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #E6DFD3', position: 'relative', overflow: 'hidden' }}>
+                      {url ? (
+                        <LazyImage src={url} alt="News Media" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                      ) : (
+                        <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '12px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em' }}>News Media</span>
+                      )}
+                    </div>
+                  );
+                })()}
+              </div>
           </div>
-          <div style={{ order: 1, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
-              {(() => {
-                const photo = getEraPhoto('achievements', 0);
-                const url = photo ? galleryImageUrl(photo.image) : null;
-                return (
-                  <div style={{ aspectRatio: '1/1', backgroundColor: '#F0EBE1', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #E6DFD3', position: 'relative', overflow: 'hidden' }}>
-                    {url ? (
-                      <LazyImage src={url} alt="Achievements" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
-                    ) : (
-                      <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '12px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Achievements</span>
-                    )}
-                  </div>
-                );
-              })()}
-              {(() => {
-                const photo = getEraPhoto('news-media', 0);
-                const url = photo ? galleryImageUrl(photo.image) : null;
-                return (
-                  <div style={{ aspectRatio: '1/1', backgroundColor: '#F0EBE1', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #E6DFD3', position: 'relative', overflow: 'hidden' }}>
-                    {url ? (
-                      <LazyImage src={url} alt="News Media" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
-                    ) : (
-                      <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '12px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em' }}>News Media</span>
-                    )}
-                  </div>
-                );
-              })()}
-            </div>
         </div>
 
         {/* Section C */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '64px', alignItems: 'center', marginBottom: '120px' }}>
-          <div style={{ order: 2 }}>
-            <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: '42px', color: '#1C1917', marginBottom: '24px' }}>Building the Bridge</h2>
-            <div style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: '20px', color: '#4A4540', lineHeight: '1.8' }}>
-              <p style={{ marginBottom: '24px' }}>Founding Kanmani Tours was the natural culmination of her life's work. It was born from a desire to show Japanese tourists the authentic heart of India—moving beyond commercial stereotypes to facilitate genuine, transformative cultural exchanges based on mutual respect and shared humanity.</p>
-              <p>Her philosophy is rooted in providing “not borrowed wisdom but lived proof.” As a motivational speaker and tour director, she ensures that every itinerary crafted by Kanmani Tours serves as a bridge, allowing travelers to experience the profound spiritual, historical, and daily realities of India through the lens of someone who intimately understands both cultures.</p>
+        <div 
+          id="bio-section-2"
+          style={{
+            padding: isMobile ? '24px 16px' : '40px 48px',
+            borderRadius: '12px',
+            backgroundColor: activeBioIndex === 2 ? '#F3EDE2' : 'transparent',
+            borderLeft: `4px solid ${activeBioIndex === 2 ? '#C9933A' : 'transparent'}`,
+            boxShadow: activeBioIndex === 2 ? '0 10px 30px rgba(0,0,0,0.04)' : 'none',
+            transition: 'all 0.4s ease-in-out',
+            marginBottom: '60px'
+          }}
+        >
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '64px', alignItems: 'center' }}>
+            <div>
+              <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: '42px', color: '#1C1917', marginBottom: '24px' }}>And Then There Was the World Beyond</h2>
+              <div style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '16px', color: '#4A4540', lineHeight: '1.7' }}>
+                <p style={{ marginBottom: '24px', textAlign: 'justify' }}>Since the year 2000, I have solo backpacked across <strong>forty-one countries</strong> — not as a tourist, but as a student of the world. I took <strong>30 low-cost flights in 30 days</strong> across Europe — before the EU was even formed. One night in Czech Republic, I was pulled off a train by border security in the middle of darkness and taken to a police station. A different woman might have stopped there. But when your will is made of steel — <strong>nothing scares your soul. Nothing can touch your core.</strong></p>
+                <p style={{ marginBottom: '24px', textAlign: 'justify' }}>Through it all, Japan showed me something I carry to this day — that true strength is silent, like an undercurrent in the ocean — <strong>invisible, yet unstoppable.</strong> That respect is earned through action, not words. That overwhelming kindness from strangers needs no common language. That discipline and grace can live together in everything you do.</p>
+                <p style={{ marginBottom: '24px', textAlign: 'justify' }}>And India — my India — reminded me of something equally powerful: <strong>that no matter how far you go, your roots are your greatest strength.</strong></p>
+                <p style={{ marginBottom: '24px', textAlign: 'justify' }}>Twenty-eight years in Japan. Four languages — Japanese, Tamil, Telugu, and English. Forty-one countries. Two cultures that live inside me. Countless experiences — some that broke me open, some that built me whole. <strong>One woman who refused to quit.</strong></p>
+                <p style={{ marginBottom: '24px', textAlign: 'justify' }}>Now, I'm building the bridge I once wished existed — between India and Japan — in language, culture, knowledge, and opportunity. So the next generation doesn't just dream across borders. <strong>They walk across them.</strong></p>
+                <p style={{ textAlign: 'justify' }}>Because if a girl from Tamil Nadu can land in Japan with nothing but a one-way ticket and turn 28 years of struggle into a life of purpose — <strong>so can you.</strong></p>
+              </div>
             </div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '16px', maxWidth: '400px', margin: '0 auto', width: '100%' }}>
+                {(() => {
+                  const photo = getEraPhoto('world-travel', 0);
+                  const url = photo ? galleryImageUrl(photo.image) : null;
+                  return (
+                    <div style={{ aspectRatio: '1/1', backgroundColor: '#F0EBE1', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #E6DFD3', position: 'relative', overflow: 'hidden' }}>
+                      {url ? (
+                        <LazyImage src={url} alt="World Travel" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                      ) : (
+                        <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '12px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em' }}>World Travel</span>
+                      )}
+                    </div>
+                  );
+                })()}
+                {(() => {
+                  const photo = getEraPhoto('celebrity', 0);
+                  const url = photo ? galleryImageUrl(photo.image) : null;
+                  return (
+                    <div style={{ aspectRatio: '1/1', backgroundColor: '#F0EBE1', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #E6DFD3', position: 'relative', overflow: 'hidden' }}>
+                      {url ? (
+                        <LazyImage src={url} alt="Celebrity" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                      ) : (
+                        <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '12px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Celebrity Era</span>
+                      )}
+                    </div>
+                  );
+                })()}
+              </div>
           </div>
-          <div style={{ order: 1, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
-              {(() => {
-                const photo = getEraPhoto('world-travel', 0);
-                const url = photo ? galleryImageUrl(photo.image) : null;
-                return (
-                  <div style={{ aspectRatio: '1/1', backgroundColor: '#F0EBE1', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #E6DFD3', position: 'relative', overflow: 'hidden' }}>
-                    {url ? (
-                      <LazyImage src={url} alt="World Travel" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
-                    ) : (
-                      <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '12px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em' }}>World Travel</span>
-                    )}
-                  </div>
-                );
-              })()}
-              {(() => {
-                const photo = getEraPhoto('celebrity', 0);
-                const url = photo ? galleryImageUrl(photo.image) : null;
-                return (
-                  <div style={{ aspectRatio: '1/1', backgroundColor: '#F0EBE1', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #E6DFD3', position: 'relative', overflow: 'hidden' }}>
-                    {url ? (
-                      <LazyImage src={url} alt="Celebrity" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
-                    ) : (
-                      <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '12px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Celebrity Era</span>
-                    )}
-                  </div>
-                );
-              })()}
-            </div>
         </div>
       </section>
 
@@ -865,48 +958,7 @@ export default function FounderPageClient({ locale, photos }: FounderPageClientP
         </div>
       </section>
 
-      {/* CHAPTER 5 — CLOSING */}
-      <section style={{ backgroundColor: '#1C1917', color: '#FFFFFF', padding: '120px 20px', textAlign: 'center' }}>
-        <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-          <div style={{ width: '2px', height: '60px', backgroundColor: '#C9933A', margin: '0 auto 48px' }}></div>
-          <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 'clamp(28px, 4vw, 42px)', fontStyle: 'italic', lineHeight: '1.5', color: '#E8E4DC', marginBottom: '64px' }}>
-            "Every journey I have taken — across 41 countries, across disciplines, across cultures — has led me back to the same truth. Connection is everything."
-          </p>
-          <div style={{ display: 'flex', gap: '24px', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <a href={`/${locale}/tours`} style={{
-              display: 'inline-block',
-              fontFamily: "'Jost', Arial, sans-serif",
-              fontSize: '14px',
-              fontWeight: '500',
-              letterSpacing: '0.1em',
-              textTransform: 'uppercase',
-              color: '#1C1917',
-              backgroundColor: '#C9933A',
-              padding: '16px 48px',
-              textDecoration: 'none',
-              transition: 'background-color 0.3s ease'
-            }}>
-              Explore Tours
-            </a>
-            <a href={`/${locale}/contact`} style={{
-              display: 'inline-block',
-              fontFamily: "'Jost', Arial, sans-serif",
-              fontSize: '14px',
-              fontWeight: '500',
-              letterSpacing: '0.1em',
-              textTransform: 'uppercase',
-              color: '#FFFFFF',
-              backgroundColor: 'transparent',
-              border: '1px solid #FFFFFF',
-              padding: '16px 48px',
-              textDecoration: 'none',
-              transition: 'all 0.3s ease'
-            }}>
-              Contact Us
-            </a>
-          </div>
-        </div>
-      </section>
+
 
       {/* LIGHTBOX OVERLAY */}
       {lightboxPhoto && (
