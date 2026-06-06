@@ -1,7 +1,7 @@
 import { useRef, useState, type ChangeEvent } from 'react'
 import { UploadIcon } from '@sanity/icons'
 import { Button, Card, Stack, Text } from '@sanity/ui'
-import { set, type ArrayOfObjectsInputProps } from 'sanity'
+import { set, type ArrayOfObjectsInputProps, useClient } from 'sanity'
 
 type GalleryImageValue = {
     _type: 'image'
@@ -20,6 +20,7 @@ export default function TourGalleryInput(props: ArrayOfObjectsInputProps) {
     const fileInputRef = useRef<HTMLInputElement | null>(null)
     const [isUploading, setIsUploading] = useState(false)
     const [error, setError] = useState<string | null>(null)
+    const client = useClient({ apiVersion: '2024-01-01' })
 
     const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
         const files = Array.from(event.currentTarget.files ?? []).filter(file => file.type.startsWith('image/'))
@@ -38,7 +39,7 @@ export default function TourGalleryInput(props: ArrayOfObjectsInputProps) {
             // concurrent request burst, and so one bad file does not block the rest.
             for (const file of files) {
                 try {
-                    const asset = await props.client.assets.upload('image', file, { filename: file.name })
+                    const asset = await client.assets.upload('image', file, { filename: file.name })
                     nextItems.push({
                         _type: 'image',
                         _key: createKey(),
@@ -96,9 +97,11 @@ export default function TourGalleryInput(props: ArrayOfObjectsInputProps) {
                         onChange={handleFileChange}
                     />
                     {error && (
-                        <Text size={1} tone="critical">
-                            {error}
-                        </Text>
+                        <Card tone="critical" padding={2} radius={2}>
+                            <Text size={1}>
+                                {error}
+                            </Text>
+                        </Card>
                     )}
                 </Stack>
             </Card>
