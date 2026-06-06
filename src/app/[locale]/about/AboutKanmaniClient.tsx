@@ -429,13 +429,8 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
     return photos.filter(photo => photo.era === eraId);
   };
 
-  const getEraPhoto = (eraId: string, skip: number = 0) => {
-    const eraPhotos = photos.filter(p => p.era === eraId);
-    if (eraPhotos.length === 0) return null;
-    const featured = eraPhotos.filter(p => p.featured);
-    if (featured.length > skip) return featured[skip];
-    if (eraPhotos.length > skip) return eraPhotos[skip];
-    return eraPhotos[0];
+  const getEraPhoto = (eraId: string, skip: number = 0): FounderPhoto | null => {
+    return null;
   };
 
   const handleEraClick = (eraId: string) => {

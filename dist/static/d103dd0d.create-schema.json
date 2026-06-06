@@ -2,29 +2,10 @@
   {
     "fields": [
       {
-        "validation": [
-          {
-            "rules": [
-              {
-                "flag": "custom"
-              }
-            ],
-            "level": "error"
-          }
-        ],
-        "name": "name",
-        "type": "slug"
-      }
-    ],
-    "name": "media.tag",
-    "type": "document"
-  },
-  {
-    "fields": [
-      {
         "options": {
           "layout": "grid"
         },
+        "description": "Upload multiple tour photos here. Drag and drop to reorder them.",
         "of": [
           {
             "options": {
