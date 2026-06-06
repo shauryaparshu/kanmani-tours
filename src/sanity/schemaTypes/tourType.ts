@@ -1,10 +1,24 @@
 import { defineField, defineType } from 'sanity'
+import TourGalleryInput from '../components/TourGalleryInput'
 
 export const tourType = defineType({
     name: 'tour',
     title: 'Tour',
     type: 'document',
     fields: [
+        defineField({
+            name: 'galleryImages',
+            title: 'Gallery Images',
+            type: 'array',
+            of: [{ type: 'image', options: { hotspot: true } }],
+            options: {
+                layout: 'grid',
+            },
+            description: 'Upload multiple tour photos here. Drag and drop to reorder them.',
+            components: {
+                input: TourGalleryInput,
+            },
+        }),
 
         // ─── BASIC INFORMATION ───────────────────────────────────────
         defineField({
@@ -179,12 +193,6 @@ export const tourType = defineType({
             type: 'image',
             options: { hotspot: true },
             description: 'Use wide landscape photos minimum 1400px wide. Avoid close-up or portrait photos — they do not look good as full-screen hero backgrounds.',
-        }),
-        defineField({
-            name: 'galleryImages',
-            title: 'Gallery Images',
-            type: 'array',
-            of: [{ type: 'image', options: { hotspot: true } }],
         }),
 
         // ─── TOUR HIGHLIGHTS (simple bullet list) ────────────────────

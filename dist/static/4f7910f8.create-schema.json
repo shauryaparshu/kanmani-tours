@@ -6,6 +6,41 @@
           {
             "rules": [
               {
+                "flag": "custom"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "name",
+        "type": "slug"
+      }
+    ],
+    "name": "media.tag",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "options": {
+          "layout": "grid"
+        },
+        "of": [
+          {
+            "options": {
+              "hotspot": true
+            },
+            "type": "image"
+          }
+        ],
+        "name": "galleryImages",
+        "type": "array"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
                 "flag": "presence",
                 "constraint": "required"
               }
@@ -286,18 +321,6 @@
         "name": "coverImage",
         "type": "image",
         "title": "Hero Photo (use wide landscape photos only)"
-      },
-      {
-        "of": [
-          {
-            "options": {
-              "hotspot": true
-            },
-            "type": "image"
-          }
-        ],
-        "name": "galleryImages",
-        "type": "array"
       },
       {
         "description": "Key highlights shown as a bullet list on the tour page",
@@ -1018,36 +1041,32 @@
         "options": {
           "list": [
             {
-              "title": "Student Life",
-              "value": "student"
-            },
-            {
-              "title": "PhD & Academic",
-              "value": "phd"
-            },
-            {
-              "title": "Humanitarian",
-              "value": "humanitarian"
-            },
-            {
-              "title": "Tours",
-              "value": "tours"
-            },
-            {
               "title": "Celebrity",
               "value": "celebrity"
             },
             {
-              "title": "Conferences",
-              "value": "conferences"
-            },
-            {
-              "title": "Recent",
-              "value": "recent"
-            },
-            {
-              "title": "News & Media",
+              "title": "News Media",
               "value": "news-media"
+            },
+            {
+              "title": "Achievements",
+              "value": "achievements"
+            },
+            {
+              "title": "Student Life and PhD",
+              "value": "student-phd"
+            },
+            {
+              "title": "World Travel",
+              "value": "world-travel"
+            },
+            {
+              "title": "Arts",
+              "value": "arts"
+            },
+            {
+              "title": "Others",
+              "value": "others"
             }
           ]
         },
@@ -1057,14 +1076,13 @@
               {
                 "flag": "valid",
                 "constraint": [
-                  "student",
-                  "phd",
-                  "humanitarian",
-                  "tours",
                   "celebrity",
-                  "conferences",
-                  "recent",
-                  "news-media"
+                  "news-media",
+                  "achievements",
+                  "student-phd",
+                  "world-travel",
+                  "arts",
+                  "others"
                 ]
               },
               {

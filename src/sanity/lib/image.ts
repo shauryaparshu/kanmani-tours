@@ -84,6 +84,21 @@ export function thumbnailImageUrl(image: any): string {
   }
 }
 
+export function containThumbnailImageUrl(image: any): string {
+  if (!image) return '';
+  try {
+    return urlForImage(image)
+      ?.width(600)
+      .quality(75)
+      .auto('format')
+      .fit('max')
+      .url() ?? '';
+  } catch {
+    return image?.asset?.url ?? '';
+  }
+}
+
+
 export function blurPlaceholderUrl(image: any): string {
   if (!image) return '';
   try {

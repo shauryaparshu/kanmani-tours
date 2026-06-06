@@ -623,7 +623,6 @@ function Gallery({ images, tourTitle }: {
             }}
           >
             <LazyImage
-              mode="natural"
               src={images[lightboxIndex].url}
               lqip={images[lightboxIndex].lqip}
               alt={`${tourTitle} — photo ${lightboxIndex + 1}`}

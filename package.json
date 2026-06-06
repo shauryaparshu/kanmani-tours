@@ -23,6 +23,8 @@
     "react-dom": "19.2.3",
     "react-phone-number-input": "^3.4.16",
     "sanity": "^5.11.0",
+    "sanity-plugin-image-asset-picker": "^2.0.0",
+    "sanity-plugin-media": "^4.3.0",
     "styled-components": "^6.3.11"
   },
   "devDependencies": {

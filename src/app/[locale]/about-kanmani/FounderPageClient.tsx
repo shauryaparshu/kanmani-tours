@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from 'react';
-import { galleryImageUrl } from '@/sanity/lib/image';
+import { galleryImageUrl, containThumbnailImageUrl } from '@/sanity/lib/image';
 import LazyImage from '@/components/ui/LazyImage';
 
 interface FounderPhoto {
@@ -41,15 +41,15 @@ function FlipImageCard({ photo, onClick, isJa }: FlipImageCardProps) {
     }
   }, [photo, isFlipped, frontPhoto, backPhoto]);
 
-  const frontUrl = galleryImageUrl(frontPhoto.image);
-  const backUrl = backPhoto ? galleryImageUrl(backPhoto.image) : '';
+  const frontUrl = containThumbnailImageUrl(frontPhoto.image);
+  const backUrl = backPhoto ? containThumbnailImageUrl(backPhoto.image) : '';
 
   return (
     <div 
       onClick={onClick}
       style={{
         aspectRatio: '1 / 1',
-        backgroundColor: '#E8E4DC',
+        backgroundColor: '#1C1917',
         position: 'relative',
         cursor: 'pointer',
         perspective: '1000px',
@@ -75,7 +75,7 @@ function FlipImageCard({ photo, onClick, isJa }: FlipImageCardProps) {
           height: '100%',
           backfaceVisibility: 'hidden',
           WebkitBackfaceVisibility: 'hidden',
-          backgroundColor: '#E8E4DC',
+          backgroundColor: '#1C1917',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -89,8 +89,8 @@ function FlipImageCard({ photo, onClick, isJa }: FlipImageCardProps) {
               style={{
                 width: '100%',
                 height: '100%',
-                objectFit: 'cover',
-                objectPosition: 'center 80%'
+                objectFit: 'contain',
+                objectPosition: 'center'
               }}
             />
           )}
@@ -106,7 +106,7 @@ function FlipImageCard({ photo, onClick, isJa }: FlipImageCardProps) {
           backfaceVisibility: 'hidden',
           WebkitBackfaceVisibility: 'hidden',
           transform: 'rotateY(180deg)',
-          backgroundColor: '#E8E4DC',
+          backgroundColor: '#1C1917',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -120,8 +120,8 @@ function FlipImageCard({ photo, onClick, isJa }: FlipImageCardProps) {
               style={{
                 width: '100%',
                 height: '100%',
-                objectFit: 'cover',
-                objectPosition: 'center 80%'
+                objectFit: 'contain',
+                objectPosition: 'center'
               }}
             />
           )}
@@ -218,14 +218,14 @@ function EraGallery({
           gap: '16px'
         }}>
           {eraPhotos.map((photo, index) => {
-            const url = galleryImageUrl(photo.image);
+            const url = containThumbnailImageUrl(photo.image);
             return (
               <div 
                 key={photo._id} 
                 onClick={() => openLightbox(photo, eraId, index)}
                 style={{
                   aspectRatio: '1 / 1',
-                  backgroundColor: '#E8E4DC',
+                  backgroundColor: '#1C1917',
                   position: 'relative',
                   cursor: 'pointer',
                   overflow: 'hidden'
@@ -239,8 +239,8 @@ function EraGallery({
                     style={{
                       width: '100%',
                       height: '100%',
-                      objectFit: 'cover',
-                      objectPosition: 'center 80%',
+                      objectFit: 'contain',
+                      objectPosition: 'center',
                       transition: 'transform 0.5s ease'
                     }}
                   />
@@ -694,11 +694,11 @@ export default function FounderPageClient({ locale, photos }: FounderPageClientP
             <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '16px', maxWidth: '400px', margin: '0 auto', width: '100%' }}>
                 {(() => {
                   const photo = getEraPhoto('student-phd', 0);
-                  const url = photo ? galleryImageUrl(photo.image) : null;
+                  const url = photo ? containThumbnailImageUrl(photo.image) : null;
                   return (
                     <div style={{ aspectRatio: '1/1', backgroundColor: '#F0EBE1', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #E6DFD3', position: 'relative', overflow: 'hidden' }}>
                       {url ? (
-                        <LazyImage src={url} alt="Student Life" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                        <LazyImage src={url} alt="Student Life" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }} />
                       ) : (
                         <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '12px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Student Life Era</span>
                       )}
@@ -707,11 +707,11 @@ export default function FounderPageClient({ locale, photos }: FounderPageClientP
                 })()}
                 {(() => {
                   const photo = getEraPhoto('student-phd', 1);
-                  const url = photo ? galleryImageUrl(photo.image) : null;
+                  const url = photo ? containThumbnailImageUrl(photo.image) : null;
                   return (
                     <div style={{ aspectRatio: '1/1', backgroundColor: '#F0EBE1', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #E6DFD3', position: 'relative', overflow: 'hidden' }}>
                       {url ? (
-                        <LazyImage src={url} alt="PhD" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                        <LazyImage src={url} alt="PhD" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }} />
                       ) : (
                         <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '12px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em' }}>PhD Era</span>
                       )}
@@ -747,11 +747,11 @@ export default function FounderPageClient({ locale, photos }: FounderPageClientP
             <div style={{ order: 1, display: 'grid', gridTemplateColumns: '1fr', gap: '16px', maxWidth: '400px', margin: '0 auto', width: '100%' }}>
                 {(() => {
                   const photo = getEraPhoto('achievements', 0);
-                  const url = photo ? galleryImageUrl(photo.image) : null;
+                  const url = photo ? containThumbnailImageUrl(photo.image) : null;
                   return (
                     <div style={{ aspectRatio: '1/1', backgroundColor: '#F0EBE1', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #E6DFD3', position: 'relative', overflow: 'hidden' }}>
                       {url ? (
-                        <LazyImage src={url} alt="Achievements" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                        <LazyImage src={url} alt="Achievements" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }} />
                       ) : (
                         <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '12px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Achievements</span>
                       )}
@@ -760,11 +760,11 @@ export default function FounderPageClient({ locale, photos }: FounderPageClientP
                 })()}
                 {(() => {
                   const photo = getEraPhoto('news-media', 0);
-                  const url = photo ? galleryImageUrl(photo.image) : null;
+                  const url = photo ? containThumbnailImageUrl(photo.image) : null;
                   return (
                     <div style={{ aspectRatio: '1/1', backgroundColor: '#F0EBE1', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #E6DFD3', position: 'relative', overflow: 'hidden' }}>
                       {url ? (
-                        <LazyImage src={url} alt="News Media" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                        <LazyImage src={url} alt="News Media" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }} />
                       ) : (
                         <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '12px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em' }}>News Media</span>
                       )}
@@ -803,11 +803,11 @@ export default function FounderPageClient({ locale, photos }: FounderPageClientP
             <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '16px', maxWidth: '400px', margin: '0 auto', width: '100%' }}>
                 {(() => {
                   const photo = getEraPhoto('world-travel', 0);
-                  const url = photo ? galleryImageUrl(photo.image) : null;
+                  const url = photo ? containThumbnailImageUrl(photo.image) : null;
                   return (
                     <div style={{ aspectRatio: '1/1', backgroundColor: '#F0EBE1', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #E6DFD3', position: 'relative', overflow: 'hidden' }}>
                       {url ? (
-                        <LazyImage src={url} alt="World Travel" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                        <LazyImage src={url} alt="World Travel" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }} />
                       ) : (
                         <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '12px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em' }}>World Travel</span>
                       )}
@@ -816,11 +816,11 @@ export default function FounderPageClient({ locale, photos }: FounderPageClientP
                 })()}
                 {(() => {
                   const photo = getEraPhoto('celebrity', 0);
-                  const url = photo ? galleryImageUrl(photo.image) : null;
+                  const url = photo ? containThumbnailImageUrl(photo.image) : null;
                   return (
                     <div style={{ aspectRatio: '1/1', backgroundColor: '#F0EBE1', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #E6DFD3', position: 'relative', overflow: 'hidden' }}>
                       {url ? (
-                        <LazyImage src={url} alt="Celebrity" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                        <LazyImage src={url} alt="Celebrity" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }} />
                       ) : (
                         <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '12px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Celebrity Era</span>
                       )}
@@ -866,7 +866,7 @@ export default function FounderPageClient({ locale, photos }: FounderPageClientP
                         <div style={{ aspectRatio: '16/9', backgroundColor: '#2C2420', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', border: '1px solid #4A4540', position: 'relative', overflow: 'hidden' }}>
                           {url ? (
                             <>
-                              <LazyImage src={url} alt={event.title} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 80%' }} />
+                              <LazyImage src={url} alt={event.title} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }} />
                               <button 
                                 onClick={() => handleEraClick(event.era)}
                                 style={{
@@ -1035,13 +1035,14 @@ export default function FounderPageClient({ locale, photos }: FounderPageClientP
                 }}
               >
                 <LazyImage
-                  src={galleryImageUrl(photo.image)}
+                  src={containThumbnailImageUrl(photo.image)}
                   lqip={photo.image?.asset?.metadata?.lqip}
                   alt="Thumbnail"
                   style={{
                     width: '100%',
                     height: '100%',
-                    objectFit: 'cover'
+                    objectFit: 'cover',
+                    objectPosition: 'center'
                   }}
                 />
               </div>
