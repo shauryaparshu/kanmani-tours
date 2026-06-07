@@ -994,6 +994,46 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
 
             </section>
 
+            {/* CHAPTER 4 — PHOTO GALLERY */}
+            <section id="founder-gallery" style={{ padding: '80px 20px', maxWidth: '1400px', margin: '0 auto' }}>
+              <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: '42px', textAlign: 'center', marginBottom: '48px', color: '#1C1917' }}>Kanmani's Life in Pictures</h2>
+              
+              {/* Era Filters */}
+              <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '8px', marginBottom: '48px' }}>
+                {ERAS.map(era => (
+                  <button
+                    key={era.id}
+                    onClick={() => setActiveEra(era.id)}
+                    style={{
+                      fontFamily: "'Jost', Arial, sans-serif",
+                      fontSize: '12px',
+                      fontWeight: '500',
+                      letterSpacing: '0.1em',
+                      textTransform: 'uppercase',
+                      padding: '8px 18px',
+                      borderRadius: '20px',
+                      border: '1px solid',
+                      borderColor: activeEra === era.id ? '#1C1917' : '#D4CFC9',
+                      backgroundColor: activeEra === era.id ? '#1C1917' : 'transparent',
+                      color: activeEra === era.id ? '#FFFFFF' : '#4A4540',
+                      cursor: 'pointer',
+                      transition: 'all 0.3s ease'
+                    }}
+                  >
+                    {era.label}
+                  </button>
+                ))}
+              </div>
+
+              {/* Gallery Grids */}
+              <div>
+                {activeEra === 'all' 
+                  ? ERAS.filter(e => e.id !== 'all').map(era => renderGalleryEra(era.id, era.label))
+                  : renderGalleryEra(activeEra, ERAS.find(e => e.id === activeEra)?.label || '')
+                }
+              </div>
+            </section>
+
             {/* CHAPTER 3 — TIMELINE */}
             <section style={{ backgroundColor: '#1C1917', color: '#FFFFFF', padding: '80px 20px' }}>
               <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
@@ -1087,46 +1127,6 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
                     </div>
                   ))}
                 </div>
-              </div>
-            </section>
-
-            {/* CHAPTER 4 — PHOTO GALLERY */}
-            <section id="founder-gallery" style={{ padding: '80px 20px', maxWidth: '1400px', margin: '0 auto' }}>
-              <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: '42px', textAlign: 'center', marginBottom: '48px', color: '#1C1917' }}>Kanmani's Life in Pictures</h2>
-              
-              {/* Era Filters */}
-              <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '8px', marginBottom: '48px' }}>
-                {ERAS.map(era => (
-                  <button
-                    key={era.id}
-                    onClick={() => setActiveEra(era.id)}
-                    style={{
-                      fontFamily: "'Jost', Arial, sans-serif",
-                      fontSize: '12px',
-                      fontWeight: '500',
-                      letterSpacing: '0.1em',
-                      textTransform: 'uppercase',
-                      padding: '8px 18px',
-                      borderRadius: '20px',
-                      border: '1px solid',
-                      borderColor: activeEra === era.id ? '#1C1917' : '#D4CFC9',
-                      backgroundColor: activeEra === era.id ? '#1C1917' : 'transparent',
-                      color: activeEra === era.id ? '#FFFFFF' : '#4A4540',
-                      cursor: 'pointer',
-                      transition: 'all 0.3s ease'
-                    }}
-                  >
-                    {era.label}
-                  </button>
-                ))}
-              </div>
-
-              {/* Gallery Grids */}
-              <div>
-                {activeEra === 'all' 
-                  ? ERAS.filter(e => e.id !== 'all').map(era => renderGalleryEra(era.id, era.label))
-                  : renderGalleryEra(activeEra, ERAS.find(e => e.id === activeEra)?.label || '')
-                }
               </div>
             </section>
 
