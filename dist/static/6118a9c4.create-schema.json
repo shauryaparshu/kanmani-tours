@@ -816,6 +816,141 @@
         "name": "visionMission",
         "type": "object",
         "title": "Vision & Mission"
+      },
+      {
+        "description": "Drop multiple images here to create founder photo entries quickly. You can still refine captions, eras, and metadata below.",
+        "of": [
+          {
+            "fields": [
+              {
+                "options": {
+                  "hotspot": true
+                },
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "name": "image",
+                "type": "image",
+                "title": "Photo"
+              },
+              {
+                "description": "One line describing what is happening in this photo",
+                "name": "caption",
+                "type": "string",
+                "title": "Caption (English)"
+              },
+              {
+                "name": "captionJa",
+                "type": "string",
+                "title": "キャプション（日本語）/ Caption in Japanese"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Celebrity",
+                      "value": "celebrity"
+                    },
+                    {
+                      "title": "News Media",
+                      "value": "news-media"
+                    },
+                    {
+                      "title": "Achievements",
+                      "value": "achievements"
+                    },
+                    {
+                      "title": "Student Life and PhD",
+                      "value": "student-phd"
+                    },
+                    {
+                      "title": "World Travel",
+                      "value": "world-travel"
+                    },
+                    {
+                      "title": "Arts",
+                      "value": "arts"
+                    },
+                    {
+                      "title": "Others",
+                      "value": "others"
+                    }
+                  ]
+                },
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "valid",
+                        "constraint": [
+                          "celebrity",
+                          "news-media",
+                          "achievements",
+                          "student-phd",
+                          "world-travel",
+                          "arts",
+                          "others"
+                        ]
+                      },
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "name": "era",
+                "type": "string",
+                "title": "Era / Album"
+              },
+              {
+                "description": "Approximate year the photo was taken",
+                "name": "year",
+                "type": "number",
+                "title": "Year (approximate)"
+              },
+              {
+                "description": "City or country where photo was taken",
+                "hidden": "conditional",
+                "name": "location",
+                "type": "string"
+              },
+              {
+                "description": "Select the country for World Travel album sub-albums",
+                "to": [
+                  {
+                    "type": "country"
+                  }
+                ],
+                "hidden": "conditional",
+                "name": "country",
+                "type": "reference",
+                "title": "Country (for World Travel)"
+              },
+              {
+                "initialValue": false,
+                "description": "Turn on to show this photo as the representative photo in the timeline section",
+                "name": "featured",
+                "type": "boolean",
+                "title": "Feature in Timeline"
+              }
+            ],
+            "type": "object",
+            "name": "founderPhoto"
+          }
+        ],
+        "name": "founderPhotos",
+        "type": "array",
+        "title": "Founder Photos Gallery"
       }
     ],
     "name": "about",
@@ -985,126 +1120,6 @@
     "name": "testimonial",
     "type": "document",
     "title": "Testimonials"
-  },
-  {
-    "fields": [
-      {
-        "options": {
-          "hotspot": true
-        },
-        "validation": [
-          {
-            "rules": [
-              {
-                "flag": "presence",
-                "constraint": "required"
-              }
-            ],
-            "level": "error"
-          }
-        ],
-        "name": "image",
-        "type": "image",
-        "title": "Photo"
-      },
-      {
-        "description": "One line describing what is happening in this photo",
-        "name": "caption",
-        "type": "string",
-        "title": "Caption (English)"
-      },
-      {
-        "name": "captionJa",
-        "type": "string",
-        "title": "キャプション（日本語）/ Caption in Japanese"
-      },
-      {
-        "options": {
-          "list": [
-            {
-              "title": "Celebrity",
-              "value": "celebrity"
-            },
-            {
-              "title": "News Media",
-              "value": "news-media"
-            },
-            {
-              "title": "Achievements",
-              "value": "achievements"
-            },
-            {
-              "title": "Student Life and PhD",
-              "value": "student-phd"
-            },
-            {
-              "title": "World Travel",
-              "value": "world-travel"
-            },
-            {
-              "title": "Arts",
-              "value": "arts"
-            },
-            {
-              "title": "Others",
-              "value": "others"
-            }
-          ]
-        },
-        "validation": [
-          {
-            "rules": [
-              {
-                "flag": "valid",
-                "constraint": [
-                  "celebrity",
-                  "news-media",
-                  "achievements",
-                  "student-phd",
-                  "world-travel",
-                  "arts",
-                  "others"
-                ]
-              },
-              {
-                "flag": "presence",
-                "constraint": "required"
-              }
-            ],
-            "level": "error"
-          }
-        ],
-        "name": "era",
-        "type": "string",
-        "title": "Era / Album"
-      },
-      {
-        "description": "Approximate year the photo was taken",
-        "name": "year",
-        "type": "number",
-        "title": "Year (approximate)"
-      },
-      {
-        "description": "City or country where photo was taken",
-        "name": "location",
-        "type": "string"
-      },
-      {
-        "initialValue": false,
-        "description": "Turn on to show this photo as the representative photo in the timeline section",
-        "name": "featured",
-        "type": "boolean",
-        "title": "Feature in Timeline"
-      },
-      {
-        "description": "Lower numbers appear first within the same era",
-        "name": "orderRank",
-        "type": "number",
-        "title": "Order within Era"
-      }
-    ],
-    "name": "founderPhoto",
-    "type": "document"
   },
   {
     "fields": [

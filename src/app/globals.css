@@ -4113,6 +4113,12 @@ button {
     padding: 0 20px !important;
     position: fixed !important;
     top: 0 !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 0 20px !important;
+    position: fixed !important;
+    top: 0 !important;
     left: 0 !important;
     right: 0 !important;
     height: 64px !important;
@@ -4122,5 +4128,32 @@ button {
     display: block !important;
     height: 64px !important;
     width: 100% !important;
+  }
+}
+
+/* Responsive Desktop Navbar Adjustments */
+@media screen and (min-width: 1281px) and (max-width: 1440px) {
+  .nav-links-container {
+    gap: 6px !important;
+    padding: 0 8px !important;
+  }
+  .nav-link-wrapper {
+    gap: 8px !important;
+  }
+  .nav-link-item {
+    font-size: 13px !important;
+    padding: 6px 6px !important;
+  }
+}
+
+@media screen and (min-width: 1281px) and (max-width: 1380px) {
+  .nav-email-chip, .nav-divider-email {
+    display: none !important;
+  }
+}
+
+@media screen and (min-width: 1281px) and (max-width: 1320px) {
+  .nav-phone-chip, .nav-divider-phone {
+    display: none !important;
   }
 }

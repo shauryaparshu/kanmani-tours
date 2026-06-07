@@ -250,85 +250,10 @@ export default function GalleryPageClient({ tours }: Props) {
   const [lightboxTour, setLightboxTour] = useState<string | null>(null);
   const [lightboxIndex, setLightboxIndex] = useState<number>(0);
   const [expandedTours, setExpandedTours] = useState<Set<string>>(new Set());
-  const [isHoveringLightbox, setIsHoveringLightbox] = useState(false);
-  const thumbnailStripRef = useRef<HTMLDivElement>(null);
-  const lightboxTimerRef = useRef<number | null>(null);
-
   const activeTourObj = tours.find(t => t.id === lightboxTour);
   const closeLightbox = () => {
     setLightboxTour(null);
-    setIsHoveringLightbox(false);
-    if (lightboxTimerRef.current !== null) {
-      window.clearTimeout(lightboxTimerRef.current);
-      lightboxTimerRef.current = null;
-    }
   };
-
-  const handleNextImage = () => {
-    if (activeTourObj) {
-      setLightboxIndex((prev) => (prev + 1) % activeTourObj.images.length);
-    }
-  };
-
-  const handlePrevImage = () => {
-    if (activeTourObj) {
-      setLightboxIndex((prev) => (prev - 1 + activeTourObj.images.length) % activeTourObj.images.length);
-    }
-  };
-
-  // Keyboard navigation
-  useEffect(() => {
-    if (!lightboxTour || !activeTourObj) return;
-
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        setLightboxTour(null);
-        setIsHoveringLightbox(false);
-        if (lightboxTimerRef.current !== null) {
-          window.clearTimeout(lightboxTimerRef.current);
-          lightboxTimerRef.current = null;
-        }
-      } else if (e.key === 'ArrowRight') {
-        setLightboxIndex((prev) => (prev + 1) % activeTourObj.images.length);
-      } else if (e.key === 'ArrowLeft') {
-        setLightboxIndex((prev) => (prev - 1 + activeTourObj.images.length) % activeTourObj.images.length);
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [lightboxTour, activeTourObj, isHoveringLightbox]);
-
-  useEffect(() => {
-    // Auto-scroll active thumbnail into view
-    if (thumbnailStripRef.current && activeTourObj) {
-      const activeThumb = thumbnailStripRef.current.children[lightboxIndex] as HTMLElement;
-      if (activeThumb) {
-        activeThumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-      }
-    }
-  }, [lightboxIndex, activeTourObj]);
-
-  useEffect(() => {
-    if (!lightboxTour || !activeTourObj || activeTourObj.images.length <= 1 || isHoveringLightbox) {
-      if (lightboxTimerRef.current !== null) {
-        window.clearTimeout(lightboxTimerRef.current);
-        lightboxTimerRef.current = null;
-      }
-      return;
-    }
-
-    lightboxTimerRef.current = window.setTimeout(() => {
-      setLightboxIndex((prev) => (prev + 1) % activeTourObj.images.length);
-    }, 5000);
-
-    return () => {
-      if (lightboxTimerRef.current !== null) {
-        window.clearTimeout(lightboxTimerRef.current);
-        lightboxTimerRef.current = null;
-      }
-    };
-  }, [lightboxTour, activeTourObj, lightboxIndex, isHoveringLightbox]);
 
   const toggleExpand = (id: string) => {
     setExpandedTours(prev => {
@@ -478,19 +403,28 @@ export default function GalleryPageClient({ tours }: Props) {
                   {/* A — EVENT HEADER ROW */}
                   <div style={{
                     display: 'flex',
-                    justifyContent: 'space-between',
+                    flexDirection: 'row',
                     alignItems: 'flex-start',
+                    justifyContent: 'space-between',
                     marginBottom: '20px',
-                    flexWrap: 'wrap',
-                    gap: '16px'
+                    gap: '24px'
                   }}>
-                    <div>
+                    <div style={{ 
+                      flex: 1,
+                      borderLeft: '3px solid #C9933A',
+                      paddingLeft: '20px',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: '8px'
+                    }}>
                       <h2 style={{
                         fontFamily: "'Cormorant Garamond', Georgia, serif",
-                        fontSize: '28px',
+                        fontSize: '32px',
                         fontWeight: '500',
                         color: '#1C1917',
-                        margin: '0 0 12px 0'
+                        margin: '0',
+                        lineHeight: '1.2',
+                        letterSpacing: '-0.01em'
                       }}>
                         {tour.title}
                       </h2>
@@ -498,7 +432,9 @@ export default function GalleryPageClient({ tours }: Props) {
                         <span style={{
                           fontFamily: "'Jost', Arial, sans-serif",
                           fontSize: '12px',
-                          color: '#9A948F'
+                          color: '#9A948F',
+                          fontWeight: '500',
+                          letterSpacing: '0.05em'
                         }}>
                           {formatHeaderDate(tour.startDate)}
                         </span>
@@ -506,11 +442,13 @@ export default function GalleryPageClient({ tours }: Props) {
                           fontFamily: "'Jost', Arial, sans-serif",
                           fontSize: '10px',
                           color: '#C9933A',
-                          border: '1px solid #C9933A',
-                          backgroundColor: 'rgba(201,147,58,0.06)',
+                          border: '1px solid rgba(201,147,58,0.4)',
+                          backgroundColor: 'rgba(201,147,58,0.05)',
                           textTransform: 'uppercase',
-                          letterSpacing: '0.2em',
-                          padding: '4px 10px'
+                          letterSpacing: '0.15em',
+                          padding: '4px 12px',
+                          borderRadius: '2px',
+                          fontWeight: '600'
                         }}>
                           {tour.category || 'Event'}
                         </span>
@@ -537,7 +475,8 @@ export default function GalleryPageClient({ tours }: Props) {
                           gap: '12px',
                           transition: 'all 0.3s ease',
                           boxShadow: '0 0 25px rgba(201, 147, 58, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.4)',
-                          whiteSpace: 'nowrap'
+                          whiteSpace: 'nowrap',
+                          marginTop: '4px'
                         }}
                         onMouseEnter={(e) => {
                           e.currentTarget.style.background = 'linear-gradient(135deg, #FFF8E1 0%, #E5A93C 50%, #B87F2A 100%)';

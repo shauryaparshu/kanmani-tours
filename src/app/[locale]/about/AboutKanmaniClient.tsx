@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { galleryImageUrl, containThumbnailImageUrl } from '@/sanity/lib/image';
 import LazyImage from '@/components/ui/LazyImage';
 import UnifiedLightbox, { LightboxImage } from '@/components/ui/UnifiedLightbox';
@@ -11,6 +11,12 @@ interface FounderPhoto {
   era: string;
   year?: number;
   location?: string;
+  country?: {
+    _id: string;
+    title: string;
+    title_ja?: string;
+    key: string;
+  };
   featured?: boolean;
   orderRank?: string;
   image: any;
@@ -138,7 +144,7 @@ interface EraGalleryProps {
   eraPhotos: FounderPhoto[];
   isExpanded: boolean;
   onToggleExpand: () => void;
-  openLightbox: (photo: FounderPhoto, eraId: string, index: number) => void;
+  openLightbox: (photo: FounderPhoto, photosList: FounderPhoto[], index: number) => void;
   isJa: boolean;
 }
 
@@ -151,19 +157,36 @@ function EraGallery({
   openLightbox,
   isJa
 }: EraGalleryProps) {
+  const [selectedCountry, setSelectedCountry] = useState<string>('all');
   const [visiblePhotos, setVisiblePhotos] = useState<FounderPhoto[]>([]);
 
-  useEffect(() => {
-    setVisiblePhotos(eraPhotos.slice(0, 4));
-  }, [eraPhotos]);
+  const availableCountries = useMemo(() => {
+    if (eraId !== 'world-travel') return [];
+    const countriesMap = new Map<string, { _id: string; title: string; title_ja?: string; key: string }>();
+    eraPhotos.forEach(photo => {
+      if (photo.country && photo.country.key) {
+        countriesMap.set(photo.country.key, photo.country);
+      }
+    });
+    return Array.from(countriesMap.values()).sort((a, b) => a.title.localeCompare(b.title));
+  }, [eraId, eraPhotos]);
+
+  const filteredPhotos = useMemo(() => {
+    if (eraId !== 'world-travel' || selectedCountry === 'all') return eraPhotos;
+    return eraPhotos.filter(photo => photo.country?.key === selectedCountry);
+  }, [eraId, selectedCountry, eraPhotos]);
 
   useEffect(() => {
-    if (isExpanded || eraPhotos.length <= 4) return;
+    setVisiblePhotos(filteredPhotos.slice(0, 4));
+  }, [filteredPhotos]);
+
+  useEffect(() => {
+    if (isExpanded || filteredPhotos.length <= 4) return;
 
     const interval = setInterval(() => {
       setVisiblePhotos(currentVisible => {
         const visibleIds = new Set(currentVisible.map(p => p._id));
-        const pool = eraPhotos.filter(p => !visibleIds.has(p._id));
+        const pool = filteredPhotos.filter(p => !visibleIds.has(p._id));
 
         if (pool.length === 0) return currentVisible;
 
@@ -178,7 +201,7 @@ function EraGallery({
           selected = [...selected, ...shuffledVisible.slice(0, remainingCount)];
         }
 
-        // Shuffle up to 100 times to guarantee that no slot receives the same photo it currently has
+        // Shuffle up to 100 times to guarantee that no duplicate slot
         let nextVisible = selected;
         let attempts = 0;
         while (attempts < 100) {
@@ -195,20 +218,71 @@ function EraGallery({
     }, 4000);
 
     return () => clearInterval(interval);
-  }, [isExpanded, eraPhotos]);
-
-  const handlePhotoClick = (photo: FounderPhoto, displayIndex: number) => {
-    const fullIndex = eraPhotos.findIndex(p => p._id === photo._id);
-    openLightbox(photo, eraId, fullIndex >= 0 ? fullIndex : displayIndex);
-  };
+  }, [isExpanded, filteredPhotos]);
 
   return (
     <div style={{ marginBottom: '48px' }}>
-      <div style={{ display: 'flex', alignItems: 'baseline', gap: '12px', marginBottom: '20px' }}>
-        <h3 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: '24px', color: '#1C1917' }}>{eraLabel}</h3>
-        <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '11px', color: '#9A948F', backgroundColor: '#E8E4DC', padding: '2px 8px', borderRadius: '10px' }}>
-          {eraPhotos.length} photos
-        </span>
+      <div style={{ 
+        display: 'flex', 
+        alignItems: 'center', 
+        justifyContent: 'space-between',
+        flexWrap: 'wrap',
+        gap: '16px',
+        marginBottom: '20px'
+      }}>
+        <div style={{ display: 'flex', alignItems: 'baseline', gap: '12px' }}>
+          <h3 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: '24px', color: '#1C1917', margin: 0 }}>{eraLabel}</h3>
+          <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '11px', color: '#9A948F', backgroundColor: '#E8E4DC', padding: '2px 8px', borderRadius: '10px' }}>
+            {filteredPhotos.length} photos
+          </span>
+        </div>
+
+        {eraId === 'world-travel' && availableCountries.length > 0 && (
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <label htmlFor="world-travel-country-select" style={{
+              fontFamily: "'Jost', Arial, sans-serif",
+              fontSize: '12px',
+              fontWeight: '500',
+              letterSpacing: '0.05em',
+              textTransform: 'uppercase',
+              color: '#9A948F'
+            }}>
+              {isJa ? '国でフィルター:' : 'Filter by Country:'}
+            </label>
+            <select
+              id="world-travel-country-select"
+              value={selectedCountry}
+              onChange={(e) => setSelectedCountry(e.target.value)}
+              style={{
+                fontFamily: "'Jost', Arial, sans-serif",
+                fontSize: '13px',
+                color: '#1C1917',
+                padding: '6px 24px 6px 12px',
+                border: '1px solid #D4CFC9',
+                borderRadius: '4px',
+                backgroundColor: '#FFFFFF',
+                cursor: 'pointer',
+                outline: 'none',
+                boxShadow: '0 2px 6px rgba(0,0,0,0.03)',
+                transition: 'border-color 0.2s ease',
+                WebkitAppearance: 'none',
+                MozAppearance: 'none',
+                appearance: 'none',
+                backgroundImage: 'url("data:image/svg+xml;utf8,<svg fill=\'%231C1917\' height=\'24\' viewBox=\'0 0 24 24\' width=\'24\' xmlns=\'http://www.w3.org/2000/svg\'><path d=\'M7 10l5 5 5-5z\'/><path d=\'M0 0h24v24H0z\' fill=\'none\'/></svg>")',
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'right 6px center',
+                backgroundSize: '16px'
+              }}
+            >
+              <option value="all">{isJa ? 'すべての国' : 'All Countries'}</option>
+              {availableCountries.map(c => (
+                <option key={c.key} value={c.key}>
+                  {isJa ? c.title_ja || c.title : c.title}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
       </div>
 
       {isExpanded ? (
@@ -217,12 +291,12 @@ function EraGallery({
           gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
           gap: '12px'
         }}>
-          {eraPhotos.map((photo, index) => {
+          {filteredPhotos.map((photo, index) => {
             const url = containThumbnailImageUrl(photo.image);
             return (
               <div 
                 key={photo._id} 
-                onClick={() => openLightbox(photo, eraId, index)}
+                onClick={() => openLightbox(photo, filteredPhotos, index)}
                 style={{
                   aspectRatio: '1 / 1',
                   backgroundColor: '#1C1917',
@@ -260,14 +334,17 @@ function EraGallery({
             <FlipImageCard 
               key={index} 
               photo={photo}
-              onClick={() => handlePhotoClick(photo, index)}
+              onClick={() => {
+                const displayIndex = filteredPhotos.findIndex(p => p._id === photo._id);
+                openLightbox(photo, filteredPhotos, displayIndex >= 0 ? displayIndex : index);
+              }}
               isJa={isJa}
             />
           ))}
         </div>
       )}
 
-      {!isExpanded && eraPhotos.length > 4 && (
+      {!isExpanded && filteredPhotos.length > 4 && (
         <div style={{ textAlign: 'center', marginTop: '24px', display: 'flex', justifyContent: 'center' }}>
           <button 
             onClick={onToggleExpand}
@@ -306,12 +383,12 @@ function EraGallery({
               <rect x="3" y="3" width="18" height="18" rx="2"/>
               <path d="M3 9h18M9 21V9"/>
             </svg>
-            VIEW ALL {eraPhotos.length} PHOTOS
+            VIEW ALL {filteredPhotos.length} PHOTOS
           </button>
         </div>
       )}
 
-      {isExpanded && eraPhotos.length > 4 && (
+      {isExpanded && filteredPhotos.length > 4 && (
         <div style={{ textAlign: 'center', marginTop: '24px', display: 'flex', justifyContent: 'center' }}>
           <button 
             onClick={onToggleExpand}
@@ -449,16 +526,14 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
   const [lightboxPhoto, setLightboxPhoto] = useState<FounderPhoto | null>(null);
   const [lightboxIndex, setLightboxIndex] = useState<number>(0);
   const [currentEraPhotos, setCurrentEraPhotos] = useState<FounderPhoto[]>([]);
-  const [isHoveringLightbox, setIsHoveringLightbox] = useState(false);
-  const lightboxTimerRef = useRef<number | null>(null);
-
   const getPhotosByEra = (eraId: string) => {
     if (eraId === 'all') return photos;
     return photos.filter(photo => photo.era === eraId);
   };
 
   const getEraPhoto = (eraId: string, skip: number = 0): FounderPhoto | null => {
-    return null;
+    const eraPhotos = getPhotosByEra(eraId);
+    return eraPhotos[skip] || null;
   };
 
   const handleEraClick = (eraId: string) => {
@@ -469,73 +544,17 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
     }
   };
 
-  const openLightbox = (photo: FounderPhoto, eraId: string, index: number) => {
-    setCurrentEraPhotos(getPhotosByEra(eraId));
+  const openLightbox = (photo: FounderPhoto, photosList: FounderPhoto[], index: number) => {
+    setCurrentEraPhotos(photosList);
     setLightboxPhoto(photo);
     setLightboxIndex(index);
-    setIsHoveringLightbox(false);
     document.body.style.overflow = 'hidden';
   };
 
   const closeLightbox = useCallback(() => {
     setLightboxPhoto(null);
-    setIsHoveringLightbox(false);
     document.body.style.overflow = 'auto';
-    if (lightboxTimerRef.current !== null) {
-      window.clearTimeout(lightboxTimerRef.current);
-      lightboxTimerRef.current = null;
-    }
   }, []);
-
-  const goNext = useCallback(() => {
-    if (currentEraPhotos.length === 0) return;
-    const newIndex = (lightboxIndex + 1) % currentEraPhotos.length;
-    setLightboxIndex(newIndex);
-    setLightboxPhoto(currentEraPhotos[newIndex]);
-  }, [lightboxIndex, currentEraPhotos]);
-
-  const goPrev = useCallback(() => {
-    if (currentEraPhotos.length === 0) return;
-    const newIndex = (lightboxIndex - 1 + currentEraPhotos.length) % currentEraPhotos.length;
-    setLightboxIndex(newIndex);
-    setLightboxPhoto(currentEraPhotos[newIndex]);
-  }, [lightboxIndex, currentEraPhotos]);
-
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (!lightboxPhoto) return;
-      if (e.key === 'ArrowLeft') goPrev();
-      if (e.key === 'ArrowRight') goNext();
-      if (e.key === 'Escape') closeLightbox();
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [lightboxPhoto, goPrev, goNext, closeLightbox]);
-
-  // Auto-advance timer for lightbox
-  useEffect(() => {
-    if (!lightboxPhoto || currentEraPhotos.length <= 1 || isHoveringLightbox) {
-      if (lightboxTimerRef.current !== null) {
-        window.clearTimeout(lightboxTimerRef.current);
-        lightboxTimerRef.current = null;
-      }
-      return;
-    }
-
-    lightboxTimerRef.current = window.setTimeout(() => {
-      const newIndex = (lightboxIndex + 1) % currentEraPhotos.length;
-      setLightboxIndex(newIndex);
-      setLightboxPhoto(currentEraPhotos[newIndex]);
-    }, 5000);
-
-    return () => {
-      if (lightboxTimerRef.current !== null) {
-        window.clearTimeout(lightboxTimerRef.current);
-        lightboxTimerRef.current = null;
-      }
-    };
-  }, [lightboxPhoto, lightboxIndex, currentEraPhotos, isHoveringLightbox]);
 
   const toggleExpandEra = (eraId: string) => {
     const newExpanded = new Set(expandedEras);
@@ -591,23 +610,26 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
           backgroundColor: '#1C1917',
           width: '100%'
         }}>
-          <div style={{
+           <div style={{
             width: '100%',
             display: 'flex',
             alignItems: 'stretch',
             flexDirection: isMobile ? 'column' : 'row',
-            backgroundColor: '#1C1917'
+            backgroundColor: '#1C1917',
+            height: isMobile ? 'auto' : '60vh'
           }}>
             <div style={{
-              width: isMobile ? '100%' : '60%',
+              width: isMobile ? '100%' : '40%',
               backgroundColor: '#111010',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              flexShrink: 0
+              flexShrink: 0,
+              height: isMobile ? 'auto' : '100%'
             }}>
               <div style={{
                 width: '100%',
+                height: isMobile ? 'auto' : '100%',
                 position: 'relative',
                 overflow: 'hidden'
               }}>
@@ -616,7 +638,9 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
                   alt="Dr. Kanmani"
                   style={{
                     width: '100%',
-                    height: 'auto',
+                    height: isMobile ? 'auto' : '100%',
+                    objectFit: 'cover',
+                    objectPosition: 'center 15%',
                     display: 'block'
                   }}
                   onError={(e) => {
@@ -627,29 +651,29 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
             </div>
 
             <div style={{
-              width: isMobile ? '100%' : '40%',
+              width: isMobile ? '100%' : '60%',
               backgroundColor: '#1C1917',
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'space-between',
-              padding: isMobile ? '32px 16px 24px 16px' : '88px 40px 48px 40px',
+              padding: isMobile ? '32px 16px 24px 16px' : '40px 48px 32px 48px',
               borderLeft: isMobile ? 'none' : '1px solid rgba(201,147,58,0.15)',
               minHeight: 'auto',
-              height: 'auto',
-              overflow: 'visible'
+              height: isMobile ? 'auto' : '100%',
+              overflow: 'hidden'
             }}>
               {/* Header Intro Group (Quote + Name) */}
               <div style={{ display: 'flex', flexDirection: 'column' }}>
                 {/* Block 1: Special Quote Block */}
                 <div style={{
                   position: 'relative',
-                  borderLeft: '4px solid #C9933A',
+                  borderLeft: '4px solid #EBB14E',
                   padding: '20px 24px',
-                  backgroundColor: 'rgba(201, 147, 58, 0.04)',
+                  backgroundColor: 'rgba(235, 177, 78, 0.04)',
                   marginBottom: '20px',
                   marginTop: 0,
                   borderRadius: '0 8px 8px 0',
-                  boxShadow: 'inset 0 0 15px rgba(201, 147, 58, 0.05)',
+                  boxShadow: 'inset 0 0 15px rgba(235, 177, 78, 0.05)',
                   backdropFilter: 'blur(5px)',
                   overflow: 'visible'
                 }}>
@@ -688,7 +712,7 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
                     fontSize: '11px',
                     fontWeight: 500,
                     letterSpacing: '0.32em',
-                    color: '#C9933A',
+                    color: '#EBB14E',
                     textTransform: 'uppercase',
                     marginBottom: '6px'
                   }}>THE FOUNDER</p>
@@ -709,17 +733,17 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
                     fontSize: '11px',
                     fontWeight: 400,
                     letterSpacing: '0.12em',
-                    color: '#C9933A',
+                    color: '#EBB14E',
                     lineHeight: 1.2,
                     marginBottom: '12px',
                     whiteSpace: 'nowrap'
-                  }}>PhD SCHOLAR · ENTREPRENEUR · HUMANITARIAN</p>
+                  }}>PhD SCHOLAR · ENTREPRENEUR · MOTIVATIONAL SPEAKER · HUMANITARIAN</p>
 
                   {/* Divider */}
                   <div style={{
                     width: '56px',
                     height: '1px',
-                    backgroundColor: '#C9933A',
+                    backgroundColor: '#EBB14E',
                     marginBottom: 0
                   }} />
                 </div>
@@ -738,31 +762,31 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
                   { num: '4', label: 'Languages' }
                 ].map((stat, idx) => (
                   <div key={idx} style={{
-                    padding: '12px 16px',
-                    borderRight: '1px solid rgba(201,147,58,0.12)',
-                    borderBottom: '1px solid rgba(201,147,58,0.12)',
-                    minWidth: '120px',
+                    padding: '16px 20px',
+                    borderRight: '1px solid rgba(235,177,78,0.15)',
+                    borderBottom: '1px solid rgba(235,177,78,0.15)',
+                    minWidth: '140px',
                     flex: '1 1 50%',
                     display: 'flex',
                     alignItems: 'baseline',
-                    gap: '8px'
+                    gap: '10px'
                   }}>
                     <div style={{
                       fontFamily: "'Jost', Arial, sans-serif",
                       fontWeight: 300,
-                      fontSize: 'clamp(20px, 2.2vw, 32px)',
+                      fontSize: 'clamp(28px, 2.8vw, 42px)',
                       color: '#F5F1EB',
                       lineHeight: '1.2',
                       flexShrink: 0
                     }}>{stat.num}</div>
                     <div style={{
                       fontFamily: "'Jost', Arial, sans-serif",
-                      fontSize: '11px',
+                      fontSize: '13px',
                       fontWeight: 500,
                       letterSpacing: '0.08em',
-                      color: '#E8E4DC',
+                      color: '#FFF7E8',
                       textTransform: 'uppercase',
-                      lineHeight: '1.2',
+                      lineHeight: '1.3',
                       whiteSpace: 'nowrap'
                     }}>{stat.label}</div>
                   </div>
@@ -773,7 +797,7 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
         </div>
 
         {/* CHAPTER 4 — PHOTO GALLERY */}
-        <section id="founder-gallery" style={{ padding: '80px 20px', maxWidth: '1400px', margin: '0 auto' }}>
+        <section id="founder-gallery" style={{ padding: '24px 20px 80px 20px', maxWidth: '1400px', margin: '0 auto' }}>
           <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: '42px', textAlign: 'center', marginBottom: '48px', color: '#1C1917' }}>Kanmani's Life in Pictures</h2>
           
           {/* Era Filters */}
@@ -985,14 +1009,19 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
       {/* LIGHTBOX OVERLAY */}
       {lightboxPhoto && (
         <UnifiedLightbox
-          images={currentEraPhotos.map((photo) => ({
-            id: photo._id,
-            url: galleryImageUrl(photo.image),
-            thumbnailUrl: containThumbnailImageUrl(photo.image) || '',
-            lqip: photo.image?.asset?.metadata?.lqip,
-            caption: isJa ? photo.captionJa : photo.caption,
-            subCaption: [photo.year, photo.location].filter(Boolean).join(' • ')
-          }))}
+          images={currentEraPhotos.map((photo) => {
+            const loc = photo.era === 'world-travel' && photo.country 
+              ? (isJa ? photo.country.title_ja || photo.country.title : photo.country.title)
+              : photo.location;
+            return {
+              id: photo._id,
+              url: galleryImageUrl(photo.image),
+              thumbnailUrl: containThumbnailImageUrl(photo.image) || '',
+              lqip: photo.image?.asset?.metadata?.lqip,
+              caption: isJa ? photo.captionJa : photo.caption,
+              subCaption: [photo.year, loc].filter(Boolean).join(' • ')
+            };
+          })}
           initialIndex={lightboxIndex}
           onClose={closeLightbox}
         />

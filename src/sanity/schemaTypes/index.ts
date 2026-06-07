@@ -6,7 +6,6 @@ import { aboutType } from './aboutType'
 import { celebrityType } from './celebrityType'
 import { categoryType } from './categoryType'
 import testimonialType from './testimonialType'
-import { founderPhotoType } from './founderPhotoType'
 import { countryType } from './countryType'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
@@ -17,7 +16,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
         celebrityType,
         categoryType,
         testimonialType,
-        founderPhotoType,
         countryType,
     ],
 }

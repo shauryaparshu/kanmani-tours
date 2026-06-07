@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { galleryImageUrl, containThumbnailImageUrl } from '@/sanity/lib/image';
 import LazyImage from '@/components/ui/LazyImage';
 import UnifiedLightbox, { LightboxImage } from '@/components/ui/UnifiedLightbox';
@@ -11,6 +11,12 @@ interface FounderPhoto {
   era: string;
   year?: number;
   location?: string;
+  country?: {
+    _id: string;
+    title: string;
+    title_ja?: string;
+    key: string;
+  };
   featured?: boolean;
   orderRank?: string;
   image: any;
@@ -138,7 +144,7 @@ interface EraGalleryProps {
   eraPhotos: FounderPhoto[];
   isExpanded: boolean;
   onToggleExpand: () => void;
-  openLightbox: (photo: FounderPhoto, eraId: string, index: number) => void;
+  openLightbox: (photo: FounderPhoto, photosList: FounderPhoto[], index: number) => void;
   isJa: boolean;
 }
 
@@ -151,19 +157,36 @@ function EraGallery({
   openLightbox,
   isJa
 }: EraGalleryProps) {
+  const [selectedCountry, setSelectedCountry] = useState<string>('all');
   const [visiblePhotos, setVisiblePhotos] = useState<FounderPhoto[]>([]);
 
-  useEffect(() => {
-    setVisiblePhotos(eraPhotos.slice(0, 5));
-  }, [eraPhotos]);
+  const availableCountries = useMemo(() => {
+    if (eraId !== 'world-travel') return [];
+    const countriesMap = new Map<string, { _id: string; title: string; title_ja?: string; key: string }>();
+    eraPhotos.forEach(photo => {
+      if (photo.country && photo.country.key) {
+        countriesMap.set(photo.country.key, photo.country);
+      }
+    });
+    return Array.from(countriesMap.values()).sort((a, b) => a.title.localeCompare(b.title));
+  }, [eraId, eraPhotos]);
+
+  const filteredPhotos = useMemo(() => {
+    if (eraId !== 'world-travel' || selectedCountry === 'all') return eraPhotos;
+    return eraPhotos.filter(photo => photo.country?.key === selectedCountry);
+  }, [eraId, selectedCountry, eraPhotos]);
 
   useEffect(() => {
-    if (isExpanded || eraPhotos.length <= 5) return;
+    setVisiblePhotos(filteredPhotos.slice(0, 5));
+  }, [filteredPhotos]);
+
+  useEffect(() => {
+    if (isExpanded || filteredPhotos.length <= 5) return;
 
     const interval = setInterval(() => {
       setVisiblePhotos(currentVisible => {
         const visibleIds = new Set(currentVisible.map(p => p._id));
-        const pool = eraPhotos.filter(p => !visibleIds.has(p._id));
+        const pool = filteredPhotos.filter(p => !visibleIds.has(p._id));
 
         if (pool.length === 0) return currentVisible;
 
@@ -178,7 +201,7 @@ function EraGallery({
           selected = [...selected, ...shuffledVisible.slice(0, remainingCount)];
         }
 
-        // Shuffle up to 100 times to guarantee that no slot receives the same photo it currently has
+        // Shuffle up to 100 times to guarantee that no duplicate slot
         let nextVisible = selected;
         let attempts = 0;
         while (attempts < 100) {
@@ -195,20 +218,71 @@ function EraGallery({
     }, 3000);
 
     return () => clearInterval(interval);
-  }, [isExpanded, eraPhotos]);
-
-  const handlePhotoClick = (photo: FounderPhoto, displayIndex: number) => {
-    const fullIndex = eraPhotos.findIndex(p => p._id === photo._id);
-    openLightbox(photo, eraId, fullIndex >= 0 ? fullIndex : displayIndex);
-  };
+  }, [isExpanded, filteredPhotos]);
 
   return (
     <div style={{ marginBottom: '64px' }}>
-      <div style={{ display: 'flex', alignItems: 'baseline', gap: '16px', marginBottom: '24px' }}>
-        <h3 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: '32px', color: '#1C1917' }}>{eraLabel}</h3>
-        <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '12px', color: '#9A948F', backgroundColor: '#E8E4DC', padding: '4px 12px', borderRadius: '12px' }}>
-          {eraPhotos.length} photos
-        </span>
+      <div style={{ 
+        display: 'flex', 
+        alignItems: 'center', 
+        justifyContent: 'space-between',
+        flexWrap: 'wrap',
+        gap: '16px',
+        marginBottom: '24px'
+      }}>
+        <div style={{ display: 'flex', alignItems: 'baseline', gap: '16px' }}>
+          <h3 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: '32px', color: '#1C1917', margin: 0 }}>{eraLabel}</h3>
+          <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '12px', color: '#9A948F', backgroundColor: '#E8E4DC', padding: '4px 12px', borderRadius: '12px' }}>
+            {filteredPhotos.length} photos
+          </span>
+        </div>
+
+        {eraId === 'world-travel' && availableCountries.length > 0 && (
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <label htmlFor="world-travel-country-select" style={{
+              fontFamily: "'Jost', Arial, sans-serif",
+              fontSize: '12px',
+              fontWeight: '500',
+              letterSpacing: '0.05em',
+              textTransform: 'uppercase',
+              color: '#9A948F'
+            }}>
+              {isJa ? '国でフィルター:' : 'Filter by Country:'}
+            </label>
+            <select
+              id="world-travel-country-select"
+              value={selectedCountry}
+              onChange={(e) => setSelectedCountry(e.target.value)}
+              style={{
+                fontFamily: "'Jost', Arial, sans-serif",
+                fontSize: '13px',
+                color: '#1C1917',
+                padding: '6px 24px 6px 12px',
+                border: '1px solid #D4CFC9',
+                borderRadius: '4px',
+                backgroundColor: '#FFFFFF',
+                cursor: 'pointer',
+                outline: 'none',
+                boxShadow: '0 2px 6px rgba(0,0,0,0.03)',
+                transition: 'border-color 0.2s ease',
+                WebkitAppearance: 'none',
+                MozAppearance: 'none',
+                appearance: 'none',
+                backgroundImage: 'url("data:image/svg+xml;utf8,<svg fill=\'%231C1917\' height=\'24\' viewBox=\'0 0 24 24\' width=\'24\' xmlns=\'http://www.w3.org/2000/svg\'><path d=\'M7 10l5 5 5-5z\'/><path d=\'M0 0h24v24H0z\' fill=\'none\'/></svg>")',
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'right 6px center',
+                backgroundSize: '16px'
+              }}
+            >
+              <option value="all">{isJa ? 'すべての国' : 'All Countries'}</option>
+              {availableCountries.map(c => (
+                <option key={c.key} value={c.key}>
+                  {isJa ? c.title_ja || c.title : c.title}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
       </div>
 
       {isExpanded ? (
@@ -217,12 +291,12 @@ function EraGallery({
           gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
           gap: '16px'
         }}>
-          {eraPhotos.map((photo, index) => {
+          {filteredPhotos.map((photo, index) => {
             const url = containThumbnailImageUrl(photo.image);
             return (
               <div 
                 key={photo._id} 
-                onClick={() => openLightbox(photo, eraId, index)}
+                onClick={() => openLightbox(photo, filteredPhotos, index)}
                 style={{
                   aspectRatio: '1 / 1',
                   backgroundColor: '#1C1917',
@@ -260,14 +334,17 @@ function EraGallery({
             <FlipImageCard 
               key={index} 
               photo={photo}
-              onClick={() => handlePhotoClick(photo, index)}
+              onClick={() => {
+                const displayIndex = filteredPhotos.findIndex(p => p._id === photo._id);
+                openLightbox(photo, filteredPhotos, displayIndex >= 0 ? displayIndex : index);
+              }}
               isJa={isJa}
             />
           ))}
         </div>
       )}
 
-      {!isExpanded && eraPhotos.length > 5 && (
+      {!isExpanded && filteredPhotos.length > 5 && (
         <div style={{ textAlign: 'center', marginTop: '32px', display: 'flex', justifyContent: 'center' }}>
           <button 
             onClick={onToggleExpand}
@@ -306,12 +383,12 @@ function EraGallery({
               <rect x="3" y="3" width="18" height="18" rx="2"/>
               <path d="M3 9h18M9 21V9"/>
             </svg>
-            View all {eraPhotos.length} photos
+            View all {filteredPhotos.length} photos
           </button>
         </div>
       )}
 
-      {isExpanded && eraPhotos.length > 5 && (
+      {isExpanded && filteredPhotos.length > 5 && (
         <div style={{ textAlign: 'center', marginTop: '32px', display: 'flex', justifyContent: 'center' }}>
           <button 
             onClick={onToggleExpand}
@@ -430,9 +507,6 @@ export default function FounderPageClient({ locale, photos }: FounderPageClientP
   const [lightboxPhoto, setLightboxPhoto] = useState<FounderPhoto | null>(null);
   const [lightboxIndex, setLightboxIndex] = useState<number>(0);
   const [currentEraPhotos, setCurrentEraPhotos] = useState<FounderPhoto[]>([]);
-  const [isHoveringLightbox, setIsHoveringLightbox] = useState(false);
-  const lightboxTimerRef = useRef<number | null>(null);
-
   // Filter photos by era
   const getPhotosByEra = (eraId: string) => {
     if (eraId === 'all') return photos;
@@ -440,7 +514,8 @@ export default function FounderPageClient({ locale, photos }: FounderPageClientP
   };
 
   const getEraPhoto = (eraId: string, skip: number = 0): FounderPhoto | null => {
-    return null;
+    const eraPhotos = getPhotosByEra(eraId);
+    return eraPhotos[skip] || null;
   };
 
   const handleEraClick = (eraId: string) => {
@@ -452,74 +527,17 @@ export default function FounderPageClient({ locale, photos }: FounderPageClientP
   };
 
   // Lightbox navigation
-  const openLightbox = (photo: FounderPhoto, eraId: string, index: number) => {
-    setCurrentEraPhotos(getPhotosByEra(eraId));
+  const openLightbox = (photo: FounderPhoto, photosList: FounderPhoto[], index: number) => {
+    setCurrentEraPhotos(photosList);
     setLightboxPhoto(photo);
     setLightboxIndex(index);
-    setIsHoveringLightbox(false);
     document.body.style.overflow = 'hidden';
   };
 
   const closeLightbox = useCallback(() => {
     setLightboxPhoto(null);
-    setIsHoveringLightbox(false);
     document.body.style.overflow = 'auto';
-    if (lightboxTimerRef.current !== null) {
-      window.clearTimeout(lightboxTimerRef.current);
-      lightboxTimerRef.current = null;
-    }
   }, []);
-
-  const goNext = useCallback(() => {
-    if (currentEraPhotos.length === 0) return;
-    const newIndex = (lightboxIndex + 1) % currentEraPhotos.length;
-    setLightboxIndex(newIndex);
-    setLightboxPhoto(currentEraPhotos[newIndex]);
-  }, [lightboxIndex, currentEraPhotos]);
-
-  const goPrev = useCallback(() => {
-    if (currentEraPhotos.length === 0) return;
-    const newIndex = (lightboxIndex - 1 + currentEraPhotos.length) % currentEraPhotos.length;
-    setLightboxIndex(newIndex);
-    setLightboxPhoto(currentEraPhotos[newIndex]);
-  }, [lightboxIndex, currentEraPhotos]);
-
-  // Keyboard navigation for lightbox
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (!lightboxPhoto) return;
-      if (e.key === 'ArrowLeft') goPrev();
-      if (e.key === 'ArrowRight') goNext();
-      if (e.key === 'Escape') closeLightbox();
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [lightboxPhoto, goPrev, goNext, closeLightbox]);
-
-  // Auto-advance timer for lightbox
-  useEffect(() => {
-    if (!lightboxPhoto || currentEraPhotos.length <= 1 || isHoveringLightbox) {
-      if (lightboxTimerRef.current !== null) {
-        window.clearTimeout(lightboxTimerRef.current);
-        lightboxTimerRef.current = null;
-      }
-      return;
-    }
-
-    lightboxTimerRef.current = window.setTimeout(() => {
-      const newIndex = (lightboxIndex + 1) % currentEraPhotos.length;
-      setLightboxIndex(newIndex);
-      setLightboxPhoto(currentEraPhotos[newIndex]);
-    }, 5000);
-
-    return () => {
-      if (lightboxTimerRef.current !== null) {
-        window.clearTimeout(lightboxTimerRef.current);
-        lightboxTimerRef.current = null;
-      }
-    };
-  }, [lightboxPhoto, lightboxIndex, currentEraPhotos, isHoveringLightbox]);
 
   const toggleExpandEra = (eraId: string) => {
     const newExpanded = new Set(expandedEras);
@@ -618,7 +636,7 @@ export default function FounderPageClient({ locale, photos }: FounderPageClientP
             fontSize: '11px',
             fontWeight: 500,
             letterSpacing: '0.32em',
-            color: '#C9933A',
+            color: '#EBB14E',
             textTransform: 'uppercase',
             marginBottom: '16px'
           }}>THE FOUNDER</p>
@@ -637,16 +655,16 @@ export default function FounderPageClient({ locale, photos }: FounderPageClientP
             fontSize: 'clamp(9px, 1.2vw, 12px)',
             fontWeight: 400,
             letterSpacing: '0.18em',
-            color: '#C9933A',
+            color: '#EBB14E',
             textTransform: 'uppercase',
             marginBottom: '40px',
             whiteSpace: 'nowrap'
-          }}>PHD SCHOLAR · ENTREPRENEUR · HUMANITARIAN</p>
+          }}>PHD SCHOLAR · ENTREPRENEUR · MOTIVATIONAL SPEAKER · HUMANITARIAN</p>
 
           <div style={{
             width: '80px',
             height: '1px',
-            backgroundColor: '#C9933A',
+            backgroundColor: '#EBB14E',
             margin: '0 auto 40px'
           }} />
 
@@ -660,32 +678,32 @@ export default function FounderPageClient({ locale, photos }: FounderPageClientP
           }}>
             {/* Stat 1 */}
             <div style={{ textAlign: 'center' }}>
-              <div style={{ fontFamily: "'Jost', Arial, sans-serif", fontWeight: 300, fontSize: 'clamp(32px, 4vw, 48px)', color: '#F5F1EB', lineHeight: '1.2' }}>28</div>
-              <div style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '11px', letterSpacing: '0.2em', color: '#9A948F', textTransform: 'uppercase', marginTop: '4px', whiteSpace: 'nowrap' }}>Years in Japan</div>
+              <div style={{ fontFamily: "'Jost', Arial, sans-serif", fontWeight: 300, fontSize: 'clamp(44px, 5vw, 64px)', color: '#F5F1EB', lineHeight: '1.2' }}>28</div>
+              <div style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '13px', letterSpacing: '0.2em', color: '#FFF7E8', textTransform: 'uppercase', marginTop: '4px', whiteSpace: 'nowrap' }}>Years in Japan</div>
             </div>
 
-            <div style={{ width: '1px', height: '40px', backgroundColor: 'rgba(201,147,58,0.2)' }} />
+            <div style={{ width: '1px', height: '40px', backgroundColor: 'rgba(235,177,78,0.25)' }} />
 
             {/* Stat 2 */}
             <div style={{ textAlign: 'center' }}>
-              <div style={{ fontFamily: "'Jost', Arial, sans-serif", fontWeight: 300, fontSize: 'clamp(32px, 4vw, 48px)', color: '#F5F1EB', lineHeight: '1.2' }}>41</div>
-              <div style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '11px', letterSpacing: '0.2em', color: '#9A948F', textTransform: 'uppercase', marginTop: '4px', whiteSpace: 'nowrap' }}>Countries Travelled</div>
+              <div style={{ fontFamily: "'Jost', Arial, sans-serif", fontWeight: 300, fontSize: 'clamp(44px, 5vw, 64px)', color: '#F5F1EB', lineHeight: '1.2' }}>41</div>
+              <div style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '13px', letterSpacing: '0.2em', color: '#FFF7E8', textTransform: 'uppercase', marginTop: '4px', whiteSpace: 'nowrap' }}>Countries Travelled</div>
             </div>
 
-            <div style={{ width: '1px', height: '40px', backgroundColor: 'rgba(201,147,58,0.2)' }} />
+            <div style={{ width: '1px', height: '40px', backgroundColor: 'rgba(235,177,78,0.25)' }} />
 
             {/* Stat 3 */}
             <div style={{ textAlign: 'center' }}>
-              <div style={{ fontFamily: "'Jost', Arial, sans-serif", fontWeight: 300, fontSize: 'clamp(32px, 4vw, 48px)', color: '#F5F1EB', lineHeight: '1.2' }}>PhD</div>
-              <div style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '11px', letterSpacing: '0.2em', color: '#9A948F', textTransform: 'uppercase', marginTop: '4px', whiteSpace: 'nowrap' }}>Nagoya Uni, Japan</div>
+              <div style={{ fontFamily: "'Jost', Arial, sans-serif", fontWeight: 300, fontSize: 'clamp(44px, 5vw, 64px)', color: '#F5F1EB', lineHeight: '1.2' }}>PhD</div>
+              <div style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '13px', letterSpacing: '0.2em', color: '#FFF7E8', textTransform: 'uppercase', marginTop: '4px', whiteSpace: 'nowrap' }}>Nagoya Uni, Japan</div>
             </div>
 
-            <div style={{ width: '1px', height: '40px', backgroundColor: 'rgba(201,147,58,0.2)' }} />
+            <div style={{ width: '1px', height: '40px', backgroundColor: 'rgba(235,177,78,0.25)' }} />
 
             {/* Stat 4 */}
             <div style={{ textAlign: 'center' }}>
-              <div style={{ fontFamily: "'Jost', Arial, sans-serif", fontWeight: 300, fontSize: 'clamp(32px, 4vw, 48px)', color: '#F5F1EB', lineHeight: '1.2' }}>4</div>
-              <div style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '11px', letterSpacing: '0.2em', color: '#9A948F', textTransform: 'uppercase', marginTop: '4px', whiteSpace: 'nowrap' }}>Languages</div>
+              <div style={{ fontFamily: "'Jost', Arial, sans-serif", fontWeight: 300, fontSize: 'clamp(44px, 5vw, 64px)', color: '#F5F1EB', lineHeight: '1.2' }}>4</div>
+              <div style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '13px', letterSpacing: '0.2em', color: '#FFF7E8', textTransform: 'uppercase', marginTop: '4px', whiteSpace: 'nowrap' }}>Languages</div>
             </div>
           </div>
         </div>
@@ -933,14 +951,19 @@ export default function FounderPageClient({ locale, photos }: FounderPageClientP
       {/* LIGHTBOX OVERLAY */}
       {lightboxPhoto && (
         <UnifiedLightbox
-          images={currentEraPhotos.map((photo) => ({
-            id: photo._id,
-            url: galleryImageUrl(photo.image),
-            thumbnailUrl: containThumbnailImageUrl(photo.image) || '',
-            lqip: photo.image?.asset?.metadata?.lqip,
-            caption: isJa ? photo.captionJa : photo.caption,
-            subCaption: [photo.year, photo.location].filter(Boolean).join(' • ')
-          }))}
+          images={currentEraPhotos.map((photo) => {
+            const loc = photo.era === 'world-travel' && photo.country 
+              ? (isJa ? photo.country.title_ja || photo.country.title : photo.country.title)
+              : photo.location;
+            return {
+              id: photo._id,
+              url: galleryImageUrl(photo.image),
+              thumbnailUrl: containThumbnailImageUrl(photo.image) || '',
+              lqip: photo.image?.asset?.metadata?.lqip,
+              caption: isJa ? photo.captionJa : photo.caption,
+              subCaption: [photo.year, loc].filter(Boolean).join(' • ')
+            };
+          })}
           initialIndex={lightboxIndex}
           onClose={closeLightbox}
         />

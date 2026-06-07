@@ -21,9 +21,18 @@ interface UnifiedLightboxProps {
 export default function UnifiedLightbox({ images, initialIndex, onClose }: UnifiedLightboxProps) {
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
   const [isHoveringLightbox, setIsHoveringLightbox] = useState(false);
+  const [isIdle, setIsIdle] = useState(false);
   const currentImage = images[currentIndex];
   
-  // Close on Escape key
+  const goNext = useCallback(() => {
+    setCurrentIndex((prev) => (prev + 1) % images.length);
+  }, [images.length]);
+
+  const goPrev = useCallback(() => {
+    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
+  }, [images.length]);
+
+  // Close on Escape key and handle Arrows
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
@@ -32,15 +41,57 @@ export default function UnifiedLightbox({ images, initialIndex, onClose }: Unifi
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [currentIndex, onClose]);
+  }, [goPrev, goNext, onClose]);
 
-  const goNext = useCallback(() => {
-    setCurrentIndex((prev) => (prev + 1) % images.length);
-  }, [images.length]);
+  // Track idle state (5 seconds)
+  useEffect(() => {
+    let idleTimeout: NodeJS.Timeout;
+    
+    const resetIdleTimer = () => {
+      setIsIdle(false);
+      clearTimeout(idleTimeout);
+      idleTimeout = setTimeout(() => {
+        setIsIdle(true);
+      }, 5000);
+    };
 
-  const goPrev = useCallback(() => {
-    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
-  }, [images.length]);
+    resetIdleTimer();
+
+    const activityEvents = [
+      'mousemove',
+      'mousedown',
+      'click',
+      'keydown',
+      'touchstart',
+      'touchmove',
+      'scroll',
+      'wheel'
+    ];
+
+    activityEvents.forEach((event) => {
+      window.addEventListener(event, resetIdleTimer);
+    });
+
+    return () => {
+      clearTimeout(idleTimeout);
+      activityEvents.forEach((event) => {
+        window.removeEventListener(event, resetIdleTimer);
+      });
+    };
+  }, []);
+
+  // Autoplay when idle
+  useEffect(() => {
+    if (!isIdle || images.length <= 1) return;
+
+    const autoplayInterval = setInterval(() => {
+      goNext();
+    }, 4000);
+
+    return () => {
+      clearInterval(autoplayInterval);
+    };
+  }, [isIdle, goNext, images.length]);
 
   if (!images || images.length === 0) return null;
 
@@ -61,6 +112,25 @@ export default function UnifiedLightbox({ images, initialIndex, onClose }: Unifi
         WebkitBackdropFilter: 'blur(10px)'
       }}
     >
+      {/* Lightbox Header Section */}
+      {(currentImage.caption || currentImage.subCaption) && (
+        <div 
+          className="lightbox-header-container"
+          onClick={(e) => e.stopPropagation()}
+        >
+          {currentImage.caption && (
+            <h2 className="lightbox-title-left">
+              {currentImage.caption}
+            </h2>
+          )}
+          {currentImage.subCaption && (
+            <span className="lightbox-location-right">
+              {currentImage.subCaption}
+            </span>
+          )}
+        </div>
+      )}
+
       {/* Close button */}
       <button
         onClick={onClose}
@@ -83,30 +153,6 @@ export default function UnifiedLightbox({ images, initialIndex, onClose }: Unifi
         }}
       >✕</button>
 
-      {/* Image counter */}
-      <div style={{
-        position: 'absolute',
-        top: '18px',
-        left: '50%',
-        transform: 'translateX(-50%)',
-        fontFamily: "'Jost', Arial, sans-serif",
-        fontSize: 'clamp(18px, 2vw, 26px)',
-        fontWeight: '600',
-        letterSpacing: '0.2em',
-        color: '#FFF7E8',
-        background: 'linear-gradient(180deg, rgba(33,25,19,0.9), rgba(10,8,7,0.76))',
-        border: '1px solid rgba(201,147,58,0.3)',
-        padding: '8px 16px',
-        borderRadius: '999px',
-        minWidth: '96px',
-        textAlign: 'center',
-        boxShadow: '0 14px 28px rgba(0,0,0,0.32), inset 0 1px 0 rgba(255,255,255,0.08)',
-        backdropFilter: 'blur(10px)',
-        WebkitBackdropFilter: 'blur(10px)'
-      }}>
-        {currentIndex + 1} / {images.length}
-      </div>
-
       {images.length > 1 && (
         <>
           {/* Previous photo card */}
@@ -117,12 +163,12 @@ export default function UnifiedLightbox({ images, initialIndex, onClose }: Unifi
             }}
             style={{
               position: 'absolute',
-              left: '96px',
+              left: '48px',
               top: '50%',
               transform: 'translateY(-50%)',
-              width: 'clamp(96px, 12vw, 170px)',
+              width: 'clamp(144px, 18vw, 255px)',
               padding: '8px',
-              border: '1px solid rgba(201,147,58,0.28)',
+              border: '1px solid rgba(235,177,78,0.28)',
               background: 'rgba(10,8,7,0.7)',
               backdropFilter: 'blur(10px)',
               WebkitBackdropFilter: 'blur(10px)',
@@ -132,20 +178,20 @@ export default function UnifiedLightbox({ images, initialIndex, onClose }: Unifi
               transition: 'transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease'
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = '#C9933A';
+              e.currentTarget.style.borderColor = '#EBB14E';
               e.currentTarget.style.transform = 'translateY(-50%) scale(1.03)';
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = 'rgba(201,147,58,0.28)';
+              e.currentTarget.style.borderColor = 'rgba(235,177,78,0.28)';
               e.currentTarget.style.transform = 'translateY(-50%) scale(1)';
             }}
           >
-            <div style={{ position: 'relative', width: '100%', aspectRatio: '4 / 3', overflow: 'hidden' }}>
+            <div style={{ position: 'relative', width: '100%', aspectRatio: '4 / 3', overflow: 'hidden', backgroundColor: '#0A0807' }}>
               <LazyImage
                 src={images[(currentIndex - 1 + images.length) % images.length].thumbnailUrl}
                 lqip={images[(currentIndex - 1 + images.length) % images.length].lqip}
                 alt="Previous photo preview"
-                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }}
               />
               <div style={{
                 position: 'absolute',
@@ -173,12 +219,12 @@ export default function UnifiedLightbox({ images, initialIndex, onClose }: Unifi
             }}
             style={{
               position: 'absolute',
-              right: '96px',
+              right: '48px',
               top: '50%',
               transform: 'translateY(-50%)',
-              width: 'clamp(96px, 12vw, 170px)',
+              width: 'clamp(144px, 18vw, 255px)',
               padding: '8px',
-              border: '1px solid rgba(201,147,58,0.28)',
+              border: '1px solid rgba(235,177,78,0.28)',
               background: 'rgba(10,8,7,0.7)',
               backdropFilter: 'blur(10px)',
               WebkitBackdropFilter: 'blur(10px)',
@@ -188,20 +234,20 @@ export default function UnifiedLightbox({ images, initialIndex, onClose }: Unifi
               transition: 'transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease'
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = '#C9933A';
+              e.currentTarget.style.borderColor = '#EBB14E';
               e.currentTarget.style.transform = 'translateY(-50%) scale(1.03)';
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = 'rgba(201,147,58,0.28)';
+              e.currentTarget.style.borderColor = 'rgba(235,177,78,0.28)';
               e.currentTarget.style.transform = 'translateY(-50%) scale(1)';
             }}
           >
-            <div style={{ position: 'relative', width: '100%', aspectRatio: '4 / 3', overflow: 'hidden' }}>
+            <div style={{ position: 'relative', width: '100%', aspectRatio: '4 / 3', overflow: 'hidden', backgroundColor: '#0A0807' }}>
               <LazyImage
                 src={images[(currentIndex + 1) % images.length].thumbnailUrl}
                 lqip={images[(currentIndex + 1) % images.length].lqip}
                 alt="Next photo preview"
-                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }}
               />
               <div style={{
                 position: 'absolute',
@@ -230,15 +276,17 @@ export default function UnifiedLightbox({ images, initialIndex, onClose }: Unifi
           display: 'flex', 
           flexDirection: 'column', 
           alignItems: 'center', 
-          width: '72vw',
+          width: '80vw',
           zIndex: 999 
         }}
       >
+        {/* Image container below */}
         <div
           key={currentIndex}
           style={{
+            position: 'relative',
             width: '100%',
-            height: '60vh',
+            height: '82vh',
             animation: 'premiumLightboxFade 760ms cubic-bezier(0.16, 1, 0.3, 1) both',
             borderRadius: '12px',
             overflow: 'hidden',
@@ -247,6 +295,28 @@ export default function UnifiedLightbox({ images, initialIndex, onClose }: Unifi
             background: 'rgba(255,255,255,0.02)'
           }}
         >
+          {/* Page counter inside image box top right */}
+          <div style={{
+            position: 'absolute',
+            top: '16px',
+            right: '16px',
+            fontFamily: "'Jost', Arial, sans-serif",
+            fontSize: '24px',
+            fontWeight: '700',
+            letterSpacing: '0.12em',
+            color: '#FFF7E8',
+            background: 'rgba(10, 8, 7, 0.75)',
+            border: '2px solid rgba(235,177,78,0.6)',
+            padding: '10px 20px',
+            borderRadius: '30px',
+            zIndex: 10,
+            boxShadow: '0 4px 12px rgba(0,0,0,0.5)',
+            backdropFilter: 'blur(8px)',
+            WebkitBackdropFilter: 'blur(8px)'
+          }}>
+            {currentIndex + 1} / {images.length}
+          </div>
+ 
           <img
             src={currentImage.url}
             alt={currentImage.caption || 'Fullscreen'}
@@ -258,38 +328,28 @@ export default function UnifiedLightbox({ images, initialIndex, onClose }: Unifi
             }}
           />
         </div>
-        <div style={{ marginTop: '20px', textAlign: 'center', maxWidth: '800px' }}>
-          {currentImage.caption && (
-            <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: '20px', color: '#FFFFFF', marginBottom: '8px' }}>
-              {currentImage.caption}
-            </p>
-          )}
-          {currentImage.subCaption && (
-            <p style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '14px', color: '#C9933A', letterSpacing: '0.1em', textTransform: 'uppercase', margin: 0 }}>
-              {currentImage.subCaption}
-            </p>
-          )}
-        </div>
       </div>
 
       {/* Thumbnail strip at bottom */}
-      <div style={{
-        position: 'absolute',
-        bottom: '16px',
-        left: '50%',
-        transform: 'translateX(-50%)',
-        display: 'flex',
-        alignItems: 'flex-end',
-        gap: '6px',
-        padding: '0px 12px 8px 12px',
-        backgroundColor: 'transparent',
-        height: '130px',
-        maxWidth: '80vw',
-        overflowX: 'auto',
-        scrollbarWidth: 'none',
-        zIndex: 1000,
-        pointerEvents: 'auto'
-      }}>
+      <div 
+        className="thumbnail-container"
+        style={{
+          position: 'absolute',
+          bottom: '16px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          display: 'flex',
+          alignItems: 'flex-end',
+          gap: '6px',
+          padding: '0px 12px 8px 12px',
+          backgroundColor: 'transparent',
+          maxWidth: '80vw',
+          overflowX: 'auto',
+          scrollbarWidth: 'none',
+          zIndex: 1000,
+          pointerEvents: 'auto'
+        }}
+      >
         {images.map((photo, i) => (
           <button
             key={photo.id}
@@ -299,7 +359,8 @@ export default function UnifiedLightbox({ images, initialIndex, onClose }: Unifi
             }}
             className="thumbnail-btn"
             style={{
-              flexBasis: '48px', // Default width
+              flexBasis: '56px', // Square width base
+              width: '56px',
               height: '56px',
               flexShrink: 0,
               position: 'relative',
@@ -309,7 +370,7 @@ export default function UnifiedLightbox({ images, initialIndex, onClose }: Unifi
                 : '2px solid transparent',
               cursor: 'pointer',
               backgroundColor: '#000000',
-              transition: 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.4s ease',
+              transition: 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), margin 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease',
               transformOrigin: 'bottom center',
               boxShadow: '0 4px 12px rgba(0,0,0,0.5)',
               display: 'flex',
@@ -323,7 +384,7 @@ export default function UnifiedLightbox({ images, initialIndex, onClose }: Unifi
               style={{
                 width: '100%',
                 height: '100%',
-                objectFit: 'cover',
+                objectFit: 'contain',
                 display: 'block',
                 transition: 'transform 0.4s ease'
               }}
@@ -345,11 +406,82 @@ export default function UnifiedLightbox({ images, initialIndex, onClose }: Unifi
             filter: saturate(1) brightness(1);
           }
         }
+        .thumbnail-container {
+          height: 80px;
+          transition: height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .thumbnail-container:hover {
+          height: 380px;
+        }
         .thumbnail-btn:hover {
-          transform: scale(6);
+          transform: scale(5);
+          margin: 0 112px;
           z-index: 100;
           box-shadow: 0 10px 30px rgba(0,0,0,0.8);
-          border-width: 0.5px !important; /* Counteract 6x scale for border */
+          border-width: 0.5px !important; /* Counteract 5x scale for border */
+        }
+        .lightbox-header-container {
+          position: absolute;
+          top: 24px;
+          left: 24px;
+          right: 88px;
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-start;
+          gap: 24px;
+          z-index: 10000;
+          pointer-events: none;
+        }
+        .lightbox-title-left {
+          font-family: 'Cormorant Garamond', Georgia, serif;
+          font-size: clamp(16px, 1.8vw, 22px);
+          font-weight: 700;
+          color: #FFB834;
+          margin: 0;
+          text-align: left;
+          letter-spacing: 0.03em;
+          text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          max-width: 60vw;
+          line-height: 1.3;
+        }
+        .lightbox-location-right {
+          font-family: 'Cormorant Garamond', Georgia, serif;
+          font-size: clamp(16px, 1.8vw, 22px);
+          font-weight: 500;
+          color: #FFF7E8;
+          text-align: right;
+          letter-spacing: 0.03em;
+          text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+          white-space: nowrap;
+          flex-shrink: 0;
+          line-height: 1.3;
+        }
+        @media screen and (max-width: 1024px) {
+          .lightbox-header-container {
+            position: absolute;
+            top: 76px;
+            left: 20px;
+            right: 20px;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            text-align: center;
+          }
+          .lightbox-title-left {
+            max-width: 100%;
+            text-align: center;
+            -webkit-line-clamp: 2;
+            font-size: 18px;
+          }
+          .lightbox-location-right {
+            text-align: center;
+            font-size: 18px;
+            white-space: normal;
+          }
         }
       `}</style>
     </div>

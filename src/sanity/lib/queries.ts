@@ -207,15 +207,15 @@ export const TESTIMONIALS_QUERY = defineQuery(`
 `)
 
 export const FOUNDER_PHOTOS_QUERY = defineQuery(`
-  *[_type == "founderPhoto"] | order(era asc, orderRank asc, year asc) {
-    _id,
+  *[_type == "about"][0].founderPhotos[] {
+    "_id": _key,
     caption,
     captionJa,
     era,
     year,
     location,
+    country->{_id, title, title_ja, key},
     featured,
-    orderRank,
     image {
       asset-> {
         _id,
@@ -229,14 +229,15 @@ export const FOUNDER_PHOTOS_QUERY = defineQuery(`
 `)
 
 export const FOUNDER_FEATURED_PHOTOS_QUERY = defineQuery(`
-  *[_type == "founderPhoto" && featured == true] 
-  | order(year asc) {
-    _id,
+  *[_type == "about"][0].founderPhotos[featured == true] {
+    "_id": _key,
     caption,
     captionJa,
     era,
     year,
     location,
+    country->{_id, title, title_ja, key},
+    featured,
     image {
       asset-> {
         _id,

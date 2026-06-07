@@ -164,7 +164,7 @@ export default function Navigation() {
                     </div>
 
                     {/* CENTER COLUMN — Navigation links */}
-                    <div style={{
+                    <div className="nav-links-container" style={{
                         display: 'flex',
                         alignItems: 'center',
                         flexWrap: 'nowrap',
@@ -177,7 +177,7 @@ export default function Navigation() {
                         {navLinks.map((link, index) => {
                             const isActive = pathname === link.href || (link.href !== '/' && pathname?.startsWith(link.href));
                             return (
-                                <div key={link.href} style={{
+                                <div key={link.href} className="nav-link-wrapper" style={{
                                     display: 'flex',
                                     alignItems: 'center',
                                     gap: isJa ? '12px' : '16px',
@@ -189,7 +189,7 @@ export default function Navigation() {
                                           onMouseEnter={() => setServicesOpen(true)}
                                           onMouseLeave={() => setServicesOpen(false)}
                                         >
-                                          <button style={{
+                                          <button className="nav-link-item" style={{
                                             fontFamily: "'Cormorant Garamond', Georgia, serif",
                                             fontSize: isJa ? '13px' : '16px',
                                             fontWeight: '400',
@@ -313,6 +313,7 @@ export default function Navigation() {
                                     ) : (
                                                 <Link
                                             href={link.href}
+                                            className="nav-link-item"
                                             style={{
                                                 fontFamily: "'Cormorant Garamond', Georgia, serif",
                                                 fontSize: isJa ? '13px' : '16px',
@@ -379,7 +380,7 @@ export default function Navigation() {
                         height: '76px',
                         borderLeft: '1px solid rgba(201,147,58,0.18)'
                     }}>
-                        <a href="tel:+919597716664" style={{
+                        <a href="tel:+919597716664" className="nav-phone-chip" style={{
                             ...contactChipStyle
                         }}
                             onMouseEnter={(e) => {
@@ -397,8 +398,8 @@ export default function Navigation() {
                         >
                             +91 95977-16664
                         </a>
-                        <span style={{ width: '1px', height: '24px', background: 'linear-gradient(180deg, transparent, rgba(201,147,58,0.45), transparent)' }} />
-                        <a href="mailto:kanmanitours@gmail.com" style={{
+                        <span className="nav-divider-phone" style={{ width: '1px', height: '24px', background: 'linear-gradient(180deg, transparent, rgba(201,147,58,0.45), transparent)' }} />
+                        <a href="mailto:kanmanitours@gmail.com" className="nav-email-chip" style={{
                             ...contactChipStyle
                         }}
                             onMouseEnter={(e) => {
@@ -416,7 +417,7 @@ export default function Navigation() {
                         >
                             kanmanitours@gmail.com
                         </a>
-                        <span style={{ width: '1px', height: '24px', background: 'linear-gradient(180deg, transparent, rgba(201,147,58,0.45), transparent)' }} />
+                        <span className="nav-divider-email" style={{ width: '1px', height: '24px', background: 'linear-gradient(180deg, transparent, rgba(201,147,58,0.45), transparent)' }} />
                         <div style={{ display: 'flex', alignItems: 'center' }}>
                             <select
                                 value={locale}
