@@ -464,145 +464,12 @@ function Gallery({ images, tourTitle }: {
             {lightboxIndex + 1} / {images.length}
           </div>
 
-          {/* Left arrow */}
+          {/* Preload adjacent images */}
           {images.length > 1 && (
-            <button
-              onClick={(e) => { e.stopPropagation(); goPrev(); }}
-              style={{
-                position: 'absolute',
-                left: '24px',
-                top: '50%',
-                transform: 'translateY(-50%)',
-                background: 'rgba(28,25,23,0.8)',
-                border: '1px solid rgba(201,147,58,0.3)',
-                color: '#F5F1EB',
-                fontSize: '20px',
-                width: '52px',
-                height: '52px',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                zIndex: 10000,
-                transition: 'border-color 0.3s ease, background 0.3s ease'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = '#C9933A';
-                e.currentTarget.style.background = 'rgba(201,147,58,0.15)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = 'rgba(201,147,58,0.3)';
-                e.currentTarget.style.background = 'rgba(28,25,23,0.8)';
-              }}
-            >←</button>
-          )}
-
-          {images.length > 1 && (
-            <>
-              <button
-                onClick={(e) => { e.stopPropagation(); setLightboxIndex((lightboxIndex - 1 + images.length) % images.length); }}
-                style={{
-                  position: 'absolute',
-                  left: '96px',
-                  top: '50%',
-                  transform: 'translateY(-50%)',
-                  width: 'clamp(96px, 12vw, 170px)',
-                  padding: '8px',
-                  border: '1px solid rgba(201,147,58,0.28)',
-                  background: 'rgba(10,8,7,0.7)',
-                  backdropFilter: 'blur(10px)',
-                  WebkitBackdropFilter: 'blur(10px)',
-                  cursor: 'pointer',
-                  zIndex: 10000,
-                  boxShadow: '0 18px 40px rgba(0,0,0,0.35)',
-                  transition: 'transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = '#C9933A';
-                  e.currentTarget.style.transform = 'translateY(-50%) scale(1.03)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = 'rgba(201,147,58,0.28)';
-                  e.currentTarget.style.transform = 'translateY(-50%) scale(1)';
-                }}
-              >
-                <div style={{ position: 'relative', width: '100%', aspectRatio: '4 / 3', overflow: 'hidden' }}>
-                  <LazyImage
-                    src={images[(lightboxIndex - 1 + images.length) % images.length].url}
-                    lqip={images[(lightboxIndex - 1 + images.length) % images.length].lqip}
-                    alt="Previous photo preview"
-                    style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-                  />
-                  <div style={{
-                    position: 'absolute',
-                    inset: 0,
-                    background: 'linear-gradient(to top, rgba(5,3,2,0.55), transparent 60%)'
-                  }} />
-                </div>
-                <div style={{
-                  marginTop: '8px',
-                  fontFamily: "'Jost', Arial, sans-serif",
-                  fontSize: '11px',
-                  letterSpacing: '0.22em',
-                  textTransform: 'uppercase',
-                  color: '#FFF7E8'
-                }}>
-                  Prev
-                </div>
-              </button>
-
-              <button
-                onClick={(e) => { e.stopPropagation(); setLightboxIndex((lightboxIndex + 1) % images.length); }}
-                style={{
-                  position: 'absolute',
-                  right: '96px',
-                  top: '50%',
-                  transform: 'translateY(-50%)',
-                  width: 'clamp(96px, 12vw, 170px)',
-                  padding: '8px',
-                  border: '1px solid rgba(201,147,58,0.28)',
-                  background: 'rgba(10,8,7,0.7)',
-                  backdropFilter: 'blur(10px)',
-                  WebkitBackdropFilter: 'blur(10px)',
-                  cursor: 'pointer',
-                  zIndex: 10000,
-                  boxShadow: '0 18px 40px rgba(0,0,0,0.35)',
-                  transition: 'transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = '#C9933A';
-                  e.currentTarget.style.transform = 'translateY(-50%) scale(1.03)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = 'rgba(201,147,58,0.28)';
-                  e.currentTarget.style.transform = 'translateY(-50%) scale(1)';
-                }}
-              >
-                <div style={{ position: 'relative', width: '100%', aspectRatio: '4 / 3', overflow: 'hidden' }}>
-                  <LazyImage
-                    src={images[(lightboxIndex + 1) % images.length].url}
-                    lqip={images[(lightboxIndex + 1) % images.length].lqip}
-                    alt="Next photo preview"
-                    style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-                  />
-                  <div style={{
-                    position: 'absolute',
-                    inset: 0,
-                    background: 'linear-gradient(to top, rgba(5,3,2,0.55), transparent 60%)'
-                  }} />
-                </div>
-                <div style={{
-                  marginTop: '8px',
-                  fontFamily: "'Jost', Arial, sans-serif",
-                  fontSize: '11px',
-                  letterSpacing: '0.22em',
-                  textTransform: 'uppercase',
-                  color: '#FFF7E8'
-                }}>
-                  Next
-                </div>
-              </button>
-            </>
+            <div style={{ display: 'none' }}>
+              <img src={images[(lightboxIndex + 1) % images.length].url} alt="" />
+              <img src={images[(lightboxIndex - 1 + images.length) % images.length].url} alt="" />
+            </div>
           )}
 
           {/* Main image */}
@@ -622,9 +489,8 @@ function Gallery({ images, tourTitle }: {
               background: 'rgba(255,255,255,0.02)'
             }}
           >
-            <LazyImage
+            <img
               src={images[lightboxIndex].url}
-              lqip={images[lightboxIndex].lqip}
               alt={`${tourTitle} — photo ${lightboxIndex + 1}`}
               style={{
                 width: '100%',
@@ -635,53 +501,21 @@ function Gallery({ images, tourTitle }: {
             />
           </div>
 
-          {/* Right arrow */}
-          {images.length > 1 && (
-            <button
-              onClick={(e) => { e.stopPropagation(); goNext(); }}
-              style={{
-                position: 'absolute',
-                right: '24px',
-                top: '50%',
-                transform: 'translateY(-50%)',
-                background: 'rgba(28,25,23,0.8)',
-                border: '1px solid rgba(201,147,58,0.3)',
-                color: '#F5F1EB',
-                fontSize: '20px',
-                width: '52px',
-                height: '52px',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                zIndex: 10000,
-                transition: 'border-color 0.3s ease, background 0.3s ease'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = '#C9933A';
-                e.currentTarget.style.background = 'rgba(201,147,58,0.15)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = 'rgba(201,147,58,0.3)';
-                e.currentTarget.style.background = 'rgba(28,25,23,0.8)';
-              }}
-            >→</button>
-          )}
-
-          {/* Thumbnail strip at bottom */}
           <div style={{
             position: 'absolute',
-            bottom: '24px',
+            bottom: '16px',
             left: '50%',
             transform: 'translateX(-50%)',
             display: 'flex',
+            alignItems: 'flex-end',
             gap: '6px',
-            padding: '8px 12px',
-            backgroundColor: 'rgba(10,8,7,0.7)',
-            backdropFilter: 'blur(8px)',
+            padding: '0px 12px 8px 12px',
+            backgroundColor: 'transparent',
+            height: '130px',
             maxWidth: '80vw',
             overflowX: 'auto',
-            scrollbarWidth: 'none'
+            scrollbarWidth: 'none',
+            pointerEvents: 'none'
           }}>
             {images.map((imgData, i) => (
               <button
@@ -694,24 +528,37 @@ function Gallery({ images, tourTitle }: {
                   width: '48px',
                   height: '36px',
                   flexShrink: 0,
+                  position: 'relative',
                   overflow: 'hidden',
                   border: i === lightboxIndex
                     ? '2px solid #C9933A'
                     : '2px solid transparent',
                   cursor: 'pointer',
                   padding: 0,
-                  background: 'none',
-                  transition: 'border-color 0.2s ease'
+                  backgroundColor: '#000000',
+                  transition: 'all 0.2s ease',
+                  zIndex: 1,
+                  pointerEvents: 'auto',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.5)'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-36px) scale(3)';
+                  e.currentTarget.style.zIndex = '100';
+                  e.currentTarget.style.boxShadow = '0 12px 28px rgba(0,0,0,0.8)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'none';
+                  e.currentTarget.style.zIndex = '1';
+                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.5)';
                 }}
               >
-                <LazyImage
+                <img
                   src={imgData.url}
-                  lqip={imgData.lqip}
                   alt=""
                   style={{
                     width: '100%',
                     height: '100%',
-                    objectFit: 'cover',
+                    objectFit: 'contain',
                     display: 'block'
                   }}
                 />

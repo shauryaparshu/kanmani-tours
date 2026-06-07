@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { galleryImageUrl, containThumbnailImageUrl } from '@/sanity/lib/image';
 import LazyImage from '@/components/ui/LazyImage';
 
@@ -268,62 +268,88 @@ function EraGallery({
       )}
 
       {!isExpanded && eraPhotos.length > 4 && (
-        <div style={{ textAlign: 'center', marginTop: '24px' }}>
+        <div style={{ textAlign: 'center', marginTop: '24px', display: 'flex', justifyContent: 'center' }}>
           <button 
             onClick={onToggleExpand}
             style={{
               fontFamily: "'Jost', Arial, sans-serif",
-              fontSize: '12px',
-              fontWeight: '600',
+              fontSize: '15px',
+              fontWeight: '700',
               letterSpacing: '0.22em',
-              textTransform: 'uppercase',
-              color: '#d49a36',
-              backgroundColor: 'transparent',
-              border: '1px solid #d49a36',
-              padding: '14px 32px',
+              color: '#1C1917',
+              background: 'linear-gradient(135deg, #FFE082 0%, #C9933A 50%, #A17124 100%)',
+              border: '2px solid #FFFFFF',
+              borderRadius: '4px',
+              padding: '16px 36px',
               cursor: 'pointer',
-              transition: 'all 0.3s ease'
+              textTransform: 'uppercase',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px',
+              transition: 'all 0.3s ease',
+              boxShadow: '0 0 25px rgba(201, 147, 58, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.4)',
+              whiteSpace: 'nowrap'
             }}
-            onMouseOver={(e) => {
-              e.currentTarget.style.backgroundColor = '#d49a36';
-              e.currentTarget.style.color = '#FFFFFF';
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = 'linear-gradient(135deg, #FFF8E1 0%, #E5A93C 50%, #B87F2A 100%)';
+              e.currentTarget.style.transform = 'translateY(-2px)';
+              e.currentTarget.style.boxShadow = '0 0 35px rgba(255, 224, 130, 0.95), 0 6px 20px rgba(0,0,0,0.4)';
             }}
-            onMouseOut={(e) => {
-              e.currentTarget.style.backgroundColor = 'transparent';
-              e.currentTarget.style.color = '#d49a36';
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = 'linear-gradient(135deg, #FFE082 0%, #C9933A 50%, #A17124 100%)';
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = '0 0 25px rgba(201, 147, 58, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.4)';
             }}
           >
+            <svg width="22" height="22" viewBox="0 0 24 24" 
+                 fill="none" stroke="currentColor" strokeWidth="2.5" style={{ marginRight: '2px' }}>
+              <rect x="3" y="3" width="18" height="18" rx="2"/>
+              <path d="M3 9h18M9 21V9"/>
+            </svg>
             VIEW ALL {eraPhotos.length} PHOTOS
           </button>
         </div>
       )}
 
       {isExpanded && eraPhotos.length > 4 && (
-        <div style={{ textAlign: 'center', marginTop: '24px' }}>
+        <div style={{ textAlign: 'center', marginTop: '24px', display: 'flex', justifyContent: 'center' }}>
           <button 
             onClick={onToggleExpand}
             style={{
               fontFamily: "'Jost', Arial, sans-serif",
-              fontSize: '12px',
-              fontWeight: '600',
+              fontSize: '15px',
+              fontWeight: '700',
               letterSpacing: '0.22em',
-              textTransform: 'uppercase',
-              color: '#d49a36',
-              backgroundColor: 'transparent',
-              border: '1px solid #d49a36',
-              padding: '14px 32px',
+              color: '#1C1917',
+              background: 'linear-gradient(135deg, #FFE082 0%, #C9933A 50%, #A17124 100%)',
+              border: '2px solid #FFFFFF',
+              borderRadius: '4px',
+              padding: '16px 36px',
               cursor: 'pointer',
-              transition: 'all 0.3s ease'
+              textTransform: 'uppercase',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px',
+              transition: 'all 0.3s ease',
+              boxShadow: '0 0 25px rgba(201, 147, 58, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.4)',
+              whiteSpace: 'nowrap'
             }}
-            onMouseOver={(e) => {
-              e.currentTarget.style.backgroundColor = '#d49a36';
-              e.currentTarget.style.color = '#FFFFFF';
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = 'linear-gradient(135deg, #FFF8E1 0%, #E5A93C 50%, #B87F2A 100%)';
+              e.currentTarget.style.transform = 'translateY(-2px)';
+              e.currentTarget.style.boxShadow = '0 0 35px rgba(255, 224, 130, 0.95), 0 6px 20px rgba(0,0,0,0.4)';
             }}
-            onMouseOut={(e) => {
-              e.currentTarget.style.backgroundColor = 'transparent';
-              e.currentTarget.style.color = '#d49a36';
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = 'linear-gradient(135deg, #FFE082 0%, #C9933A 50%, #A17124 100%)';
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = '0 0 25px rgba(201, 147, 58, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.4)';
             }}
           >
+            <svg width="22" height="22" viewBox="0 0 24 24" 
+                 fill="none" stroke="currentColor" strokeWidth="2.5" style={{ marginRight: '2px' }}>
+              <rect x="3" y="3" width="18" height="18" rx="2"/>
+              <path d="M3 9h18M9 21V9"/>
+            </svg>
             SHOW LESS
           </button>
         </div>
@@ -423,6 +449,8 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
   const [lightboxPhoto, setLightboxPhoto] = useState<FounderPhoto | null>(null);
   const [lightboxIndex, setLightboxIndex] = useState<number>(0);
   const [currentEraPhotos, setCurrentEraPhotos] = useState<FounderPhoto[]>([]);
+  const [isHoveringLightbox, setIsHoveringLightbox] = useState(false);
+  const lightboxTimerRef = useRef<number | null>(null);
 
   const getPhotosByEra = (eraId: string) => {
     if (eraId === 'all') return photos;
@@ -445,36 +473,69 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
     setCurrentEraPhotos(getPhotosByEra(eraId));
     setLightboxPhoto(photo);
     setLightboxIndex(index);
+    setIsHoveringLightbox(false);
     document.body.style.overflow = 'hidden';
   };
 
-  const closeLightbox = () => {
+  const closeLightbox = useCallback(() => {
     setLightboxPhoto(null);
+    setIsHoveringLightbox(false);
     document.body.style.overflow = 'auto';
-  };
+    if (lightboxTimerRef.current !== null) {
+      window.clearTimeout(lightboxTimerRef.current);
+      lightboxTimerRef.current = null;
+    }
+  }, []);
 
-  const navigateLightbox = useCallback((direction: 'prev' | 'next') => {
-    if (!lightboxPhoto) return;
-    
-    let newIndex = direction === 'prev' ? lightboxIndex - 1 : lightboxIndex + 1;
-    if (newIndex < 0) newIndex = currentEraPhotos.length - 1;
-    if (newIndex >= currentEraPhotos.length) newIndex = 0;
-    
+  const goNext = useCallback(() => {
+    if (currentEraPhotos.length === 0) return;
+    const newIndex = (lightboxIndex + 1) % currentEraPhotos.length;
     setLightboxIndex(newIndex);
     setLightboxPhoto(currentEraPhotos[newIndex]);
-  }, [lightboxPhoto, lightboxIndex, currentEraPhotos]);
+  }, [lightboxIndex, currentEraPhotos]);
+
+  const goPrev = useCallback(() => {
+    if (currentEraPhotos.length === 0) return;
+    const newIndex = (lightboxIndex - 1 + currentEraPhotos.length) % currentEraPhotos.length;
+    setLightboxIndex(newIndex);
+    setLightboxPhoto(currentEraPhotos[newIndex]);
+  }, [lightboxIndex, currentEraPhotos]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (!lightboxPhoto) return;
-      if (e.key === 'ArrowLeft') navigateLightbox('prev');
-      if (e.key === 'ArrowRight') navigateLightbox('next');
+      if (e.key === 'ArrowLeft') goPrev();
+      if (e.key === 'ArrowRight') goNext();
       if (e.key === 'Escape') closeLightbox();
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [lightboxPhoto, navigateLightbox]);
+  }, [lightboxPhoto, goPrev, goNext, closeLightbox]);
+
+  // Auto-advance timer for lightbox
+  useEffect(() => {
+    if (!lightboxPhoto || currentEraPhotos.length <= 1 || isHoveringLightbox) {
+      if (lightboxTimerRef.current !== null) {
+        window.clearTimeout(lightboxTimerRef.current);
+        lightboxTimerRef.current = null;
+      }
+      return;
+    }
+
+    lightboxTimerRef.current = window.setTimeout(() => {
+      const newIndex = (lightboxIndex + 1) % currentEraPhotos.length;
+      setLightboxIndex(newIndex);
+      setLightboxPhoto(currentEraPhotos[newIndex]);
+    }, 5000);
+
+    return () => {
+      if (lightboxTimerRef.current !== null) {
+        window.clearTimeout(lightboxTimerRef.current);
+        lightboxTimerRef.current = null;
+      }
+    };
+  }, [lightboxPhoto, lightboxIndex, currentEraPhotos, isHoveringLightbox]);
 
   const toggleExpandEra = (eraId: string) => {
     const newExpanded = new Set(expandedEras);
@@ -974,41 +1035,40 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
                                         position: 'absolute',
                                         top: '12px',
                                         left: '12px',
-                                        backgroundColor: 'rgba(28, 25, 23, 0.85)',
                                         fontFamily: "'Jost', Arial, sans-serif",
-                                        fontSize: '15px',
+                                        fontSize: '12px',
                                         fontWeight: '700',
-                                        letterSpacing: '0.22em',
+                                        letterSpacing: '0.15em',
                                         color: '#1C1917',
                                         background: 'linear-gradient(135deg, #FFE082 0%, #C9933A 50%, #A17124 100%)',
-                                        border: '2px solid #FFFFFF',
+                                        border: '1.5px solid #FFFFFF',
                                         borderRadius: '4px',
-                                        padding: '16px 36px',
+                                        padding: '8px 16px',
+                                        cursor: 'pointer',
                                         textTransform: 'uppercase',
                                         display: 'flex',
                                         alignItems: 'center',
-                                        gap: '12px',
-                                        cursor: 'pointer',
-                                        zIndex: 10,
+                                        gap: '8px',
                                         transition: 'all 0.3s ease',
-                                        boxShadow: '0 0 25px rgba(201, 147, 58, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.4)',
-                                        whiteSpace: 'nowrap'
+                                        boxShadow: '0 0 15px rgba(201, 147, 58, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.4)',
+                                        whiteSpace: 'nowrap',
+                                        zIndex: 10,
                                       }}
-                                      onMouseOver={(e) => {
+                                      onMouseEnter={(e) => {
                                         e.currentTarget.style.background = 'linear-gradient(135deg, #FFF8E1 0%, #E5A93C 50%, #B87F2A 100%)';
-                                        e.currentTarget.style.transform = 'translateY(-2px)';
-                                        e.currentTarget.style.boxShadow = '0 0 35px rgba(255, 224, 130, 0.95), 0 6px 20px rgba(0,0,0,0.4)';
+                                        e.currentTarget.style.transform = 'scale(1.05)';
+                                        e.currentTarget.style.boxShadow = '0 0 20px rgba(255, 224, 130, 0.8), 0 4px 12px rgba(0,0,0,0.3)';
                                       }}
-                                      onMouseOut={(e) => {
+                                      onMouseLeave={(e) => {
                                         e.currentTarget.style.background = 'linear-gradient(135deg, #FFE082 0%, #C9933A 50%, #A17124 100%)';
-                                        e.currentTarget.style.transform = 'translateY(0)';
-                                        e.currentTarget.style.boxShadow = '0 0 25px rgba(201, 147, 58, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.4)';
+                                        e.currentTarget.style.transform = 'scale(1)';
+                                        e.currentTarget.style.boxShadow = '0 0 15px rgba(201, 147, 58, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.4)';
                                       }}
                                     >
-                                      <svg width="22" height="22" viewBox="0 0 24 24"
-                                           fill="none" stroke="currentColor" strokeWidth="2.5" style={{ marginRight: '2px' }}>
-                                        <rect x="3" y="3" width="18" height="18" rx="2" />
-                                        <path d="M3 9h18M9 21V9" />
+                                      <svg width="14" height="14" viewBox="0 0 24 24" 
+                                           fill="none" stroke="currentColor" strokeWidth="2.5">
+                                        <rect x="3" y="3" width="18" height="18" rx="2"/>
+                                        <path d="M3 9h18M9 21V9"/>
                                       </svg>
                                       View Gallery
                                     </button>
@@ -1312,94 +1372,329 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
 
       {/* LIGHTBOX OVERLAY */}
       {lightboxPhoto && (
-        <div style={{
-          position: 'fixed',
-          top: 0, left: 0, right: 0, bottom: 0,
-          backgroundColor: 'rgba(28, 25, 23, 0.98)',
-          zIndex: 9999,
-          display: 'flex',
-          flexDirection: 'column',
-          backdropFilter: 'blur(10px)'
-        }}>
-          {/* Header */}
-          <div style={{ display: 'flex', justifyContent: 'space-between', padding: '24px', color: '#FFFFFF', alignItems: 'center' }}>
-            <div style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '12px', letterSpacing: '0.1em', color: '#9A948F', textTransform: 'uppercase' }}>
-              {lightboxIndex + 1} of {currentEraPhotos.length} photos from {ERAS.find(e => e.id === lightboxPhoto.era)?.label}
-            </div>
-            <button 
-              onClick={closeLightbox}
-              style={{ background: 'none', border: 'none', color: '#FFFFFF', fontSize: '32px', cursor: 'pointer', padding: '0 16px' }}
-            >×</button>
+        <div
+          onClick={closeLightbox}
+          onMouseEnter={() => setIsHoveringLightbox(true)}
+          onMouseLeave={() => setIsHoveringLightbox(false)}
+          style={{
+            position: 'fixed',
+            inset: 0,
+            backgroundColor: 'rgba(5, 3, 2, 0.95)',
+            zIndex: 9999,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            backdropFilter: 'blur(10px)',
+            WebkitBackdropFilter: 'blur(10px)'
+          }}
+        >
+          {/* Close button */}
+          <button
+            onClick={closeLightbox}
+            style={{
+              position: 'absolute',
+              top: '24px',
+              right: '24px',
+              background: 'none',
+              border: '1px solid rgba(201,147,58,0.4)',
+              color: '#F5F1EB',
+              fontSize: '20px',
+              width: '44px',
+              height: '44px',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              zIndex: 10000,
+              transition: 'border-color 0.3s ease'
+            }}
+          >✕</button>
+
+          {/* Image counter */}
+          <div style={{
+            position: 'absolute',
+            top: '18px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            fontFamily: "'Jost', Arial, sans-serif",
+            fontSize: 'clamp(18px, 2vw, 26px)',
+            fontWeight: '600',
+            letterSpacing: '0.2em',
+            color: '#FFF7E8',
+            background: 'linear-gradient(180deg, rgba(33,25,19,0.9), rgba(10,8,7,0.76))',
+            border: '1px solid rgba(201,147,58,0.3)',
+            padding: '8px 16px',
+            borderRadius: '999px',
+            minWidth: '96px',
+            textAlign: 'center',
+            boxShadow: '0 14px 28px rgba(0,0,0,0.32), inset 0 1px 0 rgba(255,255,255,0.08)',
+            backdropFilter: 'blur(10px)',
+            WebkitBackdropFilter: 'blur(10px)'
+          }}>
+            {lightboxIndex + 1} / {currentEraPhotos.length}
           </div>
 
-          {/* Main Image Area */}
-          <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', padding: '0 80px' }}>
-            <button 
-              onClick={() => navigateLightbox('prev')}
-              style={{ position: 'absolute', left: '24px', background: 'none', border: 'none', color: '#FFFFFF', fontSize: '48px', cursor: 'pointer', padding: '16px', opacity: 0.7 }}
-            >‹</button>
-            
-            <div style={{ maxWidth: '1400px', maxHeight: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <img 
-                src={galleryImageUrl(lightboxPhoto.image)} 
-                alt={isJa ? lightboxPhoto.captionJa || 'Fullscreen' : lightboxPhoto.caption || 'Fullscreen'} 
-                style={{ 
-                  maxWidth: '100%', 
-                  maxHeight: '70vh', 
-                  objectFit: 'contain',
-                  display: 'block' 
-                }} 
-              />
-              <div style={{ marginTop: '24px', textAlign: 'center', maxWidth: '800px' }}>
-                <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: '20px', color: '#FFFFFF', marginBottom: '8px' }}>
-                  {isJa ? lightboxPhoto.captionJa : lightboxPhoto.caption}
-                </p>
-                {(lightboxPhoto.year || lightboxPhoto.location) && (
-                  <p style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '14px', color: '#C9933A', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
-                    {[lightboxPhoto.year, lightboxPhoto.location].filter(Boolean).join(' • ')}
-                  </p>
-                )}
-              </div>
-            </div>
 
-            <button 
-              onClick={() => navigateLightbox('next')}
-              style={{ position: 'absolute', right: '24px', background: 'none', border: 'none', color: '#FFFFFF', fontSize: '48px', cursor: 'pointer', padding: '16px', opacity: 0.7 }}
-            >›</button>
-          </div>
 
-          <div style={{ height: '100px', padding: '16px 24px', display: 'flex', gap: '8px', overflowX: 'auto', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
-            {currentEraPhotos.map((photo, i) => (
-              <div
-                key={photo._id}
-                onClick={() => { setLightboxIndex(i); setLightboxPhoto(photo); }}
+          {currentEraPhotos.length > 1 && (
+            <>
+              {/* Previous photo card */}
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  const newIndex = (lightboxIndex - 1 + currentEraPhotos.length) % currentEraPhotos.length;
+                  setLightboxIndex(newIndex);
+                  setLightboxPhoto(currentEraPhotos[newIndex]);
+                }}
                 style={{
-                  height: '100%',
-                  aspectRatio: '1/1',
+                  position: 'absolute',
+                  left: '96px',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  width: 'clamp(96px, 12vw, 170px)',
+                  padding: '8px',
+                  border: '1px solid rgba(201,147,58,0.28)',
+                  background: 'rgba(10,8,7,0.7)',
+                  backdropFilter: 'blur(10px)',
+                  WebkitBackdropFilter: 'blur(10px)',
                   cursor: 'pointer',
-                  opacity: i === lightboxIndex ? 1 : 0.4,
-                  border: i === lightboxIndex ? '2px solid #C9933A' : 'none',
-                  transition: 'opacity 0.3s ease',
-                  flexShrink: 0,
-                  overflow: 'hidden'
+                  zIndex: 10000,
+                  boxShadow: '0 18px 40px rgba(0,0,0,0.35)',
+                  transition: 'transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = '#C9933A';
+                  e.currentTarget.style.transform = 'translateY(-50%) scale(1.03)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = 'rgba(201,147,58,0.28)';
+                  e.currentTarget.style.transform = 'translateY(-50%) scale(1)';
                 }}
               >
-                <LazyImage
+                <div style={{ position: 'relative', width: '100%', aspectRatio: '4 / 3', overflow: 'hidden' }}>
+                  <LazyImage
+                    src={containThumbnailImageUrl(currentEraPhotos[(lightboxIndex - 1 + currentEraPhotos.length) % currentEraPhotos.length].image)}
+                    lqip={currentEraPhotos[(lightboxIndex - 1 + currentEraPhotos.length) % currentEraPhotos.length].image?.asset?.metadata?.lqip}
+                    alt="Previous photo preview"
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                  />
+                  <div style={{
+                    position: 'absolute',
+                    inset: 0,
+                    background: 'linear-gradient(to top, rgba(5,3,2,0.55), transparent 60%)'
+                  }} />
+                </div>
+                <div style={{
+                  marginTop: '8px',
+                  fontFamily: "'Jost', Arial, sans-serif",
+                  fontSize: '11px',
+                  letterSpacing: '0.22em',
+                  textTransform: 'uppercase',
+                  color: '#FFF7E8'
+                }}>
+                  Prev
+                </div>
+              </button>
+
+              {/* Next photo card */}
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  const newIndex = (lightboxIndex + 1) % currentEraPhotos.length;
+                  setLightboxIndex(newIndex);
+                  setLightboxPhoto(currentEraPhotos[newIndex]);
+                }}
+                style={{
+                  position: 'absolute',
+                  right: '96px',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  width: 'clamp(96px, 12vw, 170px)',
+                  padding: '8px',
+                  border: '1px solid rgba(201,147,58,0.28)',
+                  background: 'rgba(10,8,7,0.7)',
+                  backdropFilter: 'blur(10px)',
+                  WebkitBackdropFilter: 'blur(10px)',
+                  cursor: 'pointer',
+                  zIndex: 10000,
+                  boxShadow: '0 18px 40px rgba(0,0,0,0.35)',
+                  transition: 'transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = '#C9933A';
+                  e.currentTarget.style.transform = 'translateY(-50%) scale(1.03)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = 'rgba(201,147,58,0.28)';
+                  e.currentTarget.style.transform = 'translateY(-50%) scale(1)';
+                }}
+              >
+                <div style={{ position: 'relative', width: '100%', aspectRatio: '4 / 3', overflow: 'hidden' }}>
+                  <LazyImage
+                    src={containThumbnailImageUrl(currentEraPhotos[(lightboxIndex + 1) % currentEraPhotos.length].image)}
+                    lqip={currentEraPhotos[(lightboxIndex + 1) % currentEraPhotos.length].image?.asset?.metadata?.lqip}
+                    alt="Next photo preview"
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                  />
+                  <div style={{
+                    position: 'absolute',
+                    inset: 0,
+                    background: 'linear-gradient(to top, rgba(5,3,2,0.55), transparent 60%)'
+                  }} />
+                </div>
+                <div style={{
+                  marginTop: '8px',
+                  fontFamily: "'Jost', Arial, sans-serif",
+                  fontSize: '11px',
+                  letterSpacing: '0.22em',
+                  textTransform: 'uppercase',
+                  color: '#FFF7E8'
+                }}>
+                  Next
+                </div>
+              </button>
+            </>
+          )}
+
+          {/* Preload adjacent images */}
+          {currentEraPhotos.length > 1 && (
+            <div style={{ display: 'none' }}>
+              <img src={galleryImageUrl(currentEraPhotos[(lightboxIndex + 1) % currentEraPhotos.length].image)} alt="" />
+              <img src={galleryImageUrl(currentEraPhotos[(lightboxIndex - 1 + currentEraPhotos.length) % currentEraPhotos.length].image)} alt="" />
+            </div>
+          )}
+
+          {/* Main Content Area */}
+          <div 
+            onClick={(e) => e.stopPropagation()} 
+            style={{ 
+              display: 'flex', 
+              flexDirection: 'column', 
+              alignItems: 'center', 
+              width: '72vw',
+              zIndex: 999 
+            }}
+          >
+            <div
+              key={lightboxIndex}
+              style={{
+                width: '100%',
+                height: '60vh',
+                animation: 'premiumLightboxFade 760ms cubic-bezier(0.16, 1, 0.3, 1) both',
+                borderRadius: '12px',
+                overflow: 'hidden',
+                border: '2px solid rgba(255,255,255,0.92)',
+                boxShadow: '0 0 0 1px rgba(255,255,255,0.32), 0 0 24px rgba(255,255,255,0.16), 0 24px 80px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.3)',
+                background: 'rgba(255,255,255,0.02)'
+              }}
+            >
+              <img
+                src={galleryImageUrl(lightboxPhoto.image)}
+                alt={isJa ? lightboxPhoto.captionJa || 'Fullscreen' : lightboxPhoto.caption || 'Fullscreen'}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'contain',
+                  display: 'block'
+                }}
+              />
+            </div>
+            <div style={{ marginTop: '20px', textAlign: 'center', maxWidth: '800px' }}>
+              <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: '20px', color: '#FFFFFF', marginBottom: '8px' }}>
+                {isJa ? lightboxPhoto.captionJa : lightboxPhoto.caption}
+              </p>
+              {(lightboxPhoto.year || lightboxPhoto.location) && (
+                <p style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '14px', color: '#C9933A', letterSpacing: '0.1em', textTransform: 'uppercase', margin: 0 }}>
+                  {[lightboxPhoto.year, lightboxPhoto.location].filter(Boolean).join(' • ')}
+                </p>
+              )}
+            </div>
+          </div>
+
+          {/* Thumbnail strip at bottom */}
+          <div style={{
+            position: 'absolute',
+            bottom: '16px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            display: 'flex',
+            alignItems: 'flex-end',
+            gap: '6px',
+            padding: '0px 12px 8px 12px',
+            backgroundColor: 'transparent',
+            height: '130px',
+            maxWidth: '80vw',
+            overflowX: 'auto',
+            scrollbarWidth: 'none',
+            zIndex: 1000,
+            pointerEvents: 'none'
+          }}>
+            {currentEraPhotos.map((photo, i) => (
+              <button
+                key={photo._id}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setLightboxIndex(i);
+                  setLightboxPhoto(photo);
+                }}
+                style={{
+                  width: '48px',
+                  height: '36px',
+                  flexShrink: 0,
+                  position: 'relative',
+                  overflow: 'hidden',
+                  border: i === lightboxIndex
+                    ? '2px solid #C9933A'
+                    : '2px solid transparent',
+                  cursor: 'pointer',
+                  padding: 0,
+                  backgroundColor: '#000000',
+                  transition: 'all 0.2s ease',
+                  zIndex: 1,
+                  pointerEvents: 'auto',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.5)'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-36px) scale(3)';
+                  e.currentTarget.style.zIndex = '100';
+                  e.currentTarget.style.boxShadow = '0 12px 28px rgba(0,0,0,0.8)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'none';
+                  e.currentTarget.style.zIndex = '1';
+                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.5)';
+                }}
+              >
+                <img
                   src={containThumbnailImageUrl(photo.image)}
-                  lqip={photo.image?.asset?.metadata?.lqip}
-                  alt="Thumbnail"
+                  alt=""
                   style={{
                     width: '100%',
                     height: '100%',
-                    objectFit: 'cover',
-                    objectPosition: 'center'
+                    objectFit: 'contain',
+                    display: 'block'
                   }}
                 />
-              </div>
+              </button>
             ))}
           </div>
         </div>
       )}
+
+      <style jsx global>{`
+        @keyframes premiumLightboxFade {
+          0% {
+            opacity: 0;
+            transform: scale(1.08);
+            filter: saturate(0.88) brightness(0.86);
+          }
+          100% {
+            opacity: 1;
+            transform: scale(1);
+            filter: saturate(1) brightness(1);
+          }
+        }
+      `}</style>
 
     </div>
   );

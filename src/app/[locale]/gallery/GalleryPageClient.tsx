@@ -666,6 +666,14 @@ export default function GalleryPageClient({ tours }: Props) {
               justifyContent: 'center',
               padding: '110px clamp(120px, 14vw, 240px) 80px'
             }}>
+              {/* Preload adjacent images */}
+              {activeTourObj.images.length > 1 && (
+                <div style={{ display: 'none' }}>
+                  <img src={activeTourObj.images[(lightboxIndex + 1) % activeTourObj.images.length].url} alt="" />
+                  <img src={activeTourObj.images[(lightboxIndex - 1 + activeTourObj.images.length) % activeTourObj.images.length].url} alt="" />
+                </div>
+              )}
+
               <div
                 key={lightboxIndex}
                 style={{
@@ -681,9 +689,8 @@ export default function GalleryPageClient({ tours }: Props) {
                   background: 'rgba(255,255,255,0.02)'
                 }}
               >
-                <LazyImage
+                <img
                   src={activeTourObj.images[lightboxIndex].url}
-                  lqip={activeTourObj.images[lightboxIndex].lqip}
                   alt="Lightbox"
                   style={{
                     width: '100%',
@@ -809,89 +816,31 @@ export default function GalleryPageClient({ tours }: Props) {
               </>
             )}
 
-          {/* Left Arrow */}
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              handlePrevImage();
-            }}
-            style={{
-              position: 'absolute',
-              left: '24px',
-              top: '50%',
-              transform: 'translateY(-50%)',
-              width: '52px',
-              height: '52px',
-              backgroundColor: 'rgba(28,25,23,0.8)',
-              border: '1px solid rgba(201,147,58,0.3)',
-              color: '#F5F1EB',
-              fontSize: '20px',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              zIndex: 10,
-              transition: 'border-color 0.2s ease'
-            }}
-            onMouseEnter={(e) => e.currentTarget.style.borderColor = '#C9933A'}
-            onMouseLeave={(e) => e.currentTarget.style.borderColor = 'rgba(201,147,58,0.3)'}
-          >
-            ←
-          </button>
 
-          {/* Right Arrow */}
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              handleNextImage();
-            }}
-            style={{
-              position: 'absolute',
-              right: '24px',
-              top: '50%',
-              transform: 'translateY(-50%)',
-              width: '52px',
-              height: '52px',
-              backgroundColor: 'rgba(28,25,23,0.8)',
-              border: '1px solid rgba(201,147,58,0.3)',
-              color: '#F5F1EB',
-              fontSize: '20px',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              zIndex: 10,
-              transition: 'border-color 0.2s ease'
-            }}
-            onMouseEnter={(e) => e.currentTarget.style.borderColor = '#C9933A'}
-            onMouseLeave={(e) => e.currentTarget.style.borderColor = 'rgba(201,147,58,0.3)'}
-          >
-            →
-          </button>
 
-          {/* Bottom Thumbnail Strip */}
           <div 
             ref={thumbnailStripRef}
             style={{
               position: 'absolute',
-              bottom: '24px',
+              bottom: '16px',
               left: '50%',
               transform: 'translateX(-50%)',
               display: 'flex',
               flexDirection: 'row',
+              alignItems: 'flex-end',
               gap: '6px',
-              backgroundColor: 'rgba(10,8,7,0.7)',
-              backdropFilter: 'blur(8px)',
-              WebkitBackdropFilter: 'blur(8px)',
-              padding: '8px 12px',
+              padding: '0px 12px 8px 12px',
+              backgroundColor: 'transparent',
+              height: '130px',
               maxWidth: '80vw',
               overflowX: 'auto',
               scrollbarWidth: 'none',
-              zIndex: 10
+              zIndex: 10,
+              pointerEvents: 'none'
             }}
           >
             {activeTourObj.images.map((thumbData, idx) => (
-              <div
+              <button
                 key={idx}
                 onClick={(e) => {
                   e.stopPropagation();
@@ -900,24 +849,42 @@ export default function GalleryPageClient({ tours }: Props) {
                 style={{
                   width: '48px',
                   height: '36px',
-                  cursor: 'pointer',
-                  border: lightboxIndex === idx ? '2px solid #C9933A' : '2px solid transparent',
                   flexShrink: 0,
-                  overflow: 'hidden'
+                  position: 'relative',
+                  overflow: 'hidden',
+                  border: lightboxIndex === idx
+                    ? '2px solid #C9933A'
+                    : '2px solid transparent',
+                  cursor: 'pointer',
+                  padding: 0,
+                  backgroundColor: '#000000',
+                  transition: 'all 0.2s ease',
+                  zIndex: 1,
+                  pointerEvents: 'auto',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.5)'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-36px) scale(3)';
+                  e.currentTarget.style.zIndex = '100';
+                  e.currentTarget.style.boxShadow = '0 12px 28px rgba(0,0,0,0.8)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'none';
+                  e.currentTarget.style.zIndex = '1';
+                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.5)';
                 }}
               >
-                <LazyImage
+                <img
                   src={thumbData.url}
-                  lqip={thumbData.lqip}
                   alt={`Thumbnail ${idx + 1}`}
                   style={{
                     width: '100%',
                     height: '100%',
-                    objectFit: 'cover',
+                    objectFit: 'contain',
                     display: 'block'
                   }}
                 />
-              </div>
+              </button>
             ))}
           </div>
         </div>
