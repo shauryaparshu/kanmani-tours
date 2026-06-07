@@ -447,6 +447,11 @@ const ERAS = [
   { id: 'achievements', label: 'Achievements' },
   { id: 'student-phd', label: 'Student Life and PhD' },
   { id: 'world-travel', label: 'World Travel' },
+  { id: 'tours', label: 'Tours' },
+  { id: 'conferences', label: 'Conferences' },
+  { id: 'humanitarian', label: 'Humanitarian' },
+  { id: 'phd', label: 'PhD' },
+  { id: 'student', label: 'Student' },
   { id: 'arts', label: 'Arts' },
   { id: 'others', label: 'Others' }
 ];

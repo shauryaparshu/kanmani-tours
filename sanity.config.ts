@@ -1,7 +1,7 @@
 import { visionTool } from '@sanity/vision'
 import { defineConfig } from 'sanity'
 import { structureTool } from 'sanity/structure'
-import { apiVersion, dataset, projectId } from './src/sanity/env'
+import { apiVersion } from './src/sanity/env'
 import { schema } from './src/sanity/schemaTypes'
 import { orderableDocumentListDeskItem } from '@sanity/orderable-document-list'
 
@@ -34,9 +34,9 @@ export default defineConfig({
                 S.list()
                     .title('Content')
                     .items([
-                        // Singleton: About Page
+                        // Singleton: About Founder
                         S.listItem()
-                            .title('About Page')
+                            .title('About Founder')
                             .id('about')
                             .child(
                                 S.document()
