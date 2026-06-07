@@ -6,6 +6,7 @@ import type { Tour, TourFaq } from '@/lib/tours';
 import { useTranslations, useLocale } from 'next-intl';
 import { cardImageUrl, galleryImageUrl } from '@/sanity/lib/image';
 import LazyImage from '@/components/ui/LazyImage';
+import UnifiedLightbox from '@/components/ui/UnifiedLightbox';
 
 interface TourDetailClientProps {
     tour: Tour;
@@ -308,61 +309,13 @@ function Gallery({ images, tourTitle }: {
   tourTitle: string 
 }) {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
-  const [isHoveringLightbox, setIsHoveringLightbox] = useState(false);
-  const lightboxTimerRef = useRef<number | null>(null);
 
   const openLightbox = (index: number) => {
     setLightboxIndex(index);
-    setIsHoveringLightbox(false);
   };
   const closeLightbox = () => {
     setLightboxIndex(null);
-    setIsHoveringLightbox(false);
-    if (lightboxTimerRef.current !== null) {
-      window.clearTimeout(lightboxTimerRef.current);
-      lightboxTimerRef.current = null;
-    }
   };
-  const goNext = () => {
-    if (lightboxIndex === null) return;
-    setLightboxIndex(prev => (prev === null ? prev : (prev + 1) % images.length));
-  };
-  const goPrev = () => {
-    if (lightboxIndex === null) return;
-    setLightboxIndex(prev => (prev === null ? prev : (prev - 1 + images.length) % images.length));
-  };
-
-  useEffect(() => {
-    const handleKey = (e: KeyboardEvent) => {
-      if (lightboxIndex === null) return;
-      if (e.key === 'ArrowRight') goNext();
-      if (e.key === 'ArrowLeft') goPrev();
-      if (e.key === 'Escape') closeLightbox();
-    };
-    window.addEventListener('keydown', handleKey);
-    return () => window.removeEventListener('keydown', handleKey);
-  }, [lightboxIndex]);
-
-  useEffect(() => {
-    if (lightboxIndex === null || images.length <= 1 || isHoveringLightbox) {
-      if (lightboxTimerRef.current !== null) {
-        window.clearTimeout(lightboxTimerRef.current);
-        lightboxTimerRef.current = null;
-      }
-      return;
-    }
-
-    lightboxTimerRef.current = window.setTimeout(() => {
-      setLightboxIndex(prev => (prev === null ? prev : (prev + 1) % images.length));
-    }, 5000);
-
-    return () => {
-      if (lightboxTimerRef.current !== null) {
-        window.clearTimeout(lightboxTimerRef.current);
-        lightboxTimerRef.current = null;
-      }
-    };
-  }, [lightboxIndex, images.length, isHoveringLightbox]);
 
   if (images.length === 0) return null;
 
@@ -404,183 +357,18 @@ function Gallery({ images, tourTitle }: {
       </div>
 
       {lightboxIndex !== null && (
-        <div
-          onClick={closeLightbox}
-          onMouseEnter={() => setIsHoveringLightbox(true)}
-          onMouseLeave={() => setIsHoveringLightbox(false)}
-          style={{
-            position: 'fixed',
-            inset: 0,
-            backgroundColor: 'rgba(5,3,2,0.95)',
-            zIndex: 9999,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}
-        >
-          {/* Close button */}
-          <button
-            onClick={closeLightbox}
-            style={{
-              position: 'absolute',
-              top: '24px',
-              right: '24px',
-              background: 'none',
-              border: '1px solid rgba(201,147,58,0.4)',
-              color: '#F5F1EB',
-              fontSize: '20px',
-              width: '44px',
-              height: '44px',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              zIndex: 10000,
-              transition: 'border-color 0.3s ease'
-            }}
-          >✕</button>
-
-          {/* Image counter */}
-          <div style={{
-            position: 'absolute',
-            top: '18px',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            fontFamily: "'Jost', Arial, sans-serif",
-            fontSize: 'clamp(18px, 2vw, 26px)',
-            fontWeight: '600',
-            letterSpacing: '0.2em',
-            color: '#FFF7E8',
-            background: 'linear-gradient(180deg, rgba(33,25,19,0.9), rgba(10,8,7,0.76))',
-            border: '1px solid rgba(201,147,58,0.3)',
-            padding: '8px 16px',
-            borderRadius: '999px',
-            minWidth: '96px',
-            textAlign: 'center',
-            boxShadow: '0 14px 28px rgba(0,0,0,0.32), inset 0 1px 0 rgba(255,255,255,0.08)',
-            backdropFilter: 'blur(10px)',
-            WebkitBackdropFilter: 'blur(10px)'
-          }}>
-            {lightboxIndex + 1} / {images.length}
-          </div>
-
-          {/* Preload adjacent images */}
-          {images.length > 1 && (
-            <div style={{ display: 'none' }}>
-              <img src={images[(lightboxIndex + 1) % images.length].url} alt="" />
-              <img src={images[(lightboxIndex - 1 + images.length) % images.length].url} alt="" />
-            </div>
-          )}
-
-          {/* Main image */}
-          <div
-            key={lightboxIndex}
-            style={{
-              marginTop: '44px',
-              width: '72vw',
-              height: '85vh',
-              maxWidth: '72vw',
-              maxHeight: '85vh',
-              animation: 'premiumLightboxFade 760ms cubic-bezier(0.16, 1, 0.3, 1) both',
-              borderRadius: '12px',
-              overflow: 'hidden',
-              border: '2px solid rgba(255,255,255,0.92)',
-              boxShadow: '0 0 0 1px rgba(255,255,255,0.32), 0 0 24px rgba(255,255,255,0.16), 0 24px 80px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.3)',
-              background: 'rgba(255,255,255,0.02)'
-            }}
-          >
-            <img
-              src={images[lightboxIndex].url}
-              alt={`${tourTitle} — photo ${lightboxIndex + 1}`}
-              style={{
-                width: '100%',
-                height: '100%',
-                objectFit: 'contain',
-                display: 'block'
-              }}
-            />
-          </div>
-
-          <div style={{
-            position: 'absolute',
-            bottom: '16px',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            display: 'flex',
-            alignItems: 'flex-end',
-            gap: '6px',
-            padding: '0px 12px 8px 12px',
-            backgroundColor: 'transparent',
-            height: '130px',
-            maxWidth: '80vw',
-            overflowX: 'auto',
-            scrollbarWidth: 'none',
-            pointerEvents: 'none'
-          }}>
-            {images.map((imgData, i) => (
-              <button
-                key={i}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setLightboxIndex(i);
-                }}
-                style={{
-                  width: '48px',
-                  height: '36px',
-                  flexShrink: 0,
-                  position: 'relative',
-                  overflow: 'hidden',
-                  border: i === lightboxIndex
-                    ? '2px solid #C9933A'
-                    : '2px solid transparent',
-                  cursor: 'pointer',
-                  padding: 0,
-                  backgroundColor: '#000000',
-                  transition: 'all 0.2s ease',
-                  zIndex: 1,
-                  pointerEvents: 'auto',
-                  boxShadow: '0 4px 12px rgba(0,0,0,0.5)'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-36px) scale(3)';
-                  e.currentTarget.style.zIndex = '100';
-                  e.currentTarget.style.boxShadow = '0 12px 28px rgba(0,0,0,0.8)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'none';
-                  e.currentTarget.style.zIndex = '1';
-                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.5)';
-                }}
-              >
-                <img
-                  src={imgData.url}
-                  alt=""
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'contain',
-                    display: 'block'
-                  }}
-                />
-              </button>
-            ))}
-          </div>
-        </div>
+        <UnifiedLightbox
+          images={images.map((img, i) => ({
+            id: `gallery-img-${i}`,
+            url: img.url,
+            thumbnailUrl: img.url,
+            lqip: img.lqip,
+            caption: `${tourTitle} — photo ${i + 1}`
+          }))}
+          initialIndex={lightboxIndex}
+          onClose={closeLightbox}
+        />
       )}
-      <style jsx global>{`
-        @keyframes premiumLightboxFade {
-          0% {
-            opacity: 0;
-            transform: scale(1.08);
-            filter: saturate(0.88) brightness(0.86);
-          }
-          100% {
-            opacity: 1;
-            transform: scale(1);
-            filter: saturate(1) brightness(1);
-          }
-        }
-      `}</style>
     </>
   );
 }

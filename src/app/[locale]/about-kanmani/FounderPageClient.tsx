@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { galleryImageUrl, containThumbnailImageUrl } from '@/sanity/lib/image';
 import LazyImage from '@/components/ui/LazyImage';
-
+import UnifiedLightbox, { LightboxImage } from '@/components/ui/UnifiedLightbox';
 interface FounderPhoto {
   _id: string;
   caption?: string;
@@ -720,6 +720,46 @@ export default function FounderPageClient({ locale, photos }: FounderPageClientP
         </p>
       </div>
 
+      {/* CHAPTER 4 — PHOTO GALLERY */}
+      <section id="founder-gallery" style={{ padding: '120px 20px', maxWidth: '1400px', margin: '0 auto' }}>
+        <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: '48px', textAlign: 'center', marginBottom: '64px', color: '#1C1917' }}>Kanmani's Life in Pictures</h2>
+        
+        {/* Era Filters */}
+        <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '12px', marginBottom: '80px' }}>
+          {ERAS.map(era => (
+            <button
+              key={era.id}
+              onClick={() => setActiveEra(era.id)}
+              style={{
+                fontFamily: "'Jost', Arial, sans-serif",
+                fontSize: '13px',
+                fontWeight: '500',
+                letterSpacing: '0.1em',
+                textTransform: 'uppercase',
+                padding: '10px 24px',
+                borderRadius: '30px',
+                border: '1px solid',
+                borderColor: activeEra === era.id ? '#1C1917' : '#D4CFC9',
+                backgroundColor: activeEra === era.id ? '#1C1917' : 'transparent',
+                color: activeEra === era.id ? '#FFFFFF' : '#4A4540',
+                cursor: 'pointer',
+                transition: 'all 0.3s ease'
+              }}
+            >
+              {era.label}
+            </button>
+          ))}
+        </div>
+
+        {/* Gallery Grids */}
+        <div>
+          {activeEra === 'all' 
+            ? ERAS.filter(e => e.id !== 'all').map(era => renderGalleryEra(era.id, era.label))
+            : renderGalleryEra(activeEra, ERAS.find(e => e.id === activeEra)?.label || '')
+          }
+        </div>
+      </section>
+
       {/* CHAPTER 2 — HER STORY */}
       <section style={{ padding: '120px 20px', maxWidth: '1200px', margin: '0 auto' }}>
         
@@ -888,469 +928,23 @@ export default function FounderPageClient({ locale, photos }: FounderPageClientP
         </div>
       </section>
 
-      {/* CHAPTER 4 — PHOTO GALLERY */}
-      <section id="founder-gallery" style={{ padding: '120px 20px', maxWidth: '1400px', margin: '0 auto' }}>
-        <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: '48px', textAlign: 'center', marginBottom: '64px', color: '#1C1917' }}>Kanmani's Life in Pictures</h2>
-        
-        {/* Era Filters */}
-        <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '12px', marginBottom: '80px' }}>
-          {ERAS.map(era => (
-            <button
-              key={era.id}
-              onClick={() => setActiveEra(era.id)}
-              style={{
-                fontFamily: "'Jost', Arial, sans-serif",
-                fontSize: '13px',
-                fontWeight: '500',
-                letterSpacing: '0.1em',
-                textTransform: 'uppercase',
-                padding: '10px 24px',
-                borderRadius: '30px',
-                border: '1px solid',
-                borderColor: activeEra === era.id ? '#1C1917' : '#D4CFC9',
-                backgroundColor: activeEra === era.id ? '#1C1917' : 'transparent',
-                color: activeEra === era.id ? '#FFFFFF' : '#4A4540',
-                cursor: 'pointer',
-                transition: 'all 0.3s ease'
-              }}
-            >
-              {era.label}
-            </button>
-          ))}
-        </div>
-
-        {/* Gallery Grids */}
-        <div>
-          {activeEra === 'all' 
-            ? ERAS.filter(e => e.id !== 'all').map(era => renderGalleryEra(era.id, era.label))
-            : renderGalleryEra(activeEra, ERAS.find(e => e.id === activeEra)?.label || '')
-          }
-        </div>
-      </section>
-
-      {/* CHAPTER 3 — TIMELINE */}
-      <section style={{ backgroundColor: '#1C1917', color: '#FFFFFF', padding: '120px 20px' }}>
-        <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
-          <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: '48px', textAlign: 'center', marginBottom: '80px', letterSpacing: '0.05em' }}>Journey Through Time</h2>
-          
-          <div style={{ position: 'relative', borderLeft: '2px solid rgba(201,147,58,0.3)', paddingLeft: '40px', marginLeft: '20px' }}>
-            {[
-              { year: '1998', title: 'Arrived in Japan for postgraduate studies', desc: 'The beginning of a 28-year journey.', era: 'student-phd' },
-              { year: '2001', title: 'Began PhD research at Nagoya University', desc: 'Immersing in academia and cross-cultural studies.', era: 'student-phd' },
-              { year: '2004', title: 'JICA Tsunami Relief Coordinator, Sri Lanka', desc: 'Managing critical on-the-ground disaster recovery.', era: 'achievements' },
-              { year: '2006', title: 'Completed PhD, Nagoya University', desc: 'Achieving the highest academic milestone in Japan.', era: 'student-phd' },
-              { year: '2008', title: 'Founded Kanmani Tours', desc: 'Creating the ultimate bridge between Japan and India.', era: 'world-travel' },
-              { year: '2012', title: 'First celebrity fan tour to South India', desc: 'Opening new avenues for cultural exchange.', era: 'celebrity' },
-              { year: '2015', title: 'International conference speaker alongside Dr. M.S. Swaminathan', desc: 'Discussing global agricultural and climate challenges.', era: 'news-media' },
-              { year: '2019', title: 'Expanded tours, 500+ Japanese guests served', desc: 'Growing the community of India-Japan travelers.', era: 'world-travel' },
-              { year: '2022', title: 'Post-pandemic revival of Japan-India travel', desc: 'Welcoming guests back to the heart of India.', era: 'others' },
-              { year: '2026', title: 'Continuing the journey', desc: 'Looking ahead to the next chapter of connection.', era: 'others' }
-            ].map((event, i) => (
-              <div key={i} style={{ position: 'relative', marginBottom: '64px' }}>
-                <div style={{ position: 'absolute', left: '-49px', top: '0', width: '16px', height: '16px', borderRadius: '50%', backgroundColor: '#C9933A' }}></div>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '32px' }}>
-                  <div>
-                    <h3 style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '32px', color: '#C9933A', fontWeight: '400', marginBottom: '8px' }}>{event.year}</h3>
-                    <h4 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: '24px', marginBottom: '12px', lineHeight: '1.4' }}>{event.title}</h4>
-                    <p style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '15px', color: '#9A948F', lineHeight: '1.6' }}>{event.desc}</p>
-                  </div>
-                  <div>
-                    {(() => {
-                      const photo = getEraPhoto(event.era);
-                      const url = photo ? galleryImageUrl(photo.image) : null;
-                      return (
-                        <div style={{ aspectRatio: '16/9', backgroundColor: '#2C2420', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', border: '1px solid #4A4540', position: 'relative', overflow: 'hidden' }}>
-                          {url ? (
-                            <>
-                              <LazyImage src={url} alt={event.title} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }} />
-                              <button 
-                                onClick={() => handleEraClick(event.era)}
-                                style={{
-                                  position: 'absolute',
-                                  top: '12px',
-                                  left: '12px',
-                                  fontFamily: "'Jost', Arial, sans-serif",
-                                  fontSize: '12px',
-                                  fontWeight: '700',
-                                  letterSpacing: '0.15em',
-                                  color: '#1C1917',
-                                  background: 'linear-gradient(135deg, #FFE082 0%, #C9933A 50%, #A17124 100%)',
-                                  border: '1.5px solid #FFFFFF',
-                                  borderRadius: '4px',
-                                  padding: '8px 16px',
-                                  cursor: 'pointer',
-                                  textTransform: 'uppercase',
-                                  display: 'flex',
-                                  alignItems: 'center',
-                                  gap: '8px',
-                                  transition: 'all 0.3s ease',
-                                  boxShadow: '0 0 15px rgba(201, 147, 58, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.4)',
-                                  whiteSpace: 'nowrap',
-                                  zIndex: 10,
-                                }}
-                                onMouseEnter={(e) => {
-                                  e.currentTarget.style.background = 'linear-gradient(135deg, #FFF8E1 0%, #E5A93C 50%, #B87F2A 100%)';
-                                  e.currentTarget.style.transform = 'scale(1.05)';
-                                  e.currentTarget.style.boxShadow = '0 0 20px rgba(255, 224, 130, 0.8), 0 4px 12px rgba(0,0,0,0.3)';
-                                }}
-                                onMouseLeave={(e) => {
-                                  e.currentTarget.style.background = 'linear-gradient(135deg, #FFE082 0%, #C9933A 50%, #A17124 100%)';
-                                  e.currentTarget.style.transform = 'scale(1)';
-                                  e.currentTarget.style.boxShadow = '0 0 15px rgba(201, 147, 58, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.4)';
-                                }}
-                              >
-                                <svg width="14" height="14" viewBox="0 0 24 24" 
-                                     fill="none" stroke="currentColor" strokeWidth="2.5">
-                                  <rect x="3" y="3" width="18" height="18" rx="2"/>
-                                  <path d="M3 9h18M9 21V9"/>
-                                </svg>
-                                View Gallery
-                              </button>
-                            </>
-                          ) : (
-                            <div style={{ padding: '16px', textAlign: 'center', cursor: 'pointer' }} onClick={() => handleEraClick(event.era)}>
-                              <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '12px', color: '#C9933A', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '8px' }}>{event.era} Era</span>
-                              <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '10px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Photos from this era available in gallery below</span>
-                            </div>
-                          )}
-                        </div>
-                      );
-                    })()}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
 
 
       {/* LIGHTBOX OVERLAY */}
       {lightboxPhoto && (
-        <div
-          onClick={closeLightbox}
-          onMouseEnter={() => setIsHoveringLightbox(true)}
-          onMouseLeave={() => setIsHoveringLightbox(false)}
-          style={{
-            position: 'fixed',
-            inset: 0,
-            backgroundColor: 'rgba(5, 3, 2, 0.95)',
-            zIndex: 9999,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            backdropFilter: 'blur(10px)',
-            WebkitBackdropFilter: 'blur(10px)'
-          }}
-        >
-          {/* Close button */}
-          <button
-            onClick={closeLightbox}
-            style={{
-              position: 'absolute',
-              top: '24px',
-              right: '24px',
-              background: 'none',
-              border: '1px solid rgba(201,147,58,0.4)',
-              color: '#F5F1EB',
-              fontSize: '20px',
-              width: '44px',
-              height: '44px',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              zIndex: 10000,
-              transition: 'border-color 0.3s ease'
-            }}
-          >✕</button>
-
-          {/* Image counter */}
-          <div style={{
-            position: 'absolute',
-            top: '18px',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            fontFamily: "'Jost', Arial, sans-serif",
-            fontSize: 'clamp(18px, 2vw, 26px)',
-            fontWeight: '600',
-            letterSpacing: '0.2em',
-            color: '#FFF7E8',
-            background: 'linear-gradient(180deg, rgba(33,25,19,0.9), rgba(10,8,7,0.76))',
-            border: '1px solid rgba(201,147,58,0.3)',
-            padding: '8px 16px',
-            borderRadius: '999px',
-            minWidth: '96px',
-            textAlign: 'center',
-            boxShadow: '0 14px 28px rgba(0,0,0,0.32), inset 0 1px 0 rgba(255,255,255,0.08)',
-            backdropFilter: 'blur(10px)',
-            WebkitBackdropFilter: 'blur(10px)'
-          }}>
-            {lightboxIndex + 1} / {currentEraPhotos.length}
-          </div>
-
-
-
-          {currentEraPhotos.length > 1 && (
-            <>
-              {/* Previous photo card */}
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  const newIndex = (lightboxIndex - 1 + currentEraPhotos.length) % currentEraPhotos.length;
-                  setLightboxIndex(newIndex);
-                  setLightboxPhoto(currentEraPhotos[newIndex]);
-                }}
-                style={{
-                  position: 'absolute',
-                  left: '96px',
-                  top: '50%',
-                  transform: 'translateY(-50%)',
-                  width: 'clamp(96px, 12vw, 170px)',
-                  padding: '8px',
-                  border: '1px solid rgba(201,147,58,0.28)',
-                  background: 'rgba(10,8,7,0.7)',
-                  backdropFilter: 'blur(10px)',
-                  WebkitBackdropFilter: 'blur(10px)',
-                  cursor: 'pointer',
-                  zIndex: 10000,
-                  boxShadow: '0 18px 40px rgba(0,0,0,0.35)',
-                  transition: 'transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = '#C9933A';
-                  e.currentTarget.style.transform = 'translateY(-50%) scale(1.03)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = 'rgba(201,147,58,0.28)';
-                  e.currentTarget.style.transform = 'translateY(-50%) scale(1)';
-                }}
-              >
-                <div style={{ position: 'relative', width: '100%', aspectRatio: '4 / 3', overflow: 'hidden' }}>
-                  <LazyImage
-                    src={containThumbnailImageUrl(currentEraPhotos[(lightboxIndex - 1 + currentEraPhotos.length) % currentEraPhotos.length].image)}
-                    lqip={currentEraPhotos[(lightboxIndex - 1 + currentEraPhotos.length) % currentEraPhotos.length].image?.asset?.metadata?.lqip}
-                    alt="Previous photo preview"
-                    style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-                  />
-                  <div style={{
-                    position: 'absolute',
-                    inset: 0,
-                    background: 'linear-gradient(to top, rgba(5,3,2,0.55), transparent 60%)'
-                  }} />
-                </div>
-                <div style={{
-                  marginTop: '8px',
-                  fontFamily: "'Jost', Arial, sans-serif",
-                  fontSize: '11px',
-                  letterSpacing: '0.22em',
-                  textTransform: 'uppercase',
-                  color: '#FFF7E8'
-                }}>
-                  Prev
-                </div>
-              </button>
-
-              {/* Next photo card */}
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  const newIndex = (lightboxIndex + 1) % currentEraPhotos.length;
-                  setLightboxIndex(newIndex);
-                  setLightboxPhoto(currentEraPhotos[newIndex]);
-                }}
-                style={{
-                  position: 'absolute',
-                  right: '96px',
-                  top: '50%',
-                  transform: 'translateY(-50%)',
-                  width: 'clamp(96px, 12vw, 170px)',
-                  padding: '8px',
-                  border: '1px solid rgba(201,147,58,0.28)',
-                  background: 'rgba(10,8,7,0.7)',
-                  backdropFilter: 'blur(10px)',
-                  WebkitBackdropFilter: 'blur(10px)',
-                  cursor: 'pointer',
-                  zIndex: 10000,
-                  boxShadow: '0 18px 40px rgba(0,0,0,0.35)',
-                  transition: 'transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = '#C9933A';
-                  e.currentTarget.style.transform = 'translateY(-50%) scale(1.03)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = 'rgba(201,147,58,0.28)';
-                  e.currentTarget.style.transform = 'translateY(-50%) scale(1)';
-                }}
-              >
-                <div style={{ position: 'relative', width: '100%', aspectRatio: '4 / 3', overflow: 'hidden' }}>
-                  <LazyImage
-                    src={containThumbnailImageUrl(currentEraPhotos[(lightboxIndex + 1) % currentEraPhotos.length].image)}
-                    lqip={currentEraPhotos[(lightboxIndex + 1) % currentEraPhotos.length].image?.asset?.metadata?.lqip}
-                    alt="Next photo preview"
-                    style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-                  />
-                  <div style={{
-                    position: 'absolute',
-                    inset: 0,
-                    background: 'linear-gradient(to top, rgba(5,3,2,0.55), transparent 60%)'
-                  }} />
-                </div>
-                <div style={{
-                  marginTop: '8px',
-                  fontFamily: "'Jost', Arial, sans-serif",
-                  fontSize: '11px',
-                  letterSpacing: '0.22em',
-                  textTransform: 'uppercase',
-                  color: '#FFF7E8'
-                }}>
-                  Next
-                </div>
-              </button>
-            </>
-          )}
-
-          {/* Preload adjacent images */}
-          {currentEraPhotos.length > 1 && (
-            <div style={{ display: 'none' }}>
-              <img src={galleryImageUrl(currentEraPhotos[(lightboxIndex + 1) % currentEraPhotos.length].image)} alt="" />
-              <img src={galleryImageUrl(currentEraPhotos[(lightboxIndex - 1 + currentEraPhotos.length) % currentEraPhotos.length].image)} alt="" />
-            </div>
-          )}
-
-          {/* Main Content Area */}
-          <div 
-            onClick={(e) => e.stopPropagation()} 
-            style={{ 
-              display: 'flex', 
-              flexDirection: 'column', 
-              alignItems: 'center', 
-              width: '72vw',
-              zIndex: 999 
-            }}
-          >
-            <div
-              key={lightboxIndex}
-              style={{
-                width: '100%',
-                height: '60vh',
-                animation: 'premiumLightboxFade 760ms cubic-bezier(0.16, 1, 0.3, 1) both',
-                borderRadius: '12px',
-                overflow: 'hidden',
-                border: '2px solid rgba(255,255,255,0.92)',
-                boxShadow: '0 0 0 1px rgba(255,255,255,0.32), 0 0 24px rgba(255,255,255,0.16), 0 24px 80px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.3)',
-                background: 'rgba(255,255,255,0.02)'
-              }}
-            >
-              <img
-                src={galleryImageUrl(lightboxPhoto.image)}
-                alt={isJa ? lightboxPhoto.captionJa || 'Fullscreen' : lightboxPhoto.caption || 'Fullscreen'}
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'contain',
-                  display: 'block'
-                }}
-              />
-            </div>
-            <div style={{ marginTop: '20px', textAlign: 'center', maxWidth: '800px' }}>
-              <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: '20px', color: '#FFFFFF', marginBottom: '8px' }}>
-                {isJa ? lightboxPhoto.captionJa : lightboxPhoto.caption}
-              </p>
-              {(lightboxPhoto.year || lightboxPhoto.location) && (
-                <p style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '14px', color: '#C9933A', letterSpacing: '0.1em', textTransform: 'uppercase', margin: 0 }}>
-                  {[lightboxPhoto.year, lightboxPhoto.location].filter(Boolean).join(' • ')}
-                </p>
-              )}
-            </div>
-          </div>
-
-          {/* Thumbnail strip at bottom */}
-          <div style={{
-            position: 'absolute',
-            bottom: '16px',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            display: 'flex',
-            alignItems: 'flex-end',
-            gap: '6px',
-            padding: '0px 12px 8px 12px',
-            backgroundColor: 'transparent',
-            height: '130px',
-            maxWidth: '80vw',
-            overflowX: 'auto',
-            scrollbarWidth: 'none',
-            zIndex: 1000,
-            pointerEvents: 'none'
-          }}>
-            {currentEraPhotos.map((photo, i) => (
-              <button
-                key={photo._id}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setLightboxIndex(i);
-                  setLightboxPhoto(photo);
-                }}
-                style={{
-                  width: '48px',
-                  height: '36px',
-                  flexShrink: 0,
-                  position: 'relative',
-                  overflow: 'hidden',
-                  border: i === lightboxIndex
-                    ? '2px solid #C9933A'
-                    : '2px solid transparent',
-                  cursor: 'pointer',
-                  padding: 0,
-                  backgroundColor: '#000000',
-                  transition: 'all 0.2s ease',
-                  zIndex: 1,
-                  pointerEvents: 'auto',
-                  boxShadow: '0 4px 12px rgba(0,0,0,0.5)'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-36px) scale(3)';
-                  e.currentTarget.style.zIndex = '100';
-                  e.currentTarget.style.boxShadow = '0 12px 28px rgba(0,0,0,0.8)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'none';
-                  e.currentTarget.style.zIndex = '1';
-                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.5)';
-                }}
-              >
-                <img
-                  src={containThumbnailImageUrl(photo.image)}
-                  alt=""
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'contain',
-                    display: 'block'
-                  }}
-                />
-              </button>
-            ))}
-          </div>
-        </div>
+        <UnifiedLightbox
+          images={currentEraPhotos.map((photo) => ({
+            id: photo._id,
+            url: galleryImageUrl(photo.image),
+            thumbnailUrl: containThumbnailImageUrl(photo.image) || '',
+            lqip: photo.image?.asset?.metadata?.lqip,
+            caption: isJa ? photo.captionJa : photo.caption,
+            subCaption: [photo.year, photo.location].filter(Boolean).join(' • ')
+          }))}
+          initialIndex={lightboxIndex}
+          onClose={closeLightbox}
+        />
       )}
-
-      <style jsx global>{`
-        @keyframes premiumLightboxFade {
-          0% {
-            opacity: 0;
-            transform: scale(1.08);
-            filter: saturate(0.88) brightness(0.86);
-          }
-          100% {
-            opacity: 1;
-            transform: scale(1);
-            filter: saturate(1) brightness(1);
-          }
-        }
-      `}</style>
 
     </div>
   );

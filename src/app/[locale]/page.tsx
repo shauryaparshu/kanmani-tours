@@ -6,6 +6,8 @@ import { getImages, getSlugs, getLatestImage } from '@/lib/server-images';
 import { getAllTours } from '@/lib/tours';
 import { getAllCelebrities } from '@/lib/celebrities';
 
+import CompanySections from '@/components/sections/CompanySections';
+
 export default async function Home({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   const heroImages = getImages('/assets/img/home/hero');
@@ -47,6 +49,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         heroImages={heroImages}
       />
       <ToursSection tours={upcomingTours} locale={locale} />
+      <CompanySections />
       <Testimonials customerImages={customerImages} />
       <Footer />
     </main>
