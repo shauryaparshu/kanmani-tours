@@ -1,0 +1,15 @@
+{
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "srikan-tours-kuox.vercel.app"
+        }
+      ],
+      "destination": "https://www.kanmanitours.com/$1",
+      "permanent": true
+    }
+  ]
+}
