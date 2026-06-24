@@ -7,6 +7,7 @@ import { routing } from "@/i18n/routing";
 import BookingWrapper from "@/components/forms/BookingWrapper";
 import { getAllTours } from "@/lib/tours";
 import Navigation from '@/components/layout/Navigation';
+import { Analytics } from '@vercel/analytics/next';
 
 export const metadata: Metadata = {
   title: "Kanmani Tours | Exclusive Japan-India Journeys",
@@ -47,6 +48,7 @@ export default async function RootLayout({
             {children}
           </BookingWrapper>
         </NextIntlClientProvider>
+        <Analytics />
       </body>
     </html>
   );
