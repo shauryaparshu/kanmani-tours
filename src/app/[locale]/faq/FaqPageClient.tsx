@@ -194,14 +194,10 @@ export default function FaqPageClient({ faqs }: { faqs: FaqItem[] }) {
         minHeight: '100vh',
         paddingTop: '2rem'
       }}>
-        <div style={{
+        <div className="r-grid-faq r-padding" style={{
           maxWidth: '1200px',
           margin: '0 auto',
-          width: '100%',
-          display: 'grid',
-          gridTemplateColumns: '28% 65%',
-          justifyContent: 'space-between',
-          alignItems: 'flex-start'
+          width: '100%'
         }}>
 
           {/* STICKY SIDEBAR */}
@@ -366,9 +362,7 @@ export default function FaqPageClient({ faqs }: { faqs: FaqItem[] }) {
           </div>
 
           {/* RIGHT CONTENT */}
-          <div style={{
-            padding: '48px 0 80px 0',
-          }}>
+          <div>
             {FAQ_CATEGORIES.map(({ value, label, star }) => {
               const categoryFaqs = groupedFaqs[value] || [];
               if (categoryFaqs.length === 0) return null;

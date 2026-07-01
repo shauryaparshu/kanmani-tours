@@ -15,13 +15,8 @@ export default function FooterSection() {
       fontFamily: "'Jost', Arial, sans-serif"
     }}>
       {/* ROW 1 — MAIN FOOTER CONTENT */}
-      <div style={{
+      <div className="r-grid-footer" style={{
         padding: '64px 60px 48px',
-        display: 'grid',
-        gridTemplateColumns: '2fr 1fr 1fr 1fr',
-        gap: '60px',
-        maxWidth: '1400px',
-        margin: '0 auto'
       }}>
         
         {/* COLUMN 1 — BRAND */}
@@ -313,8 +308,10 @@ export default function FooterSection() {
       <div style={{
         padding: '20px 60px',
         display: 'flex',
+        flexWrap: 'wrap',
         justifyContent: 'space-between',
         alignItems: 'center',
+        gap: '16px',
         maxWidth: '1400px',
         margin: '0 auto'
       }}>

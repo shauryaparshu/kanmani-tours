@@ -1,34 +1,19 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 export default function CompanySections() {
-  const [windowWidth, setWindowWidth] = useState(1200);
-
-  useEffect(() => {
-    setWindowWidth(window.innerWidth);
-    const handler = () => setWindowWidth(window.innerWidth);
-    window.addEventListener('resize', handler);
-    return () => window.removeEventListener('resize', handler);
-  }, []);
-
-  const isMobile = windowWidth < 768;
-  const isTablet = windowWidth >= 768 && windowWidth < 1024;
-
   return (
     <div id="about-company">
       {/* OUR STORY SECTION */}
-      <div style={{
+      <div className="r-padding" style={{
         backgroundColor: '#FAFAF7',
-        padding: isMobile ? '48px 20px' : '80px 60px',
         borderTop: '1px solid rgba(201,147,58,0.15)'
       }}>
-        <div style={{
+        <div className="r-grid-2" style={{
           maxWidth: '1300px',
           margin: '0 auto',
-          display: 'grid',
-          gridTemplateColumns: isMobile || isTablet ? '1fr' : '1fr 1fr',
-          gap: isMobile ? '40px' : '80px',
+          gap: '80px',
           alignItems: 'center'
         }}>
           <div>
@@ -150,9 +135,8 @@ export default function CompanySections() {
       </div>
 
       {/* VALUES SECTION */}
-      <div style={{
+      <div className="r-padding" style={{
         backgroundColor: '#FAFAF7',
-        padding: isMobile ? '48px 20px' : '80px 60px',
         borderTop: '1px solid rgba(201,147,58,0.15)'
       }}>
         <div style={{ maxWidth: '1300px', margin: '0 auto' }}>
@@ -177,10 +161,8 @@ export default function CompanySections() {
             width: '48px', height: '1px',
             backgroundColor: '#C9933A', marginBottom: '48px'
           }}/>
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: isMobile ? '1fr' : isTablet ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)',
-            gap: isMobile ? '16px' : '2px'
+          <div className="r-grid-3" style={{
+            gap: '2px'
           }}>
             {[
               {

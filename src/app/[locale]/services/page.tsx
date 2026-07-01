@@ -49,15 +49,12 @@ export default function ServicesPage() {
         </div>
 
         {/* SERVICES GRID */}
-        <div style={{
-          backgroundColor: '#FAFAF7',
-          padding: '80px 60px'
+        <div className="r-padding" style={{
+          backgroundColor: '#FAFAF7'
         }}>
-          <div style={{
+          <div className="r-grid-2" style={{
             maxWidth: '1300px',
             margin: '0 auto',
-            display: 'grid',
-            gridTemplateColumns: 'repeat(2, 1fr)',
             gap: '2px'
           }}>
 
@@ -161,11 +158,10 @@ export default function ServicesPage() {
           </div>
 
           {/* CONTACT CTA */}
-          <div style={{
+          <div className="r-padding-sm" style={{
             maxWidth: '1300px',
             margin: '48px auto 0',
             backgroundColor: '#1C1917',
-            padding: '48px 60px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',

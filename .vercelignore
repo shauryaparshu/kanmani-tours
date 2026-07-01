@@ -1,0 +1,9 @@
+node_modules
+.next
+.git
+.sanity
+dist
+out
+*.mp4
+*.MOV
+*.avi

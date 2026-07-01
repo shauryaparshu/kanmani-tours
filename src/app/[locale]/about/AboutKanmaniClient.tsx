@@ -615,26 +615,20 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
           backgroundColor: '#1C1917',
           width: '100%'
         }}>
-           <div style={{
+           <div className="r-hero-split" style={{
             width: '100%',
-            display: 'flex',
-            alignItems: 'stretch',
-            flexDirection: isMobile ? 'column' : 'row',
-            backgroundColor: '#1C1917',
-            height: isMobile ? 'auto' : '60vh'
+            backgroundColor: '#1C1917'
           }}>
-            <div style={{
-              width: isMobile ? '100%' : '40%',
+            <div className="r-hero-split-image" style={{
               backgroundColor: '#111010',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              flexShrink: 0,
-              height: isMobile ? 'auto' : '100%'
+              flexShrink: 0
             }}>
               <div style={{
                 width: '100%',
-                height: isMobile ? 'auto' : '100%',
+                height: '100%',
                 position: 'relative',
                 overflow: 'hidden'
               }}>
@@ -643,7 +637,7 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
                   alt="Dr. Kanmani"
                   style={{
                     width: '100%',
-                    height: isMobile ? 'auto' : '100%',
+                    height: '100%',
                     objectFit: 'cover',
                     objectPosition: 'center 15%',
                     display: 'block'
@@ -655,16 +649,12 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
               </div>
             </div>
 
-            <div style={{
-              width: isMobile ? '100%' : '60%',
+            <div className="r-hero-split-content" style={{
               backgroundColor: '#1C1917',
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'space-between',
-              padding: isMobile ? '32px 16px 24px 16px' : '40px 48px 32px 48px',
-              borderLeft: isMobile ? 'none' : '1px solid rgba(201,147,58,0.15)',
               minHeight: 'auto',
-              height: isMobile ? 'auto' : '100%',
               overflow: 'hidden'
             }}>
               {/* Header Intro Group (Quote + Name) */}
@@ -755,11 +745,7 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
               </div>
 
               {/* Block 3: Stats Grid */}
-              <div style={{
-                display: 'flex',
-                flexWrap: 'wrap',
-                gap: 0
-              }}>
+              <div className="r-grid-about-stats">
                 {[
                   { num: '28', label: 'Years in Japan' },
                   { num: '41', label: 'Countries Travelled' },
@@ -771,7 +757,6 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
                     borderRight: '1px solid rgba(235,177,78,0.15)',
                     borderBottom: '1px solid rgba(235,177,78,0.15)',
                     minWidth: '140px',
-                    flex: '1 1 50%',
                     display: 'flex',
                     alignItems: 'baseline',
                     gap: '10px'

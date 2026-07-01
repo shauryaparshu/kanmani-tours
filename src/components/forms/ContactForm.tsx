@@ -140,7 +140,7 @@ export default function ContactForm() {
     return (
         <form onSubmit={handleSubmit} noValidate>
             {/* Name and Email grid */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '24px' }}>
+            <div className="r-grid-2" style={{ gap: '20px', marginBottom: '24px' }}>
                 <div>
                     <label style={labelStyle}>FULL NAME <span style={{ color: '#d49a36' }}>*</span></label>
                     <input
