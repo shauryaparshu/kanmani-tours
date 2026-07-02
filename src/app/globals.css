@@ -4405,6 +4405,14 @@ button {
   }
 }
 
+.mobile-only-btn {
+  display: none !important;
+}
+
+.mobile-btn-text {
+  display: none;
+}
+
 /* ─── MOBILE RESPONSIVE FIXES (768px and below) ─── */
 @media (max-width: 768px) {
   /* Prompt 1: Tours Listing Page Filters Bar */
@@ -4743,7 +4751,28 @@ button {
     align-items: center !important;
     justify-content: center !important;
   }
-  .gallery-flip-grid {
+  .desktop-only-btn {
+    display: none !important;
+  }
+  .mobile-only-btn {
+    display: flex !important;
+    margin-left: auto !important;
+  }
+  .mobile-only-btn.collapse-mode {
+    font-size: 12px !important;
+    padding: 6px 12px !important;
+    min-height: 32px !important;
+    background: transparent !important;
+    border: 1px solid #C9933A !important;
+    color: #C9933A !important;
+    box-shadow: none !important;
+  }
+  .mobile-only-btn.collapse-mode svg {
+    width: 14px !important;
+    height: 14px !important;
+    margin-right: 4px !important;
+  }
+  .gallery-collapsed-grid {
     display: flex !important;
     overflow-x: auto !important;
     overflow-y: hidden !important;
@@ -4752,17 +4781,35 @@ button {
     width: 100% !important;
     -webkit-overflow-scrolling: touch !important;
   }
-  .gallery-flip-grid > div {
+  .gallery-collapsed-grid > div {
     flex: 0 0 100px !important;
     height: 80px !important;
     aspect-ratio: auto !important;
   }
-  .gallery-flip-grid > div > div {
+  .gallery-collapsed-grid > div > div {
     height: 80px !important;
   }
-  .gallery-flip-grid img {
+  .gallery-collapsed-grid img {
     height: 80px !important;
     width: 100px !important;
+    object-fit: cover !important;
+  }
+  .gallery-expanded-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 4px !important;
+    overflow-x: visible !important;
+    width: 100% !important;
+  }
+  .gallery-expanded-grid > div {
+    aspect-ratio: 1 / 1 !important;
+    height: auto !important;
+    flex: none !important;
+  }
+  .gallery-expanded-grid img {
+    aspect-ratio: 1 / 1 !important;
+    height: 100% !important;
+    width: 100% !important;
     object-fit: cover !important;
   }
   .desktop-btn-text {
@@ -4776,5 +4823,3 @@ button {
 .mobile-btn-text {
   display: none;
 }
-
-

@@ -195,7 +195,7 @@ function FlipGrid({ images, tourTitle, onImageClick, isExpanded }: FlipGridProps
 
   if (isExpanded) {
     return (
-      <div className="gallery-flip-grid" style={{
+      <div className="gallery-flip-grid gallery-expanded-grid" style={{
         display: 'grid',
         gridTemplateColumns: 'repeat(4, 1fr)',
         gap: '4px'
@@ -232,7 +232,7 @@ function FlipGrid({ images, tourTitle, onImageClick, isExpanded }: FlipGridProps
   }
 
   return (
-    <div className="gallery-flip-grid" style={{
+    <div className="gallery-flip-grid gallery-collapsed-grid" style={{
       display: 'grid',
       gridTemplateColumns: 'repeat(4, 1fr)',
       gap: '4px'
@@ -438,7 +438,7 @@ export default function GalleryPageClient({ tours }: Props) {
                       }}>
                         {getCleanTitle(tour.title)}
                       </h2>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                      <div className="gallery-event-meta-row" style={{ display: 'flex', alignItems: 'center', gap: '16px', width: '100%' }}>
                         <span className="gallery-event-date" style={{
                           fontFamily: "'Jost', Arial, sans-serif",
                           fontSize: '12px',
@@ -462,13 +462,57 @@ export default function GalleryPageClient({ tours }: Props) {
                         }}>
                           {tour.category || 'Event'}
                         </span>
+                        {hasMore && (
+                          <button
+                            onClick={() => toggleExpand(tour.id)}
+                            className={`gallery-view-btn mobile-only-btn ${isExpanded ? 'collapse-mode' : 'view-mode'}`}
+                            style={{
+                              fontFamily: "'Jost', Arial, sans-serif",
+                              fontSize: '15px',
+                              fontWeight: '700',
+                              letterSpacing: '0.22em',
+                              color: '#1C1917',
+                              background: 'linear-gradient(135deg, #FFE082 0%, #C9933A 50%, #A17124 100%)',
+                              border: '2px solid #FFFFFF',
+                              borderRadius: '4px',
+                              padding: '16px 36px',
+                              cursor: 'pointer',
+                              textTransform: 'uppercase',
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: '12px',
+                              transition: 'all 0.3s ease',
+                              boxShadow: '0 0 25px rgba(201, 147, 58, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.4)',
+                              whiteSpace: 'nowrap',
+                              marginTop: '4px'
+                            }}
+                            onMouseEnter={(e) => {
+                              e.currentTarget.style.background = 'linear-gradient(135deg, #FFF8E1 0%, #E5A93C 50%, #B87F2A 100%)';
+                              e.currentTarget.style.transform = 'translateY(-2px)';
+                              e.currentTarget.style.boxShadow = '0 0 35px rgba(255, 224, 130, 0.95), 0 6px 20px rgba(0,0,0,0.4)';
+                            }}
+                            onMouseLeave={(e) => {
+                              e.currentTarget.style.background = 'linear-gradient(135deg, #FFE082 0%, #C9933A 50%, #A17124 100%)';
+                              e.currentTarget.style.transform = 'translateY(0)';
+                              e.currentTarget.style.boxShadow = '0 0 25px rgba(201, 147, 58, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.4)';
+                            }}
+                          >
+                            <svg width="22" height="22" viewBox="0 0 24 24"
+                                 fill="none" stroke="currentColor" strokeWidth="2.5" style={{ marginRight: '2px' }}>
+                              <rect x="3" y="3" width="18" height="18" rx="2" />
+                              <path d="M3 9h18M9 21V9" />
+                            </svg>
+                            <span className="desktop-btn-text">{isExpanded ? 'COLLAPSE PHOTOS' : `VIEW ALL PHOTOS (${tour.images.length})`}</span>
+                            <span className="mobile-btn-text">{isExpanded ? 'COLLAPSE' : 'VIEW'}</span>
+                          </button>
+                        )}
                       </div>
                     </div>
 
                     {hasMore && (
                       <button
                         onClick={() => toggleExpand(tour.id)}
-                        className="gallery-view-btn"
+                        className="gallery-view-btn desktop-only-btn"
                         style={{
                           fontFamily: "'Jost', Arial, sans-serif",
                           fontSize: '15px',

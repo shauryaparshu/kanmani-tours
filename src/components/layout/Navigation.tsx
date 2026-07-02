@@ -36,6 +36,30 @@ export default function Navigation() {
         };
     }, [menuOpen]);
 
+    useEffect(() => {
+        if (!menuOpen) return;
+        const handleOutsideClick = (e: MouseEvent) => {
+            const menuElement = document.getElementById('mobile-menu-overlay');
+            const hamburgerButton = document.getElementById('mobile-hamburger-btn');
+            if (
+                menuElement &&
+                !menuElement.contains(e.target as Node) &&
+                hamburgerButton &&
+                !hamburgerButton.contains(e.target as Node)
+            ) {
+                setMenuOpen(false);
+            }
+        };
+        const timer = setTimeout(() => {
+            document.addEventListener('click', handleOutsideClick);
+        }, 100);
+
+        return () => {
+            clearTimeout(timer);
+            document.removeEventListener('click', handleOutsideClick);
+        };
+    }, [menuOpen]);
+
     const changeLanguage = (nextLocale: string) => {
         router.replace(pathname, { locale: nextLocale });
     };
@@ -614,7 +638,8 @@ export default function Navigation() {
 
                             {/* Hamburger button */}
                             <button
-                                onClick={() => setMenuOpen(true)}
+                                id="mobile-hamburger-btn"
+                                onClick={() => setMenuOpen(!menuOpen)}
                                 style={{
                                     background: 'none',
                                     border: '1px solid rgba(201,147,58,0.4)',
@@ -630,11 +655,20 @@ export default function Navigation() {
                                     padding: '10px',
                                     flexShrink: 0
                                 }}
-                                aria-label="Open menu"
+                                aria-label={menuOpen ? "Close menu" : "Open menu"}
                             >
-                                <span style={{ width: '20px', height: '1.5px', backgroundColor: '#C9933A', display: 'block' }}/>
-                                <span style={{ width: '20px', height: '1.5px', backgroundColor: '#C9933A', display: 'block' }}/>
-                                <span style={{ width: '20px', height: '1.5px', backgroundColor: '#C9933A', display: 'block' }}/>
+                                {menuOpen ? (
+                                    <div style={{ position: 'relative', width: '20px', height: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                        <span style={{ position: 'absolute', width: '20px', height: '1.5px', backgroundColor: '#C9933A', transform: 'rotate(45deg)', display: 'block' }}/>
+                                        <span style={{ position: 'absolute', width: '20px', height: '1.5px', backgroundColor: '#C9933A', transform: 'rotate(-45deg)', display: 'block' }}/>
+                                    </div>
+                                ) : (
+                                    <>
+                                        <span style={{ width: '20px', height: '1.5px', backgroundColor: '#C9933A', display: 'block' }}/>
+                                        <span style={{ width: '20px', height: '1.5px', backgroundColor: '#C9933A', display: 'block' }}/>
+                                        <span style={{ width: '20px', height: '1.5px', backgroundColor: '#C9933A', display: 'block' }}/>
+                                    </>
+                                )}
                             </button>
                         </div>
                     </div>
@@ -644,15 +678,18 @@ export default function Navigation() {
 
                     {/* FULL SCREEN MENU OVERLAY */}
                     {menuOpen && (
-                        <div style={{
-                            position: 'fixed',
-                            inset: 0,
-                            backgroundColor: '#1C1917',
-                            zIndex: 2000,
-                            display: 'flex',
-                            flexDirection: 'column',
-                            overflowY: 'auto'
-                        }}>
+                        <div
+                            id="mobile-menu-overlay"
+                            style={{
+                                position: 'fixed',
+                                inset: 0,
+                                backgroundColor: '#1C1917',
+                                zIndex: 2000,
+                                display: 'flex',
+                                flexDirection: 'column',
+                                overflowY: 'auto'
+                            }}
+                        >
                             {/* Overlay top bar */}
                             <div style={{
                                 display: 'flex',
@@ -956,6 +993,7 @@ export default function Navigation() {
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                                     <a
                                         href="tel:+919597716664"
+                                        onClick={() => setMenuOpen(false)}
                                         style={{
                                             display: 'inline-flex',
                                             alignItems: 'center',
@@ -977,6 +1015,7 @@ export default function Navigation() {
                                     </a>
                                     <a
                                         href="mailto:kanmanitours@gmail.com"
+                                        onClick={() => setMenuOpen(false)}
                                         style={{
                                             display: 'inline-flex',
                                             alignItems: 'center',
@@ -1018,6 +1057,7 @@ export default function Navigation() {
                                         href={href}
                                         target="_blank"
                                         rel="noopener noreferrer"
+                                        onClick={() => setMenuOpen(false)}
                                         style={{
                                             fontFamily: "'Jost', Arial, sans-serif",
                                             fontSize: '11px',
