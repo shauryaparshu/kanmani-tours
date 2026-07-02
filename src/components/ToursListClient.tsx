@@ -424,9 +424,9 @@ export default function ToursListClient({ tours, categories, countries }: Props)
 
     return (
         <div style={{ backgroundColor: '#FAFAF7', width: '100%', minHeight: '100vh', paddingBottom: '80px' }}>
-            <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
+            <div className="tours-page-container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
             {/* ── Filter Bar ── */}
-            <div style={{
+            <div className="tours-filter-bar" style={{
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center',
@@ -436,7 +436,7 @@ export default function ToursListClient({ tours, categories, countries }: Props)
                 marginBottom: '2rem'
             }}>
                 {/* Left Side: Category & Search */}
-                <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                <div className="tours-filter-left" style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
                     {/* Category Select */}
                     <select
                         className="tlc-category-select"
@@ -497,7 +497,7 @@ export default function ToursListClient({ tours, categories, countries }: Props)
 
 
                     {/* Search Input */}
-                    <div style={{ position: 'relative', width: '280px' }}>
+                    <div className="tours-filter-search" style={{ position: 'relative', width: '280px' }}>
                         <input
                             type="text"
                             placeholder={t('searchPlaceholder')}
@@ -520,7 +520,7 @@ export default function ToursListClient({ tours, categories, countries }: Props)
                 </div>
 
                 {/* Center: Status Toggles */}
-                <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
+                <div className="tours-filter-center" style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
                     {(['all', 'upcoming', 'past'] as StatusFilter[]).map(s => {
                         const isActive = filters.status === s;
                         return (
@@ -553,7 +553,7 @@ export default function ToursListClient({ tours, categories, countries }: Props)
                 </div>
 
                 {/* Right Side: Year, Clear, and Count */}
-                <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
+                <div className="tours-filter-right" style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
                     <select
                         style={{
                             fontFamily: "'Jost', Arial, sans-serif",
