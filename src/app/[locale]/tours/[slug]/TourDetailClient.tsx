@@ -130,7 +130,7 @@ function ItineraryItem({
       marginBottom: last ? '0' : '20px'
     }}>
       {/* LEFT — Timeline Graphic Column */}
-      <div style={{
+      <div className="itinerary-timeline-col" style={{
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -140,7 +140,7 @@ function ItineraryItem({
         alignSelf: 'stretch' // Fix: Dynamically stretch this container to full content height
       }}>
         {/* Number Circle */}
-        <div style={{
+        <div className="itinerary-number-circle" style={{
           width: '36px',
           height: '36px',
           borderRadius: '50%',
@@ -160,7 +160,7 @@ function ItineraryItem({
 
         {/* Persistent connector line */}
         {!last && (
-          <div style={{
+          <div className="itinerary-connector-line" style={{
             position: 'absolute',
             top: '42px', 
             bottom: '-44px', // Fix: bridges the full 20px gap plus 24px next-margin for total overlap
@@ -721,6 +721,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
                 <button
                   key={tab.key}
                   onClick={() => setActiveTab(tab.key)}
+                  className={`tour-tab-btn ${activeTab === tab.key ? 'active' : ''}`}
                   style={{
                     fontFamily: "'Jost', Arial, sans-serif",
                     fontSize: '17px', fontWeight: '600',
@@ -851,7 +852,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
             )}
 
             {activeTab === 'itinerary' && (
-              <div style={{ 
+              <div className="tour-itinerary-tab-container" style={{ 
                 animation: 'fadeIn 0.5s ease',
                 backgroundColor: '#FAFAF7',
                 padding: '72px 60px'
@@ -1005,7 +1006,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
 
     {/* ══ SECTION 8 — OTHER TOURS ivory ══ */}
     {otherTours.length > 0 && (
-      <div style={{
+      <div className="other-tours-section" style={{
         backgroundColor: '#FAFAF7',
         padding: '72px 60px'
       }}>
@@ -1020,7 +1021,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
             width: '48px', height: '1px',
             backgroundColor: '#C9933A', marginBottom: '36px'
           }}/>
-          <div style={{
+          <div className="other-tours-grid" style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(3, 1fr)',
             gap: '28px'
@@ -1052,7 +1053,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
                     objectFit: 'cover', display: 'block'
                   }}
                 />
-                <div style={{ padding: '24px', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
+                <div className="other-tour-card-body" style={{ padding: '24px', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
                   <span style={{
                     fontFamily: "'Jost', Arial, sans-serif",
                     fontSize: '11px', fontWeight: '500',

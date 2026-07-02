@@ -12,16 +12,16 @@ export const metadata: Metadata = {
 export default async function ContactPage() {
     return (
         <>
-            <main>
+            <main style={{ overflowX: 'hidden' }}>
                 {/* SECTION 1 — HERO (dark #1C1917) */}
-                <div style={{
+                <div className="contact-hero-section" style={{
                     backgroundColor: '#1C1917',
                     padding: '80px 0 72px',
                     borderBottom: '1px solid rgba(201,147,58,0.2)',
                     position: 'relative',
                     overflow: 'hidden'
                 }}>
-                    <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 60px' }}>
+                    <div className="contact-hero-inner" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 60px' }}>
                         <div style={{ maxWidth: '1000px' }}>
                             <p style={{
                                 fontFamily: "'Jost', Arial, sans-serif",
@@ -32,7 +32,7 @@ export default async function ContactPage() {
                                 textTransform: 'uppercase',
                                 marginBottom: '16px'
                             }}>GET IN TOUCH</p>
-                            <h1 style={{
+                            <h1 className="contact-hero-title" style={{
                                 fontFamily: "'Cormorant Garamond', Georgia, serif",
                                 fontSize: 'clamp(36px, 5vw, 64px)',
                                 fontWeight: '500',
@@ -67,7 +67,7 @@ export default async function ContactPage() {
                 </div>
 
                 {/* SECTION 2 — MAIN LAYOUT (two column) */}
-                <div style={{
+                <div className="contact-main-grid" style={{
                     backgroundColor: '#FAFAF7',
                     padding: '72px 60px',
                     display: 'grid',
@@ -78,12 +78,12 @@ export default async function ContactPage() {
                     alignItems: 'start'
                 }}>
                     {/* LEFT COLUMN — Contact Form */}
-                    <div style={{
+                    <div className="contact-form-card" style={{
                         backgroundColor: '#FFFFFF',
                         padding: '48px',
                         border: '1px solid #E8E4DC',
                     }}>
-                        <h2 style={{
+                        <h2 className="contact-form-title" style={{
                             fontFamily: "'Cormorant Garamond', Georgia, serif",
                             fontSize: '32px',
                             fontWeight: '500',

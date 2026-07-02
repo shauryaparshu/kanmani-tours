@@ -100,6 +100,7 @@ export default function UnifiedLightbox({ images, initialIndex, onClose }: Unifi
       onClick={onClose}
       onMouseEnter={() => setIsHoveringLightbox(true)}
       onMouseLeave={() => setIsHoveringLightbox(false)}
+      className="unified-lightbox-wrapper"
       style={{
         position: 'fixed',
         inset: 0,
@@ -134,6 +135,7 @@ export default function UnifiedLightbox({ images, initialIndex, onClose }: Unifi
       {/* Close button */}
       <button
         onClick={onClose}
+        className="lightbox-close-btn"
         style={{
           position: 'absolute',
           top: '24px',
@@ -225,6 +227,7 @@ export default function UnifiedLightbox({ images, initialIndex, onClose }: Unifi
 
       {/* Main Content Area */}
       <div 
+        className="lightbox-main-content"
         onClick={(e) => e.stopPropagation()} 
         style={{ 
           display: 'flex', 
@@ -237,6 +240,7 @@ export default function UnifiedLightbox({ images, initialIndex, onClose }: Unifi
         {/* Image container below */}
         <div
           key={currentIndex}
+          className="lightbox-image-box"
           style={{
             position: 'relative',
             width: '100%',
@@ -250,7 +254,7 @@ export default function UnifiedLightbox({ images, initialIndex, onClose }: Unifi
           }}
         >
           {/* Page counter inside image box top right */}
-          <div style={{
+          <div className="lightbox-counter" style={{
             position: 'absolute',
             top: '16px',
             right: '16px',
