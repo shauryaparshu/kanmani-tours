@@ -851,33 +851,20 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
                       <p style={{ textAlign: 'justify' }}>Japan didn't hand me anything on a silver plate. I struggled for it. I fought for it. I earned it — <strong>word by word, year by year, trust by trust.</strong></p>
                     </div>
                   </div>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '16px', maxWidth: '400px', margin: '0 auto', width: '100%' }}>
-                    {(() => {
-                      const photo = getEraPhoto('student-phd', 0);
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '12px', maxWidth: '480px', margin: '0 auto', width: '100%' }}>
+                    {[0, 1, 2, 3, 4, 5].map((index) => {
+                      const photo = getEraPhoto('student-phd', index);
                       const url = photo ? containThumbnailImageUrl(photo.image) : null;
                       return (
-                        <div style={{ aspectRatio: '1/1', backgroundColor: '#E8E4DC', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #D4CFC9', position: 'relative', overflow: 'hidden' }}>
+                        <div key={index} style={{ aspectRatio: '1/1', backgroundColor: '#E8E4DC', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #D4CFC9', position: 'relative', overflow: 'hidden' }}>
                           {url ? (
-                            <img src={url} alt="Student Life" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }} />
+                            <img src={url} alt={`Student Life ${index + 1}`} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }} />
                           ) : (
-                            <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '11px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em', textAlign: 'center' }}>Student Life Era</span>
+                            <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '11px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em', textAlign: 'center' }}>Photo {index + 1}</span>
                           )}
                         </div>
                       );
-                    })()}
-                    {(() => {
-                      const photo = getEraPhoto('student-phd', 1);
-                      const url = photo ? containThumbnailImageUrl(photo.image) : null;
-                      return (
-                        <div style={{ aspectRatio: '1/1', backgroundColor: '#E8E4DC', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #D4CFC9', position: 'relative', overflow: 'hidden' }}>
-                          {url ? (
-                            <img src={url} alt="PhD" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }} />
-                          ) : (
-                            <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '11px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em', textAlign: 'center' }}>PhD Era</span>
-                          )}
-                        </div>
-                      );
-                    })()}
+                    })}
                   </div>
                 </div>
               </div>
