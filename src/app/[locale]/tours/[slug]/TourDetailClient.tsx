@@ -525,24 +525,9 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
         borderTop: '1px solid rgba(201,147,58,0.5)'
       }}>
         {/* LEFT/CENTER BLOCK: Centered text information */}
-        <div style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          textAlign: 'center',
-          gap: '8px',
-          flex: '1 1 auto',
-          minWidth: 0
-        }}>
+        <div className="tour-hero-info">
           {/* LINE 1: Title and Category/Seats pill */}
-          <div style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            width: '100%',
-            flexWrap: 'wrap',
-            gap: '24px'
-          }}>
+          <div className="tour-hero-title-row">
             <h1 style={{
               fontFamily: "'Jost', Arial, sans-serif",
               fontSize: 'clamp(22px, 2.5vw, 36px)',
@@ -579,16 +564,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
           </div>
 
           {/* LINE 2: Dates, Location, and Short Description */}
-          <div style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            gap: '16px',
-            flexWrap: 'wrap',
-            width: '100%',
-            borderTop: '1px solid rgba(201,147,58,0.15)',
-            paddingTop: '8px'
-          }}>
+          <div className="tour-hero-meta-row">
             <span style={{
               fontFamily: "'Jost', Arial, sans-serif",
               fontSize: '14px',
@@ -600,7 +576,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
             }}>
               {displayDateRange}
             </span>
-            <span style={{
+            <span className="hero-meta-dot" style={{
               display: 'inline-block', width: '4px', height: '4px',
               borderRadius: '50%', backgroundColor: 'rgba(201,147,58,0.45)',
               flexShrink: 0
@@ -616,7 +592,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
             </span>
             {tour.shortDescription && (
               <>
-                <span style={{
+                <span className="hero-meta-dot" style={{
                   display: 'inline-block', width: '4px', height: '4px',
                   borderRadius: '50%', backgroundColor: 'rgba(201,147,58,0.45)',
                   flexShrink: 0
