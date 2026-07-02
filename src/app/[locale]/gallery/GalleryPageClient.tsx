@@ -26,6 +26,14 @@ const CATEGORIES = [
   { label: 'Village Tours', value: 'Village' }
 ];
 
+const getCleanTitle = (title: string) => {
+  if (!title) return '';
+  if (/^\d{8}/.test(title)) {
+    return '';
+  }
+  return title;
+};
+
 // ─── Flip Image Card ──────────────────────────────────────────────────────────
 interface FlipGalleryCardProps {
   imgData: { url: string; lqip?: string };
@@ -187,7 +195,7 @@ function FlipGrid({ images, tourTitle, onImageClick, isExpanded }: FlipGridProps
 
   if (isExpanded) {
     return (
-      <div style={{
+      <div className="gallery-flip-grid" style={{
         display: 'grid',
         gridTemplateColumns: 'repeat(4, 1fr)',
         gap: '4px'
@@ -207,7 +215,7 @@ function FlipGrid({ images, tourTitle, onImageClick, isExpanded }: FlipGridProps
             <LazyImage
               src={imgData.url}
               lqip={imgData.lqip}
-              alt={`${tourTitle} photo ${i + 1}`}
+              alt={`${getCleanTitle(tourTitle)} photo ${i + 1}`}
               style={{
                 width: '100%',
                 height: '100%',
@@ -224,7 +232,7 @@ function FlipGrid({ images, tourTitle, onImageClick, isExpanded }: FlipGridProps
   }
 
   return (
-    <div style={{
+    <div className="gallery-flip-grid" style={{
       display: 'grid',
       gridTemplateColumns: 'repeat(4, 1fr)',
       gap: '4px'
@@ -232,12 +240,13 @@ function FlipGrid({ images, tourTitle, onImageClick, isExpanded }: FlipGridProps
       {visibleImages.map((imgData, i) => {
         const originalIndex = images.findIndex(img => img.url === imgData.url);
         return (
-          <FlipGalleryCard
-            key={i}
-            imgData={imgData}
-            alt={`${tourTitle} photo ${i + 1}`}
-            onClick={() => onImageClick(originalIndex >= 0 ? originalIndex : i)}
-          />
+          <div key={i}>
+            <FlipGalleryCard
+              imgData={imgData}
+              alt={`${getCleanTitle(tourTitle)} photo ${i + 1}`}
+              onClick={() => onImageClick(originalIndex >= 0 ? originalIndex : i)}
+            />
+          </div>
         );
       })}
     </div>
@@ -323,12 +332,12 @@ export default function GalleryPageClient({ tours }: Props) {
       </section>
 
       {/* SECTION 2 — FILTER BAR */}
-      <section style={{
+      <section className="gallery-filter-section" style={{
         backgroundColor: '#FAFAF7',
         padding: '24px 60px',
         borderBottom: '1px solid #E8E4DC'
       }}>
-        <div style={{ 
+        <div className="gallery-filter-container" style={{ 
           maxWidth: '1200px', 
           margin: '0 auto', 
           display: 'flex', 
@@ -337,13 +346,14 @@ export default function GalleryPageClient({ tours }: Props) {
           flexWrap: 'wrap',
           gap: '16px'
         }}>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+          <div className="gallery-categories-container" style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
             {CATEGORIES.map(cat => {
               const isActive = activeCategory === cat.value;
               return (
                 <button
                   key={cat.value}
                   onClick={() => setActiveCategory(cat.value)}
+                  className="gallery-category-pill"
                   style={{
                     fontFamily: "'Jost', Arial, sans-serif",
                     fontSize: '12px',
@@ -377,7 +387,7 @@ export default function GalleryPageClient({ tours }: Props) {
       </section>
 
       {/* SECTION 3 — EVENTS GALLERY LIST */}
-      <section style={{
+      <section className="gallery-event-section" style={{
         backgroundColor: '#FAFAF7',
         padding: '48px 60px 80px'
       }}>
@@ -401,7 +411,7 @@ export default function GalleryPageClient({ tours }: Props) {
               return (
                 <div key={tour.id}>
                   {/* A — EVENT HEADER ROW */}
-                  <div style={{
+                  <div className="gallery-event-header" style={{
                     display: 'flex',
                     flexDirection: 'row',
                     alignItems: 'flex-start',
@@ -417,7 +427,7 @@ export default function GalleryPageClient({ tours }: Props) {
                       flexDirection: 'column',
                       gap: '8px'
                     }}>
-                      <h2 style={{
+                      <h2 className="gallery-event-title" style={{
                         fontFamily: "'Cormorant Garamond', Georgia, serif",
                         fontSize: '32px',
                         fontWeight: '500',
@@ -426,10 +436,10 @@ export default function GalleryPageClient({ tours }: Props) {
                         lineHeight: '1.2',
                         letterSpacing: '-0.01em'
                       }}>
-                        {tour.title}
+                        {getCleanTitle(tour.title)}
                       </h2>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-                        <span style={{
+                        <span className="gallery-event-date" style={{
                           fontFamily: "'Jost', Arial, sans-serif",
                           fontSize: '12px',
                           color: '#9A948F',
@@ -458,6 +468,7 @@ export default function GalleryPageClient({ tours }: Props) {
                     {hasMore && (
                       <button
                         onClick={() => toggleExpand(tour.id)}
+                        className="gallery-view-btn"
                         style={{
                           fontFamily: "'Jost', Arial, sans-serif",
                           fontSize: '15px',
@@ -494,7 +505,8 @@ export default function GalleryPageClient({ tours }: Props) {
                           <rect x="3" y="3" width="18" height="18" rx="2" />
                           <path d="M3 9h18M9 21V9" />
                         </svg>
-                        {isExpanded ? 'COLLAPSE PHOTOS' : `VIEW ALL PHOTOS (${tour.images.length})`}
+                        <span className="desktop-btn-text">{isExpanded ? 'COLLAPSE PHOTOS' : `VIEW ALL PHOTOS (${tour.images.length})`}</span>
+                        <span className="mobile-btn-text">{isExpanded ? 'COLLAPSE' : 'VIEW'}</span>
                       </button>
                     )}
                   </div>
@@ -534,7 +546,7 @@ export default function GalleryPageClient({ tours }: Props) {
             url: img.url,
             thumbnailUrl: img.url,
             lqip: img.lqip,
-            caption: activeTourObj.title
+            caption: getCleanTitle(activeTourObj.title)
           }))}
           initialIndex={lightboxIndex}
           onClose={closeLightbox}
