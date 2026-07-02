@@ -122,7 +122,7 @@ function ItineraryItem({
   })();
 
   return (
-    <div style={{
+    <div className="itinerary-item-row" style={{
       display: 'flex',
       alignItems: 'flex-start',
       gap: '32px',
@@ -184,6 +184,7 @@ function ItineraryItem({
         {/* ACCORDION HEADER ROW */}
         <button
           onClick={() => setOpen(!open)}
+          className="itinerary-header-btn"
           style={{
             width: '100%',
             display: 'flex',
@@ -225,7 +226,7 @@ function ItineraryItem({
 
         {/* EXPANDED CONTENT Split Grid */}
         {open && (
-          <div style={{
+          <div className="itinerary-split-grid" style={{
             display: 'grid',
             gridTemplateColumns: dayImageUrl ? '1fr 1fr' : '1fr',
             borderTop: '1px solid rgba(232,228,220,0.6)',
@@ -279,7 +280,7 @@ function ItineraryItem({
             )}
 
             {/* RIGHT HALF — Details Text */}
-            <div style={{
+            <div className="itinerary-details-box" style={{
               padding: '36px 40px',
               display: 'flex',
               flexDirection: 'column',
@@ -485,7 +486,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
   <>
 
     {/* ══ HERO — keep existing hero panel exactly as is ══ */}
-    <div style={{
+    <div className="tour-hero-container" style={{
       position: 'relative',
       width: '100%',
       height: '75vh',
@@ -496,6 +497,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
         src={heroSrc}
         alt={tour.title}
         lqip={tour.coverImageLqip}
+        className="tour-hero-image"
         style={{
           width: '100%',
           height: '100%',
@@ -508,7 +510,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
             `https://placehold.co/1400x600/1c2331/ffffff?text=${encodeURIComponent(tour.title)}`;
         }}
       />
-      <div style={{
+      <div className="tour-hero-overlay" style={{
         position: 'absolute',
         inset: 0,
         background: 'linear-gradient(to top, rgba(3,2,1,0.6) 0%, rgba(3,2,1,0.15) 50%, rgba(3,2,1,0.0) 100%)'
@@ -539,7 +541,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
               textAlign: 'center'
             }}>{tour.title}</h1>
             <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-              <span style={{
+              <span className="hero-category-label" style={{
                 fontFamily: "'Jost', Arial, sans-serif",
                 fontSize: '11px',
                 fontWeight: '500',
@@ -565,7 +567,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
 
           {/* LINE 2: Dates, Location, and Short Description */}
           <div className="tour-hero-meta-row">
-            <span style={{
+            <span className="hero-meta-value" style={{
               fontFamily: "'Jost', Arial, sans-serif",
               fontSize: '14px',
               fontWeight: '400',
@@ -581,7 +583,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
               borderRadius: '50%', backgroundColor: 'rgba(201,147,58,0.45)',
               flexShrink: 0
             }}/>
-            <span style={{
+            <span className="hero-meta-value" style={{
               fontFamily: "'Jost', Arial, sans-serif",
               fontSize: '14px', fontWeight: '400',
               color: '#C8C2BC', letterSpacing: '0.08em',
@@ -597,7 +599,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
                   borderRadius: '50%', backgroundColor: 'rgba(201,147,58,0.45)',
                   flexShrink: 0
                 }}/>
-                <p style={{
+                <p className="hero-short-description" style={{
                   fontFamily: "'Jost', Arial, sans-serif",
                   fontSize: '14px',
                   fontWeight: '300',
@@ -676,7 +678,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
     </div>
 
     {/* ══ BREADCRUMB ══ */}
-    <div style={{
+    <div className="tour-breadcrumb" style={{
       backgroundColor: '#F0EDE6',
       padding: '12px 60px',
       borderBottom: '1px solid #E8E4DC'
@@ -697,7 +699,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
 
     {/* ══ TWO-COLUMN MASTER CONTAINER ══ */}
     <div style={{ backgroundColor: '#faf9f6' }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '4rem 2rem' }}>
+      <div className="tour-details-container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '4rem 2rem' }}>
         <section className="main-tour-details">
           
           {/* LEFT COLUMN: Content Area (Tabbed Interface) */}
@@ -708,7 +710,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
             padding: '2rem'
           }}>
             {/* TAB BAR */}
-            <div style={{
+            <div className="tour-tab-bar" style={{
               display: 'flex', gap: '32px',
               borderBottom: '1px solid #E8E4DC',
               marginBottom: '48px',
