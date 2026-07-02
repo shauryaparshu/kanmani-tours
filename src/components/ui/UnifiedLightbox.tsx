@@ -157,33 +157,10 @@ export default function UnifiedLightbox({ images, initialIndex, onClose }: Unifi
         <>
           {/* Previous photo card */}
           <button
+            className="lightbox-nav-card prev-card"
             onClick={(e) => {
               e.stopPropagation();
               goPrev();
-            }}
-            style={{
-              position: 'absolute',
-              left: '48px',
-              top: '50%',
-              transform: 'translateY(-50%)',
-              width: 'clamp(144px, 18vw, 255px)',
-              padding: '8px',
-              border: '1px solid rgba(235,177,78,0.28)',
-              background: 'rgba(10,8,7,0.7)',
-              backdropFilter: 'blur(10px)',
-              WebkitBackdropFilter: 'blur(10px)',
-              cursor: 'pointer',
-              zIndex: 10000,
-              boxShadow: '0 18px 40px rgba(0,0,0,0.35)',
-              transition: 'transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = '#EBB14E';
-              e.currentTarget.style.transform = 'translateY(-50%) scale(1.03)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = 'rgba(235,177,78,0.28)';
-              e.currentTarget.style.transform = 'translateY(-50%) scale(1)';
             }}
           >
             <div style={{ position: 'relative', width: '100%', aspectRatio: '4 / 3', overflow: 'hidden', backgroundColor: '#0A0807' }}>
@@ -213,33 +190,10 @@ export default function UnifiedLightbox({ images, initialIndex, onClose }: Unifi
 
           {/* Next photo card */}
           <button
+            className="lightbox-nav-card next-card"
             onClick={(e) => {
               e.stopPropagation();
               goNext();
-            }}
-            style={{
-              position: 'absolute',
-              right: '48px',
-              top: '50%',
-              transform: 'translateY(-50%)',
-              width: 'clamp(144px, 18vw, 255px)',
-              padding: '8px',
-              border: '1px solid rgba(235,177,78,0.28)',
-              background: 'rgba(10,8,7,0.7)',
-              backdropFilter: 'blur(10px)',
-              WebkitBackdropFilter: 'blur(10px)',
-              cursor: 'pointer',
-              zIndex: 10000,
-              boxShadow: '0 18px 40px rgba(0,0,0,0.35)',
-              transition: 'transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = '#EBB14E';
-              e.currentTarget.style.transform = 'translateY(-50%) scale(1.03)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = 'rgba(235,177,78,0.28)';
-              e.currentTarget.style.transform = 'translateY(-50%) scale(1)';
             }}
           >
             <div style={{ position: 'relative', width: '100%', aspectRatio: '4 / 3', overflow: 'hidden', backgroundColor: '#0A0807' }}>
@@ -255,7 +209,7 @@ export default function UnifiedLightbox({ images, initialIndex, onClose }: Unifi
                 background: 'linear-gradient(to top, rgba(5,3,2,0.55), transparent 60%)'
               }} />
             </div>
-            <div style={{
+            <div className="nav-text" style={{
               marginTop: '8px',
               fontFamily: "'Jost', Arial, sans-serif",
               fontSize: '11px',
@@ -460,27 +414,82 @@ export default function UnifiedLightbox({ images, initialIndex, onClose }: Unifi
           flex-shrink: 0;
           line-height: 1.3;
         }
+        .lightbox-nav-card {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          width: clamp(144px, 18vw, 255px);
+          padding: 8px;
+          border: 1px solid rgba(235,177,78,0.28);
+          background: rgba(10,8,7,0.7);
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px);
+          cursor: pointer;
+          z-index: 10000;
+          box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+          transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+        .lightbox-nav-card:hover {
+          border-color: #EBB14E;
+          transform: translateY(-50%) scale(1.03);
+        }
+        .prev-card { left: 48px; }
+        .next-card { right: 48px; }
+        
         @media screen and (max-width: 1024px) {
+          .lightbox-nav-card {
+            width: 44px;
+            height: 44px;
+            padding: 0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(10,8,7,0.85);
+          }
+          .lightbox-nav-card > div {
+            display: none;
+          }
+          .lightbox-nav-card::after {
+            content: '';
+            width: 12px;
+            height: 12px;
+            border-top: 2px solid #FFF7E8;
+            border-right: 2px solid #FFF7E8;
+            display: block;
+          }
+          .prev-card { left: 16px; }
+          .prev-card::after { transform: rotate(-135deg); margin-left: 4px; }
+          .next-card { right: 16px; }
+          .next-card::after { transform: rotate(45deg); margin-right: 4px; }
+          
           .lightbox-header-container {
             position: absolute;
-            top: 76px;
-            left: 20px;
-            right: 20px;
+            top: auto;
+            bottom: 110px;
+            left: 10px;
+            right: 10px;
             flex-direction: column;
             align-items: center;
             gap: 8px;
             text-align: center;
+            background: rgba(0,0,0,0.6);
+            padding: 12px;
+            border-radius: 8px;
+            pointer-events: none;
           }
           .lightbox-title-left {
             max-width: 100%;
             text-align: center;
             -webkit-line-clamp: 2;
             font-size: 18px;
+            text-shadow: none;
           }
           .lightbox-location-right {
             text-align: center;
             font-size: 18px;
             white-space: normal;
+            text-shadow: none;
           }
         }
       `}</style>

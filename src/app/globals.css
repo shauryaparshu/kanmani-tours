@@ -143,6 +143,32 @@ img {
   .r-hero-split-content { width: 100%; height: auto; border-left: none; padding: 32px 16px 24px 16px; }
 }
 
+/* ─── TOUR HERO BAR ──────────────────────── */
+.tour-hero-bar {
+  padding: 20px 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+@media (max-width: 1024px) {
+  .tour-hero-bar {
+    padding: 20px 40px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+@media (max-width: 768px) {
+  .tour-hero-bar {
+    padding: 24px 20px;
+    flex-direction: column;
+    text-align: center;
+    gap: 16px;
+  }
+}
+
 /* ─── SMALL MOBILE (max-width: 480px) ────────────── */
 @media (max-width: 480px) {
   .r-grid-4 { grid-template-columns: 1fr; gap: 12px; }

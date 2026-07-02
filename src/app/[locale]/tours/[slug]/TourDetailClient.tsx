@@ -513,7 +513,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
         inset: 0,
         background: 'linear-gradient(to top, rgba(3,2,1,0.6) 0%, rgba(3,2,1,0.15) 50%, rgba(3,2,1,0.0) 100%)'
       }}/>
-      <div style={{
+      <div className="tour-hero-bar" style={{
         position: 'absolute',
         bottom: '0',
         left: '0',
@@ -522,14 +522,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
         zIndex: 10,
         backgroundColor: 'rgba(8,5,3,0.85)',
         backdropFilter: 'blur(16px)',
-        borderTop: '1px solid rgba(201,147,58,0.5)',
-        padding: '20px 60px',
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        flexWrap: 'nowrap',
-        gap: '24px'
+        borderTop: '1px solid rgba(201,147,58,0.5)'
       }}>
         {/* LEFT/CENTER BLOCK: Centered text information */}
         <div style={{
