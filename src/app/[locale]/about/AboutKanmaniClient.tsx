@@ -286,7 +286,7 @@ function EraGallery({
       </div>
 
       {isExpanded ? (
-        <div style={{
+        <div className="about-expanded-grid" style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
           gap: '12px'
@@ -324,7 +324,7 @@ function EraGallery({
           })}
         </div>
       ) : (
-        <div style={{
+        <div className="about-preview-grid" style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(4, 1fr)',
           gap: '12px',
@@ -723,7 +723,7 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
                   }}>Dr. Kanmani</h1>
 
                   {/* Title Row */}
-                  <p style={{
+                  <p className="about-tagline" style={{
                     fontFamily: "'Jost', Arial, sans-serif",
                     fontSize: '11px',
                     fontWeight: 400,
@@ -787,7 +787,7 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
         </div>
 
         {/* CHAPTER 4 — PHOTO GALLERY */}
-        <section id="founder-gallery" style={{ padding: '24px 20px 80px 20px', maxWidth: '1400px', margin: '0 auto' }}>
+        <section id="founder-gallery" className="about-gallery-section" style={{ padding: '24px 20px 80px 20px', maxWidth: '1400px', margin: '0 auto' }}>
           <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: '42px', textAlign: 'center', marginBottom: '48px', color: '#1C1917' }}>Kanmani's Life in Pictures</h2>
           
           {/* Era Filters */}
