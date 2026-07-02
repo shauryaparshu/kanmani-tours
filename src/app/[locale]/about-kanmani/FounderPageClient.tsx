@@ -812,7 +812,7 @@ export default function FounderPageClient({ locale, photos }: FounderPageClientP
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '12px', maxWidth: '480px', margin: '0 auto', width: '100%' }}>
                 {[0, 1, 2, 3, 4, 5].map((index) => {
-                  const photo = getEraPhoto('student-phd', index);
+                  const photo = getEraPhoto('bio-pics', index);
                   const url = photo ? containThumbnailImageUrl(photo.image) : null;
                   return (
                     <div key={index} style={{ aspectRatio: '1/1', backgroundColor: '#F0EBE1', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #E6DFD3', position: 'relative', overflow: 'hidden' }}>

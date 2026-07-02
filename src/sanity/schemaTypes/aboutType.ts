@@ -60,6 +60,7 @@ export const aboutType = defineType({
                                     { title: 'PhD', value: 'phd' },
                                     { title: 'Student', value: 'student' },
                                     { title: 'Arts', value: 'arts' },
+                                    { title: 'Bio Pics', value: 'bio-pics' },
                                     { title: 'Others', value: 'others' },
                                 ],
                             },
