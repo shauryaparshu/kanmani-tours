@@ -4818,6 +4818,33 @@ button {
   .mobile-btn-text {
     display: inline !important;
   }
+
+  /* Contact Page Mobile Responsive Fixes */
+  .contact-hero-section {
+    padding: 48px 0 40px !important;
+  }
+  .contact-hero-inner {
+    padding: 0 16px !important;
+  }
+  .contact-hero-title {
+    white-space: normal !important;
+    font-size: 28px !important;
+  }
+  .contact-main-grid {
+    grid-template-columns: 1fr !important;
+    padding: 32px 16px !important;
+    gap: 40px !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+    max-width: 100vw !important;
+  }
+  .contact-form-card {
+    padding: 24px 16px !important;
+    box-sizing: border-box !important;
+  }
+  .contact-form-title {
+    font-size: 28px !important;
+  }
 }
 
 .mobile-btn-text {
