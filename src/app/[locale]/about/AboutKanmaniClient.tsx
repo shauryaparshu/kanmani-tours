@@ -752,32 +752,29 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
                   { num: 'PhD', label: 'Nagoya Uni, Japan' },
                   { num: '4', label: 'Languages' }
                 ].map((stat, idx) => (
-                  <div key={idx} style={{
+                  <div key={idx} className="about-stat-cell" style={{
                     padding: '16px 20px',
                     borderRight: '1px solid rgba(235,177,78,0.15)',
                     borderBottom: '1px solid rgba(235,177,78,0.15)',
-                    minWidth: '140px',
                     display: 'flex',
-                    alignItems: 'baseline',
-                    gap: '10px'
+                    flexDirection: 'column',
+                    gap: '4px'
                   }}>
-                    <div style={{
+                    <div className="about-stat-num" style={{
                       fontFamily: "'Jost', Arial, sans-serif",
                       fontWeight: 300,
                       fontSize: 'clamp(28px, 2.8vw, 42px)',
                       color: '#F5F1EB',
-                      lineHeight: '1.2',
-                      flexShrink: 0
+                      lineHeight: '1.2'
                     }}>{stat.num}</div>
-                    <div style={{
+                    <div className="about-stat-label" style={{
                       fontFamily: "'Jost', Arial, sans-serif",
                       fontSize: '13px',
                       fontWeight: 500,
                       letterSpacing: '0.08em',
                       color: '#FFF7E8',
                       textTransform: 'uppercase',
-                      lineHeight: '1.3',
-                      whiteSpace: 'nowrap'
+                      lineHeight: '1.3'
                     }}>{stat.label}</div>
                   </div>
                 ))}
@@ -796,20 +793,21 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
                   <button
                     key={era.id}
                     onClick={() => setActiveEra(era.id)}
+                    className={`about-era-pill ${activeEra === era.id ? 'about-era-pill-active' : ''}`}
                     style={{
                       fontFamily: "'Jost', Arial, sans-serif",
                       fontSize: '12px',
                       fontWeight: '500',
                       letterSpacing: '0.1em',
                       textTransform: 'uppercase',
-                      padding: '8px 18px',
-                      borderRadius: '20px',
+                      padding: '6px 14px',
+                      borderRadius: '999px',
                       border: '1px solid',
-                      borderColor: activeEra === era.id ? '#1C1917' : '#D4CFC9',
-                      backgroundColor: activeEra === era.id ? '#1C1917' : 'transparent',
-                      color: activeEra === era.id ? '#FFFFFF' : '#4A4540',
+                      borderColor: activeEra === era.id ? '#C9A84C' : 'rgba(201,168,76,0.45)',
+                      backgroundColor: activeEra === era.id ? '#C9A84C' : 'transparent',
+                      color: activeEra === era.id ? '#1C1917' : '#C9A84C',
                       cursor: 'pointer',
-                      transition: 'all 0.3s ease'
+                      transition: 'all 0.25s ease'
                     }}
                   >
                     {era.label}

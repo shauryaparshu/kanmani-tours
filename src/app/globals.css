@@ -139,6 +139,33 @@ img {
   .r-grid-faq { display: flex; flex-direction: column; gap: 32px; }
   /* Stats: 2x2 grid on mobile (was 1 column) */
   .r-grid-about-stats { grid-template-columns: repeat(2, 1fr) !important; }
+  /* Stat cell: column layout, proper padding, border separators */
+  .about-stat-cell {
+    padding: 12px !important;
+    min-width: 0 !important;
+    flex-direction: column !important;
+    gap: 2px !important;
+    border-right: 1px solid rgba(235,177,78,0.15) !important;
+    border-bottom: 1px solid rgba(235,177,78,0.15) !important;
+    box-sizing: border-box !important;
+  }
+  .about-stat-num {
+    font-size: clamp(22px, 7vw, 32px) !important;
+    line-height: 1.1 !important;
+  }
+  .about-stat-label {
+    font-size: 0.65rem !important;
+    letter-spacing: 0.06em !important;
+    white-space: normal !important;
+    word-break: break-word !important;
+    line-height: 1.3 !important;
+  }
+  /* Era filter pill — ensure consistent small size on mobile */
+  .about-era-pill {
+    font-size: 0.7rem !important;
+    padding: 6px 12px !important;
+    letter-spacing: 0.05em !important;
+  }
   /* Hero split: stack image above content */
   .r-hero-split { flex-direction: column; height: auto; }
   .r-hero-split-image { width: 100%; height: 300px !important; min-height: 300px; flex-shrink: 0; }
