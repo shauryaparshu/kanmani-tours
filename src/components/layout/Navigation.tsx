@@ -66,7 +66,7 @@ export default function Navigation() {
 
     const navLinks = [
         { name: t('home'), href: '/' },
-        { name: t('tours'), href: '/tours' },
+        { name: t('tours'), href: '/india/tours' },
         { name: 'Transfers', href: '/airport-transfer' },
         { name: t('gallery'), href: '/gallery' },
         { name: t('about'), href: '/about' },
@@ -767,7 +767,7 @@ export default function Navigation() {
 
                                 {/* 2. Tours */}
                                 <a
-                                    href={`/${locale}/tours`}
+                                    href={`/${locale}/india/tours`}
                                     onClick={() => setMenuOpen(false)}
                                     style={{
                                         display: 'flex',

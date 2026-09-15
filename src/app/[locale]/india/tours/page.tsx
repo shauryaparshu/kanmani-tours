@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { getAllTours } from '@/lib/tours';
+import { getToursByDestination } from '@/lib/tours';
 import { getAllCategories } from '@/lib/categories';
 import { getAllCountries } from '@/lib/countries';
 import Footer from '@/components/layout/FooterSection';
@@ -9,16 +9,16 @@ import ToursListClient from '@/components/ToursListClient';
 import { getTranslations } from 'next-intl/server';
 
 export const metadata: Metadata = {
-    title: 'All Tours — Srikan Tours',
+    title: 'India Tours — Srikan Tours',
     description:
-        'Browse all upcoming and past tours by Srikan Tours. Celebrity-related experiences, culinary journeys, and cultural heritage trips across India.',
+        'Browse all upcoming and past India tours by Srikan Tours. Celebrity-related experiences, culinary journeys, and cultural heritage trips across India.',
 };
 
-export default async function ToursPage({ params }: { params: Promise<{ locale: string }> }) {
+export default async function IndiaToursPage({ params }: { params: Promise<{ locale: string }> }) {
     const { locale } = await params;
 
     const [rawTours, categories, countries] = await Promise.all([
-        getAllTours(locale),
+        getToursByDestination('india', locale),
         getAllCategories(locale),
         getAllCountries(locale)
     ]);

@@ -13,6 +13,25 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: '/tours/:slug*',
+        destination: '/india/tours/:slug*',
+        permanent: true,
+      },
+      {
+        source: '/en/tours/:slug*',
+        destination: '/en/india/tours/:slug*',
+        permanent: true,
+      },
+      {
+        source: '/ja/tours/:slug*',
+        destination: '/india/tours/:slug*',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default withNextIntl(nextConfig);

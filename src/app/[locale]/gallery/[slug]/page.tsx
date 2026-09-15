@@ -102,7 +102,7 @@ export default function GalleryDetailPage() {
                                     {new Date(tour.startDate).toLocaleDateString('en-JP', { month: 'long', year: 'numeric' })} • {tour.media.length} Media Items
                                 </p>
                             </div>
-                            <Link href={`/tours/${tour.slug}`} className="btn-outline-small">
+                            <Link href={`/india/tours/${tour.slug}`} className="btn-outline-small">
                                 View Tour Details
                             </Link>
                         </div>

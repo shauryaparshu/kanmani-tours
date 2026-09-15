@@ -1,6 +1,6 @@
 import toursData from '@/data/tours.json';
 import { client } from '@/sanity/lib/client';
-import { TOURS_QUERY, TOUR_BY_SLUG_QUERY } from '@/sanity/lib/queries';
+import { TOURS_QUERY, TOURS_BY_DESTINATION_QUERY, TOUR_BY_SLUG_QUERY } from '@/sanity/lib/queries';
 import { cardImageUrl, heroImageUrl } from '@/sanity/lib/image';
 
 export interface TourItineraryDay {
@@ -36,6 +36,8 @@ interface RawTour {
     _id?: string;
     id: number | string;
     slug: string;
+    destination?: string;
+    bookingType?: string;
     category: string;
     title: string;
     shortDescription: string;
@@ -134,14 +136,18 @@ function normaliseTour(t: any, locale: string = 'ja'): Tour {
         })),
         coverImage: resolveHeroImageUrl(t.coverImage) || (t.galleryImages?.[0] ? resolveHeroImageUrl(t.galleryImages[0]) : ''),
         coverImageLqip: resolveLqip(t.coverImage) || (t.galleryImages?.[0] ? resolveLqip(t.galleryImages[0]) : ''),
+        destination: t.destination || 'india',
+        bookingType: t.bookingType || 'private',
         featured: t.featured || false,
         bookingClosed: t.bookingClosed || false,
     };
 }
 
-export async function getAllTours(locale: string = 'ja'): Promise<Tour[]> {
+export async function getAllTours(locale: string = 'ja', destination?: string): Promise<Tour[]> {
     try {
-        const sanityTours = await client.fetch(TOURS_QUERY, {}, { next: { revalidate: 60 } });
+        const query = destination ? TOURS_BY_DESTINATION_QUERY : TOURS_QUERY;
+        const params = destination ? { destination } : {};
+        const sanityTours = await client.fetch(query, params, { next: { revalidate: 60 } });
         if (sanityTours && sanityTours.length > 0) {
             return sanityTours.map((t: any) => normaliseTour(t, locale));
         }
@@ -149,9 +155,16 @@ export async function getAllTours(locale: string = 'ja'): Promise<Tour[]> {
         console.error('Error fetching tours from Sanity:', error);
     }
 
-    return (toursData as any[]).map(t => normaliseTour(t, locale)).sort(
-        (a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
-    );
+    return (toursData as any[])
+        .filter(t => !destination || t.destination === destination || (!t.destination && destination === 'india'))
+        .map(t => normaliseTour(t, locale))
+        .sort(
+            (a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
+        );
+}
+
+export async function getToursByDestination(destination: string, locale: string = 'ja'): Promise<Tour[]> {
+    return getAllTours(locale, destination);
 }
 
 export async function getUpcomingTours(limit?: number, locale: string = 'ja'): Promise<Tour[]> {

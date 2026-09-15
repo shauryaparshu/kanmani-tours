@@ -68,7 +68,7 @@ function TourCard({ tour, tLabels, categories }: { tour: Tour; tLabels: any, cat
     const [hovered, setHovered] = useState(false);
 
     return (
-        <Link href={`/tours/${tour.slug}`} style={{ textDecoration: 'none', display: 'block' }}>
+        <Link href={tour.destination === 'japan' ? `/japan/tours/${tour.slug}` : `/india/tours/${tour.slug}`} style={{ textDecoration: 'none', display: 'block' }}>
         <article 
             style={{
                 backgroundColor: '#FFFFFF',

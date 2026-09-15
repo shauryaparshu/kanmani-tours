@@ -308,7 +308,7 @@ export default function ToursSection({ tours, cardImages = {}, locale: propLocal
                         </p>
                     </div>
                     <div className="upcoming-tours-action">
-                        <Link href="/tours" style={{
+                        <Link href="/india/tours" style={{
                             fontFamily: "'Jost', Arial, sans-serif",
                             fontSize: '14px',
                             fontWeight: '700',
@@ -370,7 +370,7 @@ export default function ToursSection({ tours, cardImages = {}, locale: propLocal
                         };
                         const imagePath = tourImage.hero_image || tourImage.featured_image || tourImage.thumbnail_image || tourImage.banner_image || tour.coverImage;
                         return (
-                            <Link key={tour._id || tour.id} href={`/tours/${tour.slug}`} className="tour-card-link">
+                            <Link key={tour._id || tour.id} href={tour.destination === 'japan' ? `/japan/tours/${tour.slug}` : `/india/tours/${tour.slug}`} className="tour-card-link">
                                 <article className="tour-card-frame">
                                     <div className="tour-card-image-wrap">
                                         {imagePath ? (

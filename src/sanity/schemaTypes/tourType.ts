@@ -27,11 +27,37 @@ export const tourType = defineType({
             type: 'string',
             validation: (Rule) => Rule.required(),
         }),
+
+        defineField({
+            name: 'destination',
+            title: 'Destination',
+            type: 'string',
+            options: {
+                list: [
+                    { title: 'India', value: 'india' },
+                    { title: 'Japan', value: 'japan' },
+                ],
+            },
+            initialValue: 'india',
+        }),
+        defineField({
+            name: 'bookingType',
+            title: 'Booking Type',
+            type: 'string',
+            options: {
+                list: [
+                    { title: 'Private', value: 'private' },
+                    { title: 'Group', value: 'group' },
+                ],
+            },
+            initialValue: 'private',
+        }),
         defineField({
             name: 'titleJa',
             title: 'タイトル（日本語）/ Title in Japanese',
             type: 'string',
             description: 'Japanese translation of the tour title',
+            hidden: ({ document }) => document?.destination === 'japan',
         }),
         defineField({
             name: 'slug',
@@ -79,6 +105,7 @@ export const tourType = defineType({
             type: 'text',
             rows: 3,
             description: 'Japanese translation of the hero description',
+            hidden: ({ document }) => document?.destination === 'japan',
         }),
         defineField({
             name: 'longDescription',
@@ -92,6 +119,7 @@ export const tourType = defineType({
             type: 'text',
             rows: 10,
             description: 'Japanese translation of the full tour description',
+            hidden: ({ document }) => document?.destination === 'japan',
         }),
 
         // ─── DATES & AVAILABILITY ────────────────────────────────────
@@ -122,6 +150,7 @@ export const tourType = defineType({
             title: '日程表示（日本語）/ Date Display Text in Japanese',
             type: 'string',
             description: 'Japanese translation of the date display text',
+            hidden: ({ document }) => document?.destination === 'japan',
         }),
         defineField({
             name: 'maxGroupSize',
@@ -182,6 +211,7 @@ export const tourType = defineType({
             title: '場所（日本語）/ Location in Japanese',
             type: 'string',
             description: 'Japanese translation of location',
+            hidden: ({ document }) => document?.destination === 'japan',
         }),
 
 
@@ -209,6 +239,7 @@ export const tourType = defineType({
             type: 'array',
             of: [{ type: 'string' }],
             description: 'Japanese translation of tour highlights',
+            hidden: ({ document }) => document?.destination === 'japan',
         }),
 
         // ─── NUMBERED FEATURE CARDS (01, 02, 03...) ──────────────────
@@ -225,6 +256,7 @@ export const tourType = defineType({
             type: 'array',
             of: [{ type: 'string' }],
             description: 'Japanese translation of the numbered feature cards',
+            hidden: ({ document }) => document?.destination === 'japan',
         }),
 
         // ─── WHAT TO EXPECT ──────────────────────────────────────────
@@ -240,6 +272,7 @@ export const tourType = defineType({
             type: 'array',
             of: [{ type: 'string' }],
             description: "Japanese translation of What You'll Experience",
+            hidden: ({ document }) => document?.destination === 'japan',
         }),
 
         // ─── ITINERARY ───────────────────────────────────────────────
@@ -265,6 +298,7 @@ export const tourType = defineType({
                             name: 'titleJa',
                             title: 'タイトル（日本語）/ Day Title in Japanese',
                             type: 'string',
+                            hidden: ({ document }) => document?.destination === 'japan',
                         },
                         {
                             name: 'details',
@@ -277,6 +311,7 @@ export const tourType = defineType({
                             title: '詳細（日本語）/ Day Details in Japanese',
                             type: 'text',
                             rows: 4,
+                            hidden: ({ document }) => document?.destination === 'japan',
                         },
                         {
                             name: 'image',
@@ -320,6 +355,7 @@ export const tourType = defineType({
             type: 'array',
             of: [{ type: 'string' }],
             description: 'Japanese translation of included items',
+            hidden: ({ document }) => document?.destination === 'japan',
         }),
         defineField({
             name: 'exclusions',
@@ -334,6 +370,7 @@ export const tourType = defineType({
             type: 'array',
             of: [{ type: 'string' }],
             description: 'Japanese translation of excluded items',
+            hidden: ({ document }) => document?.destination === 'japan',
         }),
 
         // ─── TOUR SPECIFIC FAQ ───────────────────────────────────────
@@ -354,6 +391,7 @@ export const tourType = defineType({
                             name: 'questionJa',
                             title: '質問（日本語）/ Question in Japanese',
                             type: 'string',
+                            hidden: ({ document }) => document?.destination === 'japan',
                         },
                         {
                             name: 'answer',
@@ -366,6 +404,7 @@ export const tourType = defineType({
                             title: '回答（日本語）/ Answer in Japanese',
                             type: 'text',
                             rows: 4,
+                            hidden: ({ document }) => document?.destination === 'japan',
                         },
                     ],
                     preview: {

@@ -691,7 +691,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
       }}>
         <Link href="/" style={{ color: '#9A948F', textDecoration: 'none' }}>{tTours('breadcrumbHome')}</Link>
         <span style={{ color: '#C9933A' }}>›</span>
-        <Link href="/tours" style={{ color: '#9A948F', textDecoration: 'none' }}>{tTours('breadcrumbTours')}</Link>
+        <Link href={tour.destination === 'japan' ? '/japan/tours' : '/india/tours'} style={{ color: '#9A948F', textDecoration: 'none' }}>{tTours('breadcrumbTours')}</Link>
         <span style={{ color: '#C9933A' }}>›</span>
         <span style={{ color: '#1C1917' }}>{tour.title}</span>
       </nav>
@@ -1028,7 +1028,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
           }}>
             {otherTours.map(tOther => (
               <Link
-                href={`/tours/${tOther.slug}`}
+                href={tOther.destination === 'japan' ? `/japan/tours/${tOther.slug}` : `/india/tours/${tOther.slug}`}
                 key={tOther._id || tOther.slug}
                 style={{
                   display: 'flex', flexDirection: 'column', height: '100%', textDecoration: 'none',

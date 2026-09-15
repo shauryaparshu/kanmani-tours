@@ -1,16 +1,16 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { getAllTours, getTourBySlug } from '@/lib/tours';
+import { getTourBySlug, getToursByDestination } from '@/lib/tours';
 import Footer from '@/components/layout/FooterSection';
-import TourDetailClient from './TourDetailClient';
+import TourDetailClient from '@/components/TourDetailClient';
 
 interface PageProps {
     params: Promise<{ locale: string; slug: string }>;
 }
 
-// Generate all static slugs at build time
+// Generate all static slugs for India tours at build time
 export async function generateStaticParams() {
-    const tours = await getAllTours();
+    const tours = await getToursByDestination('india');
     const locales = ['en', 'ja'];
 
     const params: { locale: string; slug: string }[] = [];
@@ -27,7 +27,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
     const { locale, slug } = await params;
     const tour = await getTourBySlug(slug, locale);
-    if (!tour) return { title: 'Tour Not Found — Srikan Tours' };
+    if (!tour || tour.destination !== 'india') return { title: 'Tour Not Found — Srikan Tours' };
 
     const heroImage = tour.coverImage;
 
@@ -46,10 +46,10 @@ export default async function TourDetailPage({ params }: PageProps) {
     const { locale, slug } = await params;
     const [tour, allTours] = await Promise.all([
         getTourBySlug(slug, locale),
-        getAllTours(locale)
+        getToursByDestination('india', locale)
     ]);
 
-    if (!tour) notFound();
+    if (!tour || tour.destination !== 'india') notFound();
 
     // Other upcoming tours (exclude current)
     const today = new Date();
