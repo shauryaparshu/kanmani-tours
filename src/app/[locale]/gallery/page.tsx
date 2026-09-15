@@ -6,6 +6,13 @@ import GalleryPageClient from './GalleryPageClient';
 import { galleryImageUrl } from '@/sanity/lib/image';
 
 export const metadata: Metadata = {
+    alternates: {
+        languages: {
+            'ja': 'https://kanmanitours.com/ja/gallery',
+            'en': 'https://kanmanitours.com/en/gallery',
+            'x-default': 'https://kanmanitours.com/ja/gallery',
+        }
+    },
     title: 'Tour Gallery — Srikan Tours',
     description: 'Relive the magic of our past tours. Explore photo galleries from celebrity encounters, cultural festivals, and culinary adventures across India.',
 };

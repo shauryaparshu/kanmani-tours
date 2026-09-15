@@ -8,6 +8,17 @@ import { getAllCelebrities } from '@/lib/celebrities';
 
 import CompanySections from '@/components/sections/CompanySections';
 
+export const metadata = {
+    alternates: {
+        languages: {
+            'ja': 'https://kanmanitours.com/ja',
+            'en': 'https://kanmanitours.com/en',
+            'x-default': 'https://kanmanitours.com/ja',
+        }
+    }
+};
+
+
 export default async function Home({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   const heroImages = getImages('/assets/img/home/hero');

@@ -9,6 +9,12 @@ import Footer from '@/components/layout/FooterSection';
 import ToursListClient from '@/components/ToursListClient';
 
 export const metadata: Metadata = {
+    alternates: {
+        languages: {
+            'en': 'https://kanmanitours.com/en/japan/tours',
+            'x-default': 'https://kanmanitours.com/en/japan/tours',
+        }
+    },
     title: 'Japan Tours — Srikan Tours',
     description:
         'Browse all upcoming and past Japan tours by Srikan Tours. Educational group tours, school journeys, and cultural experiences across Japan.',

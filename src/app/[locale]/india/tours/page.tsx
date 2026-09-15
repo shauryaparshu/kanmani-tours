@@ -9,6 +9,13 @@ import ToursListClient from '@/components/ToursListClient';
 import { getTranslations } from 'next-intl/server';
 
 export const metadata: Metadata = {
+    alternates: {
+        languages: {
+            'ja': 'https://kanmanitours.com/ja/india/tours',
+            'en': 'https://kanmanitours.com/en/india/tours',
+            'x-default': 'https://kanmanitours.com/ja/india/tours',
+        }
+    },
     title: 'India Tours — Srikan Tours',
     description:
         'Browse all upcoming and past India tours by Srikan Tours. Celebrity-related experiences, culinary journeys, and cultural heritage trips across India.',

@@ -10,6 +10,7 @@ export default function Navigation() {
     const router = useRouter();
     const locale = useLocale();
     const isJa = locale === 'ja';
+    const isJapanDestination = pathname === '/japan' || pathname?.startsWith('/japan/');
 
     const [scrolled, setScrolled] = useState(false);
     const [snsOpen, setSnsOpen] = useState(false);
@@ -448,7 +449,9 @@ export default function Navigation() {
                                 onChange={(e) => changeLanguage(e.target.value)}
                                 style={utilityButtonStyle}
                             >
-                                <option value="ja" style={{ backgroundColor: '#1C1917' }}>日本語</option>
+                                {!isJapanDestination && (
+                                    <option value="ja" style={{ backgroundColor: '#1C1917' }}>日本語</option>
+                                )}
                                 <option value="en" style={{ backgroundColor: '#1C1917' }}>English</option>
                             </select>
                         </div>
@@ -632,7 +635,9 @@ export default function Navigation() {
                                     fontFamily: "'Cormorant Garamond', Georgia, serif"
                                 }}
                             >
-                                <option value="ja" style={{ backgroundColor: '#1C1917' }}>日本語</option>
+                                {!isJapanDestination && (
+                                    <option value="ja" style={{ backgroundColor: '#1C1917' }}>日本語</option>
+                                )}
                                 <option value="en" style={{ backgroundColor: '#1C1917' }}>English</option>
                             </select>
 

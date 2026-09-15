@@ -21,21 +21,28 @@ export async function generateStaticParams() {
 // Dynamic SEO metadata per tour
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
     const { locale, slug } = await params;
-    if (locale === 'ja') return { title: 'Tour Not Found — Srikan Tours' };
+    if (locale === 'ja') return { title: 'Tour Not Found — Kanmani Tours' };
 
     const tour = await getTourBySlug(slug, locale);
-    if (!tour || tour.destination !== 'japan') return { title: 'Tour Not Found — Srikan Tours' };
+    if (!tour || tour.destination !== 'japan') return { title: 'Tour Not Found — Kanmani Tours' };
 
     const heroImage = tour.coverImage;
+    const siteUrl = 'https://kanmanitours.com';
 
     return {
-        title: `${tour.title} — Srikan Tours`,
+        title: `${tour.title} — Kanmani Tours`,
         description: tour.shortDescription,
         openGraph: {
             title: tour.title,
             description: tour.shortDescription,
             images: heroImage ? [{ url: heroImage }] : [],
         },
+        alternates: {
+            languages: {
+                'en': `${siteUrl}/en/japan/tours/${slug}`,
+                'x-default': `${siteUrl}/en/japan/tours/${slug}`,
+            }
+        }
     };
 }
 

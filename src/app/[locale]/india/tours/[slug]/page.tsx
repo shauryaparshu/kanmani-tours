@@ -27,18 +27,26 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
     const { locale, slug } = await params;
     const tour = await getTourBySlug(slug, locale);
-    if (!tour || tour.destination !== 'india') return { title: 'Tour Not Found — Srikan Tours' };
+    if (!tour || tour.destination !== 'india') return { title: 'Tour Not Found — Kanmani Tours' };
 
     const heroImage = tour.coverImage;
+    const siteUrl = 'https://kanmanitours.com';
 
     return {
-        title: `${tour.title} — Srikan Tours`,
+        title: `${tour.title} — Kanmani Tours`,
         description: tour.shortDescription,
         openGraph: {
             title: tour.title,
             description: tour.shortDescription,
             images: heroImage ? [{ url: heroImage }] : [],
         },
+        alternates: {
+            languages: {
+                'ja': `${siteUrl}/ja/india/tours/${slug}`,
+                'en': `${siteUrl}/en/india/tours/${slug}`,
+                'x-default': `${siteUrl}/ja/india/tours/${slug}`,
+            }
+        }
     };
 }
 

@@ -4,6 +4,17 @@ import Footer from '@/components/layout/FooterSection';
 import { getTranslations } from 'next-intl/server';
 import './airport-transfer.css';
 
+export const metadata = {
+    alternates: {
+        languages: {
+            'ja': 'https://kanmanitours.com/ja/airport-transfer',
+            'en': 'https://kanmanitours.com/en/airport-transfer',
+            'x-default': 'https://kanmanitours.com/ja/airport-transfer',
+        }
+    }
+};
+
+
 export default async function AirportTransferPage() {
     const t = await getTranslations('Airport');
 

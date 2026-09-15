@@ -5,6 +5,13 @@ import ContactForm from '@/components/forms/ContactForm';
 import { getTranslations } from 'next-intl/server';
 
 export const metadata: Metadata = {
+    alternates: {
+        languages: {
+            'ja': 'https://kanmanitours.com/ja/contact',
+            'en': 'https://kanmanitours.com/en/contact',
+            'x-default': 'https://kanmanitours.com/ja/contact',
+        }
+    },
     title: 'Contact Us — Kanmani Tours',
     description: "Let's plan your journey to India. Our Japanese-speaking team is ready to help you plan the perfect experience.",
 };

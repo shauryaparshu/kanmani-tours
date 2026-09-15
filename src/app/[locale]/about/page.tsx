@@ -3,6 +3,17 @@ import { FOUNDER_PHOTOS_QUERY } from '@/sanity/lib/queries';
 import Footer from '@/components/layout/FooterSection';
 import AboutKanmaniClient from './AboutKanmaniClient';
 
+export const metadata = {
+    alternates: {
+        languages: {
+            'ja': 'https://kanmanitours.com/ja/about',
+            'en': 'https://kanmanitours.com/en/about',
+            'x-default': 'https://kanmanitours.com/ja/about',
+        }
+    }
+};
+
+
 export default async function AboutPage({
   params
 }: {
