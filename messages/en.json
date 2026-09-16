@@ -6,7 +6,17 @@
         "airport": "Airport Pickup & Drop",
         "about": "About",
         "faq": "FAQ",
-        "contact": "Contact"
+        "contact": "Contact",
+        "japan": "Japan"
+    },
+    "DestinationChoice": {
+        "heading": "Two Cultures, One Bridge",
+        "indiaTitle": "India Tours",
+        "indiaDesc": "Immersive cultural journeys through the heart of India.",
+        "indiaCta": "Explore India",
+        "japanTitle": "Japan Tours",
+        "japanDesc": "Curated educational and cultural experiences in Japan.",
+        "japanCta": "Explore Japan"
     },
     "Home": {
         "heroTitle": "Explore the Colors of South India",

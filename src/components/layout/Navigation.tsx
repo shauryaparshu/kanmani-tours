@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { Link, usePathname, useRouter } from '@/i18n/routing';
+import { SHOW_JAPAN_DESTINATION } from '@/lib/featureFlags';
 
 export default function Navigation() {
     const t = useTranslations('Navigation');
@@ -68,6 +69,7 @@ export default function Navigation() {
     const navLinks = [
         { name: t('home'), href: '/' },
         { name: t('tours'), href: '/india/tours' },
+        ...(SHOW_JAPAN_DESTINATION ? [{ name: t('japan'), href: '/japan/tours' }] : []),
         { name: 'Transfers', href: '/airport-transfer' },
         { name: t('gallery'), href: '/gallery' },
         { name: t('about'), href: '/about' },
@@ -792,6 +794,30 @@ export default function Navigation() {
                                     {locale === 'ja' ? 'ツアー' : 'Tours'}
                                     <span style={{ color: '#C9933A', fontSize: '14px' }}>→</span>
                                 </a>
+
+                                {SHOW_JAPAN_DESTINATION && (
+                                    <a
+                                        href={`/${locale}/japan/tours`}
+                                        onClick={() => setMenuOpen(false)}
+                                        style={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'space-between',
+                                            padding: '18px 24px',
+                                            fontFamily: "'Jost', Arial, sans-serif",
+                                            fontSize: '18px',
+                                            fontWeight: '400',
+                                            color: '#F5F1EB',
+                                            textDecoration: 'none',
+                                            borderBottom: '1px solid rgba(201,147,58,0.08)',
+                                            letterSpacing: '0.06em',
+                                            transition: 'color 0.2s ease'
+                                        }}
+                                    >
+                                        {t('japan')}
+                                        <span style={{ color: '#C9933A', fontSize: '14px' }}>→</span>
+                                    </a>
+                                )}
 
                                 {/* 3. Services Expandable */}
                                 <div>

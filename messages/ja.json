@@ -6,7 +6,17 @@
         "airport": "送迎サービス",
         "about": "私たちについて",
         "faq": "よくある質問",
-        "contact": "お問い合わせ"
+        "contact": "お問い合わせ",
+        "japan": "日本"
+    },
+    "DestinationChoice": {
+        "heading": "2つの文化をつなぐ懸け橋",
+        "indiaTitle": "インドツアー",
+        "indiaDesc": "インドの心を巡る、没入型文化ツアー。",
+        "indiaCta": "インドを探索する",
+        "japanTitle": "日本ツアー",
+        "japanDesc": "日本での教育的・文化的体験。",
+        "japanCta": "日本を探索する"
     },
     "Home": {
         "heroTitle": "南インドの色彩を探求",

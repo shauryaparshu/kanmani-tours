@@ -1,4 +1,5 @@
 import HeroSection from '@/components/sections/HeroSection';
+import DestinationChoice from '@/components/sections/DestinationChoice';
 import ToursSection from '@/components/sections/ToursSection';
 import Testimonials from '@/components/sections/Testimonials';
 import Footer from '@/components/layout/FooterSection';
@@ -59,6 +60,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       <HeroSection
         heroImages={heroImages}
       />
+      <DestinationChoice />
       <ToursSection tours={upcomingTours} locale={locale} />
       <CompanySections />
       <Testimonials customerImages={customerImages} />
