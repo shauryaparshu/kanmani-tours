@@ -1,1 +1,1 @@
-export const SHOW_JAPAN_DESTINATION = false;
+export const SHOW_JAPAN_DESTINATION = true;

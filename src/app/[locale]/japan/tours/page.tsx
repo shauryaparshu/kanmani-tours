@@ -8,6 +8,8 @@ import { getAllCountries } from '@/lib/countries';
 import Footer from '@/components/layout/FooterSection';
 import ToursListClient from '@/components/ToursListClient';
 
+import { demoJapanTours } from '@/lib/demoJapanTours';
+
 export const metadata: Metadata = {
     alternates: {
         languages: {
@@ -28,13 +30,12 @@ export default async function JapanToursPage({ params }: { params: Promise<{ loc
         notFound();
     }
 
-    const [rawTours, categories, countries] = await Promise.all([
-        getToursByDestination('japan', locale),
+    const [categories, countries] = await Promise.all([
         getAllCategories(locale),
         getAllCountries(locale)
     ]);
 
-    const tours = rawTours;
+    const tours = demoJapanTours as any;
 
     return (
         <>

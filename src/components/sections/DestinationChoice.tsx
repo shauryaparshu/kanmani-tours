@@ -4,118 +4,168 @@ import React from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { Link } from '@/i18n/routing';
 import { SHOW_JAPAN_DESTINATION } from '@/lib/featureFlags';
+import FlightRoute from '@/components/ui/FlightRoute';
 
 interface DestinationCardProps {
   href: string;
   image: string;
+  label: string;
   title: string;
   desc: string;
+  count: string;
   ctaLabel: string;
+  from: 'india' | 'japan';
+  to: 'india' | 'japan';
 }
 
-function DestinationCard({ href, image, title, desc, ctaLabel }: DestinationCardProps) {
+function DestinationCard({ href, image, label, title, desc, count, ctaLabel, from, to }: DestinationCardProps) {
   return (
     <Link href={href} style={{ 
-      flex: '1 1 300px', 
+      flex: 1, 
       textDecoration: 'none', 
       color: 'inherit', 
-      display: 'block', 
-      padding: '1px', 
-      borderRadius: '24px', 
-      background: 'linear-gradient(180deg, rgba(255,255,255,0.92), rgba(201,147,58,0.28))', 
-      boxShadow: '0 18px 45px rgba(28, 25, 23, 0.08)', 
-      transition: 'transform 0.35s ease, box-shadow 0.35s ease' 
-    }}>
-      <article style={{ 
-        height: '100%', 
-        display: 'flex', 
-        flexDirection: 'column', 
-        background: 'linear-gradient(180deg, rgba(255,255,255,0.96), rgba(247,240,231,0.98))', 
-        borderRadius: '23px', 
-        overflow: 'hidden', 
-        border: '1px solid rgba(74, 69, 64, 0.10)', 
-        position: 'relative' 
-      }}>
-        <div style={{ 
-          aspectRatio: '4/3', 
-          overflow: 'hidden', 
-          position: 'relative', 
-          background: 'linear-gradient(180deg, rgba(26,25,24,0.04), rgba(26,25,24,0.14)), #1a1918' 
-        }}>
-          <div style={{ 
-            position: 'absolute', 
-            left: 0, 
-            right: 0, 
-            top: 0, 
-            height: '3px', 
-            background: 'linear-gradient(90deg, #8A5B18 0%, #FFE082 45%, #C9933A 100%)', 
-            zIndex: 10 
-          }} />
-          <img src={image} alt={title} style={{ 
-            width: '100%', 
-            height: '100%', 
-            objectFit: 'cover', 
-            display: 'block' 
-          }} />
+      display: 'flex', 
+      flexDirection: 'column',
+      borderRadius: '16px', 
+      overflow: 'hidden',
+      border: '1px solid rgba(201,147,58,0.25)', 
+      background: '#1C1917',
+      boxShadow: '0 18px 45px rgba(28, 25, 23, 0.08)',
+      transition: 'transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease',
+      position: 'relative'
+    }}
+    onMouseEnter={(e) => {
+      e.currentTarget.style.transform = 'translateY(-4px)';
+      e.currentTarget.style.boxShadow = '0 24px 55px rgba(28, 25, 23, 0.2)';
+      const img = e.currentTarget.querySelector('.card-image') as HTMLElement;
+      if (img) {
+        img.style.filter = 'brightness(1.1)';
+        img.style.transform = 'scale(1.03)';
+      }
+    }}
+    onMouseLeave={(e) => {
+      e.currentTarget.style.transform = 'translateY(0)';
+      e.currentTarget.style.boxShadow = '0 18px 45px rgba(28, 25, 23, 0.08)';
+      const img = e.currentTarget.querySelector('.card-image') as HTMLElement;
+      if (img) {
+        img.style.filter = 'brightness(1)';
+        img.style.transform = 'scale(1)';
+      }
+    }}
+    >
+      {/* Top Zone - Image */}
+      <div className="card-top-zone">
+        <img src={image} alt={title} className="card-image" />
+        <div className="card-image-gradient" />
+      </div>
+
+      {/* Bottom Zone - Content */}
+      <div className="card-bottom-zone">
+        <FlightRoute from={from} to={to} />
+        
+        <h3 className="card-title">{title}</h3>
+        <p className="card-desc">{desc}</p>
+        <div className="card-count">{count}</div>
+        
+        <div className="card-cta">
+          {ctaLabel}
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M5 12h14" />
+            <path d="M12 5l7 7-7 7" />
+          </svg>
         </div>
-        <div style={{ 
-          padding: '1.35rem 1.35rem 1.45rem', 
-          textAlign: 'left', 
-          flexGrow: 1, 
-          display: 'flex', 
-          flexDirection: 'column' 
-        }}>
-          <h3 style={{ 
-            fontFamily: "'Jost', Arial, sans-serif", 
-            fontSize: '1.65rem', 
-            fontWeight: 650, 
-            color: '#1a1918', 
-            letterSpacing: '0.03em', 
-            lineHeight: 1.28, 
-            margin: '0 0 0.5rem' 
-          }}>{title}</h3>
-          <p style={{ 
-            fontFamily: "'Cormorant Garamond', Georgia, serif", 
-            fontSize: '18px', 
-            color: '#4A3E34', 
-            lineHeight: 1.6, 
-            margin: '0 0 1.5rem', 
-            flexGrow: 1 
-          }}>{desc}</p>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '1rem' }}>
-            <span style={{ 
-              height: '1px', 
-              flex: 1, 
-              background: 'linear-gradient(90deg, rgba(201,147,58,0.05), rgba(201,147,58,0.45), rgba(201,147,58,0.05))' 
-            }} />
-            <i style={{ 
-              width: '6px', 
-              height: '6px', 
-              borderRadius: '50%', 
-              display: 'block', 
-              background: '#C9933A', 
-              boxShadow: '0 0 10px rgba(201,147,58,0.6)' 
-            }} />
-          </div>
-          <div style={{ 
-            display: 'inline-flex', 
-            alignItems: 'center', 
-            gap: '8px', 
-            color: '#d49a36', 
-            fontFamily: "'Jost', Arial, sans-serif", 
-            fontSize: '13px', 
-            fontWeight: 700, 
-            letterSpacing: '0.16em', 
-            textTransform: 'uppercase' 
-          }}>
-            {ctaLabel}
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M5 12h14" />
-              <path d="M12 5l7 7-7 7" />
-            </svg>
-          </div>
-        </div>
-      </article>
+      </div>
+
+      <style jsx>{`
+        .card-top-zone {
+          position: relative;
+          height: 240px;
+          overflow: hidden;
+          background: #2a2623;
+          flex-shrink: 0;
+        }
+        .card-image {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), filter 0.6s ease;
+        }
+        .card-image-gradient {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          height: 80px;
+          background: linear-gradient(to bottom, rgba(28,25,23,0) 0%, rgba(28,25,23,1) 100%);
+        }
+        
+        .card-bottom-zone {
+          flex-grow: 1;
+          background-color: #1C1917;
+          padding: 32px;
+          display: flex;
+          flex-direction: column;
+          color: #F5F1EB;
+        }
+        
+        .card-title {
+          font-family: 'Cormorant Garamond', Georgia, serif;
+          font-size: 2.5rem;
+          font-weight: 500;
+          line-height: 1.1;
+          margin: 0 0 16px;
+        }
+        
+        .card-desc {
+          font-family: 'Jost', Arial, sans-serif;
+          font-size: 1.05rem;
+          font-weight: 300;
+          color: rgba(245, 241, 235, 0.7);
+          line-height: 1.5;
+          margin: 0 0 16px;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          /* autoprefixer: ignore next */
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+        
+        .card-count {
+          font-family: 'Jost', Arial, sans-serif;
+          font-size: 0.85rem;
+          font-weight: 600;
+          letter-spacing: 0.15em;
+          color: #EBB14E;
+          text-transform: uppercase;
+          margin-bottom: 24px;
+        }
+        
+        .card-cta {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          color: #EBB14E;
+          font-family: 'Jost', Arial, sans-serif;
+          font-size: 0.9rem;
+          font-weight: 600;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          margin-top: auto;
+        }
+        
+        @media (max-width: 768px) {
+          .card-top-zone {
+            height: 180px;
+          }
+          .card-bottom-zone {
+            padding: 24px;
+          }
+          .card-title {
+            font-size: 2rem;
+          }
+        }
+      `}</style>
     </Link>
   );
 }
@@ -124,84 +174,116 @@ export default function DestinationChoice() {
   const t = useTranslations('DestinationChoice');
   const locale = useLocale();
 
-  const cardsData = [
+  const cardsData: DestinationCardProps[] = [
     {
-      key: 'india',
       href: '/india/tours',
-      image: '/assets/img/about/about-2.jpg',
+      image: '/assets/img/home/hero/002-59707893.jpg',
+      label: t('indiaLabel'),
       title: t('indiaTitle'),
       desc: t('indiaDesc'),
-      ctaLabel: t('indiaCta')
+      count: t('indiaCount'),
+      ctaLabel: t('indiaCta'),
+      from: 'japan',
+      to: 'india'
     },
     ...(SHOW_JAPAN_DESTINATION ? [{
-      key: 'japan',
       href: '/japan/tours',
-      image: '/assets/img/about/about-1.jpg',
+      image: '/assets/img/home/hero/004-whatsapp(1).jpeg',
+      label: t('japanLabel'),
       title: t('japanTitle'),
       desc: t('japanDesc'),
-      ctaLabel: t('japanCta')
+      count: t('japanCount'),
+      ctaLabel: t('japanCta'),
+      from: 'india' as 'india' | 'japan',
+      to: 'japan' as 'india' | 'japan'
     }] : [])
   ];
 
   if (SHOW_JAPAN_DESTINATION) {
     if (locale === 'en') {
-      cardsData.sort((a, b) => a.key === 'japan' ? -1 : 1);
+      cardsData.sort((a, b) => a.title === t('japanTitle') ? -1 : 1);
     } else {
-      cardsData.sort((a, b) => a.key === 'india' ? -1 : 1);
+      cardsData.sort((a, b) => a.title === t('indiaTitle') ? -1 : 1);
     }
   }
 
   return (
-    <section style={{ backgroundColor: '#1C1917', width: '100%', padding: '64px 16px 80px', borderBottom: '1px solid rgba(201,147,58,0.2)' }}>
+    <section style={{ backgroundColor: '#1C1917', width: '100%', padding: '80px 16px 96px', borderBottom: '1px solid rgba(201,147,58,0.1)' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
         
-        {/* Bridge Intro */}
-        <div style={{ display: 'flex', gap: '40px', flexWrap: 'wrap', alignItems: 'center' }}>
-          
-          <div style={{ flex: '1 1 300px', backgroundColor: '#111010', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '8px', overflow: 'hidden' }}>
-            <div style={{ width: '100%', aspectRatio: '1', position: 'relative' }}>
-              <img 
-                src="/assets/img/about-kanmani/founder-hero.jpg" 
-                alt="Dr. Kanmani"
-                style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 15%', display: 'block' }}
-              />
-            </div>
-          </div>
-
-          <div style={{ flex: '2 1 400px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-            <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 'clamp(32px, 4vw, 48px)', color: '#F5F1EB', marginBottom: '24px', fontWeight: 400 }}>
-              {t('heading')}
-            </h2>
-            
-            <div style={{ position: 'relative', borderLeft: '4px solid #EBB14E', padding: '20px 24px', backgroundColor: 'rgba(235, 177, 78, 0.04)', marginBottom: '24px', borderRadius: '0 8px 8px 0' }}>
-              <span style={{ position: 'absolute', top: '-15px', left: '12px', fontSize: '72px', fontFamily: "'Cormorant Garamond', Georgia, serif", color: 'rgba(201, 147, 58, 0.12)', lineHeight: 1, pointerEvents: 'none', userSelect: 'none' }}>“</span>
-              <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 'clamp(15px, 1.25vw, 18px)', fontStyle: 'italic', color: '#F5F1EB', lineHeight: 1.6, margin: 0, fontWeight: 400, letterSpacing: '0.01em', position: 'relative', zIndex: 1 }}>
-                "Born in India, shaped by 28 years in Japan, and inspired by both— I walk forward as a bridge between the two cultures that live within me."
-              </p>
-            </div>
-
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <p style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '11px', fontWeight: 500, letterSpacing: '0.32em', color: '#EBB14E', textTransform: 'uppercase', marginBottom: '6px' }}>THE FOUNDER</p>
-              <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 'clamp(28px, 3vw, 36px)', fontWeight: 400, color: '#F5F1EB', letterSpacing: '0.06em', marginBottom: '4px', margin: 0 }}>Dr. Kanmani</p>
-              <p style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '11px', fontWeight: 400, letterSpacing: '0.12em', color: '#EBB14E', lineHeight: 1.2, marginBottom: '0' }}>PhD SCHOLAR · ENTREPRENEUR · MOTIVATIONAL SPEAKER · HUMANITARIAN</p>
-            </div>
-          </div>
+        {/* Section Header */}
+        <div style={{ textAlign: 'center', marginBottom: '64px', maxWidth: '700px', margin: '0 auto 64px' }}>
+          <span style={{ 
+            display: 'block',
+            fontFamily: "'Jost', Arial, sans-serif",
+            fontSize: '0.85rem',
+            fontWeight: 600,
+            letterSpacing: '0.2em',
+            color: '#EBB14E',
+            textTransform: 'uppercase',
+            margin: '0 0 16px 0'
+          }}>
+            {t('subheading')}
+          </span>
+          <h2 style={{ 
+            fontFamily: "'Cormorant Garamond', Georgia, serif", 
+            fontSize: 'clamp(36px, 5vw, 56px)', 
+            color: '#F5F1EB', 
+            fontWeight: 500,
+            margin: '0 0 16px',
+            lineHeight: 1.1
+          }}>
+            {t('heading')}
+          </h2>
+          <p style={{
+            fontFamily: "'Jost', Arial, sans-serif",
+            fontSize: '1.1rem',
+            color: '#9CA3AF',
+            lineHeight: 1.6,
+            margin: 0,
+            fontWeight: 300
+          }}>
+            {t('description')}
+          </p>
         </div>
 
         {/* Destination Cards */}
-        <div style={{
-          marginTop: '64px',
-          display: 'flex',
-          flexDirection: 'row',
-          flexWrap: 'wrap',
-          gap: '32px'
-        }}>
-          {cardsData.map(({ key, ...cardProps }) => (
-            <DestinationCard key={key} {...cardProps} />
+        <div className="destination-cards-container">
+          {cardsData.map((cardProps) => (
+            <DestinationCard key={cardProps.href} {...cardProps} />
           ))}
         </div>
 
       </div>
+
+      <style jsx>{`
+        .destination-cards-container {
+          display: flex;
+          flex-direction: row;
+          gap: 32px;
+          align-items: stretch;
+        }
+        .destination-card-content {
+          position: relative;
+          height: 100%;
+          min-height: 420px;
+          display: flex;
+          flex-direction: column;
+          border-radius: 23px;
+          background: #1C1917;
+          border: 1px solid rgba(201, 147, 58, 0.2);
+          overflow: hidden;
+        }
+        @media (max-width: 768px) {
+          .destination-cards-container {
+            flex-direction: column;
+            gap: 24px;
+          }
+          .destination-card-content {
+            min-height: auto;
+          }
+        }
+      `}</style>
     </section>
   );
 }
