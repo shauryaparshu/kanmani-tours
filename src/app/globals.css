@@ -4436,27 +4436,28 @@ button {
 }
 
 /* Responsive Desktop Navbar Adjustments */
-@media screen and (min-width: 1281px) and (max-width: 1440px) {
+@media screen and (min-width: 1281px) and (max-width: 1650px) {
   .nav-links-container {
-    gap: 6px !important;
+    gap: 8px !important;
     padding: 0 8px !important;
   }
   .nav-link-wrapper {
     gap: 8px !important;
   }
   .nav-link-item {
-    font-size: 13px !important;
-    padding: 6px 6px !important;
+    font-size: 13.5px !important;
+    padding: 6px 8px !important;
+    letter-spacing: 0.07em !important;
   }
 }
 
-@media screen and (min-width: 1281px) and (max-width: 1380px) {
+@media screen and (max-width: 1650px) {
   .nav-email-chip, .nav-divider-email {
     display: none !important;
   }
 }
 
-@media screen and (min-width: 1281px) and (max-width: 1320px) {
+@media screen and (max-width: 1400px) {
   .nav-phone-chip, .nav-divider-phone {
     display: none !important;
   }

@@ -197,6 +197,7 @@ export default function Navigation() {
                         flexWrap: 'nowrap',
                         gap: isJa ? '10px' : '12px',
                         justifyContent: 'center',
+                        flex: '1 1 auto',
                         minWidth: 0,
                         padding: '0 18px',
                         height: '76px'
