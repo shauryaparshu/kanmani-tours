@@ -443,17 +443,13 @@ interface AboutKanmaniClientProps {
 const ERAS = [
   { id: 'all', label: 'All Photos' },
   { id: 'celebrity', label: 'Celebrity' },
+  { id: 'politics', label: 'Politics' },
+  { id: 'friends', label: 'Friends' },
   { id: 'news-media', label: 'News Media' },
-  { id: 'achievements', label: 'Achievements' },
-  { id: 'student-phd', label: 'Student Life and PhD' },
   { id: 'world-travel', label: 'World Travel' },
-  { id: 'tours', label: 'Tours' },
-  { id: 'conferences', label: 'Conferences' },
-  { id: 'humanitarian', label: 'Humanitarian' },
-  { id: 'phd', label: 'PhD' },
-  { id: 'student', label: 'Student' },
-  { id: 'arts', label: 'Arts' },
-  { id: 'others', label: 'Others' }
+  { id: 'achievements', label: 'Achievements' },
+  { id: 'student-phd', label: 'Student Life' },
+  { id: 'humanitarian', label: 'Humanitarian' }
 ];
 
 export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClientProps) {

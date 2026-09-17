@@ -33,7 +33,42 @@
         "type": "string"
       },
       {
+        "options": {
+          "list": [
+            {
+              "title": "India",
+              "value": "india"
+            },
+            {
+              "title": "Japan",
+              "value": "japan"
+            }
+          ]
+        },
+        "initialValue": "india",
+        "name": "destination",
+        "type": "string"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Private",
+              "value": "private"
+            },
+            {
+              "title": "Group",
+              "value": "group"
+            }
+          ]
+        },
+        "initialValue": "private",
+        "name": "bookingType",
+        "type": "string"
+      },
+      {
         "description": "Japanese translation of the tour title",
+        "hidden": "conditional",
         "name": "titleJa",
         "type": "string",
         "title": "タイトル（日本語）/ Title in Japanese"
@@ -149,6 +184,7 @@
       {
         "rows": 3,
         "description": "Japanese translation of the hero description",
+        "hidden": "conditional",
         "name": "shortDescriptionJa",
         "type": "text",
         "title": "短い説明（日本語）/ Hero Description in Japanese"
@@ -162,6 +198,7 @@
       {
         "rows": 10,
         "description": "Japanese translation of the full tour description",
+        "hidden": "conditional",
         "name": "longDescriptionJa",
         "type": "text",
         "title": "詳細説明（日本語）/ About This Tour in Japanese"
@@ -187,6 +224,7 @@
       },
       {
         "description": "Japanese translation of the date display text",
+        "hidden": "conditional",
         "name": "dateDisplayJa",
         "type": "string",
         "title": "日程表示（日本語）/ Date Display Text in Japanese"
@@ -290,6 +328,7 @@
       },
       {
         "description": "Japanese translation of location",
+        "hidden": "conditional",
         "name": "locationJa",
         "type": "string",
         "title": "場所（日本語）/ Location in Japanese"
@@ -321,6 +360,7 @@
             "type": "string"
           }
         ],
+        "hidden": "conditional",
         "name": "highlightsJa",
         "type": "array",
         "title": "ハイライト（日本語）/ Tour Highlights in Japanese"
@@ -343,6 +383,7 @@
             "type": "string"
           }
         ],
+        "hidden": "conditional",
         "name": "featuresJa",
         "type": "array",
         "title": "ツアーの特徴（日本語）/ Tour Feature Cards in Japanese"
@@ -364,6 +405,7 @@
             "type": "string"
           }
         ],
+        "hidden": "conditional",
         "name": "whatToExpectJa",
         "type": "array",
         "title": "体験できること（日本語）/ What You'll Experience in Japanese"
@@ -382,6 +424,7 @@
                 "title": "Day Title (English)"
               },
               {
+                "hidden": "conditional",
                 "name": "titleJa",
                 "type": "string",
                 "title": "タイトル（日本語）/ Day Title in Japanese"
@@ -394,6 +437,7 @@
               },
               {
                 "rows": 4,
+                "hidden": "conditional",
                 "name": "detailsJa",
                 "type": "text",
                 "title": "詳細（日本語）/ Day Details in Japanese"
@@ -431,6 +475,7 @@
             "type": "string"
           }
         ],
+        "hidden": "conditional",
         "name": "inclusionsJa",
         "type": "array",
         "title": "含まれるもの（日本語）/ Inclusions in Japanese"
@@ -453,6 +498,7 @@
             "type": "string"
           }
         ],
+        "hidden": "conditional",
         "name": "exclusionsJa",
         "type": "array",
         "title": "含まれないもの（日本語）/ Exclusions in Japanese"
@@ -467,6 +513,7 @@
                 "title": "Question (English)"
               },
               {
+                "hidden": "conditional",
                 "name": "questionJa",
                 "type": "string",
                 "title": "質問（日本語）/ Question in Japanese"
@@ -479,6 +526,7 @@
               },
               {
                 "rows": 4,
+                "hidden": "conditional",
                 "name": "answerJa",
                 "type": "text",
                 "title": "回答（日本語）/ Answer in Japanese"
@@ -706,8 +754,20 @@
                       "value": "celebrity"
                     },
                     {
+                      "title": "Politics",
+                      "value": "politics"
+                    },
+                    {
+                      "title": "Friends",
+                      "value": "friends"
+                    },
+                    {
                       "title": "News Media",
                       "value": "news-media"
+                    },
+                    {
+                      "title": "World Travel",
+                      "value": "world-travel"
                     },
                     {
                       "title": "Achievements",
@@ -718,36 +778,12 @@
                       "value": "student-phd"
                     },
                     {
-                      "title": "World Travel",
-                      "value": "world-travel"
-                    },
-                    {
-                      "title": "Tours",
-                      "value": "tours"
-                    },
-                    {
-                      "title": "Conferences",
-                      "value": "conferences"
-                    },
-                    {
                       "title": "Humanitarian",
                       "value": "humanitarian"
                     },
                     {
-                      "title": "PhD",
-                      "value": "phd"
-                    },
-                    {
-                      "title": "Student",
-                      "value": "student"
-                    },
-                    {
-                      "title": "Arts",
-                      "value": "arts"
-                    },
-                    {
-                      "title": "Others",
-                      "value": "others"
+                      "title": "Bio Pics",
+                      "value": "bio-pics"
                     }
                   ]
                 },
@@ -758,17 +794,14 @@
                         "flag": "valid",
                         "constraint": [
                           "celebrity",
+                          "politics",
+                          "friends",
                           "news-media",
+                          "world-travel",
                           "achievements",
                           "student-phd",
-                          "world-travel",
-                          "tours",
-                          "conferences",
                           "humanitarian",
-                          "phd",
-                          "student",
-                          "arts",
-                          "others"
+                          "bio-pics"
                         ]
                       },
                       {
