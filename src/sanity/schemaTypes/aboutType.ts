@@ -56,7 +56,6 @@ export const aboutType = defineType({
                                     { title: 'World Travel', value: 'world-travel' },
                                     { title: 'Achievements', value: 'achievements' },
                                     { title: 'Student Life and PhD', value: 'student-phd' },
-                                    { title: 'Humanitarian', value: 'humanitarian' },
                                     { title: 'Bio Pics', value: 'bio-pics' },
                                 ],
                             },

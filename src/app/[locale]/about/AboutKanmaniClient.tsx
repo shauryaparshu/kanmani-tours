@@ -448,8 +448,7 @@ const ERAS = [
   { id: 'news-media', label: 'News Media' },
   { id: 'world-travel', label: 'World Travel' },
   { id: 'achievements', label: 'Achievements' },
-  { id: 'student-phd', label: 'Student Life' },
-  { id: 'humanitarian', label: 'Humanitarian' }
+  { id: 'student-phd', label: 'Student Life' }
 ];
 
 export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClientProps) {

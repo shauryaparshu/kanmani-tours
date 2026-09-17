@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="52" viewBox="0 0 200 52" role="img">
+  <title>Kanmani Tours</title>
+  <desc>Kanmani Tours logo with lotus mark</desc>
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&display=swap');
+      .brand { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 26px; font-weight: 400; letter-spacing: 0.13em; }
+      .sub   { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 9px;  font-weight: 400; letter-spacing: 0.44em; }
+    </style>
+  </defs>
+
+  <!-- Lotus mark centered at x=22, y=26 -->
+  <g transform="translate(22,26)">
+    <path d="M0,-16 C2,-9 2,-4 0,0 C-2,-4 -2,-9 0,-16Z"                              fill="#C9933A" opacity="0.95"/>
+    <path d="M0,0 C-4,-7 -9,-8 -12,-6 C-8,-3 -4,-1 0,0Z"                             fill="#C9933A" opacity="0.80"/>
+    <path d="M0,0 C4,-7 9,-8 12,-6 C8,-3 4,-1 0,0Z"                                  fill="#C9933A" opacity="0.80"/>
+    <path d="M0,0 C-5,-3 -13,-2 -16,2 C-11,4 -6,2 0,0Z"                              fill="#C9933A" opacity="0.50"/>
+    <path d="M0,0 C5,-3 13,-2 16,2 C11,4 6,2 0,0Z"                                   fill="#C9933A" opacity="0.50"/>
+    <path d="M-9,4 Q0,9 9,4"  stroke="#C9933A" stroke-width="0.7" fill="none" opacity="0.75"/>
+    <line x1="-14" y1="7"  x2="14" y2="7"  stroke="#C9933A" stroke-width="0.5" opacity="0.40"/>
+    <line x1="-10" y1="11" x2="10" y2="11" stroke="#C9933A" stroke-width="0.4" opacity="0.25"/>
+  </g>
+
+  <!-- Vertical gold divider -->
+  <line x1="44" y1="8" x2="44" y2="44" stroke="#C9933A" stroke-width="0.5" opacity="0.35"/>
+
+  <!-- Kanmani text — color set by CSS var so it works on dark and light -->
+  <text x="54" y="32" class="brand" fill="currentColor">Kanmani</text>
+
+  <!-- Gold rule under Kanmani -->
+  <line x1="54" y1="37" x2="188" y2="37" stroke="#C9933A" stroke-width="0.5" opacity="0.60"/>
+
+  <!-- TOURS -->
+  <text x="55" y="47" class="sub" fill="#C9933A">T O U R S</text>
+
+</svg>
