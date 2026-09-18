@@ -117,7 +117,7 @@ export default function HeroSection({ heroImages, pollImages, initialCelebrities
         }}>
             <div className="hero-content" style={{ width: '100%', position: 'relative', overflowX: 'hidden', maxWidth: '100%', borderRadius: '0' }}>
                 {/* Slideshow */}
-                <HeroSlideshow images={heroImages} altPrefix="Srikan Tours">
+                <HeroSlideshow images={heroImages} altPrefix="Kanmani Tours">
                     <style dangerouslySetInnerHTML={{ __html: `
                         .hero-content {
                             height: 75vh !important;

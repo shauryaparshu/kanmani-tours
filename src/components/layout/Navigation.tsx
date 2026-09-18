@@ -3,7 +3,8 @@
 import { useState, useEffect } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { Link, usePathname, useRouter } from '@/i18n/routing';
-import { SHOW_JAPAN_DESTINATION } from '@/lib/featureFlags';
+import { SHOW_JAPAN_DESTINATION, SHOW_SERVICES_NAV } from '@/lib/featureFlags';
+import FlagIcon from '@/components/ui/FlagIcon';
 
 export default function Navigation() {
     const t = useTranslations('Navigation');
@@ -66,13 +67,17 @@ export default function Navigation() {
         router.replace(pathname, { locale: nextLocale });
     };
 
-    const navLinks = [
+    const navLinks: {
+        name: string;
+        href: string;
+        flags?: ('india' | 'japan')[];
+    }[] = [
         { name: t('home'), href: '/' },
-        { name: t('tours'), href: '/india/tours' },
-        ...(SHOW_JAPAN_DESTINATION ? [{ name: t('japan'), href: '/japan/tours' }] : []),
-        { name: 'Transfers', href: '/airport-transfer' },
-        { name: t('gallery'), href: '/gallery' },
         { name: t('about'), href: '/about' },
+        { name: t('toIndia'), href: '/india/tours', flags: ['japan', 'india'] },
+        { name: t('toJapan'), href: '/japan/tours', flags: ['india', 'japan'] },
+        ...(SHOW_SERVICES_NAV ? [{ name: 'Transfers', href: '/airport-transfer' }] : []),
+        { name: t('gallery'), href: '/gallery' },
         { name: t('faq'), href: '/faq' },
         { name: t('contact'), href: '/contact' },
     ];
@@ -339,45 +344,75 @@ export default function Navigation() {
                                           )}
                                         </div>
                                     ) : (
-                                                <Link
-                                            href={link.href}
-                                            className="nav-link-item"
-                                            style={{
-                                                fontFamily: "'Cormorant Garamond', Georgia, serif",
-                                                fontSize: isJa ? '13px' : '16px',
-                                                fontWeight: '400',
-                                                letterSpacing: '0.1em',
-                                                color: isActive ? '#C9933A' : '#F5F1EB',
-                                                textDecoration: 'none',
-                                                opacity: '1',
-                                                transition: 'color 0.3s ease, opacity 0.3s ease, background-color 0.25s ease, box-shadow 0.25s ease',
-                                                cursor: 'pointer',
-                                                border: '1px solid transparent',
-                                                padding: '8px 10px',
-                                                whiteSpace: 'nowrap',
-                                                flexShrink: 0,
-                                                borderRadius: '0',
-                                                textTransform: 'uppercase',
-                                                backgroundColor: isActive ? 'rgba(201,147,58,0.08)' : 'transparent',
-                                                boxShadow: isActive ? 'inset 0 0 0 1px rgba(255,224,130,0.15)' : 'none'
-                                            }}
-                                            onMouseEnter={(e) => {
-                                                if (!isActive) {
-                                                    e.currentTarget.style.color = '#C9933A';
-                                                    e.currentTarget.style.backgroundColor = 'rgba(201,147,58,0.08)';
-                                                    e.currentTarget.style.borderColor = 'rgba(201,147,58,0.14)';
-                                                }
-                                            }}
-                                            onMouseLeave={(e) => {
-                                                if (!isActive) {
-                                                    e.currentTarget.style.color = '#F5F1EB';
-                                                    e.currentTarget.style.backgroundColor = 'transparent';
-                                                    e.currentTarget.style.borderColor = 'transparent';
-                                                }
-                                            }}
-                                        >
-                                            {link.name}
-                                        </Link>
+                                    <Link
+                                        href={link.href}
+                                        className={`nav-link-item ${link.flags ? 'nav-link-tour' : ''}`}
+                                        style={{
+                                            fontFamily: "'Cormorant Garamond', Georgia, serif",
+                                            fontSize: isJa ? '13px' : '16px',
+                                            fontWeight: '400',
+                                            letterSpacing: '0.1em',
+                                            color: isActive ? '#C9933A' : '#F5F1EB',
+                                            textDecoration: 'none',
+                                            opacity: '1',
+                                            transition: 'color 0.3s ease, opacity 0.3s ease, background-color 0.25s ease, box-shadow 0.25s ease',
+                                            cursor: 'pointer',
+                                            border: '1px solid transparent',
+                                            padding: '8px 10px',
+                                            whiteSpace: 'nowrap',
+                                            flexShrink: 0,
+                                            borderRadius: '0',
+                                            textTransform: 'uppercase',
+                                            backgroundColor: isActive ? 'rgba(201,147,58,0.08)' : 'transparent',
+                                            boxShadow: isActive ? 'inset 0 0 0 1px rgba(255,224,130,0.15)' : 'none',
+                                            display: 'inline-flex',
+                                            alignItems: 'center',
+                                            gap: '6px'
+                                        }}
+                                        onMouseEnter={(e) => {
+                                            if (!isActive) {
+                                                e.currentTarget.style.color = '#C9933A';
+                                                e.currentTarget.style.backgroundColor = 'rgba(201,147,58,0.08)';
+                                                e.currentTarget.style.borderColor = 'rgba(201,147,58,0.14)';
+                                            }
+                                            const flagReveal = e.currentTarget.querySelector('.nav-flag-reveal') as HTMLElement;
+                                            if (flagReveal) {
+                                                flagReveal.style.opacity = '1';
+                                                flagReveal.style.transform = 'translateX(0)';
+                                            }
+                                        }}
+                                        onMouseLeave={(e) => {
+                                            if (!isActive) {
+                                                e.currentTarget.style.color = '#F5F1EB';
+                                                e.currentTarget.style.backgroundColor = 'transparent';
+                                                e.currentTarget.style.borderColor = 'transparent';
+                                            }
+                                            const flagReveal = e.currentTarget.querySelector('.nav-flag-reveal') as HTMLElement;
+                                            if (flagReveal) {
+                                                flagReveal.style.opacity = '0';
+                                                flagReveal.style.transform = 'translateX(-5px)';
+                                            }
+                                        }}
+                                    >
+                                        <span>{link.name}</span>
+                                        {link.flags && (
+                                            <span
+                                                className="nav-flag-reveal"
+                                                style={{
+                                                    display: 'inline-flex',
+                                                    alignItems: 'center',
+                                                    gap: '4px',
+                                                    opacity: 0,
+                                                    transform: 'translateX(-5px)',
+                                                    transition: 'opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1)',
+                                                    pointerEvents: 'none'
+                                                }}
+                                            >
+                                                <FlagIcon country={link.flags[0]} width={16} height={11} />
+                                                <FlagIcon country={link.flags[1]} width={16} height={11} />
+                                            </span>
+                                        )}
+                                    </Link>
                                     )}
                                     {index < navLinks.length - 1 && (
                                         <span
@@ -769,140 +804,11 @@ export default function Navigation() {
                                         transition: 'color 0.2s ease'
                                     }}
                                 >
-                                    {locale === 'ja' ? 'ホーム' : 'Home'}
+                                    {t('home')}
                                     <span style={{ color: '#C9933A', fontSize: '14px' }}>→</span>
                                 </a>
 
-                                {/* 2. Tours */}
-                                <a
-                                    href={`/${locale}/india/tours`}
-                                    onClick={() => setMenuOpen(false)}
-                                    style={{
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'space-between',
-                                        padding: '18px 24px',
-                                        fontFamily: "'Jost', Arial, sans-serif",
-                                        fontSize: '18px',
-                                        fontWeight: '400',
-                                        color: '#F5F1EB',
-                                        textDecoration: 'none',
-                                        borderBottom: '1px solid rgba(201,147,58,0.08)',
-                                        letterSpacing: '0.06em',
-                                        transition: 'color 0.2s ease'
-                                    }}
-                                >
-                                    {locale === 'ja' ? 'ツアー' : 'Tours'}
-                                    <span style={{ color: '#C9933A', fontSize: '14px' }}>→</span>
-                                </a>
-
-                                {SHOW_JAPAN_DESTINATION && (
-                                    <a
-                                        href={`/${locale}/japan/tours`}
-                                        onClick={() => setMenuOpen(false)}
-                                        style={{
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'space-between',
-                                            padding: '18px 24px',
-                                            fontFamily: "'Jost', Arial, sans-serif",
-                                            fontSize: '18px',
-                                            fontWeight: '400',
-                                            color: '#F5F1EB',
-                                            textDecoration: 'none',
-                                            borderBottom: '1px solid rgba(201,147,58,0.08)',
-                                            letterSpacing: '0.06em',
-                                            transition: 'color 0.2s ease'
-                                        }}
-                                    >
-                                        {t('japan')}
-                                        <span style={{ color: '#C9933A', fontSize: '14px' }}>→</span>
-                                    </a>
-                                )}
-
-                                {/* 3. Services Expandable */}
-                                <div>
-                                    <button
-                                        onClick={() => setServicesExpanded(!servicesExpanded)}
-                                        style={{
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'space-between',
-                                            width: '100%',
-                                            padding: '18px 24px',
-                                            fontFamily: "'Jost', Arial, sans-serif",
-                                            fontSize: '18px',
-                                            fontWeight: '400',
-                                            color: '#F5F1EB',
-                                            background: 'none',
-                                            border: 'none',
-                                            borderBottom: '1px solid rgba(201,147,58,0.08)',
-                                            cursor: 'pointer',
-                                            letterSpacing: '0.06em',
-                                            textAlign: 'left'
-                                        }}
-                                    >
-                                        {locale === 'ja' ? 'サービス' : 'Services'}
-                                        <span style={{
-                                            color: '#C9933A',
-                                            fontSize: '12px',
-                                            transform: servicesExpanded ? 'rotate(180deg)' : 'rotate(0deg)',
-                                            transition: 'transform 0.3s ease'
-                                        }}>▼</span>
-                                    </button>
-                                    {servicesExpanded && (
-                                        <div style={{ backgroundColor: 'rgba(201,147,58,0.04)' }}>
-                                            {[
-                                                { label: locale === 'ja' ? '空港送迎' : 'Airport Transfers', href: `/${locale}/services#transfers` },
-                                                { label: locale === 'ja' ? 'インド移住サポート' : 'Moving to India Support', href: `/${locale}/services#moving` },
-                                                { label: locale === 'ja' ? 'ローカルサポート' : 'Local Support', href: `/${locale}/services#local` },
-                                                { label: locale === 'ja' ? 'ショッピングツアー' : 'Shopping Tours', href: `/${locale}/services#shopping` },
-                                                { label: locale === 'ja' ? '全サービス' : 'All Services', href: `/${locale}/services` },
-                                            ].map(({ label, href }) => (
-                                                <a
-                                                    key={href}
-                                                    href={href}
-                                                    onClick={() => setMenuOpen(false)}
-                                                    style={{
-                                                        display: 'block',
-                                                        padding: '14px 40px',
-                                                        fontFamily: "'Jost', Arial, sans-serif",
-                                                        fontSize: '15px',
-                                                        color: '#9A948F',
-                                                        textDecoration: 'none',
-                                                        borderBottom: '1px solid rgba(201,147,58,0.06)',
-                                                        letterSpacing: '0.04em'
-                                                    }}
-                                                >{label}</a>
-                                            ))}
-                                        </div>
-                                    )}
-                                </div>
-
-                                {/* 4. Gallery */}
-                                <a
-                                    href={`/${locale}/gallery`}
-                                    onClick={() => setMenuOpen(false)}
-                                    style={{
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'space-between',
-                                        padding: '18px 24px',
-                                        fontFamily: "'Jost', Arial, sans-serif",
-                                        fontSize: '18px',
-                                        fontWeight: '400',
-                                        color: '#F5F1EB',
-                                        textDecoration: 'none',
-                                        borderBottom: '1px solid rgba(201,147,58,0.08)',
-                                        letterSpacing: '0.06em',
-                                        transition: 'color 0.2s ease'
-                                    }}
-                                >
-                                    {locale === 'ja' ? 'ギャラリー' : 'Gallery'}
-                                    <span style={{ color: '#C9933A', fontSize: '14px' }}>→</span>
-                                </a>
-
-                                {/* 5. About */}
+                                {/* 2. About */}
                                 <a
                                     href={`/${locale}/about`}
                                     onClick={() => setMenuOpen(false)}
@@ -921,11 +827,153 @@ export default function Navigation() {
                                         transition: 'color 0.2s ease'
                                     }}
                                 >
-                                    {locale === 'ja' ? '私たちについて' : 'About'}
+                                    {t('about')}
                                     <span style={{ color: '#C9933A', fontSize: '14px' }}>→</span>
                                 </a>
 
-                                {/* 6. FAQ */}
+                                {/* 3. To India */}
+                                <a
+                                    href={`/${locale}/india/tours`}
+                                    onClick={() => setMenuOpen(false)}
+                                    style={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'space-between',
+                                        padding: '18px 24px',
+                                        fontFamily: "'Jost', Arial, sans-serif",
+                                        fontSize: '18px',
+                                        fontWeight: '400',
+                                        color: '#F5F1EB',
+                                        textDecoration: 'none',
+                                        borderBottom: '1px solid rgba(201,147,58,0.08)',
+                                        letterSpacing: '0.06em',
+                                        transition: 'color 0.2s ease'
+                                    }}
+                                >
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                                        <span>{t('toIndia')}</span>
+                                        <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', opacity: 0.9 }}>
+                                            <FlagIcon country="japan" width={20} height={14} />
+                                            <FlagIcon country="india" width={20} height={14} />
+                                        </span>
+                                    </div>
+                                    <span style={{ color: '#C9933A', fontSize: '14px' }}>→</span>
+                                </a>
+
+                                {/* 4. To Japan */}
+                                <a
+                                    href={`/${locale}/japan/tours`}
+                                    onClick={() => setMenuOpen(false)}
+                                    style={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'space-between',
+                                        padding: '18px 24px',
+                                        fontFamily: "'Jost', Arial, sans-serif",
+                                        fontSize: '18px',
+                                        fontWeight: '400',
+                                        color: '#F5F1EB',
+                                        textDecoration: 'none',
+                                        borderBottom: '1px solid rgba(201,147,58,0.08)',
+                                        letterSpacing: '0.06em',
+                                        transition: 'color 0.2s ease'
+                                    }}
+                                >
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                                        <span>{t('toJapan')}</span>
+                                        <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', opacity: 0.9 }}>
+                                            <FlagIcon country="india" width={20} height={14} />
+                                            <FlagIcon country="japan" width={20} height={14} />
+                                        </span>
+                                    </div>
+                                    <span style={{ color: '#C9933A', fontSize: '14px' }}>→</span>
+                                </a>
+
+                                {/* 5. Services Expandable */}
+                                {SHOW_SERVICES_NAV && (
+                                    <div>
+                                        <button
+                                            onClick={() => setServicesExpanded(!servicesExpanded)}
+                                            style={{
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'space-between',
+                                                width: '100%',
+                                                padding: '18px 24px',
+                                                fontFamily: "'Jost', Arial, sans-serif",
+                                                fontSize: '18px',
+                                                fontWeight: '400',
+                                                color: '#F5F1EB',
+                                                background: 'none',
+                                                border: 'none',
+                                                borderBottom: '1px solid rgba(201,147,58,0.08)',
+                                                cursor: 'pointer',
+                                                letterSpacing: '0.06em',
+                                                textAlign: 'left'
+                                            }}
+                                        >
+                                            {locale === 'ja' ? 'サービス' : 'Services'}
+                                            <span style={{
+                                                color: '#C9933A',
+                                                fontSize: '12px',
+                                                transform: servicesExpanded ? 'rotate(180deg)' : 'rotate(0deg)',
+                                                transition: 'transform 0.3s ease'
+                                            }}>▼</span>
+                                        </button>
+                                        {servicesExpanded && (
+                                            <div style={{ backgroundColor: 'rgba(201,147,58,0.04)' }}>
+                                                {[
+                                                    { label: locale === 'ja' ? '空港送迎' : 'Airport Transfers', href: `/${locale}/services#transfers` },
+                                                    { label: locale === 'ja' ? 'インド移住サポート' : 'Moving to India Support', href: `/${locale}/services#moving` },
+                                                    { label: locale === 'ja' ? 'ローカルサポート' : 'Local Support', href: `/${locale}/services#local` },
+                                                    { label: locale === 'ja' ? 'ショッピングツアー' : 'Shopping Tours', href: `/${locale}/services#shopping` },
+                                                    { label: locale === 'ja' ? '全サービス' : 'All Services', href: `/${locale}/services` },
+                                                ].map(({ label, href }) => (
+                                                    <a
+                                                        key={href}
+                                                        href={href}
+                                                        onClick={() => setMenuOpen(false)}
+                                                        style={{
+                                                            display: 'block',
+                                                            padding: '14px 40px',
+                                                            fontFamily: "'Jost', Arial, sans-serif",
+                                                            fontSize: '15px',
+                                                            color: '#9A948F',
+                                                            textDecoration: 'none',
+                                                            borderBottom: '1px solid rgba(201,147,58,0.06)',
+                                                            letterSpacing: '0.04em'
+                                                        }}
+                                                    >{label}</a>
+                                                ))}
+                                            </div>
+                                        )}
+                                    </div>
+                                )}
+
+                                {/* 6. Gallery */}
+                                <a
+                                    href={`/${locale}/gallery`}
+                                    onClick={() => setMenuOpen(false)}
+                                    style={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'space-between',
+                                        padding: '18px 24px',
+                                        fontFamily: "'Jost', Arial, sans-serif",
+                                        fontSize: '18px',
+                                        fontWeight: '400',
+                                        color: '#F5F1EB',
+                                        textDecoration: 'none',
+                                        borderBottom: '1px solid rgba(201,147,58,0.08)',
+                                        letterSpacing: '0.06em',
+                                        transition: 'color 0.2s ease'
+                                    }}
+                                >
+                                    {t('gallery')}
+                                    <span style={{ color: '#C9933A', fontSize: '14px' }}>→</span>
+                                </a>
+
+                                {/* 7. FAQ */}
                                 <a
                                     href={`/${locale}/faq`}
                                     onClick={() => setMenuOpen(false)}
@@ -944,11 +992,11 @@ export default function Navigation() {
                                         transition: 'color 0.2s ease'
                                     }}
                                 >
-                                    {locale === 'ja' ? 'よくある質問' : 'FAQ'}
+                                    {t('faq')}
                                     <span style={{ color: '#C9933A', fontSize: '14px' }}>→</span>
                                 </a>
 
-                                {/* 7. Contact */}
+                                {/* 8. Contact */}
                                 <a
                                     href={`/${locale}/contact`}
                                     onClick={() => setMenuOpen(false)}
@@ -967,7 +1015,7 @@ export default function Navigation() {
                                         transition: 'color 0.2s ease'
                                     }}
                                 >
-                                    {locale === 'ja' ? 'お問い合わせ' : 'Contact'}
+                                    {t('contact')}
                                     <span style={{ color: '#C9933A', fontSize: '14px' }}>→</span>
                                 </a>
                             </div>

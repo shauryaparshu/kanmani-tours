@@ -397,7 +397,7 @@ export default function ToursSection({ tours, cardImages = {}, locale: propLocal
                                                     color: 'rgba(212,154,54,0.4)',
                                                     textTransform: 'uppercase'
                                                 }}>
-                                                    Srikan Tours
+                                                    Kanmani Tours
                                                 </span>
                                             </div>
                                         )}

@@ -1,3 +1,10 @@
+// ============================================================================
+// WARNING: USES DEMO / PLACEHOLDER DATA (demoJapanTours)
+// This page falls back to hardcoded placeholder data for Japan tours during review.
+// - This data MUST NEVER be created in Sanity.
+// - This fallback MUST be removed before this branch (feature/two-way-tours) merges to main.
+// ============================================================================
+
 import React, { Suspense } from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
@@ -8,6 +15,8 @@ import { getAllCountries } from '@/lib/countries';
 import Footer from '@/components/layout/FooterSection';
 import ToursListClient from '@/components/ToursListClient';
 
+import { demoJapanTours } from '@/lib/demoJapanTours';
+
 export const metadata: Metadata = {
     alternates: {
         languages: {
@@ -15,9 +24,9 @@ export const metadata: Metadata = {
             'x-default': 'https://kanmanitours.com/en/japan/tours',
         }
     },
-    title: 'Japan Tours — Srikan Tours',
+    title: 'Japan Tours — Kanmani Tours',
     description:
-        'Browse all upcoming and past Japan tours by Srikan Tours. Educational group tours, school journeys, and cultural experiences across Japan.',
+        'Browse all upcoming and past Japan tours by Kanmani Tours. Educational group tours, school journeys, and cultural experiences across Japan.',
 };
 
 export default async function JapanToursPage({ params }: { params: Promise<{ locale: string }> }) {
@@ -34,7 +43,7 @@ export default async function JapanToursPage({ params }: { params: Promise<{ loc
         getAllCountries(locale)
     ]);
 
-    const tours = rawTours;
+    const tours = (rawTours && rawTours.length > 0) ? rawTours : (demoJapanTours as any);
 
     return (
         <>

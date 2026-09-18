@@ -13,7 +13,7 @@ export const metadata: Metadata = {
             'x-default': 'https://kanmanitours.com/ja/gallery',
         }
     },
-    title: 'Tour Gallery — Srikan Tours',
+    title: 'Tour Gallery — Kanmani Tours',
     description: 'Relive the magic of our past tours. Explore photo galleries from celebrity encounters, cultural festivals, and culinary adventures across India.',
 };
 

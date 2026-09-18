@@ -16,9 +16,9 @@ export const metadata: Metadata = {
             'x-default': 'https://kanmanitours.com/ja/india/tours',
         }
     },
-    title: 'India Tours — Srikan Tours',
+    title: 'India Tours — Kanmani Tours',
     description:
-        'Browse all upcoming and past India tours by Srikan Tours. Celebrity-related experiences, culinary journeys, and cultural heritage trips across India.',
+        'Browse all upcoming and past India tours by Kanmani Tours. Celebrity-related experiences, culinary journeys, and cultural heritage trips across India.',
 };
 
 export default async function IndiaToursPage({ params }: { params: Promise<{ locale: string }> }) {
