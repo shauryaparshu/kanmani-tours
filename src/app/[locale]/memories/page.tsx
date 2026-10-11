@@ -1,10 +1,8 @@
 import type { Metadata } from 'next';
 import { cookies } from 'next/headers';
 import { redirect, notFound } from 'next/navigation';
-import { client } from '@/sanity/lib/client';
-import { galleryImageUrl, cardImageUrl, fullResolutionImageUrl } from '@/sanity/lib/image';
 import FooterSection from '@/components/layout/FooterSection';
-import MemoriesGalleryClient, { TourDayData, MemoriesPhoto } from './MemoriesGalleryClient';
+import DriveGallery from './DriveGallery';
 
 export const metadata: Metadata = {
     title: 'Tour Memories — Kanmani Tours',
@@ -14,29 +12,6 @@ export const metadata: Metadata = {
         follow: false,
     },
 };
-
-const TOUR_DAYS_QUERY = `
-  *[_type == "tourDay"] | order(date asc) {
-    _id,
-    title,
-    date,
-    photos[] {
-      _key,
-      caption,
-      featured,
-      image {
-        ...,
-        asset-> {
-          _id,
-          url,
-          metadata {
-            lqip
-          }
-        }
-      }
-    }
-  }
-`;
 
 export default async function MemoriesPage({ params }: { params: Promise<{ locale: string }> }) {
     const { locale } = await params;
@@ -55,58 +30,191 @@ export default async function MemoriesPage({ params }: { params: Promise<{ local
         redirect('/en/memories-login');
     }
 
-    // Fetch tourDay documents from Sanity
-    let rawDays: any[] = [];
-    try {
-        rawDays = await client.fetch(TOUR_DAYS_QUERY);
-    } catch (err) {
-        console.error('Error fetching tourDay documents from Sanity:', err);
-    }
-
-    const processedDays: TourDayData[] = (rawDays || []).map((day: any) => {
-        const photos: MemoriesPhoto[] = [];
-
-        if (Array.isArray(day.photos)) {
-            day.photos.forEach((item: any, idx: number) => {
-                let fullUrl = '';
-                let thumbUrl = '';
-                const lqip = item.image?.asset?.metadata?.lqip;
-
-                try {
-                    if (item.image) {
-                        fullUrl = fullResolutionImageUrl(item.image) || item.image?.asset?.url || '';
-                        thumbUrl = cardImageUrl(item.image) || fullUrl;
-                    }
-                } catch {
-                    fullUrl = item.image?.asset?.url || '';
-                    thumbUrl = fullUrl;
-                }
-
-                if (fullUrl) {
-                    photos.push({
-                        id: item._key || `${day._id}-photo-${idx}`,
-                        url: fullUrl,
-                        thumbnailUrl: thumbUrl || fullUrl,
-                        lqip,
-                        caption: item.caption,
-                        featured: !!item.featured,
-                    });
-                }
-            });
-        }
-
-        return {
-            id: day._id,
-            title: day.title || 'Untitled Tour Day',
-            date: day.date || '',
-            photos,
-        };
-    });
+    const driveFolderId = process.env.MEMORIES_DRIVE_FOLDER_ID?.trim();
+    const googleApiKey = process.env.GOOGLE_DRIVE_API_KEY?.trim();
 
     return (
         <>
-            <main>
-                <MemoriesGalleryClient days={processedDays} />
+            <main style={{ backgroundColor: '#1C1917', minHeight: '100vh', color: '#F5F1EB' }}>
+                {driveFolderId ? (
+                    <div>
+                        {/* Header Section */}
+                        <section style={{
+                            padding: '48px 24px 28px',
+                            maxWidth: '1400px',
+                            margin: '0 auto',
+                            borderBottom: '1px solid rgba(201, 147, 58, 0.2)',
+                            marginBottom: '24px',
+                        }}>
+                            <div style={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                alignItems: 'flex-start',
+                                flexWrap: 'wrap',
+                                gap: '20px',
+                            }}>
+                                <div style={{ maxWidth: '820px' }}>
+                                    <span style={{
+                                        fontFamily: "'Jost', Arial, sans-serif",
+                                        fontSize: '11px',
+                                        fontWeight: '600',
+                                        letterSpacing: '0.28em',
+                                        textTransform: 'uppercase',
+                                        color: '#C9933A',
+                                        display: 'block',
+                                        marginBottom: '12px',
+                                    }}>
+                                        PRIVATE ACCESS • TOUR ARCHIVE
+                                    </span>
+                                    <h1 style={{
+                                        fontFamily: "'Cormorant Garamond', Georgia, serif",
+                                        fontSize: 'clamp(32px, 4.5vw, 48px)',
+                                        fontWeight: '500',
+                                        color: '#F5F1EB',
+                                        margin: '0 0 12px',
+                                        lineHeight: '1.2',
+                                    }}>
+                                        Tour Memories
+                                    </h1>
+                                    <div style={{
+                                        width: '48px',
+                                        height: '1px',
+                                        backgroundColor: '#C9933A',
+                                        marginBottom: '16px',
+                                    }} />
+                                    <p style={{
+                                        fontFamily: "'Jost', Arial, sans-serif",
+                                        fontSize: '15px',
+                                        fontWeight: '300',
+                                        color: '#9A948F',
+                                        lineHeight: '1.6',
+                                        margin: 0,
+                                    }}>
+                                        Tap any photo to open it, and use the download icon in the viewer to save it. To save a whole day, open that day&apos;s folder in Google Drive and choose Download.
+                                    </p>
+                                </div>
+
+                                <div style={{ paddingTop: '8px' }}>
+                                    <a
+                                        href={`https://drive.google.com/drive/folders/${driveFolderId}`}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        style={{
+                                            display: 'inline-flex',
+                                            alignItems: 'center',
+                                            gap: '8px',
+                                            backgroundColor: '#C9933A',
+                                            color: '#1C1917',
+                                            padding: '12px 24px',
+                                            borderRadius: '4px',
+                                            fontFamily: "'Jost', Arial, sans-serif",
+                                            fontSize: '11px',
+                                            fontWeight: '600',
+                                            letterSpacing: '0.2em',
+                                            textTransform: 'uppercase',
+                                            textDecoration: 'none',
+                                            transition: 'all 0.3s ease',
+                                            boxShadow: '0 4px 15px rgba(201, 147, 58, 0.25)',
+                                        }}
+                                    >
+                                        <span>Open in Google Drive</span>
+                                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                                            <polyline points="15 3 21 3 21 9" />
+                                            <line x1="10" y1="14" x2="21" y2="3" />
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                        </section>
+
+                        {/* Gallery Section: In-page DriveGallery when API key is present, otherwise fallback iframe */}
+                        {googleApiKey ? (
+                            <DriveGallery rootFolderId={driveFolderId} />
+                        ) : (
+                            <section style={{
+                                width: '100%',
+                                maxWidth: '1400px',
+                                margin: '0 auto',
+                                padding: '0 24px 60px',
+                            }}>
+                                <iframe
+                                    src={`https://drive.google.com/embeddedfolderview?id=${driveFolderId}#grid`}
+                                    title="Tour Memories Google Drive Gallery"
+                                    referrerPolicy="no-referrer"
+                                    loading="lazy"
+                                    style={{
+                                        width: '100%',
+                                        height: 'calc(100vh - 220px)',
+                                        minHeight: '600px',
+                                        border: 'none',
+                                        borderRadius: '6px',
+                                        backgroundColor: '#FFFFFF',
+                                        display: 'block',
+                                        boxShadow: '0 10px 30px rgba(0, 0, 0, 0.3)',
+                                    }}
+                                />
+                            </section>
+                        )}
+                    </div>
+                ) : (
+                    /* Empty / Preparation State (no iframe rendered) */
+                    <section style={{
+                        padding: '100px 24px',
+                        maxWidth: '1200px',
+                        margin: '0 auto',
+                        textAlign: 'center',
+                    }}>
+                        <div style={{
+                            maxWidth: '600px',
+                            margin: '0 auto',
+                            backgroundColor: '#23201D',
+                            borderRadius: '8px',
+                            border: '1px solid rgba(201, 147, 58, 0.25)',
+                            padding: '64px 36px',
+                            boxShadow: '0 20px 50px rgba(0, 0, 0, 0.4)',
+                        }}>
+                            <span style={{
+                                fontFamily: "'Jost', Arial, sans-serif",
+                                fontSize: '11px',
+                                fontWeight: '600',
+                                letterSpacing: '0.28em',
+                                textTransform: 'uppercase',
+                                color: '#C9933A',
+                                display: 'block',
+                                marginBottom: '16px',
+                            }}>
+                                KANMANI TOURS
+                            </span>
+                            <h1 style={{
+                                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                                fontSize: 'clamp(32px, 5vw, 42px)',
+                                fontWeight: '500',
+                                color: '#F5F1EB',
+                                margin: '0 0 16px',
+                                lineHeight: '1.2',
+                            }}>
+                                Tour Memories
+                            </h1>
+                            <div style={{
+                                width: '40px',
+                                height: '1px',
+                                backgroundColor: '#C9933A',
+                                margin: '0 auto 24px',
+                            }} />
+                            <p style={{
+                                fontFamily: "'Jost', Arial, sans-serif",
+                                fontSize: '16px',
+                                fontWeight: '300',
+                                color: '#9A948F',
+                                lineHeight: '1.7',
+                                margin: 0,
+                            }}>
+                                The gallery is being prepared. Please check back soon.
+                            </p>
+                        </div>
+                    </section>
+                )}
             </main>
             <FooterSection />
         </>
