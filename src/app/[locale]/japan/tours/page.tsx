@@ -1,10 +1,3 @@
-// ============================================================================
-// WARNING: USES DEMO / PLACEHOLDER DATA (demoJapanTours)
-// This page falls back to hardcoded placeholder data for Japan tours during review.
-// - This data MUST NEVER be created in Sanity.
-// - This fallback MUST be removed before this branch (feature/two-way-tours) merges to main.
-// ============================================================================
-
 import React, { Suspense } from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
@@ -14,8 +7,6 @@ import { getAllCategories } from '@/lib/categories';
 import { getAllCountries } from '@/lib/countries';
 import Footer from '@/components/layout/FooterSection';
 import ToursListClient from '@/components/ToursListClient';
-
-import { demoJapanTours } from '@/lib/demoJapanTours';
 
 export const metadata: Metadata = {
     alternates: {
@@ -43,7 +34,7 @@ export default async function JapanToursPage({ params }: { params: Promise<{ loc
         getAllCountries(locale)
     ]);
 
-    const tours = (rawTours && rawTours.length > 0) ? rawTours : (demoJapanTours as any);
+    const tours = rawTours || [];
 
     return (
         <>
@@ -106,10 +97,78 @@ export default async function JapanToursPage({ params }: { params: Promise<{ loc
                     </div>
                 </section>
 
-                {/* Client-side filter + card grid */}
-                <Suspense fallback={<div className="container" style={{ padding: '60px 20px' }}>Loading...</div>}>
-                    <ToursListClient tours={tours} categories={categories} countries={countries} />
-                </Suspense>
+                {/* Client-side filter + card grid or Coming Soon state */}
+                {tours.length === 0 ? (
+                    <section className="japan-tours-coming-soon" style={{
+                        backgroundColor: '#FAFAF7',
+                        padding: '96px 24px',
+                        textAlign: 'center',
+                        borderBottom: '1px solid #E8E4DC'
+                    }}>
+                        <div style={{ maxWidth: '600px', margin: '0 auto' }}>
+                            <span style={{
+                                fontFamily: "'Jost', Arial, sans-serif",
+                                fontSize: '11px',
+                                fontWeight: '600',
+                                letterSpacing: '0.24em',
+                                textTransform: 'uppercase',
+                                color: '#C9933A',
+                                display: 'block',
+                                marginBottom: '16px'
+                            }}>
+                                Coming Soon
+                            </span>
+                            <h2 style={{
+                                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                                fontSize: 'clamp(28px, 4vw, 40px)',
+                                fontWeight: '500',
+                                color: '#1c1918',
+                                margin: '0 0 16px',
+                                lineHeight: '1.2'
+                            }}>
+                                Curated Japan Journeys
+                            </h2>
+                            <div style={{
+                                width: '48px',
+                                height: '1px',
+                                backgroundColor: '#C9933A',
+                                margin: '0 auto 20px'
+                            }} />
+                            <p style={{
+                                fontFamily: "'Jost', Arial, sans-serif",
+                                fontSize: '16px',
+                                fontWeight: '300',
+                                color: '#66615b',
+                                lineHeight: '1.7',
+                                margin: '0 0 32px'
+                            }}>
+                                Japan tours are launching soon. Check back shortly.
+                            </p>
+                            <Link
+                                href="/"
+                                style={{
+                                    display: 'inline-block',
+                                    fontFamily: "'Jost', Arial, sans-serif",
+                                    fontSize: '11px',
+                                    fontWeight: '600',
+                                    letterSpacing: '0.24em',
+                                    textTransform: 'uppercase',
+                                    color: '#1c1918',
+                                    backgroundColor: '#C9933A',
+                                    padding: '14px 32px',
+                                    textDecoration: 'none',
+                                    transition: 'all 0.3s ease'
+                                }}
+                            >
+                                Return to Home
+                            </Link>
+                        </div>
+                    </section>
+                ) : (
+                    <Suspense fallback={<div className="container" style={{ padding: '60px 20px' }}>Loading...</div>}>
+                        <ToursListClient tours={tours} categories={categories} countries={countries} />
+                    </Suspense>
+                )}
             </main>
             <Footer />
         </>

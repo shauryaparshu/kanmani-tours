@@ -167,8 +167,8 @@ export default function CompanySections() {
             {[
               {
                 number: '01',
-                title: 'Japanese First',
-                body: 'Every aspect of our service is designed specifically for Japanese travellers. Our guides speak fluent Japanese, our communications are in Japanese, and we understand Japanese expectations of quality and service.'
+                title: 'Journeys in Both Directions',
+                body: 'We operate curated tours in both directions, welcoming travellers from Japan to discover India and guiding journeys from India to explore Japan. Our bilingual team, deep cross-cultural fluency, and uncompromising standards of care ensure extraordinary experiences in either direction.'
               },
               {
                 number: '02',
