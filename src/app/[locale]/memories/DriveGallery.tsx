@@ -37,15 +37,15 @@ export default function DriveGallery({ rootFolderId }: DriveGalleryProps) {
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
 
-    // Lightbox & Video modal states
+    // Lightbox state
     const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
-    const [activeVideoId, setActiveVideoId] = useState<string | null>(null);
 
     // Request counter to cancel / ignore responses from stale requests
     const requestIdRef = useRef(0);
 
     const fetchFolderData = useCallback(async (folderId: string | null, knownName?: string) => {
         const currentReq = ++requestIdRef.current;
+        setLightboxIndex(null);
         setLoading(true);
         setError(null);
 
@@ -122,18 +122,6 @@ export default function DriveGallery({ rootFolderId }: DriveGalleryProps) {
         window.addEventListener('popstate', handlePopState);
         return () => window.removeEventListener('popstate', handlePopState);
     }, [fetchFolderData]);
-
-    // Escape listener for video modal
-    useEffect(() => {
-        const handleKeyDown = (e: KeyboardEvent) => {
-            if (e.key === 'Escape') {
-                if (activeVideoId) setActiveVideoId(null);
-            }
-        };
-
-        window.addEventListener('keydown', handleKeyDown);
-        return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [activeVideoId]);
 
     // Filter only images for UnifiedLightbox
     const imageFiles = files.filter((f) => f.kind === 'image');
@@ -429,7 +417,11 @@ export default function DriveGallery({ rootFolderId }: DriveGalleryProps) {
                                         className="drive-media-tile"
                                         onClick={() => {
                                             if (isVideo) {
-                                                setActiveVideoId(file.id);
+                                                window.open(
+                                                    `https://drive.google.com/file/d/${file.id}/view`,
+                                                    '_blank',
+                                                    'noopener,noreferrer'
+                                                );
                                             } else {
                                                 const imgIndex = imageFiles.findIndex((img) => img.id === file.id);
                                                 if (imgIndex !== -1) {
@@ -463,7 +455,8 @@ export default function DriveGallery({ rootFolderId }: DriveGalleryProps) {
                                             id={`download-button-${idx}`}
                                             href={file.download}
                                             download={file.name}
-                                            rel="noopener"
+                                            target={isVideo ? '_blank' : undefined}
+                                            rel={isVideo ? 'noopener noreferrer' : 'noopener'}
                                             onClick={(e) => e.stopPropagation()}
                                             title={`Download ${file.name}`}
                                             style={{
@@ -495,31 +488,50 @@ export default function DriveGallery({ rootFolderId }: DriveGalleryProps) {
 
                                         {/* Video Play Overlay */}
                                         {isVideo && (
-                                            <div style={{
-                                                position: 'absolute',
-                                                inset: 0,
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                justifyContent: 'center',
-                                                backgroundColor: 'rgba(10, 8, 7, 0.35)',
-                                                pointerEvents: 'none',
-                                            }}>
+                                            <>
                                                 <div style={{
-                                                    width: '46px',
-                                                    height: '46px',
-                                                    borderRadius: '50%',
-                                                    backgroundColor: 'rgba(201, 147, 58, 0.9)',
+                                                    position: 'absolute',
+                                                    inset: 0,
                                                     display: 'flex',
                                                     alignItems: 'center',
                                                     justifyContent: 'center',
-                                                    color: '#1C1917',
-                                                    boxShadow: '0 4px 14px rgba(0, 0, 0, 0.5)',
+                                                    backgroundColor: 'rgba(10, 8, 7, 0.35)',
+                                                    pointerEvents: 'none',
                                                 }}>
-                                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                                                        <polygon points="6 4 20 12 6 20 6 4" />
-                                                    </svg>
+                                                    <div style={{
+                                                        width: '46px',
+                                                        height: '46px',
+                                                        borderRadius: '50%',
+                                                        backgroundColor: 'rgba(201, 147, 58, 0.9)',
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        justifyContent: 'center',
+                                                        color: '#1C1917',
+                                                        boxShadow: '0 4px 14px rgba(0, 0, 0, 0.5)',
+                                                    }}>
+                                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                                                            <polygon points="6 4 20 12 6 20 6 4" />
+                                                        </svg>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                                <span style={{
+                                                    position: 'absolute',
+                                                    bottom: '8px',
+                                                    left: '8px',
+                                                    zIndex: 3,
+                                                    fontFamily: "'Jost', Arial, sans-serif",
+                                                    fontSize: '10px',
+                                                    color: '#9A948F',
+                                                    backgroundColor: 'rgba(10, 8, 7, 0.75)',
+                                                    padding: '3px 7px',
+                                                    borderRadius: '3px',
+                                                    pointerEvents: 'none',
+                                                    letterSpacing: '0.04em',
+                                                    lineHeight: '1.2',
+                                                }}>
+                                                    Plays in Google Drive
+                                                </span>
+                                            </>
                                         )}
                                     </div>
                                 );
@@ -548,77 +560,6 @@ export default function DriveGallery({ rootFolderId }: DriveGalleryProps) {
                             </p>
                         </div>
                     )}
-                </div>
-            )}
-
-            {/* Video Preview Modal */}
-            {activeVideoId && (
-                <div
-                    role="dialog"
-                    aria-modal="true"
-                    onClick={() => setActiveVideoId(null)}
-                    style={{
-                        position: 'fixed',
-                        inset: 0,
-                        backgroundColor: 'rgba(5, 3, 2, 0.94)',
-                        backdropFilter: 'blur(10px)',
-                        WebkitBackdropFilter: 'blur(10px)',
-                        zIndex: 9999,
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        padding: '24px',
-                    }}
-                >
-                    <div
-                        onClick={(e) => e.stopPropagation()}
-                        style={{
-                            position: 'relative',
-                            width: '100%',
-                            maxWidth: '960px',
-                            aspectRatio: '16 / 9',
-                            backgroundColor: '#000000',
-                            borderRadius: '10px',
-                            overflow: 'hidden',
-                            border: '1px solid rgba(201, 147, 58, 0.35)',
-                            boxShadow: '0 25px 60px rgba(0, 0, 0, 0.8)',
-                        }}
-                    >
-                        <button
-                            type="button"
-                            onClick={() => setActiveVideoId(null)}
-                            aria-label="Close video preview"
-                            style={{
-                                position: 'absolute',
-                                top: '12px',
-                                right: '12px',
-                                zIndex: 10,
-                                background: 'rgba(10, 8, 7, 0.85)',
-                                border: '1px solid rgba(201, 147, 58, 0.5)',
-                                color: '#F5F1EB',
-                                fontSize: '18px',
-                                width: '38px',
-                                height: '38px',
-                                borderRadius: '50%',
-                                cursor: 'pointer',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                            }}
-                        >
-                            ✕
-                        </button>
-                        <iframe
-                            src={`https://drive.google.com/file/d/${activeVideoId}/preview`}
-                            title="Google Drive Video Player"
-                            allow="autoplay"
-                            style={{
-                                width: '100%',
-                                height: '100%',
-                                border: 'none',
-                            }}
-                        />
-                    </div>
                 </div>
             )}
 
