@@ -12,6 +12,17 @@ export const urlForImage = (source: Image) => {
     return imageBuilder?.image(source).auto('format').fit('max')
 }
 
+export const urlFor = urlForImage;
+
+export function fullResolutionImageUrl(image: any): string {
+  if (!image) return '';
+  try {
+    return urlForImage(image)?.auto('format').fit('max').url() ?? '';
+  } catch {
+    return image?.asset?.url ?? '';
+  }
+}
+
 export function heroImageUrl(image: any): string {
   if (!image) return '';
   try {
