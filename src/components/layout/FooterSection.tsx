@@ -152,12 +152,12 @@ export default function FooterSection() {
             marginBottom: '24px'
           }} />
           {[
-            { label: isJa ? 'セレブリティ関連ツアー' : 'Celebrity Tours', href: '/tours' },
-            { label: isJa ? '文化ツアー' : 'Cultural Tours', href: '/tours' },
-            { label: isJa ? 'フードツアー' : 'Food Tours', href: '/tours' },
-            { label: isJa ? 'ショートツアー' : 'Short Tours', href: '/tours' },
-            { label: isJa ? '農村・ビレッジツアー' : 'Village Tours', href: '/tours' },
-            { label: isJa ? 'すべてのツアーを見る' : 'View All Tours', href: '/tours', highlight: true }
+            { label: isJa ? 'セレブリティ関連ツアー' : 'Celebrity Tours', href: '/india/tours' },
+            { label: isJa ? '文化ツアー' : 'Cultural Tours', href: '/india/tours' },
+            { label: isJa ? 'フードツアー' : 'Food Tours', href: '/india/tours' },
+            { label: isJa ? 'ショートツアー' : 'Short Tours', href: '/india/tours' },
+            { label: isJa ? '農村・ビレッジツアー' : 'Village Tours', href: '/india/tours' },
+            { label: isJa ? 'すべてのツアーを見る' : 'View All Tours', href: '/india/tours', highlight: true }
           ].map(link => (
             <Link
               key={link.label}

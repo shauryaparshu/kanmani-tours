@@ -1,4 +1,5 @@
 import HeroSection from '@/components/sections/HeroSection';
+import DestinationChoice from '@/components/sections/DestinationChoice';
 import ToursSection from '@/components/sections/ToursSection';
 import Testimonials from '@/components/sections/Testimonials';
 import Footer from '@/components/layout/FooterSection';
@@ -7,6 +8,17 @@ import { getAllTours } from '@/lib/tours';
 import { getAllCelebrities } from '@/lib/celebrities';
 
 import CompanySections from '@/components/sections/CompanySections';
+
+export const metadata = {
+    alternates: {
+        languages: {
+            'ja': 'https://kanmanitours.com/ja',
+            'en': 'https://kanmanitours.com/en',
+            'x-default': 'https://kanmanitours.com/ja',
+        }
+    }
+};
+
 
 export default async function Home({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -48,6 +60,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       <HeroSection
         heroImages={heroImages}
       />
+      <DestinationChoice />
       <ToursSection tours={upcomingTours} locale={locale} />
       <CompanySections />
       <Testimonials customerImages={customerImages} />

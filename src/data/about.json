@@ -5,7 +5,7 @@
         "image": "/assets/img/home/sections/about-hero.jpg",
         "ctaPrimary": {
             "text": "View Tours",
-            "link": "/tours"
+            "link": "/india/tours"
         },
         "ctaSecondary": {
             "text": "Contact Us",

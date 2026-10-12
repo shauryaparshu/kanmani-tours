@@ -1,6 +1,17 @@
 import Footer from '@/components/layout/FooterSection';
 import Link from 'next/link';
 
+export const metadata = {
+    alternates: {
+        languages: {
+            'ja': 'https://kanmanitours.com/ja/services/moving',
+            'en': 'https://kanmanitours.com/en/services/moving',
+            'x-default': 'https://kanmanitours.com/ja/services/moving',
+        }
+    }
+};
+
+
 export default function MovingToIndiaPage() {
   return (
     <>

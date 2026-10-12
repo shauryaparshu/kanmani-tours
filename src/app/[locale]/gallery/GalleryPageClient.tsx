@@ -620,7 +620,7 @@ export default function GalleryPageClient({ tours }: Props) {
           gap: '24px',
           flexWrap: 'wrap'
         }}>
-          <Link href="/tours" style={{ textDecoration: 'none' }}>
+          <Link href="/india/tours" style={{ textDecoration: 'none' }}>
             <button style={{
               backgroundColor: '#C9933A',
               color: '#1C1917',

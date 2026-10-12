@@ -1,12 +1,24 @@
 {
     "Navigation": {
         "home": "Home",
+        "toIndia": "To India",
+        "toJapan": "To Japan",
         "tours": "Tours",
         "gallery": "Gallery",
         "airport": "Airport Pickup & Drop",
         "about": "About",
         "faq": "FAQ",
-        "contact": "Contact"
+        "contact": "Contact",
+        "japan": "Japan"
+    },
+    "DestinationChoice": {
+        "heading": "Two Cultures, One Bridge",
+        "indiaTitle": "India Tours",
+        "indiaDesc": "Immersive cultural journeys through the heart of India.",
+        "indiaCta": "Explore India",
+        "japanTitle": "Japan Tours",
+        "japanDesc": "Curated educational and cultural experiences in Japan.",
+        "japanCta": "Explore Japan"
     },
     "Home": {
         "heroTitle": "Explore the Colors of South India",
@@ -164,7 +176,7 @@
         "title": "Airport Pickup & Drop in India",
         "subtitle": "Seamless, reliable, and comfortable airport transfers with Japanese-speaking support. Your journey begins the moment you land.",
         "peaceOfMind": "Travel with Peace of Mind",
-        "desc1": "Navigating Indian airports and finding reliable transport can be overwhelming. Srikan Tours provides a premium, pre-booked airport transfer service designed specifically for international travellers who value safety, punctuality, and comfort.",
+        "desc1": "Navigating Indian airports and finding reliable transport can be overwhelming. Kanmani Tours provides a premium, pre-booked airport transfer service designed specifically for international travellers who value safety, punctuality, and comfort.",
         "desc2": "Whether you're arriving at Chennai, Delhi, Mumbai, or Hyderabad, our professional drivers will be waiting for you at the arrivals gate with a clear name board, ready to assist with your luggage and whisk you away to your destination.",
         "whyChoose": "Why Choose Our Transfers?",
         "feature1Title": "Japanese-Speaking Support:",

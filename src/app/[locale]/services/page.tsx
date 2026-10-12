@@ -1,6 +1,17 @@
 import Footer from '@/components/layout/FooterSection';
 import MoreDetailsButton from '@/components/ui/MoreDetailsButton';
 
+export const metadata = {
+    alternates: {
+        languages: {
+            'ja': 'https://kanmanitours.com/ja/services',
+            'en': 'https://kanmanitours.com/en/services',
+            'x-default': 'https://kanmanitours.com/ja/services',
+        }
+    }
+};
+
+
 export default function ServicesPage() {
   return (
     <>

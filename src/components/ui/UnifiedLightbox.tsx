@@ -10,6 +10,8 @@ export interface LightboxImage {
   lqip?: string;
   caption?: string;
   subCaption?: string;
+  downloadUrl?: string;
+  downloadName?: string;
 }
 
 interface UnifiedLightboxProps {
@@ -31,6 +33,30 @@ export default function UnifiedLightbox({ images, initialIndex, onClose }: Unifi
   const goPrev = useCallback(() => {
     setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
   }, [images.length]);
+
+  // Touch swipe support for mobile navigation
+  const touchStartX = useRef<number | null>(null);
+  const touchStartY = useRef<number | null>(null);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+    touchStartY.current = e.touches[0].clientY;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null || touchStartY.current === null) return;
+    const deltaX = e.changedTouches[0].clientX - touchStartX.current;
+    const deltaY = e.changedTouches[0].clientY - touchStartY.current;
+    if (Math.abs(deltaX) > 40 && Math.abs(deltaX) > Math.abs(deltaY) * 1.5) {
+      if (deltaX < 0) {
+        goNext();
+      } else {
+        goPrev();
+      }
+    }
+    touchStartX.current = null;
+    touchStartY.current = null;
+  };
 
   // Close on Escape key and handle Arrows
   useEffect(() => {
@@ -110,50 +136,182 @@ export default function UnifiedLightbox({ images, initialIndex, onClose }: Unifi
         alignItems: 'center',
         justifyContent: 'center',
         backdropFilter: 'blur(10px)',
-        WebkitBackdropFilter: 'blur(10px)'
+        WebkitBackdropFilter: 'blur(10px)',
+        height: '100vh',
+        maxHeight: '100dvh',
       }}
     >
-      {/* Lightbox Header Section */}
-      {(currentImage.caption || currentImage.subCaption) && (
+      {/* Lightbox Header Row (ONE flex row in normal flow across the top) */}
+      <div 
+        className="lightbox-header-bar"
+        onClick={(e) => e.stopPropagation()}
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          gap: '16px',
+          paddingTop: 'max(12px, env(safe-area-inset-top, 12px))',
+          paddingBottom: '12px',
+          paddingLeft: 'max(12px, env(safe-area-inset-left, 12px))',
+          paddingRight: 'max(12px, env(safe-area-inset-right, 12px))',
+          zIndex: 10000,
+          pointerEvents: 'auto',
+          background: 'linear-gradient(to bottom, rgba(5, 3, 2, 0.88) 0%, rgba(5, 3, 2, 0.45) 75%, transparent 100%)',
+        }}
+      >
+        {/* Left: Title block with ellipsis on one line each */}
         <div 
-          className="lightbox-header-container"
-          onClick={(e) => e.stopPropagation()}
+          className="lightbox-title-block"
+          style={{
+            flex: '1 1 auto',
+            minWidth: 0,
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '2px',
+            textAlign: 'left',
+          }}
         >
           {currentImage.caption && (
-            <h2 className="lightbox-title-left">
+            <h2 
+              className="lightbox-title-left"
+              style={{
+                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                fontSize: 'clamp(17px, 1.8vw, 22px)',
+                fontWeight: 700,
+                color: '#FFB834',
+                margin: 0,
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+                lineHeight: 1.25,
+                letterSpacing: '0.02em',
+                textShadow: '0 2px 4px rgba(0,0,0,0.8)',
+              }}
+              title={currentImage.caption}
+            >
               {currentImage.caption}
             </h2>
           )}
           {currentImage.subCaption && (
-            <span className="lightbox-location-right">
+            <span 
+              className="lightbox-location-sub"
+              style={{
+                fontFamily: "'Jost', Arial, sans-serif",
+                fontSize: '12px',
+                fontWeight: 500,
+                color: '#FFF7E8',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+                lineHeight: 1.3,
+                letterSpacing: '0.04em',
+                opacity: 0.9,
+                textShadow: '0 2px 4px rgba(0,0,0,0.8)',
+              }}
+              title={currentImage.subCaption}
+            >
               {currentImage.subCaption}
             </span>
           )}
         </div>
-      )}
 
-      {/* Close button */}
-      <button
-        onClick={onClose}
-        className="lightbox-close-btn"
-        style={{
-          position: 'absolute',
-          top: '24px',
-          right: '24px',
-          background: 'none',
-          border: '1px solid rgba(201,147,58,0.4)',
-          color: '#F5F1EB',
-          fontSize: '20px',
-          width: '44px',
-          height: '44px',
-          cursor: 'pointer',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          zIndex: 10000,
-          transition: 'border-color 0.3s ease'
-        }}
-      >✕</button>
+        {/* Right: Actions group (Download then Close) */}
+        <div 
+          className="lightbox-actions-group"
+          style={{
+            flexShrink: 0,
+            display: 'flex',
+            gap: '8px',
+            alignItems: 'center',
+          }}
+        >
+          {currentImage.downloadUrl && (
+            <a
+              id="lightbox-download-button"
+              href={currentImage.downloadUrl}
+              download={currentImage.downloadName || true}
+              rel="noopener"
+              aria-label="Download photo"
+              onClick={(e) => e.stopPropagation()}
+              className="lightbox-download-btn"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px',
+                minWidth: '44px',
+                minHeight: '44px',
+                height: '44px',
+                padding: '0 14px',
+                backgroundColor: 'rgba(28, 25, 23, 0.85)',
+                border: '1px solid rgba(201, 147, 58, 0.45)',
+                borderRadius: '4px',
+                color: '#C9933A',
+                textDecoration: 'none',
+                fontFamily: "'Jost', Arial, sans-serif",
+                fontSize: '12px',
+                fontWeight: 600,
+                letterSpacing: '0.12em',
+                textTransform: 'uppercase',
+                cursor: 'pointer',
+                transition: 'all 0.25s ease',
+                backdropFilter: 'blur(8px)',
+                WebkitBackdropFilter: 'blur(8px)',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.5)',
+              }}
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#C9933A"
+                strokeWidth="2.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                style={{ flexShrink: 0 }}
+              >
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <polyline points="7 10 12 15 17 10" />
+                <line x1="12" y1="15" x2="12" y2="3" />
+              </svg>
+              <span className="lightbox-download-label">Download</span>
+            </a>
+          )}
+
+          {/* Close button - rightmost */}
+          <button
+            id="lightbox-close-button"
+            type="button"
+            onClick={onClose}
+            className="lightbox-close-btn"
+            aria-label="Close lightbox"
+            style={{
+              minWidth: '44px',
+              minHeight: '44px',
+              width: '44px',
+              height: '44px',
+              backgroundColor: 'rgba(28, 25, 23, 0.85)',
+              border: '1px solid rgba(201, 147, 58, 0.4)',
+              borderRadius: '4px',
+              color: '#F5F1EB',
+              fontSize: '20px',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              transition: 'border-color 0.3s ease, background-color 0.3s ease',
+              backdropFilter: 'blur(8px)',
+              WebkitBackdropFilter: 'blur(8px)',
+              boxShadow: '0 4px 12px rgba(0,0,0,0.5)',
+            }}
+          >✕</button>
+        </div>
+      </div>
 
       {images.length > 1 && (
         <>
@@ -241,10 +399,13 @@ export default function UnifiedLightbox({ images, initialIndex, onClose }: Unifi
         <div
           key={currentIndex}
           className="lightbox-image-box"
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
           style={{
             position: 'relative',
             width: '100%',
-            height: '82vh',
+            height: 'calc(100vh - 210px)',
+            maxHeight: 'calc(100dvh - 210px)',
             animation: 'premiumLightboxFade 760ms cubic-bezier(0.16, 1, 0.3, 1) both',
             borderRadius: '12px',
             overflow: 'hidden',
@@ -378,17 +539,10 @@ export default function UnifiedLightbox({ images, initialIndex, onClose }: Unifi
           box-shadow: 0 10px 30px rgba(0,0,0,0.8);
           border-width: 0.5px !important; /* Counteract 5x scale for border */
         }
-        .lightbox-header-container {
-          position: absolute;
-          top: 24px;
-          left: 24px;
-          right: 88px;
-          display: flex;
-          justify-content: space-between;
-          align-items: flex-start;
-          gap: 24px;
-          z-index: 10000;
-          pointer-events: none;
+        .unified-lightbox-wrapper {
+          height: 100vh;
+          height: 100dvh;
+          max-height: 100dvh;
         }
         .lightbox-title-left {
           font-family: 'Cormorant Garamond', Georgia, serif;
@@ -399,23 +553,9 @@ export default function UnifiedLightbox({ images, initialIndex, onClose }: Unifi
           text-align: left;
           letter-spacing: 0.03em;
           text-shadow: 0 2px 4px rgba(0,0,0,0.6);
-          display: -webkit-box;
-          -webkit-line-clamp: 2;
-          -webkit-box-orient: vertical;
           overflow: hidden;
-          max-width: 60vw;
-          line-height: 1.3;
-        }
-        .lightbox-location-right {
-          font-family: 'Cormorant Garamond', Georgia, serif;
-          font-size: clamp(16px, 1.8vw, 22px);
-          font-weight: 500;
-          color: #FFF7E8;
-          text-align: right;
-          letter-spacing: 0.03em;
-          text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+          text-overflow: ellipsis;
           white-space: nowrap;
-          flex-shrink: 0;
           line-height: 1.3;
         }
         .lightbox-nav-card {
@@ -429,7 +569,7 @@ export default function UnifiedLightbox({ images, initialIndex, onClose }: Unifi
           backdrop-filter: blur(10px);
           -webkit-backdrop-filter: blur(10px);
           cursor: pointer;
-          z-index: 10000;
+          zIndex: 10000;
           box-shadow: 0 18px 40px rgba(0,0,0,0.35);
           transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
         }
@@ -439,8 +579,35 @@ export default function UnifiedLightbox({ images, initialIndex, onClose }: Unifi
         }
         .prev-card { left: 48px; }
         .next-card { right: 48px; }
+
+        .lightbox-download-btn:hover {
+          border-color: #EBB14E !important;
+          background: rgba(28, 24, 21, 0.95) !important;
+          transform: translateY(-1px);
+        }
         
         @media screen and (max-width: 1024px) {
+          .lightbox-main-content {
+            width: 92vw !important;
+            margin-top: calc(max(12px, env(safe-area-inset-top, 12px)) + 52px) !important;
+            margin-bottom: calc(max(12px, env(safe-area-inset-bottom, 12px)) + 76px) !important;
+            max-height: calc(100vh - 160px) !important;
+            max-height: calc(100dvh - 160px) !important;
+          }
+          .lightbox-image-box {
+            height: calc(100vh - 160px) !important;
+            height: calc(100dvh - 160px) !important;
+            max-height: calc(100dvh - 160px) !important;
+            border-radius: 8px !important;
+          }
+          .lightbox-counter {
+            font-size: 13px !important;
+            font-weight: 600 !important;
+            padding: 4px 10px !important;
+            top: 8px !important;
+            right: 8px !important;
+            border-width: 1px !important;
+          }
           .lightbox-nav-card {
             width: 44px;
             height: 44px;
@@ -466,34 +633,28 @@ export default function UnifiedLightbox({ images, initialIndex, onClose }: Unifi
           .prev-card::after { transform: rotate(-135deg); margin-left: 4px; }
           .next-card { right: 16px; }
           .next-card::after { transform: rotate(45deg); margin-right: 4px; }
-          
-          .lightbox-header-container {
-            position: absolute;
-            top: auto;
-            bottom: 110px;
-            left: 10px;
-            right: 10px;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            text-align: center;
-            background: rgba(0,0,0,0.6);
-            padding: 12px;
-            border-radius: 8px;
-            pointer-events: none;
+          .thumbnail-container {
+            bottom: max(8px, env(safe-area-inset-bottom, 8px)) !important;
+            max-width: 95vw !important;
+            height: 56px !important;
           }
-          .lightbox-title-left {
-            max-width: 100%;
-            text-align: center;
-            -webkit-line-clamp: 2;
-            font-size: 18px;
-            text-shadow: none;
+          .thumbnail-btn {
+            flex-basis: 44px !important;
+            width: 44px !important;
+            height: 44px !important;
           }
-          .lightbox-location-right {
-            text-align: center;
-            font-size: 18px;
-            white-space: normal;
-            text-shadow: none;
+        }
+
+        @media screen and (max-width: 640px) {
+          .lightbox-download-label {
+            display: none !important;
+          }
+          .lightbox-download-btn {
+            width: 44px !important;
+            min-width: 44px !important;
+            height: 44px !important;
+            min-height: 44px !important;
+            padding: 0 !important;
           }
         }
       `}</style>

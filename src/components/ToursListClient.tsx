@@ -68,7 +68,7 @@ function TourCard({ tour, tLabels, categories }: { tour: Tour; tLabels: any, cat
     const [hovered, setHovered] = useState(false);
 
     return (
-        <Link href={`/tours/${tour.slug}`} style={{ textDecoration: 'none', display: 'block' }}>
+        <Link href={tour.destination === 'japan' ? `/japan/tours/${tour.slug}` : `/india/tours/${tour.slug}`} style={{ textDecoration: 'none', display: 'block' }}>
         <article 
             style={{
                 backgroundColor: '#FFFFFF',
@@ -109,7 +109,7 @@ function TourCard({ tour, tLabels, categories }: { tour: Tour; tLabels: any, cat
                                 fontSize: '18px', letterSpacing: '0.2em', color: 'rgba(212,154,54,0.4)',
                                 textTransform: 'uppercase'
                             }}>
-                                Srikan Tours
+                                Kanmani Tours
                             </span>
                         </div>
                     )}

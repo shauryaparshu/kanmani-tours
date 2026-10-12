@@ -4400,6 +4400,28 @@ button {
   display: none !important;
   height: 0 !important;
 }
+
+.nav-link-tour .nav-flag-reveal {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  opacity: 0;
+  transform: translateX(-5px);
+  transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.nav-link-tour:hover .nav-flag-reveal {
+  opacity: 1 !important;
+  transform: translateX(0) !important;
+}
+
+.nav-link-tour:hover {
+  color: #C9933A !important;
+  background-color: rgba(201, 147, 58, 0.08) !important;
+  border-color: rgba(201, 147, 58, 0.14) !important;
+}
+
 @media screen and (max-width: 1280px) {
   .nav-desktop {
     display: none !important;
@@ -4436,27 +4458,28 @@ button {
 }
 
 /* Responsive Desktop Navbar Adjustments */
-@media screen and (min-width: 1281px) and (max-width: 1440px) {
+@media screen and (min-width: 1281px) and (max-width: 1650px) {
   .nav-links-container {
-    gap: 6px !important;
+    gap: 8px !important;
     padding: 0 8px !important;
   }
   .nav-link-wrapper {
     gap: 8px !important;
   }
   .nav-link-item {
-    font-size: 13px !important;
-    padding: 6px 6px !important;
+    font-size: 13.5px !important;
+    padding: 6px 8px !important;
+    letter-spacing: 0.07em !important;
   }
 }
 
-@media screen and (min-width: 1281px) and (max-width: 1380px) {
+@media screen and (max-width: 1650px) {
   .nav-email-chip, .nav-divider-email {
     display: none !important;
   }
 }
 
-@media screen and (min-width: 1281px) and (max-width: 1320px) {
+@media screen and (max-width: 1400px) {
   .nav-phone-chip, .nav-divider-phone {
     display: none !important;
   }

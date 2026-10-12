@@ -5,6 +5,73 @@ export const TOURS_QUERY = defineQuery(`*[_type == "tour"] | order(startDate asc
   title,
   titleJa,
   "slug": slug.current,
+  destination,
+  bookingType,
+  category,
+  shortDescription,
+  shortDescriptionJa,
+  longDescription,
+  longDescriptionJa,
+  startDate,
+  endDate,
+  country->{title, title_ja, key},
+  location,
+  locationJa,
+  priceJPY,
+  priceRangeJPY,
+  seatsLeft,
+  dateDisplay,
+  dateDisplayJa,
+  coverImage {
+    ...,
+    asset-> {
+      _id,
+      url,
+      metadata { lqip }
+    }
+  },
+  galleryImages[] {
+    ...,
+    asset-> {
+      _id,
+      url,
+      metadata { lqip }
+    }
+  },
+  features,
+  highlightsJa,
+  itinerary[] {
+    ...,
+    titleJa,
+    detailsJa,
+    image {
+      asset-> {
+        _id,
+        url,
+        metadata { lqip }
+      },
+      hotspot,
+      crop
+    }
+  },
+  whatToExpect,
+  whatToExpectJa,
+  inclusions,
+  inclusionsJa,
+  exclusions,
+  exclusionsJa,
+  faq,
+  bookingLink,
+  bookingClosed
+}`)
+
+export const TOURS_BY_DESTINATION_QUERY = defineQuery(`*[_type == "tour" && (destination == $destination || ($destination == "india" && !defined(destination)))] | order(startDate asc) {
+  _id,
+  title,
+  titleJa,
+  "slug": slug.current,
+  destination,
+  bookingType,
   category,
   shortDescription,
   shortDescriptionJa,
@@ -68,6 +135,8 @@ export const TOUR_BY_SLUG_QUERY = defineQuery(`*[_type == "tour" && slug.current
   title,
   titleJa,
   "slug": slug.current,
+  destination,
+  bookingType,
   category,
   shortDescription,
   shortDescriptionJa,

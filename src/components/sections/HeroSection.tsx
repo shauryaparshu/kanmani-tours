@@ -117,7 +117,7 @@ export default function HeroSection({ heroImages, pollImages, initialCelebrities
         }}>
             <div className="hero-content" style={{ width: '100%', position: 'relative', overflowX: 'hidden', maxWidth: '100%', borderRadius: '0' }}>
                 {/* Slideshow */}
-                <HeroSlideshow images={heroImages} altPrefix="Srikan Tours">
+                <HeroSlideshow images={heroImages} altPrefix="Kanmani Tours">
                     <style dangerouslySetInnerHTML={{ __html: `
                         .hero-content {
                             height: 75vh !important;
@@ -185,7 +185,7 @@ export default function HeroSection({ heroImages, pollImages, initialCelebrities
                             }
                         }
                     `}} />
-                    <Link href="/tours" className="hero-cta-btn">
+                    <Link href="/india/tours" className="hero-cta-btn">
                         <svg className="cta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
                             <rect x="3" y="3" width="18" height="18" rx="2" />
                             <path d="M3 9h18M9 21V9" />
