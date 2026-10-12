@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { TOUR_GROUP } from '@/lib/tourGroup';
 
 export default function MemoriesLoginForm() {
     const [password, setPassword] = useState('');
@@ -26,8 +27,8 @@ export default function MemoriesLoginForm() {
             });
 
             if (res.ok) {
-                // Successful auth - navigate to /en/memories with cookie active
-                window.location.href = '/en/memories';
+                // Successful auth - navigate to branded gallery page with cookie active
+                window.location.href = `/en/${TOUR_GROUP.slug}`;
             } else {
                 const data = await res.json().catch(() => ({}));
                 setError(data.error || 'Incorrect password. Please try again.');
@@ -52,7 +53,7 @@ export default function MemoriesLoginForm() {
         }}>
             <div style={{
                 width: '100%',
-                maxWidth: '440px',
+                maxWidth: '460px',
                 backgroundColor: '#23201D',
                 borderRadius: '8px',
                 border: '1px solid rgba(201, 147, 58, 0.25)',
@@ -60,7 +61,7 @@ export default function MemoriesLoginForm() {
                 boxShadow: '0 20px 50px rgba(0, 0, 0, 0.4)',
                 textAlign: 'center',
             }}>
-                {/* Brand / Kicker */}
+                {/* Brand / Eyebrow */}
                 <span style={{
                     fontFamily: "'Jost', Arial, sans-serif",
                     fontSize: '11px',
@@ -71,20 +72,33 @@ export default function MemoriesLoginForm() {
                     display: 'block',
                     marginBottom: '16px',
                 }}>
-                    KANMANI TOURS
+                    Private Gallery
                 </span>
 
                 {/* Heading */}
                 <h1 style={{
                     fontFamily: "'Cormorant Garamond', Georgia, serif",
-                    fontSize: '32px',
+                    fontSize: 'clamp(26px, 3.5vw, 32px)',
                     fontWeight: '500',
                     color: '#F5F1EB',
-                    margin: '0 0 12px',
-                    lineHeight: '1.2',
+                    margin: '0 0 10px',
+                    lineHeight: '1.25',
                 }}>
-                    Tour Memories
+                    {TOUR_GROUP.schoolName}
                 </h1>
+
+                {/* Subtitle */}
+                <p style={{
+                    fontFamily: "'Jost', Arial, sans-serif",
+                    fontSize: '13px',
+                    fontWeight: '500',
+                    letterSpacing: '0.1em',
+                    textTransform: 'uppercase',
+                    color: '#C9933A',
+                    margin: '0 0 16px',
+                }}>
+                    {TOUR_GROUP.tourName} · {TOUR_GROUP.dateLabel}
+                </p>
 
                 {/* Accent rule */}
                 <div style={{
@@ -94,7 +108,7 @@ export default function MemoriesLoginForm() {
                     margin: '0 auto 20px',
                 }} />
 
-                {/* Subtitle */}
+                {/* Helper text */}
                 <p style={{
                     fontFamily: "'Jost', Arial, sans-serif",
                     fontSize: '14px',
@@ -103,7 +117,7 @@ export default function MemoriesLoginForm() {
                     lineHeight: '1.6',
                     margin: '0 0 32px',
                 }}>
-                    Please enter the private tour password provided by your tour leader to access your journey photographs.
+                    Enter the password shared with parents and the school team.
                 </p>
 
                 {/* Form */}

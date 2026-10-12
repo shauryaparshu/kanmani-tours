@@ -2,11 +2,12 @@ import type { Metadata } from 'next';
 import { cookies } from 'next/headers';
 import { redirect, notFound } from 'next/navigation';
 import FooterSection from '@/components/layout/FooterSection';
+import { TOUR_GROUP } from '@/lib/tourGroup';
 import DriveGallery from './DriveGallery';
 
 export const metadata: Metadata = {
-    title: 'Tour Memories — Kanmani Tours',
-    description: 'Private guest photo gallery archive.',
+    title: `Japan Tour ${TOUR_GROUP.dateLabel} | ${TOUR_GROUP.schoolName}`,
+    description: `Private guest photo gallery archive for ${TOUR_GROUP.schoolName}.`,
     robots: {
         index: false,
         follow: false,
@@ -27,7 +28,7 @@ export default async function MemoriesPage({ params }: { params: Promise<{ local
     const expectedToken = process.env.MEMORIES_SESSION_TOKEN;
 
     if (!expectedToken || !token || token !== expectedToken) {
-        redirect('/en/memories-login');
+        redirect(`/en/${TOUR_GROUP.slug}/login`);
     }
 
     const driveFolderId = process.env.MEMORIES_DRIVE_FOLDER_ID?.trim();
@@ -64,18 +65,29 @@ export default async function MemoriesPage({ params }: { params: Promise<{ local
                                         display: 'block',
                                         marginBottom: '12px',
                                     }}>
-                                        PRIVATE ACCESS • TOUR ARCHIVE
+                                        {TOUR_GROUP.schoolName}
                                     </span>
                                     <h1 style={{
                                         fontFamily: "'Cormorant Garamond', Georgia, serif",
                                         fontSize: 'clamp(32px, 4.5vw, 48px)',
                                         fontWeight: '500',
                                         color: '#F5F1EB',
-                                        margin: '0 0 12px',
+                                        margin: '0 0 10px',
                                         lineHeight: '1.2',
                                     }}>
-                                        Tour Memories
+                                        Japan Tour Memories
                                     </h1>
+                                    <p style={{
+                                        fontFamily: "'Jost', Arial, sans-serif",
+                                        fontSize: '13px',
+                                        fontWeight: '500',
+                                        letterSpacing: '0.12em',
+                                        textTransform: 'uppercase',
+                                        color: '#C9933A',
+                                        margin: '0 0 14px',
+                                    }}>
+                                        {TOUR_GROUP.tourName} · {TOUR_GROUP.dateLabel}
+                                    </p>
                                     <div style={{
                                         width: '48px',
                                         height: '1px',
@@ -156,6 +168,25 @@ export default async function MemoriesPage({ params }: { params: Promise<{ local
                                 />
                             </section>
                         )}
+
+                        {/* Property & Rights Notice */}
+                        <div style={{
+                            maxWidth: '1400px',
+                            margin: '0 auto',
+                            padding: '16px 24px 48px',
+                            borderTop: '1px solid rgba(201, 147, 58, 0.15)',
+                            textAlign: 'center',
+                        }}>
+                            <p style={{
+                                fontFamily: "'Jost', Arial, sans-serif",
+                                fontSize: '12px',
+                                color: '#9A948F',
+                                lineHeight: '1.6',
+                                margin: 0,
+                            }}>
+                                Photos and videos are the property of kanmanitours.com (Infirise Private Limited), shared only with parents and the school team of {TOUR_GROUP.schoolName}.
+                            </p>
+                        </div>
                     </div>
                 ) : (
                     /* Empty / Preparation State (no iframe rendered) */
@@ -184,18 +215,29 @@ export default async function MemoriesPage({ params }: { params: Promise<{ local
                                 display: 'block',
                                 marginBottom: '16px',
                             }}>
-                                KANMANI TOURS
+                                {TOUR_GROUP.schoolName}
                             </span>
                             <h1 style={{
                                 fontFamily: "'Cormorant Garamond', Georgia, serif",
                                 fontSize: 'clamp(32px, 5vw, 42px)',
                                 fontWeight: '500',
                                 color: '#F5F1EB',
-                                margin: '0 0 16px',
+                                margin: '0 0 10px',
                                 lineHeight: '1.2',
                             }}>
-                                Tour Memories
+                                Japan Tour Memories
                             </h1>
+                            <p style={{
+                                fontFamily: "'Jost', Arial, sans-serif",
+                                fontSize: '13px',
+                                fontWeight: '500',
+                                letterSpacing: '0.12em',
+                                textTransform: 'uppercase',
+                                color: '#C9933A',
+                                margin: '0 0 16px',
+                            }}>
+                                {TOUR_GROUP.tourName} · {TOUR_GROUP.dateLabel}
+                            </p>
                             <div style={{
                                 width: '40px',
                                 height: '1px',

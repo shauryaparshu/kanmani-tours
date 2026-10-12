@@ -1,10 +1,11 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import { TOUR_GROUP } from '@/lib/tourGroup';
 import MemoriesLoginForm from './MemoriesLoginForm';
 
 export const metadata: Metadata = {
-    title: 'Tour Memories Login — Kanmani Tours',
-    description: 'Private guest photo gallery access.',
+    title: `Japan Tour ${TOUR_GROUP.dateLabel} | ${TOUR_GROUP.schoolName}`,
+    description: `Private guest photo gallery access for ${TOUR_GROUP.schoolName}.`,
     robots: {
         index: false,
         follow: false,
