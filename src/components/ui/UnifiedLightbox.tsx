@@ -10,6 +10,8 @@ export interface LightboxImage {
   lqip?: string;
   caption?: string;
   subCaption?: string;
+  downloadUrl?: string;
+  downloadName?: string;
 }
 
 interface UnifiedLightboxProps {
@@ -132,10 +134,68 @@ export default function UnifiedLightbox({ images, initialIndex, onClose }: Unifi
         </div>
       )}
 
+      {/* Download button for current photo (if downloadUrl is provided) */}
+      {currentImage.downloadUrl && (
+        <a
+          id="lightbox-download-button"
+          href={currentImage.downloadUrl}
+          download={currentImage.downloadName || true}
+          rel="noopener"
+          aria-label="Download photo"
+          onClick={(e) => e.stopPropagation()}
+          className="lightbox-download-btn"
+          style={{
+            position: 'absolute',
+            top: '24px',
+            right: '80px',
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '8px',
+            minWidth: '44px',
+            height: '44px',
+            padding: '0 14px',
+            backgroundColor: 'rgba(10, 8, 7, 0.75)',
+            border: '1px solid rgba(201, 147, 58, 0.4)',
+            color: '#C9933A',
+            textDecoration: 'none',
+            fontFamily: "'Jost', Arial, sans-serif",
+            fontSize: '12px',
+            fontWeight: '600',
+            letterSpacing: '0.12em',
+            textTransform: 'uppercase',
+            cursor: 'pointer',
+            zIndex: 10000,
+            transition: 'all 0.25s ease',
+            backdropFilter: 'blur(8px)',
+            WebkitBackdropFilter: 'blur(8px)',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.5)',
+          }}
+        >
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#C9933A"
+            strokeWidth="2.2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            style={{ flexShrink: 0 }}
+          >
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+            <polyline points="7 10 12 15 17 10" />
+            <line x1="12" y1="15" x2="12" y2="3" />
+          </svg>
+          <span className="lightbox-download-label">Download</span>
+        </a>
+      )}
+
       {/* Close button */}
       <button
         onClick={onClose}
         className="lightbox-close-btn"
+        aria-label="Close lightbox"
         style={{
           position: 'absolute',
           top: '24px',
@@ -494,6 +554,24 @@ export default function UnifiedLightbox({ images, initialIndex, onClose }: Unifi
             font-size: 18px;
             white-space: normal;
             text-shadow: none;
+          }
+        }
+
+        .lightbox-download-btn:hover {
+          border-color: #EBB14E !important;
+          background: rgba(28, 24, 21, 0.95) !important;
+          transform: translateY(-1px);
+        }
+
+        @media screen and (max-width: 640px) {
+          .lightbox-download-label {
+            display: none !important;
+          }
+          .lightbox-download-btn {
+            width: 44px !important;
+            min-width: 44px !important;
+            padding: 0 !important;
+            right: 76px !important;
           }
         }
       `}</style>

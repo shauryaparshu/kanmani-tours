@@ -572,6 +572,8 @@ export default function DriveGallery({ rootFolderId }: DriveGalleryProps) {
                         thumbnailUrl: img.thumb,
                         caption: img.name,
                         subCaption: currentFolder ? currentFolder.name : undefined,
+                        downloadUrl: img.download,
+                        downloadName: img.name,
                     }))}
                     initialIndex={lightboxIndex}
                     onClose={() => setLightboxIndex(null)}
