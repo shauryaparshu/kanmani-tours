@@ -48,7 +48,7 @@ export default function MemoriesLoginForm() {
             flexDirection: 'column',
             justifyContent: 'center',
             alignItems: 'center',
-            padding: '40px 24px',
+            padding: '32px 16px',
             color: '#F5F1EB',
         }}>
             <div style={{
@@ -57,7 +57,7 @@ export default function MemoriesLoginForm() {
                 backgroundColor: '#23201D',
                 borderRadius: '8px',
                 border: '1px solid rgba(201, 147, 58, 0.25)',
-                padding: '48px 40px',
+                padding: 'clamp(32px, 6vw, 48px) clamp(20px, 5vw, 40px)',
                 boxShadow: '0 20px 50px rgba(0, 0, 0, 0.4)',
                 textAlign: 'center',
             }}>
@@ -152,9 +152,10 @@ export default function MemoriesLoginForm() {
                             style={{
                                 width: '100%',
                                 boxSizing: 'border-box',
+                                minHeight: '48px',
                                 padding: '14px 16px',
                                 fontFamily: "'Jost', Arial, sans-serif",
-                                fontSize: '15px',
+                                fontSize: '16px',
                                 backgroundColor: 'rgba(255, 255, 255, 0.04)',
                                 border: '1px solid rgba(201, 147, 58, 0.3)',
                                 borderRadius: '4px',
@@ -181,7 +182,7 @@ export default function MemoriesLoginForm() {
                             marginBottom: '20px',
                             color: '#FF8A80',
                             fontFamily: "'Jost', Arial, sans-serif",
-                            fontSize: '13px',
+                            fontSize: '14px',
                             lineHeight: '1.4',
                         }}>
                             {error}
@@ -194,6 +195,7 @@ export default function MemoriesLoginForm() {
                         disabled={loading}
                         style={{
                             width: '100%',
+                            minHeight: '48px',
                             backgroundColor: loading ? '#8A6D3B' : '#C9933A',
                             color: '#1C1917',
                             padding: '16px 24px',
@@ -217,9 +219,16 @@ export default function MemoriesLoginForm() {
                 <div style={{ marginTop: '28px' }}>
                     <Link
                         href="/"
+                        id="login-return-link"
                         style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            minHeight: '44px',
+                            minWidth: '44px',
+                            padding: '12px 18px',
                             fontFamily: "'Jost', Arial, sans-serif",
-                            fontSize: '12px',
+                            fontSize: '13px',
                             color: '#9A948F',
                             textDecoration: 'none',
                             letterSpacing: '0.08em',

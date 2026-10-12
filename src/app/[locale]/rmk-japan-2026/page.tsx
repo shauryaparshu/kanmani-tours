@@ -114,7 +114,9 @@ export default async function MemoriesPage({ params }: { params: Promise<{ local
                                         style={{
                                             display: 'inline-flex',
                                             alignItems: 'center',
+                                            justifyContent: 'center',
                                             gap: '8px',
+                                            minHeight: '44px',
                                             backgroundColor: '#C9933A',
                                             color: '#1C1917',
                                             padding: '12px 24px',
@@ -179,7 +181,7 @@ export default async function MemoriesPage({ params }: { params: Promise<{ local
                         }}>
                             <p style={{
                                 fontFamily: "'Jost', Arial, sans-serif",
-                                fontSize: '12px',
+                                fontSize: '14px',
                                 color: '#9A948F',
                                 lineHeight: '1.6',
                                 margin: 0,

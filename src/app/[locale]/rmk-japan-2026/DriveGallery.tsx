@@ -153,7 +153,7 @@ export default function DriveGallery({ rootFolderId }: DriveGalleryProps) {
                 paddingBottom: '16px',
                 borderBottom: '1px solid rgba(201, 147, 58, 0.15)',
             }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap', flex: '1 1 auto', minWidth: 0 }}>
                     {currentFolder && (
                         <button
                             id="gallery-back-button"
@@ -162,8 +162,11 @@ export default function DriveGallery({ rootFolderId }: DriveGalleryProps) {
                             style={{
                                 display: 'inline-flex',
                                 alignItems: 'center',
+                                justifyContent: 'center',
                                 gap: '6px',
-                                padding: '8px 14px',
+                                minHeight: '44px',
+                                minWidth: '44px',
+                                padding: '8px 16px',
                                 backgroundColor: '#23201D',
                                 border: '1px solid rgba(201, 147, 58, 0.3)',
                                 borderRadius: '4px',
@@ -190,6 +193,7 @@ export default function DriveGallery({ rootFolderId }: DriveGalleryProps) {
                         gap: '8px',
                         fontFamily: "'Jost', Arial, sans-serif",
                         fontSize: '13px',
+                        minHeight: '44px',
                     }}>
                         <button
                             id="gallery-breadcrumb-root"
@@ -198,7 +202,10 @@ export default function DriveGallery({ rootFolderId }: DriveGalleryProps) {
                             style={{
                                 background: 'none',
                                 border: 'none',
-                                padding: 0,
+                                padding: '8px 4px',
+                                minHeight: '44px',
+                                display: 'inline-flex',
+                                alignItems: 'center',
                                 color: currentFolder ? '#C9933A' : '#F5F1EB',
                                 cursor: currentFolder ? 'pointer' : 'default',
                                 textDecoration: currentFolder ? 'underline' : 'none',
@@ -212,7 +219,7 @@ export default function DriveGallery({ rootFolderId }: DriveGalleryProps) {
                         {currentFolder && (
                             <>
                                 <span style={{ color: '#9A948F' }}>/</span>
-                                <span id="gallery-breadcrumb-current" style={{ color: '#F5F1EB', fontWeight: '600' }}>
+                                <span id="gallery-breadcrumb-current" style={{ color: '#F5F1EB', fontWeight: '600', display: 'inline-flex', alignItems: 'center', minHeight: '44px' }}>
                                     {currentFolder.name}
                                 </span>
                             </>
@@ -222,15 +229,19 @@ export default function DriveGallery({ rootFolderId }: DriveGalleryProps) {
 
                 {/* In-folder "Download this day" Action */}
                 {currentFolder && (
-                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '4px' }}>
+                    <div className="gallery-download-day-container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '4px' }}>
                         <a
                             href={`https://drive.google.com/drive/folders/${currentFolder.id}`}
                             target="_blank"
                             rel="noopener noreferrer"
+                            className="gallery-download-day-btn"
                             style={{
                                 display: 'inline-flex',
                                 alignItems: 'center',
+                                justifyContent: 'center',
                                 gap: '8px',
+                                minHeight: '44px',
+                                minWidth: '44px',
                                 backgroundColor: '#C9933A',
                                 color: '#1C1917',
                                 padding: '10px 18px',
@@ -252,12 +263,15 @@ export default function DriveGallery({ rootFolderId }: DriveGalleryProps) {
                             </svg>
                             <span>Download this day</span>
                         </a>
-                        <span style={{
-                            fontFamily: "'Jost', Arial, sans-serif",
-                            fontSize: '11px',
-                            color: '#9A948F',
-                            fontStyle: 'italic',
-                        }}>
+                        <span 
+                            className="gallery-download-day-note"
+                            style={{
+                                fontFamily: "'Jost', Arial, sans-serif",
+                                fontSize: '12px',
+                                color: '#9A948F',
+                                fontStyle: 'italic',
+                            }}
+                        >
                             Google will prepare a zip of the whole folder.
                         </span>
                     </div>
@@ -464,8 +478,10 @@ export default function DriveGallery({ rootFolderId }: DriveGalleryProps) {
                                                 top: '8px',
                                                 right: '8px',
                                                 zIndex: 4,
-                                                width: '32px',
-                                                height: '32px',
+                                                width: '44px',
+                                                height: '44px',
+                                                minWidth: '44px',
+                                                minHeight: '44px',
                                                 borderRadius: '4px',
                                                 backgroundColor: 'rgba(28, 25, 23, 0.85)',
                                                 border: '1px solid rgba(201, 147, 58, 0.4)',
@@ -566,15 +582,21 @@ export default function DriveGallery({ rootFolderId }: DriveGalleryProps) {
             {/* Fullscreen Photo Lightbox */}
             {lightboxIndex !== null && imageFiles.length > 0 && (
                 <UnifiedLightbox
-                    images={imageFiles.map((img) => ({
-                        id: img.id,
-                        url: img.large,
-                        thumbnailUrl: img.thumb,
-                        caption: img.name,
-                        subCaption: currentFolder ? currentFolder.name : undefined,
-                        downloadUrl: img.download,
-                        downloadName: img.name,
-                    }))}
+                    images={imageFiles.map((img) => {
+                        const folderCaption = currentFolder ? currentFolder.name : img.name;
+                        const prevSubCaption = currentFolder ? currentFolder.name : undefined;
+                        const subCaption = prevSubCaption === folderCaption ? undefined : prevSubCaption;
+
+                        return {
+                            id: img.id,
+                            url: img.large,
+                            thumbnailUrl: img.thumb,
+                            caption: folderCaption,
+                            subCaption,
+                            downloadUrl: img.download,
+                            downloadName: img.name,
+                        };
+                    })}
                     initialIndex={lightboxIndex}
                     onClose={() => setLightboxIndex(null)}
                 />
@@ -652,6 +674,22 @@ export default function DriveGallery({ rootFolderId }: DriveGalleryProps) {
 
                 .drive-media-tile:hover img {
                     transform: scale(1.04);
+                }
+
+                @media (max-width: 640px) {
+                    .gallery-download-day-container {
+                        width: 100% !important;
+                        align-items: stretch !important;
+                        margin-top: 10px !important;
+                    }
+                    .gallery-download-day-btn {
+                        width: 100% !important;
+                        justify-content: center !important;
+                    }
+                    .gallery-download-day-note {
+                        text-align: center !important;
+                        font-size: 12px !important;
+                    }
                 }
             `}</style>
         </div>
