@@ -1,0 +1,91 @@
+.section {
+  background: var(--color-paper-deep);
+  color: var(--color-ink);
+}
+
+.inner {
+  max-width: 52rem;
+  margin-inline: auto;
+  padding-block: var(--section-pad);
+  padding-left: max(var(--gutter), env(safe-area-inset-left, 0px));
+  padding-right: max(var(--gutter), env(safe-area-inset-right, 0px));
+  display: grid;
+  justify-items: center;
+  gap: var(--space-2);
+  text-align: center;
+}
+
+.title {
+  margin: 0;
+  font: var(--weight-light) var(--text-heading) / var(--leading-heading) var(--font-display);
+  letter-spacing: var(--tracking-display);
+}
+.lead {
+  margin: 0 0 var(--space-4);
+  font: var(--weight-regular) var(--text-body) / var(--leading-body) var(--font-body);
+  color: var(--color-ink-muted);
+}
+
+.quote {
+  margin: 0;
+  display: grid;
+  gap: var(--space-3);
+}
+
+/* One large vermilion opening mark, drawn from the display face. */
+.text {
+  position: relative;
+  margin: 0;
+  padding-top: var(--space-5);
+}
+.text::before {
+  content: "\201C";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  font: var(--weight-regular) var(--text-display) / 1 var(--font-display);
+  color: var(--color-accent);
+}
+.text p {
+  margin: 0;
+  font: var(--weight-light) var(--text-lead) / var(--leading-lead) var(--font-display);
+  color: var(--color-ink);
+  text-wrap: pretty;
+}
+
+.caption { display: grid; gap: var(--space-half); }
+.name {
+  font: var(--weight-regular) var(--text-lead) / var(--leading-title) var(--font-display);
+  color: var(--color-accent);
+}
+.tour {
+  font: var(--weight-medium) var(--text-label) / var(--leading-label) var(--font-body);
+  letter-spacing: 0.08em;
+  color: var(--color-ink-muted);
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+.button {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--color-ink);
+  cursor: pointer;
+}
+.button:hover { --arrow-fill: var(--color-accent); color: var(--color-on-ink); }
+.counter {
+  min-width: 3.5em;
+  font: var(--weight-medium) var(--text-label) / 1 var(--font-body);
+  letter-spacing: 0.1em;
+  color: var(--color-ink-muted);
+}

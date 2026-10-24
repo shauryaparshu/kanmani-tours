@@ -1,0 +1,106 @@
+.section {
+  background: var(--color-paper);
+  color: var(--color-ink);
+}
+
+.inner {
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-block: var(--section-pad);
+  padding-left: max(var(--gutter), env(safe-area-inset-left, 0px));
+  padding-right: max(var(--gutter), env(safe-area-inset-right, 0px));
+  display: grid;
+  gap: var(--space-6);
+}
+
+/* Tall portrait with a landscape photo overlapping its lower edge. */
+.photos {
+  position: relative;
+  padding-bottom: var(--space-7);
+}
+.portrait {
+  position: relative;
+  width: 72%;
+  aspect-ratio: 4 / 5;
+  background: var(--color-paper-deep);
+}
+.landscape {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 58%;
+  aspect-ratio: 3 / 2;
+  background: var(--color-paper-deep);
+  outline: var(--space-1) solid var(--color-paper);
+}
+.image { object-fit: cover; }
+.portrait .image { object-position: center 15%; }
+
+.text {
+  display: grid;
+  align-content: start;
+  gap: var(--space-3);
+  max-width: var(--measure);
+}
+
+.title {
+  margin: 0 0 var(--space-1);
+  font: var(--weight-light) var(--text-heading) / var(--leading-heading) var(--font-display);
+  letter-spacing: var(--tracking-display);
+  text-wrap: balance;
+}
+
+.body {
+  margin: 0;
+  font: var(--weight-regular) var(--text-body) / var(--leading-body) var(--font-body);
+  color: var(--color-ink-muted);
+}
+
+/* Dr. Kanmani's own words, set like a programme's epigraph. */
+.quote {
+  margin: var(--space-3) 0 0;
+  padding-top: var(--space-3);
+  border-top: var(--rule);
+  display: grid;
+  gap: var(--space-2);
+}
+.quote blockquote { margin: 0; }
+.quote blockquote p {
+  margin: 0;
+  font: italic var(--weight-light) var(--text-lead) / var(--leading-lead) var(--font-display);
+  color: var(--color-ink);
+}
+:lang(ja) .quote blockquote p { font-style: normal; }
+.quote figcaption { display: grid; gap: var(--space-half); }
+.name {
+  font: var(--weight-regular) var(--text-lead) / var(--leading-title) var(--font-display);
+}
+.roles {
+  font: var(--weight-medium) var(--text-label) / var(--leading-label) var(--font-body);
+  letter-spacing: 0.08em;
+  color: var(--color-accent);
+}
+
+.link {
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-top: var(--space-1);
+  font: var(--weight-medium) var(--text-label) / 1 var(--font-body);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-accent);
+  text-decoration: underline;
+}
+.link:hover { color: var(--color-accent-deep); }
+:lang(ja) .link { letter-spacing: 0.06em; }
+
+@media (min-width: 1024px) {
+  .inner {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    gap: var(--space-7);
+    align-items: center;
+  }
+  .text { padding-top: 0; }
+}

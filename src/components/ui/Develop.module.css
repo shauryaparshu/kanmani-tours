@@ -1,0 +1,13 @@
+.develop {
+  filter: saturate(0.55) brightness(0.94);
+  transition: filter var(--dur-reveal) var(--ease-out);
+}
+
+.develop[data-developed="true"] {
+  filter: none;
+}
+
+/* Without JavaScript the photo simply shows in full colour. */
+@media (scripting: none) {
+  .develop { filter: none; }
+}

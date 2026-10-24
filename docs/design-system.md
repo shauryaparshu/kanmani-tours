@@ -30,7 +30,11 @@ The site is set like the printed programme Japanese filmgoers buy at the cinema,
 | `--color-highlight` | `#C99A2E` | Turmeric: on ink only | 6.6 : 1 on ink; **2.3 : 1 on paper, never use there** |
 | `--color-error` | `#8E2A20` | Form errors, always with text | 7.5 : 1 on paper |
 | `--color-success` | `#2E6142` | Form success, always with text | 6.4 : 1 on paper |
-| `--scrim-photo` | gradient | Under any text set on a photo | paper text 8.3 : 1 or better |
+| `--scrim-photo` | gradient | Under any text set on a photo (tour cards) | paper text 8.3 : 1 or better |
+| `--scrim-hero` | gradient | Under the homepage headline and destination tiles | paper text 5.1 : 1 even over white sky |
+| `--scrim-nav` | gradient | Under the transparent nav on the homepage hero | paper text 5.1 : 1 over white sky |
+| `--scrim-side` | gradient | Copy set at the left of a busy photo | adds to `--scrim-hero` |
+| `--scrim-top` | gradient | Labels at the top of a photo (card location) | |
 
 Rules:
 - **Restraint.** Vermilion marks what you can act on (buttons, links, the active filter, focus) and the credits labels. Headings are ink, not vermilion.

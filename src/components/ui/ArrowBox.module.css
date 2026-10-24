@@ -1,0 +1,21 @@
+.arrow {
+  display: inline-grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--arrow-fill, currentColor);
+  background: var(--arrow-fill, transparent);
+  transition: background-color var(--dur-hover) var(--ease-out), border-color var(--dur-hover) var(--ease-out);
+}
+.arrow::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-top: 1px solid currentColor;
+  border-right: 1px solid currentColor;
+  transform: translateX(-1px) rotate(45deg);
+}
+.arrow[data-direction="left"]::before {
+  transform: translateX(1px) rotate(-135deg);
+}

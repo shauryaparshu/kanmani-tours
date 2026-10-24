@@ -67,7 +67,38 @@
         "otherUpcomingTours": "Other Upcoming Tours",
         "from": "From",
         "perPerson": "/ person",
-        "bookingClosed": "Booking Closed"
+        "bookingClosed": "Booking Closed",
+        "heroAlt": "Guests on a past Kanmani tour",
+        "heroLine": "Journeys between India and Japan, arranged personally by Dr. Kanmani.",
+        "heroPaths": "Destinations",
+        "pauseSlides": "Pause slideshow",
+        "playSlides": "Play slideshow",
+        "storyTitle": "Built on two decades of trust",
+        "storyP1": "Kanmani Tours was born from a unique position — a deep understanding of both Japanese and Indian culture, built over more than two decades of living between two worlds.",
+        "storyP2": "Our tours are small, personal, and meticulously crafted. We do not run large group buses. We create intimate experiences that leave lasting impressions.",
+        "storyQuote": "Born in India, shaped by 28 years in Japan, and inspired by both — I walk forward as a bridge between the two cultures that live within me.",
+        "founderName": "Dr. Kanmani",
+        "founderRoles": "PhD scholar · Entrepreneur · Motivational speaker · Humanitarian",
+        "aboutLink": "About Dr. Kanmani",
+        "storyPortraitAlt": "Dr. Kanmani",
+        "storyPhotoAlt": "Cultural exchange on a Kanmani tour",
+        "journeysTitle": "Upcoming and recent journeys",
+        "previous": "Previous",
+        "next": "Next",
+        "whyTitle": "What makes us different",
+        "testimonialCount": "Testimonial {current} of {total}",
+        "why1Title": "Journeys in both directions",
+        "why1Body": "We operate curated tours in both directions, welcoming travellers from Japan to discover India and guiding journeys from India to explore Japan. Our bilingual team, deep cross-cultural fluency, and uncompromising standards of care ensure extraordinary experiences in either direction.",
+        "why2Title": "Small groups only",
+        "why2Body": "We cap every tour at 12 guests maximum. This means personalised attention, flexibility in the schedule, and a more authentic experience. You travel as a guest, not a number.",
+        "why3Title": "Real connections",
+        "why3Body": "We do not just show you India — we connect you with it. Private temple access, family home visits, cooking with local chefs, and meeting artists in their studios. Real India, not tourist India.",
+        "why4Title": "End-to-end care",
+        "why4Body": "From the moment you land in India to the moment you depart, we handle everything. Transfers, accommodation, meals, activities, and 24/7 emergency support throughout your journey.",
+        "why5Title": "Two decades of trust",
+        "why5Body": "Kanmani Tours was not built overnight. Our reputation has been earned through more than 25 years of consistently delivering extraordinary experiences for Japanese travellers.",
+        "why6Title": "Cultural bridge",
+        "why6Body": "Our founder's unique position — Indian born, Japan educated — means we truly understand both cultures. We bridge the gap in a way no other tour company can."
     },
     "Buttons": {
         "learnMore": "Learn More →",
@@ -210,5 +241,10 @@
     "TopBar": {
         "phone": "+91 95977-16664",
         "email": "kanmanitours@gmail.com"
+    },
+    "TourCard": {
+        "past": "Past tour",
+        "upcoming": "Upcoming",
+        "seatsLeft": "{count} seats left"
     }
 }

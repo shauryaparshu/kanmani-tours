@@ -1,0 +1,82 @@
+.card { min-width: 0; }
+
+.link {
+  display: grid;
+  gap: var(--space-2);
+  color: inherit;
+  text-decoration: none;
+}
+
+.photo {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background: var(--color-paper-deep);
+}
+/* Scrims keep the location and title readable on any photo. */
+.photo::before,
+.photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+.photo::before { background: var(--scrim-top); }
+.photo::after { background: var(--scrim-photo); }
+
+.image {
+  object-fit: cover;
+  transition: transform var(--dur-reveal) var(--ease-out);
+}
+.link:hover .image { transform: scale(1.03); }
+
+.place {
+  position: absolute;
+  top: var(--space-2);
+  left: var(--space-2);
+  right: var(--space-2);
+  z-index: 2;
+  overflow: hidden;
+  font: var(--weight-medium) var(--text-label) / var(--leading-label) var(--font-body);
+  letter-spacing: 0.08em;
+  color: var(--color-on-ink);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.title {
+  position: absolute;
+  left: var(--space-3);
+  right: var(--space-3);
+  bottom: var(--space-3);
+  z-index: 2;
+  margin: 0;
+  font: var(--weight-light) var(--text-title) / var(--leading-title) var(--font-display);
+  letter-spacing: var(--tracking-display);
+  color: var(--color-on-ink);
+  text-wrap: balance;
+}
+:lang(ja) .title { word-break: auto-phrase; }
+
+/* The credits line: dates · dotted leader · status */
+.credits {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-1);
+  margin: 0;
+  font: var(--weight-medium) var(--text-label) / var(--leading-label) var(--font-body);
+  letter-spacing: 0.04em;
+  color: var(--color-ink);
+}
+.leader {
+  flex: 1;
+  min-width: var(--space-2);
+  border-bottom: 1px dotted var(--color-line-strong);
+  transform: translateY(-0.25em);
+}
+.status { color: var(--color-ink-muted); }
+.statusUpcoming { color: var(--color-accent); }
+
+.link:hover .credits .statusUpcoming,
+.link:hover .credits .status { text-decoration: underline; text-underline-offset: 0.22em; }

@@ -23,6 +23,10 @@
   --color-error: #8E2A20;
   --color-success: #2E6142;
   --scrim-photo: linear-gradient(to top, rgb(20 16 11 / 0.72) 0%, rgb(20 16 11 / 0.35) 45%, rgb(20 16 11 / 0) 75%);
+  --scrim-hero: linear-gradient(to top, rgb(20 16 11 / 0.84) 0%, rgb(20 16 11 / 0.62) 38%, rgb(20 16 11 / 0.18) 68%, rgb(20 16 11 / 0) 82%);  /* homepage hero headline */
+  --scrim-nav: linear-gradient(to bottom, rgb(20 16 11 / 0.62) 0%, rgb(20 16 11 / 0) 26%);  /* under the transparent nav, 5:1 on white sky */
+  --scrim-side: linear-gradient(to right, rgb(20 16 11 / 0.55) 0%, rgb(20 16 11 / 0.2) 45%, rgb(20 16 11 / 0) 70%);  /* copy set at the left of a busy photo */
+  --scrim-top: linear-gradient(to bottom, rgb(20 16 11 / 0.5) 0%, rgb(20 16 11 / 0) 28%);  /* under text at the top of a photo */
 
   /* ── Type ────────────────────────────────────────────────────────── */
   /* Latin face first; Japanese glyphs fall through to the JP face. */
