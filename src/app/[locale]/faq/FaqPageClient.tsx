@@ -58,7 +58,7 @@ function AccordionItem({ question, answer }: { question: string; answer: string 
         }}
       >
         <span style={{
-          fontFamily: "'Jost', Arial, sans-serif",
+          fontFamily: "var(--font-jost), Arial, sans-serif",
           fontSize: '1.1rem',
           fontWeight: '500',
           color: '#1a1918',
@@ -77,7 +77,7 @@ function AccordionItem({ question, answer }: { question: string; answer: string 
           padding: '0 2rem 1.5rem 2rem',
         }}>
           <p style={{
-            fontFamily: "'Jost', Arial, sans-serif",
+            fontFamily: "var(--font-jost), Arial, sans-serif",
             fontSize: '16px',
             fontWeight: '400',
             color: '#4a4a4a',
@@ -141,7 +141,7 @@ export default function FaqPageClient({ faqs }: { faqs: FaqItem[] }) {
         <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 60px' }}>
           <div style={{ maxWidth: '900px' }}>
             <p style={{
-              fontFamily: "'Jost', Arial, sans-serif",
+              fontFamily: "var(--font-jost), Arial, sans-serif",
               fontSize: '11px',
               fontWeight: '500',
               letterSpacing: '0.32em',
@@ -152,7 +152,7 @@ export default function FaqPageClient({ faqs }: { faqs: FaqItem[] }) {
               HELP & INFORMATION
             </p>
             <h1 style={{
-              fontFamily: "'Cormorant Garamond', Georgia, serif",
+              fontFamily: "var(--font-cormorant), Georgia, serif",
               fontSize: 'clamp(36px, 5vw, 64px)',
               fontWeight: '500',
               color: '#F5F1EB',
@@ -170,7 +170,7 @@ export default function FaqPageClient({ faqs }: { faqs: FaqItem[] }) {
               marginBottom: '20px'
             }}/>
             <p style={{
-              fontFamily: "'Jost', Arial, sans-serif",
+              fontFamily: "var(--font-jost), Arial, sans-serif",
               fontSize: '16px',
               fontWeight: '300',
               color: '#faf9f6',
@@ -214,7 +214,7 @@ export default function FaqPageClient({ faqs }: { faqs: FaqItem[] }) {
             }}
           >
             <p style={{
-              fontFamily: "'Jost', Arial, sans-serif",
+              fontFamily: "var(--font-jost), Arial, sans-serif",
               fontSize: '12px',
               fontWeight: '600',
               letterSpacing: '0.28em',
@@ -259,7 +259,7 @@ export default function FaqPageClient({ faqs }: { faqs: FaqItem[] }) {
                       }}
                     >
                       <span style={{
-                        fontFamily: "'Jost', Arial, sans-serif",
+                        fontFamily: "var(--font-jost), Arial, sans-serif",
                         fontSize: '19px',
                         fontWeight: isActive || hoveredCategory === value ? '500' : '400',
                         color: isActive
@@ -281,7 +281,7 @@ export default function FaqPageClient({ faqs }: { faqs: FaqItem[] }) {
                       </span>
                       {count > 0 && (
                         <span style={{
-                          fontFamily: "'Jost', Arial, sans-serif",
+                          fontFamily: "var(--font-jost), Arial, sans-serif",
                           fontSize: '17px',
                           fontWeight: '600',
                           color: isActive || hoveredCategory === value
@@ -327,7 +327,7 @@ export default function FaqPageClient({ faqs }: { faqs: FaqItem[] }) {
               boxShadow: '0 10px 30px rgba(0,0,0,0.05)'
             }}>
               <p style={{
-                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                fontFamily: "var(--font-cormorant), Georgia, serif",
                 fontSize: '1.4rem',
                 fontWeight: '500',
                 color: '#1C1917',
@@ -336,7 +336,7 @@ export default function FaqPageClient({ faqs }: { faqs: FaqItem[] }) {
                 Still have questions?
               </p>
               <p style={{
-                fontFamily: "'Jost', Arial, sans-serif",
+                fontFamily: "var(--font-jost), Arial, sans-serif",
                 fontSize: '1.05rem',
                 color: '#6B6560',
                 lineHeight: '1.6',
@@ -345,7 +345,7 @@ export default function FaqPageClient({ faqs }: { faqs: FaqItem[] }) {
                 Our team speaks Japanese and is happy to help.
               </p>
               <Link href="/contact" style={{
-                fontFamily: "'Jost', Arial, sans-serif",
+                fontFamily: "var(--font-jost), Arial, sans-serif",
                 fontSize: '11px',
                 fontWeight: '600',
                 letterSpacing: '0.2em',
@@ -379,7 +379,7 @@ export default function FaqPageClient({ faqs }: { faqs: FaqItem[] }) {
                     marginBottom: '8px'
                   }}>
                     <h2 style={{
-                      fontFamily: "'Cormorant Garamond', Georgia, serif",
+                      fontFamily: "var(--font-cormorant), Georgia, serif",
                       fontSize: 'clamp(24px, 2.5vw, 36px)',
                       fontWeight: '500',
                       color: '#1C1917',
@@ -422,7 +422,7 @@ export default function FaqPageClient({ faqs }: { faqs: FaqItem[] }) {
                 padding: '80px 0'
               }}>
                 <p style={{
-                  fontFamily: "'Cormorant Garamond', Georgia, serif",
+                  fontFamily: "var(--font-cormorant), Georgia, serif",
                   fontSize: '22px',
                   color: '#9A948F',
                   fontStyle: 'italic'

@@ -1,35 +1,32 @@
+import type { Metadata } from 'next';
 import HeroSection from '@/components/sections/HeroSection';
 import DestinationChoice from '@/components/sections/DestinationChoice';
 import ToursSection from '@/components/sections/ToursSection';
 import Testimonials from '@/components/sections/Testimonials';
 import Footer from '@/components/layout/FooterSection';
-import { getImages, getSlugs, getLatestImage } from '@/lib/server-images';
+import { getImages } from '@/lib/server-images';
 import { getAllTours } from '@/lib/tours';
-import { getAllCelebrities } from '@/lib/celebrities';
+import { getTestimonials } from '@/lib/testimonials';
 
 import CompanySections from '@/components/sections/CompanySections';
+import { pageAlternates } from '@/lib/site';
 
-export const metadata = {
-    alternates: {
-        languages: {
-            'ja': 'https://kanmanitours.com/ja',
-            'en': 'https://kanmanitours.com/en',
-            'x-default': 'https://kanmanitours.com/ja',
-        }
-    }
-};
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+    const { locale } = await params;
+    return {
+        alternates: pageAlternates(locale, ''),
+    };
+}
 
 
 export default async function Home({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   const heroImages = getImages('/assets/img/home/hero');
-  const pollImages = getImages('/assets/img/home/poll');
   const customerImages = getImages('/assets/img/people/customers');
 
-  // Fetch tours and celebrities from Sanity
-  const [allTours, celebrities] = await Promise.all([
+  const [allTours, testimonials] = await Promise.all([
     getAllTours(locale),
-    getAllCelebrities(locale)
+    getTestimonials(locale),
   ]);
 
   const today = new Date();
@@ -63,7 +60,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       <DestinationChoice />
       <ToursSection tours={upcomingTours} locale={locale} />
       <CompanySections />
-      <Testimonials customerImages={customerImages} />
+      <Testimonials testimonials={testimonials} customerImages={customerImages} />
       <Footer />
     </main>
   );

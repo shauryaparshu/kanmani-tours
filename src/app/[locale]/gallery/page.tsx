@@ -4,18 +4,19 @@ import { GALLERY_QUERY } from '@/sanity/lib/queries';
 import FooterSection from '@/components/layout/FooterSection';
 import GalleryPageClient from './GalleryPageClient';
 import { galleryImageUrl } from '@/sanity/lib/image';
+import { pageAlternates, pageOpenGraph } from '@/lib/site';
 
-export const metadata: Metadata = {
-    alternates: {
-        languages: {
-            'ja': 'https://kanmanitours.com/ja/gallery',
-            'en': 'https://kanmanitours.com/en/gallery',
-            'x-default': 'https://kanmanitours.com/ja/gallery',
-        }
-    },
-    title: 'Tour Gallery — Kanmani Tours',
-    description: 'Relive the magic of our past tours. Explore photo galleries from celebrity encounters, cultural festivals, and culinary adventures across India.',
-};
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+    const { locale } = await params;
+    const title = 'Tour Gallery — Kanmani Tours';
+    const description = 'Relive the magic of our past tours. Explore photo galleries from celebrity encounters, cultural festivals, and culinary adventures across India.';
+    return {
+        alternates: pageAlternates(locale, '/gallery'),
+        title,
+        description,
+        openGraph: pageOpenGraph(title, description),
+    };
+}
 
 export default async function GalleryPage() {
     const rawTours = await client.fetch(GALLERY_QUERY);

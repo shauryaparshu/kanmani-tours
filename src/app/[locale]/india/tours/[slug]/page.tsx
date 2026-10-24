@@ -1,8 +1,9 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { getTourBySlug, getToursByDestination } from '@/lib/tours';
+import { decodeSlug, getTourBySlug, getToursByDestination } from '@/lib/tours';
 import Footer from '@/components/layout/FooterSection';
 import TourDetailClient from '@/components/TourDetailClient';
+import { pageAlternates } from '@/lib/site';
 
 interface PageProps {
     params: Promise<{ locale: string; slug: string }>;
@@ -25,12 +26,12 @@ export async function generateStaticParams() {
 
 // Dynamic SEO metadata per tour
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-    const { locale, slug } = await params;
+    const { locale, slug: rawSlug } = await params;
+    const slug = decodeSlug(rawSlug);
     const tour = await getTourBySlug(slug, locale);
     if (!tour || tour.destination !== 'india') return { title: 'Tour Not Found — Kanmani Tours' };
 
     const heroImage = tour.coverImage;
-    const siteUrl = 'https://kanmanitours.com';
 
     return {
         title: `${tour.title} — Kanmani Tours`,
@@ -38,20 +39,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         openGraph: {
             title: tour.title,
             description: tour.shortDescription,
-            images: heroImage ? [{ url: heroImage }] : [],
+            images: [{ url: heroImage || '/assets/og-default.jpg' }],
         },
-        alternates: {
-            languages: {
-                'ja': `${siteUrl}/ja/india/tours/${slug}`,
-                'en': `${siteUrl}/en/india/tours/${slug}`,
-                'x-default': `${siteUrl}/ja/india/tours/${slug}`,
-            }
-        }
+        alternates: pageAlternates(locale, `/india/tours/${encodeURIComponent(slug)}`),
     };
 }
 
 export default async function TourDetailPage({ params }: PageProps) {
-    const { locale, slug } = await params;
+    const { locale, slug: rawSlug } = await params;
+    const slug = decodeSlug(rawSlug);
     const [tour, allTours] = await Promise.all([
         getTourBySlug(slug, locale),
         getToursByDestination('india', locale)

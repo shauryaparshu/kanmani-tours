@@ -1,15 +1,14 @@
+import type { Metadata } from 'next';
 import Footer from '@/components/layout/FooterSection';
 import Link from 'next/link';
+import { pageAlternates } from '@/lib/site';
 
-export const metadata = {
-    alternates: {
-        languages: {
-            'ja': 'https://kanmanitours.com/ja/services/moving',
-            'en': 'https://kanmanitours.com/en/services/moving',
-            'x-default': 'https://kanmanitours.com/ja/services/moving',
-        }
-    }
-};
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+    const { locale } = await params;
+    return {
+        alternates: pageAlternates(locale, '/services/moving'),
+    };
+}
 
 
 export default function MovingToIndiaPage() {
@@ -23,7 +22,7 @@ export default function MovingToIndiaPage() {
           borderBottom: '1px solid rgba(201,147,58,0.2)'
         }}>
           <p style={{
-            fontFamily: "'Jost', Arial, sans-serif",
+            fontFamily: "var(--font-jost), Arial, sans-serif",
             fontSize: '11px',
             fontWeight: '500',
             letterSpacing: '0.32em',
@@ -32,7 +31,7 @@ export default function MovingToIndiaPage() {
             marginBottom: '16px'
           }}>SERVICES</p>
           <h1 style={{
-            fontFamily: "'Cormorant Garamond', Georgia, serif",
+            fontFamily: "var(--font-cormorant), Georgia, serif",
             fontSize: 'clamp(36px, 5vw, 64px)',
             fontWeight: '500',
             color: '#F5F1EB',
@@ -45,7 +44,7 @@ export default function MovingToIndiaPage() {
             backgroundColor: '#C9933A', marginBottom: '20px'
           }}/>
           <p style={{
-            fontFamily: "'Jost', Arial, sans-serif",
+            fontFamily: "var(--font-jost), Arial, sans-serif",
             fontSize: '16px',
             fontWeight: '300',
             color: '#9A948F',
@@ -69,7 +68,7 @@ export default function MovingToIndiaPage() {
             border: '1px solid #E8E4DC'
           }}>
             <h2 style={{
-              fontFamily: "'Cormorant Garamond', Georgia, serif",
+              fontFamily: "var(--font-cormorant), Georgia, serif",
               fontSize: '32px',
               fontWeight: '500',
               color: '#1C1917',
@@ -88,7 +87,7 @@ export default function MovingToIndiaPage() {
                   alignItems: 'flex-start',
                   gap: '12px',
                   marginBottom: '16px',
-                  fontFamily: "'Jost', Arial, sans-serif",
+                  fontFamily: "var(--font-jost), Arial, sans-serif",
                   fontSize: '16px',
                   color: '#4A4540',
                   lineHeight: '1.5'
@@ -100,7 +99,7 @@ export default function MovingToIndiaPage() {
             </ul>
             <div style={{ marginTop: '48px' }}>
               <Link href="/contact" style={{
-                fontFamily: "'Jost', Arial, sans-serif",
+                fontFamily: "var(--font-jost), Arial, sans-serif",
                 fontSize: '13px',
                 fontWeight: '600',
                 letterSpacing: '0.2em',

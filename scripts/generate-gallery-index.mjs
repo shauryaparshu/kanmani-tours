@@ -10,7 +10,8 @@ const PUBLIC_DIR = path.join(__dirname, '../public');
 const OUTPUT_FILE = path.join(PUBLIC_DIR, 'assets/gallery-index.json');
 
 const IMAGE_EXTS = /\.(jpg|jpeg|png|webp)$/i;
-const VIDEO_EXTS = /\.(mp4|webm|ogv)$/i;
+// Videos are not indexed: .gitignore and .vercelignore exclude them from the
+// deployment, so any video listed here would 404 in production.
 
 async function generateIndex() {
     try {
@@ -22,14 +23,6 @@ async function generateIndex() {
 
             if (fs.existsSync(galleryPath)) {
                 const files = fs.readdirSync(galleryPath);
-
-                const videos = files
-                    .filter(file => VIDEO_EXTS.test(file))
-                    .sort((a, b) => a.localeCompare(b))
-                    .map(file => ({
-                        type: 'video',
-                        url: `/assets/img/tours/${tour.slug}/gallery/${file}`
-                    }));
 
                 const images = files
                     .filter(file => IMAGE_EXTS.test(file))
@@ -47,8 +40,7 @@ async function generateIndex() {
                         url: `/assets/img/tours/${tour.slug}/gallery/${file}`
                     }));
 
-                // Videos come first, then images
-                const media = [...videos, ...images];
+                const media = images;
 
                 if (media.length > 0) {
                     galleryIndex.tours.push({

@@ -70,7 +70,7 @@ export default function ToursSection({ tours, cardImages = {}, locale: propLocal
                     opacity: 0.9;
                 }
                 .upcoming-tours-heading {
-                    font-family: 'Cormorant Garamond', Georgia, serif;
+                    font-family: var(--font-cormorant), Georgia, serif;
                     font-size: clamp(42px, 5vw, 64px);
                     font-weight: 500;
                     color: #1a1918;
@@ -81,7 +81,7 @@ export default function ToursSection({ tours, cardImages = {}, locale: propLocal
                     color: #C9933A;
                 }
                 .upcoming-tours-subtitle {
-                    font-family: 'Cormorant Garamond', Georgia, serif;
+                    font-family: var(--font-cormorant), Georgia, serif;
                     font-size: 18px;
                     font-weight: 400;
                     color: #4A3E34;
@@ -213,7 +213,7 @@ export default function ToursSection({ tours, cardImages = {}, locale: propLocal
                     box-shadow: 0 0 10px rgba(201,147,58,0.6);
                 }
                 .tour-card-meta {
-                    font-family: 'Jost', Arial, sans-serif;
+                    font-family: var(--font-jost), Arial, sans-serif;
                     font-size: 12px;
                     font-weight: 500;
                     color: #4a4a4a;
@@ -221,7 +221,7 @@ export default function ToursSection({ tours, cardImages = {}, locale: propLocal
                     margin-bottom: 10px;
                 }
                 .tour-card-title {
-                    font-family: 'Jost', Arial, sans-serif;
+                    font-family: var(--font-jost), Arial, sans-serif;
                     font-size: 1.35rem;
                     font-weight: 650;
                     color: #1a1918;
@@ -243,7 +243,7 @@ export default function ToursSection({ tours, cardImages = {}, locale: propLocal
                     align-items: center;
                     gap: 8px;
                     color: #d49a36;
-                    font-family: 'Jost', Arial, sans-serif;
+                    font-family: var(--font-jost), Arial, sans-serif;
                     font-size: 13px;
                     font-weight: 700;
                     letter-spacing: 0.16em;
@@ -309,7 +309,7 @@ export default function ToursSection({ tours, cardImages = {}, locale: propLocal
                     </div>
                     <div className="upcoming-tours-action">
                         <Link href="/india/tours" style={{
-                            fontFamily: "'Jost', Arial, sans-serif",
+                            fontFamily: "var(--font-jost), Arial, sans-serif",
                             fontSize: '14px',
                             fontWeight: '700',
                             letterSpacing: '0.22em',
@@ -391,7 +391,7 @@ export default function ToursSection({ tours, cardImages = {}, locale: propLocal
                                                 backgroundImage: 'radial-gradient(circle at center, rgba(212,154,54,0.15) 0%, transparent 70%)'
                                             }}>
                                                 <span style={{
-                                                    fontFamily: "'Cormorant Garamond', Georgia, serif",
+                                                    fontFamily: "var(--font-cormorant), Georgia, serif",
                                                     fontSize: '16px',
                                                     letterSpacing: '0.2em',
                                                     color: 'rgba(212,154,54,0.4)',
@@ -407,7 +407,7 @@ export default function ToursSection({ tours, cardImages = {}, locale: propLocal
                                             left: '0',
                                             background: 'rgba(28,25,23,0.92)',
                                             color: '#FFF3D8',
-                                            fontFamily: "'Jost', Arial, sans-serif",
+                                            fontFamily: "var(--font-jost), Arial, sans-serif",
                                             fontSize: '10px',
                                             fontWeight: '700',
                                             letterSpacing: '0.24em',

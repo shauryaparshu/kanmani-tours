@@ -10,11 +10,12 @@
 - `/docs`: Project documentation and guides.
 - `/src/app`: Next.js App Router pages and layouts.
 - `/src/components`: Reusable UI components.
-- `/src/hooks`: Custom React hooks for data fetching and logic.
+- `/src/lib`: Data access (Sanity with local JSON fallback) and shared helpers.
+  - `/src/lib/site.ts`: Production URL, canonical/hreflang and Open Graph helpers.
+  - `/src/lib/server`: Server-only helpers (rate limiting, HTML escaping, gallery auth).
 - `/src/sanity`: Sanity client configuration, schemas, and GROQ queries.
-- `/src/styles`: CSS variables, global styles, and tokens.
-- `/src/types`: TypeScript interfaces and type definitions.
-- `/public`: Static assets (icons, fonts, static images).
+- `/src/app/globals.css`: Global styles. Fonts are loaded in `/src/app/fonts.ts` via `next/font`.
+- `/public`: Static assets (images, icons).
 
 ## Sanity & Frontend Connection
 Sanity acts as the content repository. The frontend connects to Sanity using the `@sanity/client` or `next-sanity` library. 

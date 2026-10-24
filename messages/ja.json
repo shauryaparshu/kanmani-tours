@@ -32,19 +32,6 @@
         "learnMore": "詳細を見る →",
         "readMore": "続きを読む",
         "showLess": "閉じる",
-        "fanVoteTitle": "限定ファン投票",
-        "fanVoteQuestion": "あなたの推しは誰ですか？",
-        "voteButton": "投票する",
-        "finalizeVote": "投票を確定する",
-        "fullName": "お名前",
-        "enterName": "お名前を入力してください",
-        "emailAddress": "メールアドレス",
-        "enterEmail": "メールアドレスを入力してください",
-        "phoneNumber": "電話番号",
-        "submitVote": "投票を送信",
-        "voteSubmitted": "投票完了！",
-        "thankYouVote": "ご投票ありがとうございます",
-        "pleaseChoose": "スターを選んで投票してください！",
         "comingSoon": "近日公開",
         "daysToGo": "{count}日後",
         "startsToday": "今日からスタート！",
@@ -72,15 +59,7 @@
         "otherUpcomingTours": "その他の今後のツアー",
         "from": "から",
         "perPerson": "/ 名",
-        "bookingClosed": "予約受付終了",
-        "actors": {
-            "vijay_thalapathi": "ヴィジャイ・タラパティ",
-            "sethupathi": "ヴィジャイ・セツパティ",
-            "ram": "ラム・チャラン",
-            "ntr": "Jr NTR",
-            "allu": "アッル・アルジュン",
-            "suryah": "SJ スーリヤ"
-        }
+        "bookingClosed": "予約受付終了"
     },
     "Buttons": {
         "learnMore": "詳細を見る →",

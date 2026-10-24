@@ -32,19 +32,6 @@
         "learnMore": "Learn More →",
         "readMore": "read more",
         "showLess": "show less",
-        "fanVoteTitle": "Exclusive Fan Vote",
-        "fanVoteQuestion": "Who's your favorite celebrity?",
-        "voteButton": "VOTE",
-        "finalizeVote": "Finalize Your Vote",
-        "fullName": "Full Name",
-        "enterName": "Enter your name",
-        "emailAddress": "Email Address",
-        "enterEmail": "Enter your email",
-        "phoneNumber": "Phone Number",
-        "submitVote": "Submit Vote",
-        "voteSubmitted": "Vote Submitted!",
-        "thankYouVote": "Thank you for voting for",
-        "pleaseChoose": "Please choose a star to vote!",
         "comingSoon": "Coming Soon",
         "daysToGo": "{count} days to go",
         "startsToday": "Starts today!",
@@ -72,15 +59,7 @@
         "otherUpcomingTours": "Other Upcoming Tours",
         "from": "From",
         "perPerson": "/ person",
-        "bookingClosed": "Booking Closed",
-        "actors": {
-            "vijay_thalapathi": "Vijay Thalapathy",
-            "sethupathi": "Vijay Sethupathi",
-            "ram": "Ram Charan",
-            "ntr": "Jr NTR",
-            "allu": "Allu Arjun",
-            "suryah": "SJ Suryah"
-        }
+        "bookingClosed": "Booking Closed"
     },
     "Buttons": {
         "learnMore": "Learn More →",

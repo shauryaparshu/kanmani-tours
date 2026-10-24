@@ -7,18 +7,19 @@ import { getAllCategories } from '@/lib/categories';
 import { getAllCountries } from '@/lib/countries';
 import Footer from '@/components/layout/FooterSection';
 import ToursListClient from '@/components/ToursListClient';
+import { pageAlternates, pageOpenGraph } from '@/lib/site';
 
-export const metadata: Metadata = {
-    alternates: {
-        languages: {
-            'en': 'https://kanmanitours.com/en/japan/tours',
-            'x-default': 'https://kanmanitours.com/en/japan/tours',
-        }
-    },
-    title: 'Japan Tours — Kanmani Tours',
-    description:
-        'Browse all upcoming and past Japan tours by Kanmani Tours. Educational group tours, school journeys, and cultural experiences across Japan.',
-};
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+    const { locale } = await params;
+    const title = 'Japan Tours — Kanmani Tours';
+    const description = 'Browse all upcoming and past Japan tours by Kanmani Tours. Educational group tours, school journeys, and cultural experiences across Japan.';
+    return {
+        alternates: pageAlternates(locale, '/japan/tours', { englishOnly: true }),
+        title,
+        description,
+        openGraph: pageOpenGraph(title, description),
+    };
+}
 
 export default async function JapanToursPage({ params }: { params: Promise<{ locale: string }> }) {
     const { locale } = await params;
@@ -53,7 +54,7 @@ export default async function JapanToursPage({ params }: { params: Promise<{ loc
                     }}>
                         <div style={{ maxWidth: '1000px' }}>
                             <nav className="breadcrumbs" style={{ 
-                                fontFamily: "'Jost', Arial, sans-serif",
+                                fontFamily: "var(--font-jost), Arial, sans-serif",
                                 fontSize: '11px',
                                 fontWeight: '500',
                                 letterSpacing: '0.32em',
@@ -69,7 +70,7 @@ export default async function JapanToursPage({ params }: { params: Promise<{ loc
                                 <span>Japan Tours</span>
                             </nav>
                             <h1 className="tours-page-title" style={{
-                                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                                fontFamily: "var(--font-cormorant), Georgia, serif",
                                 fontSize: 'clamp(36px, 5vw, 64px)',
                                 fontWeight: '500',
                                 color: '#F5F1EB',
@@ -83,7 +84,7 @@ export default async function JapanToursPage({ params }: { params: Promise<{ loc
                             <div style={{ width: '56px', height: '1px', backgroundColor: '#C9933A', marginBottom: '20px' }} />
                             
                             <p className="tours-page-subtitle" style={{
-                                fontFamily: "'Jost', Arial, sans-serif",
+                                fontFamily: "var(--font-jost), Arial, sans-serif",
                                 fontSize: '16px',
                                 fontWeight: '300',
                                 color: '#9A948F',
@@ -107,7 +108,7 @@ export default async function JapanToursPage({ params }: { params: Promise<{ loc
                     }}>
                         <div style={{ maxWidth: '600px', margin: '0 auto' }}>
                             <span style={{
-                                fontFamily: "'Jost', Arial, sans-serif",
+                                fontFamily: "var(--font-jost), Arial, sans-serif",
                                 fontSize: '11px',
                                 fontWeight: '600',
                                 letterSpacing: '0.24em',
@@ -119,7 +120,7 @@ export default async function JapanToursPage({ params }: { params: Promise<{ loc
                                 Coming Soon
                             </span>
                             <h2 style={{
-                                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                                fontFamily: "var(--font-cormorant), Georgia, serif",
                                 fontSize: 'clamp(28px, 4vw, 40px)',
                                 fontWeight: '500',
                                 color: '#1c1918',
@@ -135,7 +136,7 @@ export default async function JapanToursPage({ params }: { params: Promise<{ loc
                                 margin: '0 auto 20px'
                             }} />
                             <p style={{
-                                fontFamily: "'Jost', Arial, sans-serif",
+                                fontFamily: "var(--font-jost), Arial, sans-serif",
                                 fontSize: '16px',
                                 fontWeight: '300',
                                 color: '#66615b',
@@ -148,7 +149,7 @@ export default async function JapanToursPage({ params }: { params: Promise<{ loc
                                 href="/"
                                 style={{
                                     display: 'inline-block',
-                                    fontFamily: "'Jost', Arial, sans-serif",
+                                    fontFamily: "var(--font-jost), Arial, sans-serif",
                                     fontSize: '11px',
                                     fontWeight: '600',
                                     letterSpacing: '0.24em',

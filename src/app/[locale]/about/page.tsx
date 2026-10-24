@@ -1,17 +1,16 @@
+import type { Metadata } from 'next';
 import { client } from '@/sanity/lib/client';
 import { FOUNDER_PHOTOS_QUERY } from '@/sanity/lib/queries';
 import Footer from '@/components/layout/FooterSection';
 import AboutKanmaniClient from './AboutKanmaniClient';
+import { pageAlternates } from '@/lib/site';
 
-export const metadata = {
-    alternates: {
-        languages: {
-            'ja': 'https://kanmanitours.com/ja/about',
-            'en': 'https://kanmanitours.com/en/about',
-            'x-default': 'https://kanmanitours.com/ja/about',
-        }
-    }
-};
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+    const { locale } = await params;
+    return {
+        alternates: pageAlternates(locale, '/about'),
+    };
+}
 
 
 export default async function AboutPage({

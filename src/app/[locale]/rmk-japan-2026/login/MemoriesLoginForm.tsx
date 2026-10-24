@@ -63,7 +63,7 @@ export default function MemoriesLoginForm() {
             }}>
                 {/* Brand / Eyebrow */}
                 <span style={{
-                    fontFamily: "'Jost', Arial, sans-serif",
+                    fontFamily: "var(--font-jost), Arial, sans-serif",
                     fontSize: '11px',
                     fontWeight: '600',
                     letterSpacing: '0.28em',
@@ -77,7 +77,7 @@ export default function MemoriesLoginForm() {
 
                 {/* Heading */}
                 <h1 style={{
-                    fontFamily: "'Cormorant Garamond', Georgia, serif",
+                    fontFamily: "var(--font-cormorant), Georgia, serif",
                     fontSize: 'clamp(26px, 3.5vw, 32px)',
                     fontWeight: '500',
                     color: '#F5F1EB',
@@ -89,7 +89,7 @@ export default function MemoriesLoginForm() {
 
                 {/* Subtitle */}
                 <p style={{
-                    fontFamily: "'Jost', Arial, sans-serif",
+                    fontFamily: "var(--font-jost), Arial, sans-serif",
                     fontSize: '13px',
                     fontWeight: '500',
                     letterSpacing: '0.1em',
@@ -110,7 +110,7 @@ export default function MemoriesLoginForm() {
 
                 {/* Helper text */}
                 <p style={{
-                    fontFamily: "'Jost', Arial, sans-serif",
+                    fontFamily: "var(--font-jost), Arial, sans-serif",
                     fontSize: '14px',
                     fontWeight: '300',
                     color: '#9A948F',
@@ -127,7 +127,7 @@ export default function MemoriesLoginForm() {
                             htmlFor="memories-password"
                             style={{
                                 display: 'block',
-                                fontFamily: "'Jost', Arial, sans-serif",
+                                fontFamily: "var(--font-jost), Arial, sans-serif",
                                 fontSize: '11px',
                                 fontWeight: '500',
                                 letterSpacing: '0.15em',
@@ -154,7 +154,7 @@ export default function MemoriesLoginForm() {
                                 boxSizing: 'border-box',
                                 minHeight: '48px',
                                 padding: '14px 16px',
-                                fontFamily: "'Jost', Arial, sans-serif",
+                                fontFamily: "var(--font-jost), Arial, sans-serif",
                                 fontSize: '16px',
                                 backgroundColor: 'rgba(255, 255, 255, 0.04)',
                                 border: '1px solid rgba(201, 147, 58, 0.3)',
@@ -181,7 +181,7 @@ export default function MemoriesLoginForm() {
                             padding: '12px 14px',
                             marginBottom: '20px',
                             color: '#FF8A80',
-                            fontFamily: "'Jost', Arial, sans-serif",
+                            fontFamily: "var(--font-jost), Arial, sans-serif",
                             fontSize: '14px',
                             lineHeight: '1.4',
                         }}>
@@ -201,7 +201,7 @@ export default function MemoriesLoginForm() {
                             padding: '16px 24px',
                             border: 'none',
                             borderRadius: '4px',
-                            fontFamily: "'Jost', Arial, sans-serif",
+                            fontFamily: "var(--font-jost), Arial, sans-serif",
                             fontSize: '12px',
                             fontWeight: '600',
                             letterSpacing: '0.24em',
@@ -227,7 +227,7 @@ export default function MemoriesLoginForm() {
                             minHeight: '44px',
                             minWidth: '44px',
                             padding: '12px 18px',
-                            fontFamily: "'Jost', Arial, sans-serif",
+                            fontFamily: "var(--font-jost), Arial, sans-serif",
                             fontSize: '13px',
                             color: '#9A948F',
                             textDecoration: 'none',

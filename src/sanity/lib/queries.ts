@@ -20,6 +20,7 @@ export const TOURS_QUERY = defineQuery(`*[_type == "tour"] | order(startDate asc
   priceJPY,
   priceRangeJPY,
   seatsLeft,
+  isComingSoon,
   dateDisplay,
   dateDisplayJa,
   coverImage {
@@ -39,6 +40,7 @@ export const TOURS_QUERY = defineQuery(`*[_type == "tour"] | order(startDate asc
     }
   },
   features,
+  featuresJa,
   highlightsJa,
   itinerary[] {
     ...,
@@ -85,6 +87,7 @@ export const TOURS_BY_DESTINATION_QUERY = defineQuery(`*[_type == "tour" && (des
   priceJPY,
   priceRangeJPY,
   seatsLeft,
+  isComingSoon,
   dateDisplay,
   dateDisplayJa,
   coverImage {
@@ -104,6 +107,7 @@ export const TOURS_BY_DESTINATION_QUERY = defineQuery(`*[_type == "tour" && (des
     }
   },
   features,
+  featuresJa,
   highlightsJa,
   itinerary[] {
     ...,
@@ -150,6 +154,7 @@ export const TOUR_BY_SLUG_QUERY = defineQuery(`*[_type == "tour" && slug.current
   priceJPY,
   priceRangeJPY,
   seatsLeft,
+  isComingSoon,
   dateDisplay,
   dateDisplayJa,
   coverImage {
@@ -169,6 +174,7 @@ export const TOUR_BY_SLUG_QUERY = defineQuery(`*[_type == "tour" && slug.current
     }
   },
   features,
+  featuresJa,
   highlightsJa,
   itinerary[] {
     ...,
@@ -205,21 +211,6 @@ export const FAQS_QUERY = defineQuery(`
     answerJa
   }
 `)
-
-export const CELEBRITIES_QUERY = defineQuery(`*[_type == "celebrity"] | order(orderRank asc) {
-  _id,
-  name,
-  name_ja,
-  photo {
-    ...,
-    asset-> {
-      _id,
-      url,
-      metadata { lqip }
-    }
-  },
-  orderRank
-}`)
 
 export const CATEGORIES_QUERY = defineQuery(`*[_type == "tourCategory"] | order(orderRank asc) {
   _id,
@@ -297,24 +288,3 @@ export const FOUNDER_PHOTOS_QUERY = defineQuery(`
   }
 `)
 
-export const FOUNDER_FEATURED_PHOTOS_QUERY = defineQuery(`
-  *[_type == "about"][0].founderPhotos[featured == true] {
-    "_id": _key,
-    caption,
-    captionJa,
-    era,
-    year,
-    location,
-    country->{_id, title, title_ja, key},
-    featured,
-    image {
-      asset-> {
-        _id,
-        url,
-        metadata { lqip }
-      },
-      hotspot,
-      crop
-    }
-  }
-`)

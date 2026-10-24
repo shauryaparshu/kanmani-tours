@@ -7,19 +7,19 @@ import { getAllCountries } from '@/lib/countries';
 import Footer from '@/components/layout/FooterSection';
 import ToursListClient from '@/components/ToursListClient';
 import { getTranslations } from 'next-intl/server';
+import { pageAlternates, pageOpenGraph } from '@/lib/site';
 
-export const metadata: Metadata = {
-    alternates: {
-        languages: {
-            'ja': 'https://kanmanitours.com/ja/india/tours',
-            'en': 'https://kanmanitours.com/en/india/tours',
-            'x-default': 'https://kanmanitours.com/ja/india/tours',
-        }
-    },
-    title: 'India Tours — Kanmani Tours',
-    description:
-        'Browse all upcoming and past India tours by Kanmani Tours. Celebrity-related experiences, culinary journeys, and cultural heritage trips across India.',
-};
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+    const { locale } = await params;
+    const title = 'India Tours — Kanmani Tours';
+    const description = 'Browse all upcoming and past India tours by Kanmani Tours. Celebrity-related experiences, culinary journeys, and cultural heritage trips across India.';
+    return {
+        alternates: pageAlternates(locale, '/india/tours'),
+        title,
+        description,
+        openGraph: pageOpenGraph(title, description),
+    };
+}
 
 export default async function IndiaToursPage({ params }: { params: Promise<{ locale: string }> }) {
     const { locale } = await params;
@@ -51,7 +51,7 @@ export default async function IndiaToursPage({ params }: { params: Promise<{ loc
                     }}>
                         <div style={{ maxWidth: '1000px' }}>
                             <nav className="breadcrumbs" style={{ 
-                                fontFamily: "'Jost', Arial, sans-serif",
+                                fontFamily: "var(--font-jost), Arial, sans-serif",
                                 fontSize: '11px',
                                 fontWeight: '500',
                                 letterSpacing: '0.32em',
@@ -67,7 +67,7 @@ export default async function IndiaToursPage({ params }: { params: Promise<{ loc
                                 <span>{t('breadcrumbTours')}</span>
                             </nav>
                             <h1 className="tours-page-title" style={{
-                                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                                fontFamily: "var(--font-cormorant), Georgia, serif",
                                 fontSize: 'clamp(36px, 5vw, 64px)',
                                 fontWeight: '500',
                                 color: '#F5F1EB',
@@ -81,7 +81,7 @@ export default async function IndiaToursPage({ params }: { params: Promise<{ loc
                             <div style={{ width: '56px', height: '1px', backgroundColor: '#C9933A', marginBottom: '20px' }} />
                             
                             <p className="tours-page-subtitle" style={{
-                                fontFamily: "'Jost', Arial, sans-serif",
+                                fontFamily: "var(--font-jost), Arial, sans-serif",
                                 fontSize: '16px',
                                 fontWeight: '300',
                                 color: '#9A948F',

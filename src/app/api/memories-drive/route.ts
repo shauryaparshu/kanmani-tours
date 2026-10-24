@@ -1,5 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
+import { MEMORIES_COOKIE, hasMemoriesAccess } from '@/lib/server/memoriesAuth';
+
+// Note: the Drive folder is shared as "anyone with the link", which the API key
+// needs for reading. The password gate hides the gallery page, but anyone who
+// obtains a folder ID can open it in Drive directly. Making the folder private
+// requires a Google service account instead of an API key.
+
+// Drive IDs are URL-safe base64-ish strings.
+const DRIVE_ID_RE = /^[A-Za-z0-9_-]{10,100}$/;
 
 interface DriveRawFile {
     id: string;
@@ -17,10 +26,7 @@ interface DriveRawFile {
 export async function GET(request: NextRequest) {
     // 1. Auth check via memories_access cookie
     const cookieStore = await cookies();
-    const token = cookieStore.get('memories_access')?.value;
-    const expectedToken = process.env.MEMORIES_SESSION_TOKEN;
-
-    if (!expectedToken || !token || token !== expectedToken) {
+    if (!hasMemoriesAccess(cookieStore.get(MEMORIES_COOKIE)?.value)) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
@@ -35,6 +41,10 @@ export async function GET(request: NextRequest) {
     // 3. Resolve target folder
     const searchParams = request.nextUrl.searchParams;
     const requestedFolder = searchParams.get('folder')?.trim();
+
+    if (requestedFolder && !DRIVE_ID_RE.test(requestedFolder)) {
+        return NextResponse.json({ error: 'Invalid folder' }, { status: 400 });
+    }
     const targetFolderId = requestedFolder || rootFolderId;
 
     let currentFolderMeta: { id: string; name: string } | null = null;

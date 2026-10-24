@@ -95,7 +95,7 @@ export default function Navigation() {
         transition: 'all 0.25s ease',
         boxShadow: 'inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 6px 14px rgba(0, 0, 0, 0.16)',
         whiteSpace: 'nowrap',
-        fontFamily: "'Cormorant Garamond', Georgia, serif",
+        fontFamily: "var(--font-cormorant), Georgia, serif",
         fontSize: '16px',
         fontWeight: '500',
         letterSpacing: '0.09em',
@@ -104,7 +104,7 @@ export default function Navigation() {
     };
 
     const utilityButtonStyle: React.CSSProperties = {
-        fontFamily: "'Cormorant Garamond', Georgia, serif",
+        fontFamily: "var(--font-cormorant), Georgia, serif",
         fontSize: isJa ? '12px' : '15px',
         fontWeight: '400',
         letterSpacing: '0.1em',
@@ -183,12 +183,12 @@ export default function Navigation() {
                                 </g>
                                 <line x1="44" y1="8" x2="44" y2="44" stroke="#C9933A" strokeWidth="0.5" opacity="0.35" />
                                 <text x="54" y="32"
-                                    style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "32px", fontWeight: "400", letterSpacing: "0.13em", fill: "#F5F1EB" }}>
+                                    style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontSize: "32px", fontWeight: "400", letterSpacing: "0.13em", fill: "#F5F1EB" }}>
                                     Kanmani
                                 </text>
                                 <line x1="54" y1="37" x2="188" y2="37" stroke="#C9933A" strokeWidth="0.5" opacity="0.60" />
                                 <text x="121" y="51" textAnchor="middle"
-                                    style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "15px", fontWeight: "bold", letterSpacing: "0.3em", fill: "#C9933A" }}>
+                                    style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontSize: "15px", fontWeight: "bold", letterSpacing: "0.3em", fill: "#C9933A" }}>
                                     T O U R S
                                 </text>
                             </svg>
@@ -223,7 +223,7 @@ export default function Navigation() {
                                           onMouseLeave={() => setServicesOpen(false)}
                                         >
                                           <button className="nav-link-item" style={{
-                                            fontFamily: "'Cormorant Garamond', Georgia, serif",
+                                            fontFamily: "var(--font-cormorant), Georgia, serif",
                                             fontSize: isJa ? '13px' : '16px',
                                             fontWeight: '400',
                                             letterSpacing: '0.1em',
@@ -321,7 +321,7 @@ export default function Navigation() {
                                                   }}
                                                 >
                                                   <div style={{
-                                                    fontFamily: "'Cormorant Garamond', Georgia, serif",
+                                                    fontFamily: "var(--font-cormorant), Georgia, serif",
                                                     fontSize: '19px',
                                                     fontWeight: highlight ? '600' : '500',
                                                     color: highlight ? '#C9933A' : '#F5F1EB',
@@ -331,7 +331,7 @@ export default function Navigation() {
                                                     {label}
                                                   </div>
                                                   <div style={{
-                                                    fontFamily: "'Jost', Arial, sans-serif",
+                                                    fontFamily: "var(--font-jost), Arial, sans-serif",
                                                     fontSize: '13px',
                                                     color: '#9A948F',
                                                     letterSpacing: '0.04em'
@@ -348,7 +348,7 @@ export default function Navigation() {
                                         href={link.href}
                                         className={`nav-link-item ${link.flags ? 'nav-link-tour' : ''}`}
                                         style={{
-                                            fontFamily: "'Cormorant Garamond', Georgia, serif",
+                                            fontFamily: "var(--font-cormorant), Georgia, serif",
                                             fontSize: isJa ? '13px' : '16px',
                                             fontWeight: '400',
                                             letterSpacing: '0.1em',
@@ -501,7 +501,7 @@ export default function Navigation() {
                         >
                             <button style={{
                                 ...utilityButtonStyle,
-                                fontFamily: isJa ? "'Noto Sans JP', sans-serif" : "'Jost', Arial, sans-serif",
+                                fontFamily: isJa ? "var(--font-noto-jp), sans-serif" : "var(--font-jost), Arial, sans-serif",
                                 letterSpacing: '0.18em',
                                 textTransform: 'uppercase',
                                 fontWeight: '400'
@@ -588,7 +588,7 @@ export default function Navigation() {
                                                 alignItems: 'center',
                                                 gap: '12px',
                                                 padding: '10px 20px',
-                                                fontFamily: "'Jost', Arial, sans-serif",
+                                                fontFamily: "var(--font-jost), Arial, sans-serif",
                                                 fontSize: '15px',
                                                 fontWeight: '400',
                                                 color: '#D4CFC9',
@@ -645,12 +645,12 @@ export default function Navigation() {
                                 </g>
                                 <line x1="44" y1="8" x2="44" y2="44" stroke="#C9933A" strokeWidth="0.5" opacity="0.35" />
                                 <text x="54" y="32"
-                                    style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "32px", fontWeight: "400", letterSpacing: "0.13em", fill: "#F5F1EB" }}>
+                                    style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontSize: "32px", fontWeight: "400", letterSpacing: "0.13em", fill: "#F5F1EB" }}>
                                     Kanmani
                                 </text>
                                 <line x1="54" y1="37" x2="188" y2="37" stroke="#C9933A" strokeWidth="0.5" opacity="0.60" />
                                 <text x="121" y="51" textAnchor="middle"
-                                    style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "15px", fontWeight: "bold", letterSpacing: "0.3em", fill: "#C9933A" }}>
+                                    style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontSize: "15px", fontWeight: "bold", letterSpacing: "0.3em", fill: "#C9933A" }}>
                                     T O U R S
                                 </text>
                             </svg>
@@ -670,7 +670,7 @@ export default function Navigation() {
                                     color: '#D4CFC9',
                                     fontSize: '13px',
                                     cursor: 'pointer',
-                                    fontFamily: "'Cormorant Garamond', Georgia, serif"
+                                    fontFamily: "var(--font-cormorant), Georgia, serif"
                                 }}
                             >
                                 {!isJapanDestination && (
@@ -756,12 +756,12 @@ export default function Navigation() {
                                         </g>
                                         <line x1="44" y1="8" x2="44" y2="44" stroke="#C9933A" strokeWidth="0.5" opacity="0.35" />
                                         <text x="54" y="32"
-                                            style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "32px", fontWeight: "400", letterSpacing: "0.13em", fill: "#F5F1EB" }}>
+                                            style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontSize: "32px", fontWeight: "400", letterSpacing: "0.13em", fill: "#F5F1EB" }}>
                                             Kanmani
                                         </text>
                                         <line x1="54" y1="37" x2="188" y2="37" stroke="#C9933A" strokeWidth="0.5" opacity="0.60" />
                                         <text x="121" y="51" textAnchor="middle"
-                                            style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "15px", fontWeight: "bold", letterSpacing: "0.3em", fill: "#C9933A" }}>
+                                            style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontSize: "15px", fontWeight: "bold", letterSpacing: "0.3em", fill: "#C9933A" }}>
                                             T O U R S
                                         </text>
                                     </svg>
@@ -794,7 +794,7 @@ export default function Navigation() {
                                         alignItems: 'center',
                                         justifyContent: 'space-between',
                                         padding: '18px 24px',
-                                        fontFamily: "'Jost', Arial, sans-serif",
+                                        fontFamily: "var(--font-jost), Arial, sans-serif",
                                         fontSize: '18px',
                                         fontWeight: '400',
                                         color: '#F5F1EB',
@@ -817,7 +817,7 @@ export default function Navigation() {
                                         alignItems: 'center',
                                         justifyContent: 'space-between',
                                         padding: '18px 24px',
-                                        fontFamily: "'Jost', Arial, sans-serif",
+                                        fontFamily: "var(--font-jost), Arial, sans-serif",
                                         fontSize: '18px',
                                         fontWeight: '400',
                                         color: '#F5F1EB',
@@ -840,7 +840,7 @@ export default function Navigation() {
                                         alignItems: 'center',
                                         justifyContent: 'space-between',
                                         padding: '18px 24px',
-                                        fontFamily: "'Jost', Arial, sans-serif",
+                                        fontFamily: "var(--font-jost), Arial, sans-serif",
                                         fontSize: '18px',
                                         fontWeight: '400',
                                         color: '#F5F1EB',
@@ -869,7 +869,7 @@ export default function Navigation() {
                                         alignItems: 'center',
                                         justifyContent: 'space-between',
                                         padding: '18px 24px',
-                                        fontFamily: "'Jost', Arial, sans-serif",
+                                        fontFamily: "var(--font-jost), Arial, sans-serif",
                                         fontSize: '18px',
                                         fontWeight: '400',
                                         color: '#F5F1EB',
@@ -900,7 +900,7 @@ export default function Navigation() {
                                                 justifyContent: 'space-between',
                                                 width: '100%',
                                                 padding: '18px 24px',
-                                                fontFamily: "'Jost', Arial, sans-serif",
+                                                fontFamily: "var(--font-jost), Arial, sans-serif",
                                                 fontSize: '18px',
                                                 fontWeight: '400',
                                                 color: '#F5F1EB',
@@ -936,7 +936,7 @@ export default function Navigation() {
                                                         style={{
                                                             display: 'block',
                                                             padding: '14px 40px',
-                                                            fontFamily: "'Jost', Arial, sans-serif",
+                                                            fontFamily: "var(--font-jost), Arial, sans-serif",
                                                             fontSize: '15px',
                                                             color: '#9A948F',
                                                             textDecoration: 'none',
@@ -959,7 +959,7 @@ export default function Navigation() {
                                         alignItems: 'center',
                                         justifyContent: 'space-between',
                                         padding: '18px 24px',
-                                        fontFamily: "'Jost', Arial, sans-serif",
+                                        fontFamily: "var(--font-jost), Arial, sans-serif",
                                         fontSize: '18px',
                                         fontWeight: '400',
                                         color: '#F5F1EB',
@@ -982,7 +982,7 @@ export default function Navigation() {
                                         alignItems: 'center',
                                         justifyContent: 'space-between',
                                         padding: '18px 24px',
-                                        fontFamily: "'Jost', Arial, sans-serif",
+                                        fontFamily: "var(--font-jost), Arial, sans-serif",
                                         fontSize: '18px',
                                         fontWeight: '400',
                                         color: '#F5F1EB',
@@ -1005,7 +1005,7 @@ export default function Navigation() {
                                         alignItems: 'center',
                                         justifyContent: 'space-between',
                                         padding: '18px 24px',
-                                        fontFamily: "'Jost', Arial, sans-serif",
+                                        fontFamily: "var(--font-jost), Arial, sans-serif",
                                         fontSize: '18px',
                                         fontWeight: '400',
                                         color: '#F5F1EB',
@@ -1030,7 +1030,7 @@ export default function Navigation() {
                                 flexShrink: 0
                             }}>
                                 <span style={{
-                                    fontFamily: "'Jost', Arial, sans-serif",
+                                    fontFamily: "var(--font-jost), Arial, sans-serif",
                                     fontSize: '11px',
                                     color: '#6B6560',
                                     letterSpacing: '0.2em',
@@ -1040,7 +1040,7 @@ export default function Navigation() {
                                     href="/en"
                                     onClick={(e) => { e.preventDefault(); changeLanguage('en'); setMenuOpen(false); }}
                                     style={{
-                                        fontFamily: "'Jost', Arial, sans-serif",
+                                        fontFamily: "var(--font-jost), Arial, sans-serif",
                                         fontSize: '13px',
                                         fontWeight: locale === 'en' ? '600' : '400',
                                         color: locale === 'en' ? '#C9933A' : '#6B6560',
@@ -1053,7 +1053,7 @@ export default function Navigation() {
                                     href="/ja"
                                     onClick={(e) => { e.preventDefault(); changeLanguage('ja'); setMenuOpen(false); }}
                                     style={{
-                                        fontFamily: "'Jost', Arial, sans-serif",
+                                        fontFamily: "var(--font-jost), Arial, sans-serif",
                                         fontSize: '13px',
                                         fontWeight: locale === 'ja' ? '600' : '400',
                                         color: locale === 'ja' ? '#C9933A' : '#6B6560',
@@ -1087,7 +1087,7 @@ export default function Navigation() {
                                             transition: 'all 0.25s ease',
                                             boxShadow: 'inset 0 1px 0 rgba(255, 255, 255, 0.08)',
                                             whiteSpace: 'nowrap',
-                                            fontFamily: "'Jost', Arial, sans-serif",
+                                            fontFamily: "var(--font-jost), Arial, sans-serif",
                                             fontSize: '13px'
                                         }}
                                     >
@@ -1109,7 +1109,7 @@ export default function Navigation() {
                                             transition: 'all 0.25s ease',
                                             boxShadow: 'inset 0 1px 0 rgba(255, 255, 255, 0.08)',
                                             whiteSpace: 'nowrap',
-                                            fontFamily: "'Jost', Arial, sans-serif",
+                                            fontFamily: "var(--font-jost), Arial, sans-serif",
                                             fontSize: '13px'
                                         }}
                                     >
@@ -1139,7 +1139,7 @@ export default function Navigation() {
                                         rel="noopener noreferrer"
                                         onClick={() => setMenuOpen(false)}
                                         style={{
-                                            fontFamily: "'Jost', Arial, sans-serif",
+                                            fontFamily: "var(--font-jost), Arial, sans-serif",
                                             fontSize: '11px',
                                             fontWeight: '500',
                                             color: '#6B6560',

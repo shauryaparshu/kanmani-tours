@@ -120,7 +120,8 @@ function normaliseTour(t: any, locale: string = 'ja'): Tour {
         })(),
         // Ensure all array fields are never null or undefined because Sanity can return null for unset arrays.
         galleryImages: t.galleryImages ?? [],
-        features: (isJa && (t.highlightsJa || t.features_ja)) ? (t.highlightsJa || t.features_ja) : (t.features ?? []),
+        // featuresJa is the translation of the feature cards; highlightsJa is the older field it was copied into.
+        features: (isJa && (t.featuresJa || t.features_ja || t.highlightsJa)) ? (t.featuresJa || t.features_ja || t.highlightsJa) : (t.features ?? []),
         itinerary: (t.itinerary ?? []).map((day: any) => ({
             ...day,
             title: (isJa && (day.titleJa || day.title_ja)) ? (day.titleJa || day.title_ja) : day.title,
@@ -143,13 +144,21 @@ function normaliseTour(t: any, locale: string = 'ja'): Tour {
     };
 }
 
+// A tour with no start date that isn't marked "coming soon" is an unfinished
+// draft — it would render as "Jan 1, 1970" with no detail page.
+function isListable(t: { startDate?: string | null; isComingSoon?: boolean }): boolean {
+    return Boolean(t.startDate || t.isComingSoon);
+}
+
 export async function getAllTours(locale: string = 'ja', destination?: string): Promise<Tour[]> {
     try {
         const query = destination ? TOURS_BY_DESTINATION_QUERY : TOURS_QUERY;
         const params = destination ? { destination } : {};
         const sanityTours = await client.fetch(query, params, { next: { revalidate: 60 } });
         if (sanityTours && sanityTours.length > 0) {
-            return sanityTours.map((t: any) => normaliseTour(t, locale));
+            return sanityTours
+                .filter(isListable)
+                .map((t: any) => normaliseTour(t, locale));
         }
     } catch (error) {
         console.error('Error fetching tours from Sanity:', error);
@@ -172,6 +181,15 @@ export async function getUpcomingTours(limit?: number, locale: string = 'ja'): P
     const now = new Date();
     const upcoming = all.filter(t => new Date(t.startDate) >= now);
     return limit ? upcoming.slice(0, limit) : upcoming;
+}
+
+// Route params arrive URL-encoded (e.g. %20 for spaces); Sanity stores the raw slug.
+export function decodeSlug(slug: string): string {
+    try {
+        return decodeURIComponent(slug);
+    } catch {
+        return slug;
+    }
 }
 
 export async function getTourBySlug(slug: string, locale: string = 'ja'): Promise<Tour | undefined> {

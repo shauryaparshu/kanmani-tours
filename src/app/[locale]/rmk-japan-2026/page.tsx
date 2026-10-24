@@ -4,6 +4,7 @@ import { redirect, notFound } from 'next/navigation';
 import FooterSection from '@/components/layout/FooterSection';
 import { TOUR_GROUP } from '@/lib/tourGroup';
 import DriveGallery from './DriveGallery';
+import { MEMORIES_COOKIE, hasMemoriesAccess } from '@/lib/server/memoriesAuth';
 
 export const metadata: Metadata = {
     title: `Japan Tour ${TOUR_GROUP.dateLabel} | ${TOUR_GROUP.schoolName}`,
@@ -24,10 +25,7 @@ export default async function MemoriesPage({ params }: { params: Promise<{ local
 
     // Password-gated auth check via httpOnly cookie
     const cookieStore = await cookies();
-    const token = cookieStore.get('memories_access')?.value;
-    const expectedToken = process.env.MEMORIES_SESSION_TOKEN;
-
-    if (!expectedToken || !token || token !== expectedToken) {
+    if (!hasMemoriesAccess(cookieStore.get(MEMORIES_COOKIE)?.value)) {
         redirect(`/en/${TOUR_GROUP.slug}/login`);
     }
 
@@ -56,7 +54,7 @@ export default async function MemoriesPage({ params }: { params: Promise<{ local
                             }}>
                                 <div style={{ maxWidth: '820px' }}>
                                     <span style={{
-                                        fontFamily: "'Jost', Arial, sans-serif",
+                                        fontFamily: "var(--font-jost), Arial, sans-serif",
                                         fontSize: '11px',
                                         fontWeight: '600',
                                         letterSpacing: '0.28em',
@@ -68,7 +66,7 @@ export default async function MemoriesPage({ params }: { params: Promise<{ local
                                         {TOUR_GROUP.schoolName}
                                     </span>
                                     <h1 style={{
-                                        fontFamily: "'Cormorant Garamond', Georgia, serif",
+                                        fontFamily: "var(--font-cormorant), Georgia, serif",
                                         fontSize: 'clamp(32px, 4.5vw, 48px)',
                                         fontWeight: '500',
                                         color: '#F5F1EB',
@@ -78,7 +76,7 @@ export default async function MemoriesPage({ params }: { params: Promise<{ local
                                         Japan Tour Memories
                                     </h1>
                                     <p style={{
-                                        fontFamily: "'Jost', Arial, sans-serif",
+                                        fontFamily: "var(--font-jost), Arial, sans-serif",
                                         fontSize: '13px',
                                         fontWeight: '500',
                                         letterSpacing: '0.12em',
@@ -95,7 +93,7 @@ export default async function MemoriesPage({ params }: { params: Promise<{ local
                                         marginBottom: '16px',
                                     }} />
                                     <p style={{
-                                        fontFamily: "'Jost', Arial, sans-serif",
+                                        fontFamily: "var(--font-jost), Arial, sans-serif",
                                         fontSize: '15px',
                                         fontWeight: '300',
                                         color: '#9A948F',
@@ -121,7 +119,7 @@ export default async function MemoriesPage({ params }: { params: Promise<{ local
                                             color: '#1C1917',
                                             padding: '12px 24px',
                                             borderRadius: '4px',
-                                            fontFamily: "'Jost', Arial, sans-serif",
+                                            fontFamily: "var(--font-jost), Arial, sans-serif",
                                             fontSize: '11px',
                                             fontWeight: '600',
                                             letterSpacing: '0.2em',
@@ -180,7 +178,7 @@ export default async function MemoriesPage({ params }: { params: Promise<{ local
                             textAlign: 'center',
                         }}>
                             <p style={{
-                                fontFamily: "'Jost', Arial, sans-serif",
+                                fontFamily: "var(--font-jost), Arial, sans-serif",
                                 fontSize: '14px',
                                 color: '#9A948F',
                                 lineHeight: '1.6',
@@ -208,7 +206,7 @@ export default async function MemoriesPage({ params }: { params: Promise<{ local
                             boxShadow: '0 20px 50px rgba(0, 0, 0, 0.4)',
                         }}>
                             <span style={{
-                                fontFamily: "'Jost', Arial, sans-serif",
+                                fontFamily: "var(--font-jost), Arial, sans-serif",
                                 fontSize: '11px',
                                 fontWeight: '600',
                                 letterSpacing: '0.28em',
@@ -220,7 +218,7 @@ export default async function MemoriesPage({ params }: { params: Promise<{ local
                                 {TOUR_GROUP.schoolName}
                             </span>
                             <h1 style={{
-                                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                                fontFamily: "var(--font-cormorant), Georgia, serif",
                                 fontSize: 'clamp(32px, 5vw, 42px)',
                                 fontWeight: '500',
                                 color: '#F5F1EB',
@@ -230,7 +228,7 @@ export default async function MemoriesPage({ params }: { params: Promise<{ local
                                 Japan Tour Memories
                             </h1>
                             <p style={{
-                                fontFamily: "'Jost', Arial, sans-serif",
+                                fontFamily: "var(--font-jost), Arial, sans-serif",
                                 fontSize: '13px',
                                 fontWeight: '500',
                                 letterSpacing: '0.12em',
@@ -247,7 +245,7 @@ export default async function MemoriesPage({ params }: { params: Promise<{ local
                                 margin: '0 auto 24px',
                             }} />
                             <p style={{
-                                fontFamily: "'Jost', Arial, sans-serif",
+                                fontFamily: "var(--font-jost), Arial, sans-serif",
                                 fontSize: '16px',
                                 fontWeight: '300',
                                 color: '#9A948F',

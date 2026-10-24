@@ -67,7 +67,13 @@ export const tourType = defineType({
                 source: 'title',
                 maxLength: 96,
             },
-            validation: (Rule) => Rule.required(),
+            description: 'Click "Generate" to build it from the title. Lowercase letters, numbers and hyphens only.',
+            validation: (Rule) =>
+                Rule.required().custom((slug) =>
+                    !slug?.current || /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug.current)
+                        ? true
+                        : 'Use only lowercase letters, numbers and hyphens (no spaces or apostrophes). Click "Generate".'
+                ),
         }),
         defineField({
             name: 'category',

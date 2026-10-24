@@ -231,8 +231,8 @@ function EraGallery({
         marginBottom: '20px'
       }}>
         <div style={{ display: 'flex', alignItems: 'baseline', gap: '12px' }}>
-          <h3 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: '24px', color: '#1C1917', margin: 0 }}>{eraLabel}</h3>
-          <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '11px', color: '#9A948F', backgroundColor: '#E8E4DC', padding: '2px 8px', borderRadius: '10px' }}>
+          <h3 style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontSize: '24px', color: '#1C1917', margin: 0 }}>{eraLabel}</h3>
+          <span style={{ fontFamily: "var(--font-jost), Arial, sans-serif", fontSize: '11px', color: '#9A948F', backgroundColor: '#E8E4DC', padding: '2px 8px', borderRadius: '10px' }}>
             {filteredPhotos.length} photos
           </span>
         </div>
@@ -240,7 +240,7 @@ function EraGallery({
         {eraId === 'world-travel' && availableCountries.length > 0 && (
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <label htmlFor="world-travel-country-select" style={{
-              fontFamily: "'Jost', Arial, sans-serif",
+              fontFamily: "var(--font-jost), Arial, sans-serif",
               fontSize: '12px',
               fontWeight: '500',
               letterSpacing: '0.05em',
@@ -254,7 +254,7 @@ function EraGallery({
               value={selectedCountry}
               onChange={(e) => setSelectedCountry(e.target.value)}
               style={{
-                fontFamily: "'Jost', Arial, sans-serif",
+                fontFamily: "var(--font-jost), Arial, sans-serif",
                 fontSize: '13px',
                 color: '#1C1917',
                 padding: '6px 24px 6px 12px',
@@ -349,7 +349,7 @@ function EraGallery({
           <button 
             onClick={onToggleExpand}
             style={{
-              fontFamily: "'Jost', Arial, sans-serif",
+              fontFamily: "var(--font-jost), Arial, sans-serif",
               fontSize: '15px',
               fontWeight: '700',
               letterSpacing: '0.22em',
@@ -393,7 +393,7 @@ function EraGallery({
           <button 
             onClick={onToggleExpand}
             style={{
-              fontFamily: "'Jost', Arial, sans-serif",
+              fontFamily: "var(--font-jost), Arial, sans-serif",
               fontSize: '15px',
               fontWeight: '700',
               letterSpacing: '0.22em',
@@ -571,9 +571,9 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
     if (eraPhotos.length === 0 && eraId !== 'all') {
       return (
         <div key={eraId} style={{ marginBottom: '48px' }}>
-          <h3 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: '24px', color: '#1C1917', marginBottom: '16px' }}>{eraLabel}</h3>
+          <h3 style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontSize: '24px', color: '#1C1917', marginBottom: '16px' }}>{eraLabel}</h3>
           <div style={{ padding: '40px', textAlign: 'center', backgroundColor: '#FAFAF7', border: '1px dashed #D4CFC9' }}>
-            <p style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '13px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+            <p style={{ fontFamily: "var(--font-jost), Arial, sans-serif", fontSize: '13px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
               Photos coming soon
             </p>
           </div>
@@ -672,14 +672,14 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
                     top: '-15px',
                     left: '12px',
                     fontSize: '72px',
-                    fontFamily: "'Cormorant Garamond', Georgia, serif",
+                    fontFamily: "var(--font-cormorant), Georgia, serif",
                     color: 'rgba(201, 147, 58, 0.12)',
                     lineHeight: 1,
                     pointerEvents: 'none',
                     userSelect: 'none'
                   }}>“</span>
                   <p style={{
-                    fontFamily: "'Cormorant Garamond', Georgia, serif",
+                    fontFamily: "var(--font-cormorant), Georgia, serif",
                     fontSize: 'clamp(15px, 1.25vw, 18px)',
                     fontStyle: 'italic',
                     color: '#F5F1EB',
@@ -698,7 +698,7 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
                   {/* Gold Label */}
                   <p style={{
-                    fontFamily: "'Jost', Arial, sans-serif",
+                    fontFamily: "var(--font-jost), Arial, sans-serif",
                     fontSize: '11px',
                     fontWeight: 500,
                     letterSpacing: '0.32em',
@@ -709,7 +709,7 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
 
                   {/* Name */}
                   <h1 style={{
-                    fontFamily: "'Cormorant Garamond', Georgia, serif",
+                    fontFamily: "var(--font-cormorant), Georgia, serif",
                     fontSize: 'clamp(32px, 3.5vw, 48px)',
                     fontWeight: 400,
                     color: '#F5F1EB',
@@ -719,7 +719,7 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
 
                   {/* Title Row */}
                   <p className="about-tagline" style={{
-                    fontFamily: "'Jost', Arial, sans-serif",
+                    fontFamily: "var(--font-jost), Arial, sans-serif",
                     fontSize: '11px',
                     fontWeight: 400,
                     letterSpacing: '0.12em',
@@ -756,14 +756,14 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
                     gap: '4px'
                   }}>
                     <div className="about-stat-num" style={{
-                      fontFamily: "'Jost', Arial, sans-serif",
+                      fontFamily: "var(--font-jost), Arial, sans-serif",
                       fontWeight: 300,
                       fontSize: 'clamp(28px, 2.8vw, 42px)',
                       color: '#F5F1EB',
                       lineHeight: '1.2'
                     }}>{stat.num}</div>
                     <div className="about-stat-label" style={{
-                      fontFamily: "'Jost', Arial, sans-serif",
+                      fontFamily: "var(--font-jost), Arial, sans-serif",
                       fontSize: '13px',
                       fontWeight: 500,
                       letterSpacing: '0.08em',
@@ -780,7 +780,7 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
 
         {/* CHAPTER 4 — PHOTO GALLERY */}
         <section id="founder-gallery" className="about-gallery-section" style={{ padding: '24px 20px 80px 20px', maxWidth: '1400px', margin: '0 auto' }}>
-          <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: '42px', textAlign: 'center', marginBottom: '48px', color: '#1C1917' }}>Kanmani's Life in Pictures</h2>
+          <h2 style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontSize: '42px', textAlign: 'center', marginBottom: '48px', color: '#1C1917' }}>Kanmani's Life in Pictures</h2>
           
           {/* Era Filters */}
           <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '8px', marginBottom: '48px' }}>
@@ -790,7 +790,7 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
                     onClick={() => setActiveEra(era.id)}
                     className={`about-era-pill ${activeEra === era.id ? 'about-era-pill-active' : ''}`}
                     style={{
-                      fontFamily: "'Jost', Arial, sans-serif",
+                      fontFamily: "var(--font-jost), Arial, sans-serif",
                       fontSize: '12px',
                       fontWeight: '500',
                       letterSpacing: '0.1em',
@@ -837,8 +837,8 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
               >
                 <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '48px', alignItems: 'center' }}>
                   <div>
-                    <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: '36px', color: '#1C1917', marginBottom: '20px' }}>The Student Who Stayed</h2>
-                    <div style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '16px', color: '#4A4540', lineHeight: '1.7' }}>
+                    <h2 style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontSize: '36px', color: '#1C1917', marginBottom: '20px' }}>The Student Who Stayed</h2>
+                    <div style={{ fontFamily: "var(--font-jost), Arial, sans-serif", fontSize: '16px', color: '#4A4540', lineHeight: '1.7' }}>
                       <p style={{ marginBottom: '20px', textAlign: 'justify' }}>I landed in Japan in 1998 — a young woman from Tamil Nadu with one suitcase, a scholarship, and a fire that refused to stay small.</p>
                       <p style={{ marginBottom: '20px', textAlign: 'justify' }}>My parents gave me one thing for this journey — a one-way ticket. Just one. Everything after that was mine to earn.</p>
                       <p style={{ marginBottom: '20px', textAlign: 'justify' }}>I didn't speak Japanese. I didn't know many people. The city was vast, the silence was loud, and the loneliness was real. But I didn't come this far to turn back.</p>
@@ -855,7 +855,7 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
                           {url ? (
                             <img src={url} alt="Student Life" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }} />
                           ) : (
-                            <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '11px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em', textAlign: 'center' }}>Student Life Era</span>
+                            <span style={{ fontFamily: "var(--font-jost), Arial, sans-serif", fontSize: '11px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em', textAlign: 'center' }}>Student Life Era</span>
                           )}
                         </div>
                       );
@@ -868,7 +868,7 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
                           {url ? (
                             <img src={url} alt="PhD" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }} />
                           ) : (
-                            <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '11px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em', textAlign: 'center' }}>PhD Era</span>
+                            <span style={{ fontFamily: "var(--font-jost), Arial, sans-serif", fontSize: '11px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em', textAlign: 'center' }}>PhD Era</span>
                           )}
                         </div>
                       );
@@ -892,8 +892,8 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
               >
                 <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '48px', alignItems: 'center' }}>
                   <div style={{ order: isMobile ? 1 : 2 }}>
-                    <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: '36px', color: '#1C1917', marginBottom: '20px' }}>A Career Built on Trust</h2>
-                    <div style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '16px', color: '#4A4540', lineHeight: '1.7' }}>
+                    <h2 style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontSize: '36px', color: '#1C1917', marginBottom: '20px' }}>A Career Built on Trust</h2>
+                    <div style={{ fontFamily: "var(--font-jost), Arial, sans-serif", fontSize: '16px', color: '#4A4540', lineHeight: '1.7' }}>
                       <p style={{ marginBottom: '20px', textAlign: 'justify' }}>I was accepted into <strong>Nagoya University — home to</strong> seven Nobel laureates — and pursued my PhD. I worked with the <strong>United Nations University</strong> in Tokyo on issues that shape the future of nations. When the <strong>2004 Tsunami</strong> struck, I wasn't watching from a distance — I was on the ground, coordinating disaster relief with <strong>JICA</strong>, translating not just languages, but life-or-death urgency. I interpreted for the <strong>Refugee Assistance Headquarters</strong> in Tokyo — proceedings where a single sentence could save a family.</p>
                       <p style={{ marginBottom: '20px', textAlign: 'justify' }}>I led <strong>India's first Women's Everest Base Camp Expedition</strong> from Tamil Nadu — sponsored by then Chief Minister <strong>Dr. J. Jayalalitha</strong>. I carried <strong>India's flag at the Asian Games</strong>. I presented research alongside <strong>Dr. M.S. Swaminathan</strong> — the father of India's Green Revolution — at international conferences across the world. I was a state-level volleyball player, a striker in Tamil Nadu.</p>
                       <p style={{ textAlign: 'justify' }}><strong>None of it was given. All of it was built — with bare hands and an unbreakable will.</strong></p>
@@ -908,7 +908,7 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
                           {url ? (
                             <img src={url} alt="Achievements" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }} />
                           ) : (
-                            <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '11px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em', textAlign: 'center' }}>Achievements</span>
+                            <span style={{ fontFamily: "var(--font-jost), Arial, sans-serif", fontSize: '11px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em', textAlign: 'center' }}>Achievements</span>
                           )}
                         </div>
                       );
@@ -921,7 +921,7 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
                           {url ? (
                             <img src={url} alt="News Media" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }} />
                           ) : (
-                            <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '11px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em', textAlign: 'center' }}>News Media</span>
+                            <span style={{ fontFamily: "var(--font-jost), Arial, sans-serif", fontSize: '11px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em', textAlign: 'center' }}>News Media</span>
                           )}
                         </div>
                       );
@@ -945,8 +945,8 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
               >
                 <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '48px', alignItems: 'center' }}>
                   <div>
-                    <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: '36px', color: '#1C1917', marginBottom: '20px' }}>And Then There Was the World Beyond</h2>
-                    <div style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '16px', color: '#4A4540', lineHeight: '1.7' }}>
+                    <h2 style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontSize: '36px', color: '#1C1917', marginBottom: '20px' }}>And Then There Was the World Beyond</h2>
+                    <div style={{ fontFamily: "var(--font-jost), Arial, sans-serif", fontSize: '16px', color: '#4A4540', lineHeight: '1.7' }}>
                       <p style={{ marginBottom: '20px', textAlign: 'justify' }}>Since the year 2000, I have solo backpacked across <strong>forty-one countries</strong> — not as a tourist, but as a student of the world. I took <strong>30 low-cost flights in 30 days</strong> across Europe — before the EU was even formed. One night in Czech Republic, I was pulled off a train by border security in the middle of darkness and taken to a police station. A different woman might have stopped there. But when your will is made of steel — <strong>nothing scares your soul. Nothing can touch your core.</strong></p>
                       <p style={{ marginBottom: '20px', textAlign: 'justify' }}>Through it all, Japan showed me something I carry to this day — that true strength is silent, like an undercurrent in the ocean — <strong>invisible, yet unstoppable.</strong> That respect is earned through action, not words. That overwhelming kindness from strangers needs no common language. That discipline and grace can live together in everything you do.</p>
                       <p style={{ marginBottom: '20px', textAlign: 'justify' }}>And India — my India — reminded me of something equally powerful: <strong>that no matter how far you go, your roots are your greatest strength.</strong></p>
@@ -964,7 +964,7 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
                           {url ? (
                             <img src={url} alt="World Travel" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }} />
                           ) : (
-                            <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '11px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em', textAlign: 'center' }}>World Travel</span>
+                            <span style={{ fontFamily: "var(--font-jost), Arial, sans-serif", fontSize: '11px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em', textAlign: 'center' }}>World Travel</span>
                           )}
                         </div>
                       );
@@ -977,7 +977,7 @@ export default function AboutKanmaniClient({ locale, photos }: AboutKanmaniClien
                           {url ? (
                             <img src={url} alt="Celebrity" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }} />
                           ) : (
-                            <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '11px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em', textAlign: 'center' }}>Celebrity Era</span>
+                            <span style={{ fontFamily: "var(--font-jost), Arial, sans-serif", fontSize: '11px', color: '#9A948F', textTransform: 'uppercase', letterSpacing: '0.1em', textAlign: 'center' }}>Celebrity Era</span>
                           )}
                         </div>
                       );

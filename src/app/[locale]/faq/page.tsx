@@ -1,17 +1,16 @@
+import type { Metadata } from 'next';
 import { client } from '@/sanity/lib/client';
 import { FAQS_QUERY } from '@/sanity/lib/queries';
 import FaqPageClient from './FaqPageClient';
 import FooterSection from '@/components/layout/FooterSection';
+import { pageAlternates } from '@/lib/site';
 
-export const metadata = {
-    alternates: {
-        languages: {
-            'ja': 'https://kanmanitours.com/ja/faq',
-            'en': 'https://kanmanitours.com/en/faq',
-            'x-default': 'https://kanmanitours.com/ja/faq',
-        }
-    }
-};
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+    const { locale } = await params;
+    return {
+        alternates: pageAlternates(locale, '/faq'),
+    };
+}
 
 
 export default async function FaqPage() {

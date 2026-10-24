@@ -1,18 +1,17 @@
+import type { Metadata } from 'next';
 import React from 'react';
 import Link from 'next/link';
 import Footer from '@/components/layout/FooterSection';
 import { getTranslations } from 'next-intl/server';
 import './airport-transfer.css';
+import { pageAlternates } from '@/lib/site';
 
-export const metadata = {
-    alternates: {
-        languages: {
-            'ja': 'https://kanmanitours.com/ja/airport-transfer',
-            'en': 'https://kanmanitours.com/en/airport-transfer',
-            'x-default': 'https://kanmanitours.com/ja/airport-transfer',
-        }
-    }
-};
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+    const { locale } = await params;
+    return {
+        alternates: pageAlternates(locale, '/airport-transfer'),
+    };
+}
 
 
 export default async function AirportTransferPage() {
@@ -36,7 +35,7 @@ export default async function AirportTransferPage() {
                     }}>
                         <div style={{ maxWidth: '1000px' }}>
                             <p style={{
-                                fontFamily: "'Jost', Arial, sans-serif",
+                                fontFamily: "var(--font-jost), Arial, sans-serif",
                                 fontSize: '11px',
                                 fontWeight: '500',
                                 letterSpacing: '0.32em',
@@ -45,7 +44,7 @@ export default async function AirportTransferPage() {
                                 marginBottom: '16px'
                             }}>Arrival & Departure</p>
                             <h1 className="atp-title" style={{
-                                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                                fontFamily: "var(--font-cormorant), Georgia, serif",
                                 fontSize: 'clamp(36px, 5vw, 64px)',
                                 fontWeight: '500',
                                 color: '#F5F1EB',
@@ -57,7 +56,7 @@ export default async function AirportTransferPage() {
                             }}>{t('title')}</h1>
                             <div style={{ width: '56px', height: '1px', backgroundColor: '#C9933A', marginBottom: '20px' }} />
                             <p className="atp-subtitle" style={{
-                                fontFamily: "'Jost', Arial, sans-serif",
+                                fontFamily: "var(--font-jost), Arial, sans-serif",
                                 fontSize: '16px',
                                 fontWeight: '300',
                                 color: '#9A948F',

@@ -12,6 +12,11 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Build output that must never be linted:
+    "dist/**",      // Sanity Studio build (370 MB) — crashed ESLint with OOM
+    ".sanity/**",
+    "public/**",
+    "node_modules/**",
   ]),
 ]);
 

@@ -18,7 +18,7 @@ export default function CompanySections() {
         }}>
           <div>
             <p style={{
-              fontFamily: "'Jost', Arial, sans-serif",
+              fontFamily: "var(--font-jost), Arial, sans-serif",
               fontSize: '11px',
               fontWeight: '500',
               letterSpacing: '0.28em',
@@ -27,7 +27,7 @@ export default function CompanySections() {
               marginBottom: '16px'
             }}>OUR STORY</p>
             <h2 style={{
-              fontFamily: "'Cormorant Garamond', Georgia, serif",
+              fontFamily: "var(--font-cormorant), Georgia, serif",
               fontSize: 'clamp(28px, 3vw, 42px)',
               fontWeight: '500',
               color: '#1C1917',
@@ -41,7 +41,7 @@ export default function CompanySections() {
               backgroundColor: '#C9933A', marginBottom: '24px'
             }}/>
             <p style={{
-              fontFamily: "'Cormorant Garamond', Georgia, serif",
+              fontFamily: "var(--font-cormorant), Georgia, serif",
               fontSize: '18px',
               color: '#2C2420',
               lineHeight: '1.9',
@@ -52,7 +52,7 @@ export default function CompanySections() {
               over more than two decades of living between two worlds.
             </p>
             <p style={{
-              fontFamily: "'Cormorant Garamond', Georgia, serif",
+              fontFamily: "var(--font-cormorant), Georgia, serif",
               fontSize: '18px',
               color: '#2C2420',
               lineHeight: '1.9',
@@ -65,7 +65,7 @@ export default function CompanySections() {
               in mind.
             </p>
             <p style={{
-              fontFamily: "'Cormorant Garamond', Georgia, serif",
+              fontFamily: "var(--font-cormorant), Georgia, serif",
               fontSize: '18px',
               color: '#2C2420',
               lineHeight: '1.9'
@@ -98,14 +98,14 @@ export default function CompanySections() {
                 overflow: 'hidden'
               }}>
                 <div style={{
-                  fontFamily: "'Jost', Arial, sans-serif",
+                  fontFamily: "var(--font-jost), Arial, sans-serif",
                   fontSize: '10px',
                   letterSpacing: '0.2em',
                   color: '#9A948F',
                   textTransform: 'uppercase'
                 }}>Photo {i + 1}</div>
                 <div style={{
-                  fontFamily: "'Cormorant Garamond', Georgia, serif",
+                  fontFamily: "var(--font-cormorant), Georgia, serif",
                   fontSize: '14px',
                   color: '#6B6560',
                   textAlign: 'center',
@@ -141,7 +141,7 @@ export default function CompanySections() {
       }}>
         <div style={{ maxWidth: '1300px', margin: '0 auto' }}>
           <p style={{
-            fontFamily: "'Jost', Arial, sans-serif",
+            fontFamily: "var(--font-jost), Arial, sans-serif",
             fontSize: '11px',
             fontWeight: '500',
             letterSpacing: '0.28em',
@@ -150,7 +150,7 @@ export default function CompanySections() {
             marginBottom: '16px'
           }}>WHY CHOOSE US</p>
           <h2 style={{
-            fontFamily: "'Cormorant Garamond', Georgia, serif",
+            fontFamily: "var(--font-cormorant), Georgia, serif",
             fontSize: 'clamp(28px, 3vw, 42px)',
             fontWeight: '500',
             color: '#1C1917',
@@ -203,14 +203,14 @@ export default function CompanySections() {
                 borderLeft: '3px solid #C9933A'
               }}>
                 <div style={{
-                  fontFamily: "'Jost', Arial, sans-serif",
+                  fontFamily: "var(--font-jost), Arial, sans-serif",
                   fontSize: '11px',
                   color: '#C9933A',
                   letterSpacing: '0.22em',
                   marginBottom: '16px'
                 }}>{number}</div>
                 <h3 style={{
-                  fontFamily: "'Cormorant Garamond', Georgia, serif",
+                  fontFamily: "var(--font-cormorant), Georgia, serif",
                   fontSize: '22px',
                   fontWeight: '500',
                   color: '#1C1917',
@@ -218,7 +218,7 @@ export default function CompanySections() {
                   marginBottom: '12px'
                 }}>{title}</h3>
                 <p style={{
-                  fontFamily: "'Cormorant Garamond', Georgia, serif",
+                  fontFamily: "var(--font-cormorant), Georgia, serif",
                   fontSize: '16px',
                   color: '#4A4540',
                   lineHeight: '1.7'

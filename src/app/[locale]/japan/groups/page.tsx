@@ -4,17 +4,19 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Footer from '@/components/layout/FooterSection';
 import GroupInquiryForm from '@/components/forms/GroupInquiryForm';
+import { pageAlternates, pageOpenGraph } from '@/lib/site';
 
-export const metadata: Metadata = {
-    alternates: {
-        languages: {
-            'en': 'https://kanmanitours.com/en/japan/groups',
-            'x-default': 'https://kanmanitours.com/en/japan/groups',
-        }
-    },
-    title: 'Japan Group & Institutional Inquiries — Kanmani Tours',
-    description: 'Custom educational, university, and corporate group cultural exchange visits to Japan from India. Guided cultural experiences, full logistics, and chaperone coordination.',
-};
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+    const { locale } = await params;
+    const title = 'Japan Group & Institutional Inquiries — Kanmani Tours';
+    const description = 'Custom educational, university, and corporate group cultural exchange visits to Japan from India. Guided cultural experiences, full logistics, and chaperone coordination.';
+    return {
+        alternates: pageAlternates(locale, '/japan/groups', { englishOnly: true }),
+        title,
+        description,
+        openGraph: pageOpenGraph(title, description),
+    };
+}
 
 export default async function JapanGroupsPage({ params }: { params: Promise<{ locale: string }> }) {
     const { locale } = await params;
@@ -38,7 +40,7 @@ export default async function JapanGroupsPage({ params }: { params: Promise<{ lo
                     <div className="contact-hero-inner" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 60px' }}>
                         <div style={{ maxWidth: '1000px' }}>
                             <p style={{
-                                fontFamily: "'Jost', Arial, sans-serif",
+                                fontFamily: "var(--font-jost), Arial, sans-serif",
                                 fontSize: '11px',
                                 fontWeight: '500',
                                 letterSpacing: '0.32em',
@@ -48,7 +50,7 @@ export default async function JapanGroupsPage({ params }: { params: Promise<{ lo
                             }}>INSTITUTIONAL DELEGATIONS & STUDY VISITS</p>
 
                             <h1 className="contact-hero-title" style={{
-                                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                                fontFamily: "var(--font-cormorant), Georgia, serif",
                                 fontSize: 'clamp(36px, 5vw, 64px)',
                                 fontWeight: '500',
                                 color: '#F5F1EB',
@@ -67,7 +69,7 @@ export default async function JapanGroupsPage({ params }: { params: Promise<{ lo
                             }}/>
 
                             <p style={{
-                                fontFamily: "'Jost', Arial, sans-serif",
+                                fontFamily: "var(--font-jost), Arial, sans-serif",
                                 fontSize: '16px',
                                 fontWeight: '300',
                                 color: '#9A948F',
@@ -101,7 +103,7 @@ export default async function JapanGroupsPage({ params }: { params: Promise<{ lo
                         {/* High-level program highlights above the form */}
                         <div style={{ marginBottom: '40px' }}>
                             <h2 className="contact-form-title" style={{
-                                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                                fontFamily: "var(--font-cormorant), Georgia, serif",
                                 fontSize: '32px',
                                 fontWeight: '500',
                                 color: '#1C1917',
@@ -117,7 +119,7 @@ export default async function JapanGroupsPage({ params }: { params: Promise<{ lo
                             }}/>
 
                             <p style={{
-                                fontFamily: "'Jost', Arial, sans-serif",
+                                fontFamily: "var(--font-jost), Arial, sans-serif",
                                 fontSize: '15px',
                                 color: '#6B6560',
                                 lineHeight: '1.7',
@@ -135,10 +137,10 @@ export default async function JapanGroupsPage({ params }: { params: Promise<{ lo
                                         flexShrink: 0, marginTop: '2px', fontSize: '13px', fontWeight: 'bold'
                                     }}>✓</div>
                                     <div>
-                                        <strong style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '15px', color: '#1C1917', fontWeight: '600' }}>
+                                        <strong style={{ fontFamily: "var(--font-jost), Arial, sans-serif", fontSize: '15px', color: '#1C1917', fontWeight: '600' }}>
                                             Guided Cultural Experiences:
                                         </strong>
-                                        <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '15px', color: '#6B6560' }}>
+                                        <span style={{ fontFamily: "var(--font-jost), Arial, sans-serif", fontSize: '15px', color: '#6B6560' }}>
                                             {' '}Curated cultural workshops, historical explorations, and academic or institutional interactions across Japan.
                                         </span>
                                     </div>
@@ -152,10 +154,10 @@ export default async function JapanGroupsPage({ params }: { params: Promise<{ lo
                                         flexShrink: 0, marginTop: '2px', fontSize: '13px', fontWeight: 'bold'
                                     }}>✓</div>
                                     <div>
-                                        <strong style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '15px', color: '#1C1917', fontWeight: '600' }}>
+                                        <strong style={{ fontFamily: "var(--font-jost), Arial, sans-serif", fontSize: '15px', color: '#1C1917', fontWeight: '600' }}>
                                             End-to-End Group Logistics:
                                         </strong>
-                                        <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '15px', color: '#6B6560' }}>
+                                        <span style={{ fontFamily: "var(--font-jost), Arial, sans-serif", fontSize: '15px', color: '#6B6560' }}>
                                             {' '}Complete ground transport, Shinkansen group reservations, vetted student-friendly accommodations, and dietary-aligned dining.
                                         </span>
                                     </div>
@@ -169,10 +171,10 @@ export default async function JapanGroupsPage({ params }: { params: Promise<{ lo
                                         flexShrink: 0, marginTop: '2px', fontSize: '13px', fontWeight: 'bold'
                                     }}>✓</div>
                                     <div>
-                                        <strong style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '15px', color: '#1C1917', fontWeight: '600' }}>
+                                        <strong style={{ fontFamily: "var(--font-jost), Arial, sans-serif", fontSize: '15px', color: '#1C1917', fontWeight: '600' }}>
                                             Safety & Chaperone Coordination:
                                         </strong>
-                                        <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '15px', color: '#6B6560' }}>
+                                        <span style={{ fontFamily: "var(--font-jost), Arial, sans-serif", fontSize: '15px', color: '#6B6560' }}>
                                             {' '}Dedicated 24/7 bilingual on-ground coordination, chaperone guidance, emergency management, and institutional protocol compliance.
                                         </span>
                                     </div>
@@ -186,7 +188,7 @@ export default async function JapanGroupsPage({ params }: { params: Promise<{ lo
                                 marginBottom: '12px'
                             }}>
                                 <p style={{
-                                    fontFamily: "'Jost', Arial, sans-serif",
+                                    fontFamily: "var(--font-jost), Arial, sans-serif",
                                     fontSize: '14px',
                                     color: '#4A3E34',
                                     margin: 0,
@@ -206,7 +208,7 @@ export default async function JapanGroupsPage({ params }: { params: Promise<{ lo
                         {/* WHO THIS IS FOR */}
                         <div style={{ marginBottom: '40px' }}>
                             <h2 style={{
-                                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                                fontFamily: "var(--font-cormorant), Georgia, serif",
                                 fontSize: '22px',
                                 fontWeight: '500',
                                 color: '#1C1917',
@@ -224,8 +226,8 @@ export default async function JapanGroupsPage({ params }: { params: Promise<{ lo
                                     backgroundColor: '#FFFFFF',
                                     border: '1px solid #E8E4DC'
                                 }}>
-                                    <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '11px', fontWeight: '500', letterSpacing: '0.12em', color: '#C9933A', textTransform: 'uppercase', display: 'block', marginBottom: '4px' }}>K-12 & High Schools</span>
-                                    <p style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '14px', color: '#1C1917', margin: 0, lineHeight: 1.5 }}>Cultural discovery, STEAM workshops, and sister-school interactions.</p>
+                                    <span style={{ fontFamily: "var(--font-jost), Arial, sans-serif", fontSize: '11px', fontWeight: '500', letterSpacing: '0.12em', color: '#C9933A', textTransform: 'uppercase', display: 'block', marginBottom: '4px' }}>K-12 & High Schools</span>
+                                    <p style={{ fontFamily: "var(--font-jost), Arial, sans-serif", fontSize: '14px', color: '#1C1917', margin: 0, lineHeight: 1.5 }}>Cultural discovery, STEAM workshops, and sister-school interactions.</p>
                                 </div>
 
                                 <div style={{
@@ -233,8 +235,8 @@ export default async function JapanGroupsPage({ params }: { params: Promise<{ lo
                                     backgroundColor: '#FFFFFF',
                                     border: '1px solid #E8E4DC'
                                 }}>
-                                    <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '11px', fontWeight: '500', letterSpacing: '0.12em', color: '#C9933A', textTransform: 'uppercase', display: 'block', marginBottom: '4px' }}>Colleges & Universities</span>
-                                    <p style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '14px', color: '#1C1917', margin: 0, lineHeight: 1.5 }}>Industry immersion, academic exchanges, and research delegation visits.</p>
+                                    <span style={{ fontFamily: "var(--font-jost), Arial, sans-serif", fontSize: '11px', fontWeight: '500', letterSpacing: '0.12em', color: '#C9933A', textTransform: 'uppercase', display: 'block', marginBottom: '4px' }}>Colleges & Universities</span>
+                                    <p style={{ fontFamily: "var(--font-jost), Arial, sans-serif", fontSize: '14px', color: '#1C1917', margin: 0, lineHeight: 1.5 }}>Industry immersion, academic exchanges, and research delegation visits.</p>
                                 </div>
 
                                 <div style={{
@@ -242,8 +244,8 @@ export default async function JapanGroupsPage({ params }: { params: Promise<{ lo
                                     backgroundColor: '#FFFFFF',
                                     border: '1px solid #E8E4DC'
                                 }}>
-                                    <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '11px', fontWeight: '500', letterSpacing: '0.12em', color: '#C9933A', textTransform: 'uppercase', display: 'block', marginBottom: '4px' }}>Corporate & Leadership</span>
-                                    <p style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '14px', color: '#1C1917', margin: 0, lineHeight: 1.5 }}>Executive benchmarking, business delegations, and professional workshops.</p>
+                                    <span style={{ fontFamily: "var(--font-jost), Arial, sans-serif", fontSize: '11px', fontWeight: '500', letterSpacing: '0.12em', color: '#C9933A', textTransform: 'uppercase', display: 'block', marginBottom: '4px' }}>Corporate & Leadership</span>
+                                    <p style={{ fontFamily: "var(--font-jost), Arial, sans-serif", fontSize: '14px', color: '#1C1917', margin: 0, lineHeight: 1.5 }}>Executive benchmarking, business delegations, and professional workshops.</p>
                                 </div>
                             </div>
                         </div>
@@ -251,7 +253,7 @@ export default async function JapanGroupsPage({ params }: { params: Promise<{ lo
                         {/* DIRECT CONTACT */}
                         <div style={{ marginBottom: '40px' }}>
                             <h2 style={{
-                                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                                fontFamily: "var(--font-cormorant), Georgia, serif",
                                 fontSize: '22px',
                                 fontWeight: '500',
                                 color: '#1C1917',
@@ -268,14 +270,14 @@ export default async function JapanGroupsPage({ params }: { params: Promise<{ lo
                                 backgroundColor: '#FFFFFF',
                                 border: '1px solid #E8E4DC'
                             }}>
-                                <p style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '13px', color: '#6B6560', margin: '0 0 12px', lineHeight: 1.6 }}>
+                                <p style={{ fontFamily: "var(--font-jost), Arial, sans-serif", fontSize: '13px', color: '#6B6560', margin: '0 0 12px', lineHeight: 1.6 }}>
                                     Prefer direct coordination? Reach our institutional team directly:
                                 </p>
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                                    <a href="mailto:kanmanitours@gmail.com" style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '14px', color: '#1C1917', textDecoration: 'none', fontWeight: '500' }}>
+                                    <a href="mailto:kanmanitours@gmail.com" style={{ fontFamily: "var(--font-jost), Arial, sans-serif", fontSize: '14px', color: '#1C1917', textDecoration: 'none', fontWeight: '500' }}>
                                         ✉ kanmanitours@gmail.com
                                     </a>
-                                    <a href="tel:+919597716664" style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '14px', color: '#1C1917', textDecoration: 'none', fontWeight: '500' }}>
+                                    <a href="tel:+919597716664" style={{ fontFamily: "var(--font-jost), Arial, sans-serif", fontSize: '14px', color: '#1C1917', textDecoration: 'none', fontWeight: '500' }}>
                                         ✆ +91 95977-16664
                                     </a>
                                 </div>
@@ -289,7 +291,7 @@ export default async function JapanGroupsPage({ params }: { params: Promise<{ lo
                             borderLeft: '3px solid #C9933A'
                         }}>
                             <p style={{
-                                fontFamily: "'Jost', Arial, sans-serif",
+                                fontFamily: "var(--font-jost), Arial, sans-serif",
                                 fontSize: '11px',
                                 fontWeight: '500',
                                 letterSpacing: '0.2em',
@@ -298,7 +300,7 @@ export default async function JapanGroupsPage({ params }: { params: Promise<{ lo
                                 margin: '0 0 8px'
                             }}>LOCAL LEADERSHIP</p>
                             <p style={{
-                                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                                fontFamily: "var(--font-cormorant), Georgia, serif",
                                 fontSize: '17px',
                                 fontStyle: 'italic',
                                 color: '#F5F1EB',
@@ -308,7 +310,7 @@ export default async function JapanGroupsPage({ params }: { params: Promise<{ lo
                                 "With 28 years residing and operating in Japan, our mission is to provide Indian students and teams with an authentic, safe, and inspiring educational journey."
                             </p>
                             <p style={{
-                                fontFamily: "'Jost', Arial, sans-serif",
+                                fontFamily: "var(--font-jost), Arial, sans-serif",
                                 fontSize: '12px',
                                 color: '#9A948F',
                                 margin: 0

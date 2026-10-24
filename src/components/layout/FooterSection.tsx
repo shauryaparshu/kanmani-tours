@@ -12,7 +12,7 @@ export default function FooterSection() {
     <footer style={{
       backgroundColor: '#111010',
       borderTop: '2px solid #C9933A',
-      fontFamily: "'Jost', Arial, sans-serif"
+      fontFamily: "var(--font-jost), Arial, sans-serif"
     }}>
       {/* ROW 1 — MAIN FOOTER CONTENT */}
       <div className="r-grid-footer" style={{
@@ -35,12 +35,12 @@ export default function FooterSection() {
               </g>
               <line x1="44" y1="8" x2="44" y2="44" stroke="#C9933A" strokeWidth="0.5" opacity="0.35" />
               <text x="54" y="32"
-                  style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "34px", fontWeight: "400", letterSpacing: "0.13em", fill: "#F5F1EB" }}>
+                  style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontSize: "34px", fontWeight: "400", letterSpacing: "0.13em", fill: "#F5F1EB" }}>
                   Kanmani
               </text>
               <line x1="54" y1="37" x2="188" y2="37" stroke="#C9933A" strokeWidth="0.5" opacity="0.60" />
               <text x="121" y="51" textAnchor="middle"
-                  style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "16px", fontWeight: "bold", letterSpacing: "0.3em", fill: "#C9933A" }}>
+                  style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontSize: "16px", fontWeight: "bold", letterSpacing: "0.3em", fill: "#C9933A" }}>
                   T O U R S
               </text>
             </svg>
@@ -263,7 +263,7 @@ export default function FooterSection() {
             marginTop: '24px'
           }}>
             <div style={{
-              fontFamily: "'Cormorant Garamond', Georgia, serif",
+              fontFamily: "var(--font-cormorant), Georgia, serif",
               fontSize: '15px',
               color: '#F5F1EB',
               marginBottom: '6px'

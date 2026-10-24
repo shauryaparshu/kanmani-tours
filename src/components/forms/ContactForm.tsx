@@ -10,7 +10,8 @@ export default function ContactForm() {
         email: '',
         phone: '',
         subject: 'Tour Enquiry',
-        message: ''
+        message: '',
+        website: ''
     });
 
     const [errors, setErrors] = useState<Record<string, string>>({});
@@ -79,7 +80,7 @@ export default function ContactForm() {
             if (result.success) {
                 setSubmitted(true);
             } else {
-                setErrors({ submit: 'Something went wrong. Please email us directly.' });
+                setErrors({ submit: result.error || 'Something went wrong. Please email us directly.' });
             }
         } catch {
             setErrors({ submit: 'Connection error. Please email kanmanitours@gmail.com' });
@@ -89,7 +90,7 @@ export default function ContactForm() {
     };
 
     const inputStyle = (name: string) => ({
-        fontFamily: "'Jost', Arial, sans-serif",
+        fontFamily: "var(--font-jost), Arial, sans-serif",
         fontSize: '15px',
         color: '#1C1917',
         backgroundColor: focusedField === name ? '#FFFFFF' : '#FAFAF7',
@@ -103,7 +104,7 @@ export default function ContactForm() {
     });
 
     const labelStyle = {
-        fontFamily: "'Jost', Arial, sans-serif",
+        fontFamily: "var(--font-jost), Arial, sans-serif",
         fontSize: '12px',
         fontWeight: '500',
         letterSpacing: '0.18em',
@@ -120,14 +121,14 @@ export default function ContactForm() {
                     width: '64px', height: '64px', borderRadius: '50%', backgroundColor: 'rgba(201,147,58,0.1)',
                     display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 24px', color: '#C9933A', fontSize: '32px'
                 }}>✓</div>
-                <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: '28px', fontWeight: '500', color: '#1C1917', marginBottom: '12px' }}>Message Sent</h2>
-                <p style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '16px', color: '#6B6560', lineHeight: '1.6', maxWidth: '400px', margin: '0 auto 24px' }}>
+                <h2 style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontSize: '28px', fontWeight: '500', color: '#1C1917', marginBottom: '12px' }}>Message Sent</h2>
+                <p style={{ fontFamily: "var(--font-jost), Arial, sans-serif", fontSize: '16px', color: '#6B6560', lineHeight: '1.6', maxWidth: '400px', margin: '0 auto 24px' }}>
                     Thank you, {formData.name.split(' ')[0]}. We have received your enquiry and will respond within 24 hours.
                 </p>
                 <button
                     onClick={() => setSubmitted(false)}
                     style={{
-                        fontFamily: "'Jost', Arial, sans-serif", fontSize: '12px', fontWeight: '600', letterSpacing: '0.2em', color: '#C9933A',
+                        fontFamily: "var(--font-jost), Arial, sans-serif", fontSize: '12px', fontWeight: '600', letterSpacing: '0.2em', color: '#C9933A',
                         background: 'none', border: 'none', cursor: 'pointer', textTransform: 'uppercase'
                     }}
                 >
@@ -236,9 +237,17 @@ export default function ContactForm() {
                 {errors.message && <span style={{ color: '#E53E3E', fontSize: '12px', marginTop: '4px', display: 'block' }}>{errors.message}</span>}
             </div>
 
+            {/* Honeypot: hidden from people, filled in by bots */}
+            <div aria-hidden="true" style={{ position: 'absolute', left: '-10000px', width: '1px', height: '1px', overflow: 'hidden' }}>
+                <label>
+                    Website
+                    <input name="website" type="text" tabIndex={-1} autoComplete="off" value={formData.website} onChange={handleChange} />
+                </label>
+            </div>
+
             {errors.submit && (
                 <p style={{
-                    fontFamily: "'Jost', Arial, sans-serif",
+                    fontFamily: "var(--font-jost), Arial, sans-serif",
                     fontSize: '13px',
                     color: '#C0392B',
                     marginBottom: '12px',
@@ -250,7 +259,7 @@ export default function ContactForm() {
                 type="submit"
                 disabled={loading}
                 style={{
-                    fontFamily: "'Jost', Arial, sans-serif",
+                    fontFamily: "var(--font-jost), Arial, sans-serif",
                     fontSize: '13px',
                     fontWeight: '600',
                     letterSpacing: '0.28em',
@@ -281,7 +290,7 @@ export default function ContactForm() {
             </button>
 
             <p style={{
-                fontFamily: "'Jost', Arial, sans-serif",
+                fontFamily: "var(--font-jost), Arial, sans-serif",
                 fontSize: '12px',
                 color: '#9A948F',
                 textAlign: 'center',

@@ -1,15 +1,14 @@
+import type { Metadata } from 'next';
 import Footer from '@/components/layout/FooterSection';
 import MoreDetailsButton from '@/components/ui/MoreDetailsButton';
+import { pageAlternates } from '@/lib/site';
 
-export const metadata = {
-    alternates: {
-        languages: {
-            'ja': 'https://kanmanitours.com/ja/services',
-            'en': 'https://kanmanitours.com/en/services',
-            'x-default': 'https://kanmanitours.com/ja/services',
-        }
-    }
-};
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+    const { locale } = await params;
+    return {
+        alternates: pageAlternates(locale, '/services'),
+    };
+}
 
 
 export default function ServicesPage() {
@@ -24,7 +23,7 @@ export default function ServicesPage() {
           borderBottom: '1px solid rgba(201,147,58,0.2)'
         }}>
           <p style={{
-            fontFamily: "'Jost', Arial, sans-serif",
+            fontFamily: "var(--font-jost), Arial, sans-serif",
             fontSize: '11px',
             fontWeight: '500',
             letterSpacing: '0.32em',
@@ -33,7 +32,7 @@ export default function ServicesPage() {
             marginBottom: '16px'
           }}>WHAT WE OFFER</p>
           <h1 style={{
-            fontFamily: "'Cormorant Garamond', Georgia, serif",
+            fontFamily: "var(--font-cormorant), Georgia, serif",
             fontSize: 'clamp(36px, 5vw, 64px)',
             fontWeight: '500',
             color: '#F5F1EB',
@@ -46,7 +45,7 @@ export default function ServicesPage() {
             backgroundColor: '#C9933A', marginBottom: '20px'
           }}/>
           <p style={{
-            fontFamily: "'Jost', Arial, sans-serif",
+            fontFamily: "var(--font-jost), Arial, sans-serif",
             fontSize: '16px',
             fontWeight: '300',
             color: '#9A948F',
@@ -113,7 +112,7 @@ export default function ServicesPage() {
               >
                 <div>
                   <div style={{
-                    fontFamily: "'Jost', Arial, sans-serif",
+                    fontFamily: "var(--font-jost), Arial, sans-serif",
                     fontSize: '11px',
                     fontWeight: '400',
                     letterSpacing: '0.22em',
@@ -121,7 +120,7 @@ export default function ServicesPage() {
                     marginBottom: '16px'
                   }}>{number}</div>
                   <h2 style={{
-                    fontFamily: "'Cormorant Garamond', Georgia, serif",
+                    fontFamily: "var(--font-cormorant), Georgia, serif",
                     fontSize: 'clamp(24px, 2.5vw, 36px)',
                     fontWeight: '500',
                     color: '#1C1917',
@@ -133,7 +132,7 @@ export default function ServicesPage() {
                     backgroundColor: '#C9933A', marginBottom: '20px'
                   }}/>
                   <p style={{
-                    fontFamily: "'Cormorant Garamond', Georgia, serif",
+                    fontFamily: "var(--font-cormorant), Georgia, serif",
                     fontSize: '17px',
                     color: '#2C2420',
                     lineHeight: '1.8',
@@ -146,7 +145,7 @@ export default function ServicesPage() {
                         alignItems: 'flex-start',
                         gap: '12px',
                         marginBottom: '10px',
-                        fontFamily: "'Jost', Arial, sans-serif",
+                        fontFamily: "var(--font-jost), Arial, sans-serif",
                         fontSize: '14px',
                         color: '#4A4540',
                         lineHeight: '1.5'
@@ -182,7 +181,7 @@ export default function ServicesPage() {
           }}>
             <div>
               <h3 style={{
-                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                fontFamily: "var(--font-cormorant), Georgia, serif",
                 fontSize: '28px',
                 fontWeight: '500',
                 color: '#F5F1EB',
@@ -191,7 +190,7 @@ export default function ServicesPage() {
                 Need a custom service?
               </h3>
               <p style={{
-                fontFamily: "'Jost', Arial, sans-serif",
+                fontFamily: "var(--font-jost), Arial, sans-serif",
                 fontSize: '14px',
                 color: '#9A948F',
                 fontWeight: '300'
@@ -200,7 +199,7 @@ export default function ServicesPage() {
               </p>
             </div>
             <a href="/contact" style={{
-              fontFamily: "'Jost', Arial, sans-serif",
+              fontFamily: "var(--font-jost), Arial, sans-serif",
               fontSize: '12px',
               fontWeight: '600',
               letterSpacing: '0.28em',

@@ -292,7 +292,7 @@ export default function GalleryPageClient({ tours }: Props) {
       }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
           <div style={{
-            fontFamily: "'Jost', Arial, sans-serif",
+            fontFamily: "var(--font-jost), Arial, sans-serif",
             fontSize: '11px',
             color: '#C9933A',
             textTransform: 'uppercase',
@@ -302,7 +302,7 @@ export default function GalleryPageClient({ tours }: Props) {
             OUR MOMENTS
           </div>
           <h1 style={{
-            fontFamily: "'Cormorant Garamond', Georgia, serif",
+            fontFamily: "var(--font-cormorant), Georgia, serif",
             fontSize: 'clamp(36px, 5vw, 64px)',
             fontWeight: '500',
             color: '#F5F1EB',
@@ -318,7 +318,7 @@ export default function GalleryPageClient({ tours }: Props) {
             marginBottom: '24px'
           }} />
           <p style={{
-            fontFamily: "'Jost', Arial, sans-serif",
+            fontFamily: "var(--font-jost), Arial, sans-serif",
             fontWeight: '300',
             fontSize: '16px',
             color: '#9A948F',
@@ -355,7 +355,7 @@ export default function GalleryPageClient({ tours }: Props) {
                   onClick={() => setActiveCategory(cat.value)}
                   className="gallery-category-pill"
                   style={{
-                    fontFamily: "'Jost', Arial, sans-serif",
+                    fontFamily: "var(--font-jost), Arial, sans-serif",
                     fontSize: '12px',
                     fontWeight: '400',
                     letterSpacing: '0.15em',
@@ -376,7 +376,7 @@ export default function GalleryPageClient({ tours }: Props) {
             })}
           </div>
           <div style={{
-            fontFamily: "'Jost', Arial, sans-serif",
+            fontFamily: "var(--font-jost), Arial, sans-serif",
             fontSize: '12px',
             color: '#9A948F',
             whiteSpace: 'nowrap'
@@ -396,7 +396,7 @@ export default function GalleryPageClient({ tours }: Props) {
             <div style={{
               padding: '80px 0',
               textAlign: 'center',
-              fontFamily: "'Cormorant Garamond', Georgia, serif",
+              fontFamily: "var(--font-cormorant), Georgia, serif",
               fontSize: '22px',
               fontStyle: 'italic',
               color: '#9A948F'
@@ -428,7 +428,7 @@ export default function GalleryPageClient({ tours }: Props) {
                       gap: '8px'
                     }}>
                       <h2 className="gallery-event-title" style={{
-                        fontFamily: "'Cormorant Garamond', Georgia, serif",
+                        fontFamily: "var(--font-cormorant), Georgia, serif",
                         fontSize: '32px',
                         fontWeight: '500',
                         color: '#1C1917',
@@ -440,7 +440,7 @@ export default function GalleryPageClient({ tours }: Props) {
                       </h2>
                       <div className="gallery-event-meta-row" style={{ display: 'flex', alignItems: 'center', gap: '16px', width: '100%' }}>
                         <span className="gallery-event-date" style={{
-                          fontFamily: "'Jost', Arial, sans-serif",
+                          fontFamily: "var(--font-jost), Arial, sans-serif",
                           fontSize: '12px',
                           color: '#9A948F',
                           fontWeight: '500',
@@ -449,7 +449,7 @@ export default function GalleryPageClient({ tours }: Props) {
                           {formatHeaderDate(tour.startDate)}
                         </span>
                         <span style={{
-                          fontFamily: "'Jost', Arial, sans-serif",
+                          fontFamily: "var(--font-jost), Arial, sans-serif",
                           fontSize: '10px',
                           color: '#C9933A',
                           border: '1px solid rgba(201,147,58,0.4)',
@@ -467,7 +467,7 @@ export default function GalleryPageClient({ tours }: Props) {
                             onClick={() => toggleExpand(tour.id)}
                             className={`gallery-view-btn mobile-only-btn ${isExpanded ? 'collapse-mode' : 'view-mode'}`}
                             style={{
-                              fontFamily: "'Jost', Arial, sans-serif",
+                              fontFamily: "var(--font-jost), Arial, sans-serif",
                               fontSize: '15px',
                               fontWeight: '700',
                               letterSpacing: '0.22em',
@@ -514,7 +514,7 @@ export default function GalleryPageClient({ tours }: Props) {
                         onClick={() => toggleExpand(tour.id)}
                         className="gallery-view-btn desktop-only-btn"
                         style={{
-                          fontFamily: "'Jost', Arial, sans-serif",
+                          fontFamily: "var(--font-jost), Arial, sans-serif",
                           fontSize: '15px',
                           fontWeight: '700',
                           letterSpacing: '0.22em',
@@ -605,7 +605,7 @@ export default function GalleryPageClient({ tours }: Props) {
         borderTop: '1px solid rgba(201,147,58,0.2)'
       }}>
         <h2 style={{
-          fontFamily: "'Cormorant Garamond', Georgia, serif",
+          fontFamily: "var(--font-cormorant), Georgia, serif",
           fontSize: '42px',
           fontStyle: 'italic',
           fontWeight: '400',
@@ -625,7 +625,7 @@ export default function GalleryPageClient({ tours }: Props) {
               backgroundColor: '#C9933A',
               color: '#1C1917',
               padding: '18px 48px',
-              fontFamily: "'Jost', Arial, sans-serif",
+              fontFamily: "var(--font-jost), Arial, sans-serif",
               fontSize: '12px',
               fontWeight: '600',
               letterSpacing: '0.28em',
@@ -642,7 +642,7 @@ export default function GalleryPageClient({ tours }: Props) {
               backgroundColor: 'transparent',
               color: '#F5F1EB',
               padding: '18px 48px',
-              fontFamily: "'Jost', Arial, sans-serif",
+              fontFamily: "var(--font-jost), Arial, sans-serif",
               fontSize: '12px',
               fontWeight: '600',
               letterSpacing: '0.28em',

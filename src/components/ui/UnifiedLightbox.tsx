@@ -179,7 +179,7 @@ export default function UnifiedLightbox({ images, initialIndex, onClose }: Unifi
             <h2 
               className="lightbox-title-left"
               style={{
-                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                fontFamily: "var(--font-cormorant), Georgia, serif",
                 fontSize: 'clamp(17px, 1.8vw, 22px)',
                 fontWeight: 700,
                 color: '#FFB834',
@@ -200,7 +200,7 @@ export default function UnifiedLightbox({ images, initialIndex, onClose }: Unifi
             <span 
               className="lightbox-location-sub"
               style={{
-                fontFamily: "'Jost', Arial, sans-serif",
+                fontFamily: "var(--font-jost), Arial, sans-serif",
                 fontSize: '12px',
                 fontWeight: 500,
                 color: '#FFF7E8',
@@ -252,7 +252,7 @@ export default function UnifiedLightbox({ images, initialIndex, onClose }: Unifi
                 borderRadius: '4px',
                 color: '#C9933A',
                 textDecoration: 'none',
-                fontFamily: "'Jost', Arial, sans-serif",
+                fontFamily: "var(--font-jost), Arial, sans-serif",
                 fontSize: '12px',
                 fontWeight: 600,
                 letterSpacing: '0.12em',
@@ -338,7 +338,7 @@ export default function UnifiedLightbox({ images, initialIndex, onClose }: Unifi
             </div>
             <div style={{
               marginTop: '8px',
-              fontFamily: "'Jost', Arial, sans-serif",
+              fontFamily: "var(--font-jost), Arial, sans-serif",
               fontSize: '11px',
               letterSpacing: '0.22em',
               textTransform: 'uppercase',
@@ -371,7 +371,7 @@ export default function UnifiedLightbox({ images, initialIndex, onClose }: Unifi
             </div>
             <div className="nav-text" style={{
               marginTop: '8px',
-              fontFamily: "'Jost', Arial, sans-serif",
+              fontFamily: "var(--font-jost), Arial, sans-serif",
               fontSize: '11px',
               letterSpacing: '0.22em',
               textTransform: 'uppercase',
@@ -419,7 +419,7 @@ export default function UnifiedLightbox({ images, initialIndex, onClose }: Unifi
             position: 'absolute',
             top: '16px',
             right: '16px',
-            fontFamily: "'Jost', Arial, sans-serif",
+            fontFamily: "var(--font-jost), Arial, sans-serif",
             fontSize: '24px',
             fontWeight: '700',
             letterSpacing: '0.12em',
@@ -545,7 +545,7 @@ export default function UnifiedLightbox({ images, initialIndex, onClose }: Unifi
           max-height: 100dvh;
         }
         .lightbox-title-left {
-          font-family: 'Cormorant Garamond', Georgia, serif;
+          font-family: var(--font-cormorant), Georgia, serif;
           font-size: clamp(16px, 1.8vw, 22px);
           font-weight: 700;
           color: #FFB834;

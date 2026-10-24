@@ -105,7 +105,7 @@ function TourCard({ tour, tLabels, categories }: { tour: Tour; tLabels: any, cat
                             backgroundImage: 'radial-gradient(circle at center, rgba(212,154,54,0.15) 0%, transparent 60%)'
                         }}>
                             <span style={{
-                                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                                fontFamily: "var(--font-cormorant), Georgia, serif",
                                 fontSize: '18px', letterSpacing: '0.2em', color: 'rgba(212,154,54,0.4)',
                                 textTransform: 'uppercase'
                             }}>
@@ -127,7 +127,7 @@ function TourCard({ tour, tLabels, categories }: { tour: Tour; tLabels: any, cat
                     }}>
                         {!upcoming && (
                             <span style={{ 
-                                fontFamily: "'Jost', Arial, sans-serif",
+                                fontFamily: "var(--font-jost), Arial, sans-serif",
                                 fontSize: '10px',
                                 fontWeight: '600',
                                 letterSpacing: '0.15em',
@@ -141,7 +141,7 @@ function TourCard({ tour, tLabels, categories }: { tour: Tour; tLabels: any, cat
                         )}
                         <span
                             style={{ 
-                                fontFamily: "'Jost', Arial, sans-serif",
+                                fontFamily: "var(--font-jost), Arial, sans-serif",
                                 fontSize: '10px',
                                 fontWeight: '600',
                                 letterSpacing: '0.22em',
@@ -157,7 +157,7 @@ function TourCard({ tour, tLabels, categories }: { tour: Tour; tLabels: any, cat
                 </div>
             <div style={{ padding: '24px', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
                 <p style={{
-                    fontFamily: "'Jost', Arial, sans-serif",
+                    fontFamily: "var(--font-jost), Arial, sans-serif",
                     fontSize: '12px',
                     fontWeight: '500',
                     color: '#4a4a4a',
@@ -168,7 +168,7 @@ function TourCard({ tour, tLabels, categories }: { tour: Tour; tLabels: any, cat
                 </p>
                 <h2 style={{ marginBottom: '8px' }}>
                     <span style={{
-                        fontFamily: "'Jost', Arial, sans-serif",
+                        fontFamily: "var(--font-jost), Arial, sans-serif",
                         fontSize: '20px',
                         fontWeight: '600',
                         color: hovered ? '#d49a36' : '#1C1917',
@@ -184,7 +184,7 @@ function TourCard({ tour, tLabels, categories }: { tour: Tour; tLabels: any, cat
                     display: 'flex',
                     alignItems: 'center',
                     gap: '6px',
-                    fontFamily: "'Jost', Arial, sans-serif",
+                    fontFamily: "var(--font-jost), Arial, sans-serif",
                     fontSize: '12px',
                     color: '#4a4a4a',
                     letterSpacing: '0.06em',
@@ -198,7 +198,7 @@ function TourCard({ tour, tLabels, categories }: { tour: Tour; tLabels: any, cat
                 
                 {showComingSoon && (
                     <div style={{
-                        fontFamily: "'Jost', Arial, sans-serif",
+                        fontFamily: "var(--font-jost), Arial, sans-serif",
                         fontSize: '11px',
                         fontWeight: '500',
                         letterSpacing: '0.15em',
@@ -211,7 +211,7 @@ function TourCard({ tour, tLabels, categories }: { tour: Tour; tLabels: any, cat
                 )}
 
                 <p style={{
-                    fontFamily: "'Cormorant Garamond', Georgia, serif",
+                    fontFamily: "var(--font-cormorant), Georgia, serif",
                     fontSize: '16px',
                     color: '#4A4540',
                     lineHeight: '1.6',
@@ -226,7 +226,7 @@ function TourCard({ tour, tLabels, categories }: { tour: Tour; tLabels: any, cat
 
                 {upcoming && tour.seatsLeft > 0 && tour.seatsLeft <= 5 && (
                     <div style={{
-                        fontFamily: "'Jost', Arial, sans-serif",
+                        fontFamily: "var(--font-jost), Arial, sans-serif",
                         fontSize: '11px',
                         fontWeight: '600',
                         letterSpacing: '0.15em',
@@ -246,7 +246,7 @@ function TourCard({ tour, tLabels, categories }: { tour: Tour; tLabels: any, cat
 
                 <div style={{ marginTop: 'auto' }}>
                     <span style={{
-                        fontFamily: "'Jost', Arial, sans-serif",
+                        fontFamily: "var(--font-jost), Arial, sans-serif",
                         fontSize: '13px',
                         fontWeight: '600',
                         letterSpacing: '0.2em',
@@ -441,7 +441,7 @@ export default function ToursListClient({ tours, categories, countries }: Props)
                     <select
                         className="tlc-category-select"
                         style={{
-                            fontFamily: "'Jost', Arial, sans-serif",
+                            fontFamily: "var(--font-jost), Arial, sans-serif",
                             fontSize: '13px',
                             fontWeight: '400',
                             letterSpacing: '0.08em',
@@ -470,7 +470,7 @@ export default function ToursListClient({ tours, categories, countries }: Props)
                     <select
                         className="tlc-country-select"
                         style={{
-                            fontFamily: "'Jost', Arial, sans-serif",
+                            fontFamily: "var(--font-jost), Arial, sans-serif",
                             fontSize: '13px',
                             fontWeight: '400',
                             letterSpacing: '0.08em',
@@ -505,7 +505,7 @@ export default function ToursListClient({ tours, categories, countries }: Props)
                             onChange={e => setFilters(prev => ({ ...prev, search: e.target.value }))}
                             style={{
                                 width: '100%',
-                                fontFamily: "'Jost', Arial, sans-serif",
+                                fontFamily: "var(--font-jost), Arial, sans-serif",
                                 fontSize: '13px',
                                 color: '#1C1917',
                                 backgroundColor: '#FFFFFF',
@@ -528,7 +528,7 @@ export default function ToursListClient({ tours, categories, countries }: Props)
                                 key={s}
                                 onClick={() => setFilters(prev => ({ ...prev, status: s }))}
                                 style={{
-                                    fontFamily: "'Jost', Arial, sans-serif",
+                                    fontFamily: "var(--font-jost), Arial, sans-serif",
                                     fontSize: '12px',
                                     fontWeight: '500',
                                     letterSpacing: '0.15em',
@@ -556,7 +556,7 @@ export default function ToursListClient({ tours, categories, countries }: Props)
                 <div className="tours-filter-right" style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
                     <select
                         style={{
-                            fontFamily: "'Jost', Arial, sans-serif",
+                            fontFamily: "var(--font-jost), Arial, sans-serif",
                             fontSize: '13px',
                             color: '#1C1917',
                             backgroundColor: '#FFFFFF',
@@ -580,7 +580,7 @@ export default function ToursListClient({ tours, categories, countries }: Props)
                         onClick={clearFilters}
                         style={{
                             visibility: hasFilters ? 'visible' : 'hidden',
-                            fontFamily: "'Jost', Arial, sans-serif",
+                            fontFamily: "var(--font-jost), Arial, sans-serif",
                             fontSize: '12px',
                             fontWeight: '500',
                             color: '#9A948F',
@@ -595,7 +595,7 @@ export default function ToursListClient({ tours, categories, countries }: Props)
                     </button>
 
                     <span style={{
-                        fontFamily: "'Jost', Arial, sans-serif",
+                        fontFamily: "var(--font-jost), Arial, sans-serif",
                         fontSize: '13px',
                         fontWeight: '400',
                         letterSpacing: '0.12em',
@@ -616,12 +616,12 @@ export default function ToursListClient({ tours, categories, countries }: Props)
                 {filtered.length === 0 ? (
                     <div style={{ textAlign: 'center', padding: '100px 0', color: '#9A948F' }}>
                         <div style={{ fontSize: '48px', marginBottom: '16px' }}>🗺️</div>
-                        <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '24px', fontWeight: '500' }}>{tLabels('noTours')}</h3>
+                        <h3 style={{ fontFamily: "var(--font-cormorant), serif", fontSize: '24px', fontWeight: '500' }}>{tLabels('noTours')}</h3>
                         <button 
                             onClick={clearFilters}
                             style={{
                                 marginTop: '20px',
-                                fontFamily: "'Jost', Arial, sans-serif",
+                                fontFamily: "var(--font-jost), Arial, sans-serif",
                                 fontSize: '12px',
                                 fontWeight: '500',
                                 letterSpacing: '0.15em',

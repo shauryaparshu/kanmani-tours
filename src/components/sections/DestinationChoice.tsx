@@ -66,7 +66,7 @@ function DestinationCard({ href, image, title, desc, ctaLabel }: DestinationCard
           flexDirection: 'column' 
         }}>
           <h3 style={{ 
-            fontFamily: "'Jost', Arial, sans-serif", 
+            fontFamily: "var(--font-jost), Arial, sans-serif", 
             fontSize: '1.65rem', 
             fontWeight: 650, 
             color: '#1a1918', 
@@ -75,7 +75,7 @@ function DestinationCard({ href, image, title, desc, ctaLabel }: DestinationCard
             margin: '0 0 0.5rem' 
           }}>{title}</h3>
           <p style={{ 
-            fontFamily: "'Cormorant Garamond', Georgia, serif", 
+            fontFamily: "var(--font-cormorant), Georgia, serif", 
             fontSize: '18px', 
             color: '#4A3E34', 
             lineHeight: 1.6, 
@@ -102,7 +102,7 @@ function DestinationCard({ href, image, title, desc, ctaLabel }: DestinationCard
             alignItems: 'center', 
             gap: '8px', 
             color: '#d49a36', 
-            fontFamily: "'Jost', Arial, sans-serif", 
+            fontFamily: "var(--font-jost), Arial, sans-serif", 
             fontSize: '13px', 
             fontWeight: 700, 
             letterSpacing: '0.16em', 
@@ -169,21 +169,21 @@ export default function DestinationChoice() {
           </div>
 
           <div style={{ flex: '2 1 400px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-            <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 'clamp(32px, 4vw, 48px)', color: '#F5F1EB', marginBottom: '24px', fontWeight: 400 }}>
+            <h1 style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontSize: 'clamp(32px, 4vw, 48px)', color: '#F5F1EB', marginBottom: '24px', fontWeight: 400 }}>
               {t('heading')}
-            </h2>
+            </h1>
             
             <div style={{ position: 'relative', borderLeft: '4px solid #EBB14E', padding: '20px 24px', backgroundColor: 'rgba(235, 177, 78, 0.04)', marginBottom: '24px', borderRadius: '0 8px 8px 0' }}>
-              <span style={{ position: 'absolute', top: '-15px', left: '12px', fontSize: '72px', fontFamily: "'Cormorant Garamond', Georgia, serif", color: 'rgba(201, 147, 58, 0.12)', lineHeight: 1, pointerEvents: 'none', userSelect: 'none' }}>“</span>
-              <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 'clamp(15px, 1.25vw, 18px)', fontStyle: 'italic', color: '#F5F1EB', lineHeight: 1.6, margin: 0, fontWeight: 400, letterSpacing: '0.01em', position: 'relative', zIndex: 1 }}>
+              <span style={{ position: 'absolute', top: '-15px', left: '12px', fontSize: '72px', fontFamily: "var(--font-cormorant), Georgia, serif", color: 'rgba(201, 147, 58, 0.12)', lineHeight: 1, pointerEvents: 'none', userSelect: 'none' }}>“</span>
+              <p style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontSize: 'clamp(15px, 1.25vw, 18px)', fontStyle: 'italic', color: '#F5F1EB', lineHeight: 1.6, margin: 0, fontWeight: 400, letterSpacing: '0.01em', position: 'relative', zIndex: 1 }}>
                 "Born in India, shaped by 28 years in Japan, and inspired by both— I walk forward as a bridge between the two cultures that live within me."
               </p>
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <p style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '11px', fontWeight: 500, letterSpacing: '0.32em', color: '#EBB14E', textTransform: 'uppercase', marginBottom: '6px' }}>THE FOUNDER</p>
-              <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 'clamp(28px, 3vw, 36px)', fontWeight: 400, color: '#F5F1EB', letterSpacing: '0.06em', marginBottom: '4px', margin: 0 }}>Dr. Kanmani</p>
-              <p style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '11px', fontWeight: 400, letterSpacing: '0.12em', color: '#EBB14E', lineHeight: 1.2, marginBottom: '0' }}>PhD SCHOLAR · ENTREPRENEUR · MOTIVATIONAL SPEAKER · HUMANITARIAN</p>
+              <p style={{ fontFamily: "var(--font-jost), Arial, sans-serif", fontSize: '11px', fontWeight: 500, letterSpacing: '0.32em', color: '#EBB14E', textTransform: 'uppercase', marginBottom: '6px' }}>THE FOUNDER</p>
+              <p style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontSize: 'clamp(28px, 3vw, 36px)', fontWeight: 400, color: '#F5F1EB', letterSpacing: '0.06em', marginBottom: '4px', margin: 0 }}>Dr. Kanmani</p>
+              <p style={{ fontFamily: "var(--font-jost), Arial, sans-serif", fontSize: '11px', fontWeight: 400, letterSpacing: '0.12em', color: '#EBB14E', lineHeight: 1.2, marginBottom: '0' }}>PhD SCHOLAR · ENTREPRENEUR · MOTIVATIONAL SPEAKER · HUMANITARIAN</p>
             </div>
           </div>
         </div>

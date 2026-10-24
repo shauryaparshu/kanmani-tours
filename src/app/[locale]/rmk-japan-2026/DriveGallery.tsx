@@ -171,7 +171,7 @@ export default function DriveGallery({ rootFolderId }: DriveGalleryProps) {
                                 border: '1px solid rgba(201, 147, 58, 0.3)',
                                 borderRadius: '4px',
                                 color: '#C9933A',
-                                fontFamily: "'Jost', Arial, sans-serif",
+                                fontFamily: "var(--font-jost), Arial, sans-serif",
                                 fontSize: '11px',
                                 fontWeight: '600',
                                 letterSpacing: '0.12em',
@@ -191,7 +191,7 @@ export default function DriveGallery({ rootFolderId }: DriveGalleryProps) {
                         display: 'flex',
                         alignItems: 'center',
                         gap: '8px',
-                        fontFamily: "'Jost', Arial, sans-serif",
+                        fontFamily: "var(--font-jost), Arial, sans-serif",
                         fontSize: '13px',
                         minHeight: '44px',
                     }}>
@@ -211,7 +211,7 @@ export default function DriveGallery({ rootFolderId }: DriveGalleryProps) {
                                 textDecoration: currentFolder ? 'underline' : 'none',
                                 fontWeight: currentFolder ? '500' : '600',
                                 fontSize: '13px',
-                                fontFamily: "'Jost', Arial, sans-serif",
+                                fontFamily: "var(--font-jost), Arial, sans-serif",
                             }}
                         >
                             All Folders
@@ -246,7 +246,7 @@ export default function DriveGallery({ rootFolderId }: DriveGalleryProps) {
                                 color: '#1C1917',
                                 padding: '10px 18px',
                                 borderRadius: '4px',
-                                fontFamily: "'Jost', Arial, sans-serif",
+                                fontFamily: "var(--font-jost), Arial, sans-serif",
                                 fontSize: '11px',
                                 fontWeight: '600',
                                 letterSpacing: '0.15em',
@@ -266,7 +266,7 @@ export default function DriveGallery({ rootFolderId }: DriveGalleryProps) {
                         <span 
                             className="gallery-download-day-note"
                             style={{
-                                fontFamily: "'Jost', Arial, sans-serif",
+                                fontFamily: "var(--font-jost), Arial, sans-serif",
                                 fontSize: '12px',
                                 color: '#9A948F',
                                 fontStyle: 'italic',
@@ -291,7 +291,7 @@ export default function DriveGallery({ rootFolderId }: DriveGalleryProps) {
                         animation: 'spin 0.8s linear infinite',
                     }} />
                     <p style={{
-                        fontFamily: "'Jost', Arial, sans-serif",
+                        fontFamily: "var(--font-jost), Arial, sans-serif",
                         fontSize: '14px',
                         color: '#9A948F',
                         letterSpacing: '0.05em',
@@ -315,7 +315,7 @@ export default function DriveGallery({ rootFolderId }: DriveGalleryProps) {
                     boxShadow: '0 10px 30px rgba(0,0,0,0.4)',
                 }}>
                     <p style={{
-                        fontFamily: "'Jost', Arial, sans-serif",
+                        fontFamily: "var(--font-jost), Arial, sans-serif",
                         fontSize: '15px',
                         color: '#E07A5F',
                         lineHeight: '1.6',
@@ -335,7 +335,7 @@ export default function DriveGallery({ rootFolderId }: DriveGalleryProps) {
                             color: '#1C1917',
                             padding: '12px 24px',
                             borderRadius: '4px',
-                            fontFamily: "'Jost', Arial, sans-serif",
+                            fontFamily: "var(--font-jost), Arial, sans-serif",
                             fontSize: '11px',
                             fontWeight: '600',
                             letterSpacing: '0.15em',
@@ -385,7 +385,7 @@ export default function DriveGallery({ rootFolderId }: DriveGalleryProps) {
                                         </div>
                                         <div style={{ flex: 1, minWidth: 0, textAlign: 'left' }}>
                                             <span style={{
-                                                fontFamily: "'Cormorant Garamond', Georgia, serif",
+                                                fontFamily: "var(--font-cormorant), Georgia, serif",
                                                 fontSize: '22px',
                                                 fontWeight: '500',
                                                 color: '#F5F1EB',
@@ -398,7 +398,7 @@ export default function DriveGallery({ rootFolderId }: DriveGalleryProps) {
                                                 {f.name}
                                             </span>
                                             <span style={{
-                                                fontFamily: "'Jost', Arial, sans-serif",
+                                                fontFamily: "var(--font-jost), Arial, sans-serif",
                                                 fontSize: '10px',
                                                 letterSpacing: '0.15em',
                                                 textTransform: 'uppercase',
@@ -535,7 +535,7 @@ export default function DriveGallery({ rootFolderId }: DriveGalleryProps) {
                                                     bottom: '8px',
                                                     left: '8px',
                                                     zIndex: 3,
-                                                    fontFamily: "'Jost', Arial, sans-serif",
+                                                    fontFamily: "var(--font-jost), Arial, sans-serif",
                                                     fontSize: '10px',
                                                     color: '#9A948F',
                                                     backgroundColor: 'rgba(10, 8, 7, 0.75)',
@@ -567,7 +567,7 @@ export default function DriveGallery({ rootFolderId }: DriveGalleryProps) {
                             margin: '24px auto',
                         }}>
                             <p style={{
-                                fontFamily: "'Jost', Arial, sans-serif",
+                                fontFamily: "var(--font-jost), Arial, sans-serif",
                                 fontSize: '15px',
                                 color: '#9A948F',
                                 margin: 0,

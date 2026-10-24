@@ -12,7 +12,7 @@ export default function MoreDetailsButton({ href }: MoreDetailsButtonProps) {
     <Link 
       href={href} 
       style={{
-        fontFamily: "'Jost', Arial, sans-serif",
+        fontFamily: "var(--font-jost), Arial, sans-serif",
         fontSize: '12px',
         fontWeight: '600',
         letterSpacing: '0.2em',

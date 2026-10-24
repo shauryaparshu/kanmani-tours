@@ -62,7 +62,7 @@ function AccordionItem({ question, answer }: TourFaq) {
                     border: 'none',
                     cursor: 'pointer',
                     textAlign: 'left',
-                    fontFamily: "'Jost', Arial, sans-serif",
+                    fontFamily: "var(--font-jost), Arial, sans-serif",
                     fontSize: '17px',
                     fontWeight: '500',
                     color: '#1C1917'
@@ -82,7 +82,7 @@ function AccordionItem({ question, answer }: TourFaq) {
             }}>
                 <p style={{
                     margin: 0,
-                    fontFamily: "'Jost', Arial, sans-serif",
+                    fontFamily: "var(--font-jost), Arial, sans-serif",
                     fontSize: '16px',
                     lineHeight: '1.7',
                     color: '#2C2420',
@@ -149,7 +149,7 @@ function ItineraryItem({
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          fontFamily: "'Jost', Arial, sans-serif",
+          fontFamily: "var(--font-jost), Arial, sans-serif",
           fontSize: '13px',
           fontWeight: '600',
           zIndex: 3,
@@ -198,7 +198,7 @@ function ItineraryItem({
           }}
         >
           <span style={{
-            fontFamily: "'Jost', Arial, sans-serif",
+            fontFamily: "var(--font-jost), Arial, sans-serif",
             fontSize: '22px',
             fontWeight: '500',
             color: '#1C1917',
@@ -266,7 +266,7 @@ function ItineraryItem({
                   padding: '24px 20px 16px'
                 }}>
                   <span style={{
-                    fontFamily: "'Jost', Arial, sans-serif",
+                    fontFamily: "var(--font-jost), Arial, sans-serif",
                     fontSize: '10px',
                     fontWeight: '500',
                     letterSpacing: '0.22em',
@@ -288,7 +288,7 @@ function ItineraryItem({
               backgroundColor: '#FAFAF7'
             }}>
               <p style={{
-                fontFamily: "'Jost', Arial, sans-serif",
+                fontFamily: "var(--font-jost), Arial, sans-serif",
                 fontSize: '20px',
                 fontWeight: '400',
                 color: '#111111',
@@ -397,12 +397,12 @@ function HighlightCard({ index, text }: { index: number; text: string }) {
       }}
     >
       <span style={{
-        fontFamily: "'Jost', Arial, sans-serif",
+        fontFamily: "var(--font-jost), Arial, sans-serif",
         fontSize: '12px', fontWeight: '600', color: '#d49a36',
         letterSpacing: '0.1em'
       }}>{num}</span>
       <p style={{
-        fontFamily: "'Jost', Arial, sans-serif",
+        fontFamily: "var(--font-jost), Arial, sans-serif",
         fontSize: '16px', color: '#1a1918', margin: 0,
         lineHeight: '1.5',
         fontWeight: '400'
@@ -531,7 +531,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
           {/* LINE 1: Title and Category/Seats pill */}
           <div className="tour-hero-title-row">
             <h1 style={{
-              fontFamily: "'Jost', Arial, sans-serif",
+              fontFamily: "var(--font-jost), Arial, sans-serif",
               fontSize: 'clamp(22px, 2.5vw, 36px)',
               fontWeight: '500',
               color: '#FFFFFF',
@@ -542,7 +542,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
             }}>{tour.title}</h1>
             <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
               <span className="hero-category-label" style={{
-                fontFamily: "'Jost', Arial, sans-serif",
+                fontFamily: "var(--font-jost), Arial, sans-serif",
                 fontSize: '11px',
                 fontWeight: '500',
                 letterSpacing: '0.28em',
@@ -551,7 +551,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
               }}>{categoryLabel}</span>
               {!isPast && (
                 <span style={{
-                  fontFamily: "'Jost', Arial, sans-serif",
+                  fontFamily: "var(--font-jost), Arial, sans-serif",
                   fontSize: '10px',
                   fontWeight: '600',
                   letterSpacing: '0.18em',
@@ -568,7 +568,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
           {/* LINE 2: Dates, Location, and Short Description */}
           <div className="tour-hero-meta-row">
             <span className="hero-meta-value" style={{
-              fontFamily: "'Jost', Arial, sans-serif",
+              fontFamily: "var(--font-jost), Arial, sans-serif",
               fontSize: '14px',
               fontWeight: '400',
               color: '#C8C2BC',
@@ -584,7 +584,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
               flexShrink: 0
             }}/>
             <span className="hero-meta-value" style={{
-              fontFamily: "'Jost', Arial, sans-serif",
+              fontFamily: "var(--font-jost), Arial, sans-serif",
               fontSize: '14px', fontWeight: '400',
               color: '#C8C2BC', letterSpacing: '0.08em',
               textTransform: 'uppercase', whiteSpace: 'nowrap',
@@ -600,7 +600,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
                   flexShrink: 0
                 }}/>
                 <p className="hero-short-description" style={{
-                  fontFamily: "'Jost', Arial, sans-serif",
+                  fontFamily: "var(--font-jost), Arial, sans-serif",
                   fontSize: '14px',
                   fontWeight: '300',
                   color: 'rgba(200,194,188,0.9)',
@@ -637,7 +637,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
               }
             }}
             style={{
-              fontFamily: "'Jost', Arial, sans-serif",
+              fontFamily: "var(--font-jost), Arial, sans-serif",
               fontSize: '15px',
               fontWeight: '700',
               letterSpacing: '0.22em',
@@ -684,7 +684,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
       borderBottom: '1px solid #E8E4DC'
     }}>
       <nav style={{
-        fontFamily: "'Jost', Arial, sans-serif",
+        fontFamily: "var(--font-jost), Arial, sans-serif",
         fontSize: '15px', color: '#9A948F',
         letterSpacing: '0.08em',
         display: 'flex', gap: '8px', alignItems: 'center'
@@ -723,7 +723,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
                   onClick={() => setActiveTab(tab.key)}
                   className={`tour-tab-btn ${activeTab === tab.key ? 'active' : ''}`}
                   style={{
-                    fontFamily: "'Jost', Arial, sans-serif",
+                    fontFamily: "var(--font-jost), Arial, sans-serif",
                     fontSize: '17px', fontWeight: '600',
                     color: activeTab === tab.key ? '#1a1918' : '#9A948F',
                     letterSpacing: '0.1em',
@@ -748,13 +748,13 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
                 {(tour.features ?? []).length > 0 && (
                   <>
                     <h2 style={{
-                      fontFamily: "'Cormorant Garamond', Georgia, serif",
+                      fontFamily: "var(--font-cormorant), Georgia, serif",
                       fontSize: 'clamp(28px, 3vw, 36px)',
                       fontWeight: '500', color: '#1a1918',
                       marginBottom: '24px'
                     }}>{t('highlights')}</h2>
                     <p style={{
-                      fontFamily: "'Jost', Arial, sans-serif",
+                      fontFamily: "var(--font-jost), Arial, sans-serif",
                       fontSize: '16px', lineHeight: '1.7',
                       color: '#1a1918', marginBottom: '32px',
                       fontWeight: '400'
@@ -774,14 +774,14 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
 
                 {/* ABOUT THIS TOUR */}
                 <h2 style={{
-                  fontFamily: "'Cormorant Garamond', Georgia, serif",
+                  fontFamily: "var(--font-cormorant), Georgia, serif",
                   fontSize: 'clamp(28px, 3vw, 36px)',
                   fontWeight: '500', color: '#1a1918',
                   marginBottom: '24px'
                 }}>{t('aboutTour')}</h2>
                 {tour.longDescription?.split('\n\n').map((para, i) => (
                   <p key={i} style={{
-                    fontFamily: "'Jost', Arial, sans-serif",
+                    fontFamily: "var(--font-jost), Arial, sans-serif",
                     fontSize: '16px', lineHeight: '1.7',
                     color: '#1a1918', marginBottom: '20px',
                     fontWeight: '400'
@@ -794,7 +794,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
                 {(tour.whatToExpect ?? []).length > 0 && (
                   <>
                     <h3 style={{
-                      fontFamily: "'Cormorant Garamond', Georgia, serif",
+                      fontFamily: "var(--font-cormorant), Georgia, serif",
                       fontSize: '24px', fontWeight: '500',
                       color: '#1a1918', letterSpacing: '0.05em',
                       marginTop: '40px', marginBottom: '20px'
@@ -804,7 +804,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
                         <li key={i} style={{
                           display: 'flex', alignItems: 'flex-start',
                           gap: '14px', marginBottom: '14px',
-                          fontFamily: "'Jost', Arial, sans-serif",
+                          fontFamily: "var(--font-jost), Arial, sans-serif",
                           fontSize: '16px', color: '#1a1918', lineHeight: '1.7',
                           fontWeight: '400'
                         }}>
@@ -820,7 +820,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
                 {(tour.galleryImages ?? []).length > 0 && (
                   <section id="gallery-section" style={{ marginTop: '64px' }}>
                     <h2 style={{
-                      fontFamily: "'Cormorant Garamond', Georgia, serif",
+                      fontFamily: "var(--font-cormorant), Georgia, serif",
                       fontSize: 'clamp(28px, 3vw, 36px)',
                       fontWeight: '500', color: '#1a1918',
                       marginBottom: '32px'
@@ -881,13 +881,13 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
                     {/* INCLUDED COLUMN */}
                     <div>
                       <h3 style={{
-                        fontFamily: "'Jost', Arial, sans-serif", fontSize: '14px', fontWeight: '600',
+                        fontFamily: "var(--font-jost), Arial, sans-serif", fontSize: '14px', fontWeight: '600',
                         color: '#1a1918', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '24px',
                         paddingBottom: '12px', borderBottom: '2px solid #d49a36'
                       }}>{t('included')}</h3>
                       <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
                         {(tour.inclusions ?? []).map((item, i) => (
-                          <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem', marginBottom: '16px', fontFamily: "'Jost', Arial, sans-serif", fontSize: '16px', color: '#1a1918', lineHeight: '1.7' }}>
+                          <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem', marginBottom: '16px', fontFamily: "var(--font-jost), Arial, sans-serif", fontSize: '16px', color: '#1a1918', lineHeight: '1.7' }}>
                             <span style={{ color: '#d49a36', fontSize: '18px', flexShrink: 0 }}>✓</span>
                             <span>{item}</span>
                           </li>
@@ -897,13 +897,13 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
                     {/* NOT INCLUDED COLUMN */}
                     <div>
                       <h3 style={{
-                        fontFamily: "'Jost', Arial, sans-serif", fontSize: '14px', fontWeight: '600',
+                        fontFamily: "var(--font-jost), Arial, sans-serif", fontSize: '14px', fontWeight: '600',
                         color: '#1a1918', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '24px',
                         paddingBottom: '12px', borderBottom: '2px solid #d49a36'
                       }}>{t('notIncluded')}</h3>
                       <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
                         {(tour.exclusions ?? []).map((item, i) => (
-                          <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem', marginBottom: '16px', fontFamily: "'Jost', Arial, sans-serif", fontSize: '16px', color: '#6B6560', lineHeight: '1.7' }}>
+                          <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem', marginBottom: '16px', fontFamily: "var(--font-jost), Arial, sans-serif", fontSize: '16px', color: '#6B6560', lineHeight: '1.7' }}>
                             <span style={{ color: '#9A948F', fontSize: '18px', flexShrink: 0 }}>×</span>
                             <span>{item}</span>
                           </li>
@@ -923,7 +923,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
                     ))}
                   </div>
                 ) : (
-                  <p style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '16px', color: '#6B6560', lineHeight: '1.7' }}>
+                  <p style={{ fontFamily: "var(--font-jost), Arial, sans-serif", fontSize: '16px', color: '#6B6560', lineHeight: '1.7' }}>
                     {t('noFaqAvailable')}
                   </p>
                 )}
@@ -948,7 +948,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                   
                   <p style={{
-                    fontFamily: "'Jost', Arial, sans-serif",
+                    fontFamily: "var(--font-jost), Arial, sans-serif",
                     fontSize: '14px', color: '#faf9f6', margin: 0,
                     fontWeight: '400'
                   }}>
@@ -964,7 +964,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
                       alignSelf: 'flex-start'
                     }}>
                       <span style={{
-                        fontFamily: "'Jost', Arial, sans-serif",
+                        fontFamily: "var(--font-jost), Arial, sans-serif",
                         fontSize: '11px', fontWeight: '600',
                         color: '#d49a36', letterSpacing: '0.08em',
                         textTransform: 'uppercase'
@@ -980,7 +980,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
                   <Link
                     href="/contact"
                     style={{
-                      fontFamily: "'Jost', Arial, sans-serif",
+                      fontFamily: "var(--font-jost), Arial, sans-serif",
                       fontSize: '11px', fontWeight: '600',
                       letterSpacing: '0.15em', color: '#d49a36',
                       backgroundColor: 'transparent',
@@ -1012,7 +1012,7 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
       }}>
         <div style={{ maxWidth: '1300px', margin: '0 auto' }}>
           <h2 style={{
-            fontFamily: "'Cormorant Garamond', Georgia, serif",
+            fontFamily: "var(--font-cormorant), Georgia, serif",
             fontSize: 'clamp(28px, 3vw, 42px)',
             fontWeight: '500', color: '#1C1917',
             letterSpacing: '0.06em', marginBottom: '8px'
@@ -1055,13 +1055,13 @@ export default function TourDetailClient({ tour, otherTours }: TourDetailClientP
                 />
                 <div className="other-tour-card-body" style={{ padding: '24px', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
                   <span style={{
-                    fontFamily: "'Jost', Arial, sans-serif",
+                    fontFamily: "var(--font-jost), Arial, sans-serif",
                     fontSize: '11px', fontWeight: '500',
                     letterSpacing: '0.22em', color: '#C9933A',
                     textTransform: 'uppercase'
                   }}>{getCategoryLabel(tOther.category, tTours)}</span>
                   <p style={{
-                    fontFamily: "'Cormorant Garamond', Georgia, serif",
+                    fontFamily: "var(--font-cormorant), Georgia, serif",
                     fontSize: '20px', fontWeight: '500',
                     color: '#1C1917', margin: '8px 0 10px',
                     lineHeight: '1.3'

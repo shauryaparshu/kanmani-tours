@@ -13,7 +13,8 @@ export default function GroupInquiryForm() {
         groupType: 'School',
         groupSize: '',
         travelWindow: '',
-        additionalDetails: ''
+        additionalDetails: '',
+        website: ''
     });
 
     const [errors, setErrors] = useState<Record<string, string>>({});
@@ -106,7 +107,8 @@ export default function GroupInquiryForm() {
                 email: formData.email.trim(),
                 phone: formData.phone,
                 subject: 'Japan Group Tour Inquiry',
-                message: combinedMessage
+                message: combinedMessage,
+                website: formData.website
             };
 
             const response = await fetch('/api/contact', {
@@ -119,7 +121,7 @@ export default function GroupInquiryForm() {
             if (result.success) {
                 setSubmitted(true);
             } else {
-                setErrors({ submit: 'Something went wrong. Please email us directly at kanmanitours@gmail.com.' });
+                setErrors({ submit: result.error || 'Something went wrong. Please email us directly at kanmanitours@gmail.com.' });
             }
         } catch {
             setErrors({ submit: 'Connection error. Please email kanmanitours@gmail.com' });
@@ -129,7 +131,7 @@ export default function GroupInquiryForm() {
     };
 
     const inputStyle = (name: string) => ({
-        fontFamily: "'Jost', Arial, sans-serif",
+        fontFamily: "var(--font-jost), Arial, sans-serif",
         fontSize: '15px',
         color: '#1C1917',
         backgroundColor: focusedField === name ? '#FFFFFF' : '#FAFAF7',
@@ -144,7 +146,7 @@ export default function GroupInquiryForm() {
     });
 
     const labelStyle = {
-        fontFamily: "'Jost', Arial, sans-serif",
+        fontFamily: "var(--font-jost), Arial, sans-serif",
         fontSize: '12px',
         fontWeight: '500',
         letterSpacing: '0.18em',
@@ -161,8 +163,8 @@ export default function GroupInquiryForm() {
                     width: '64px', height: '64px', borderRadius: '50%', backgroundColor: 'rgba(201,147,58,0.1)',
                     display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 24px', color: '#C9933A', fontSize: '32px'
                 }}>✓</div>
-                <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: '28px', fontWeight: '500', color: '#1C1917', marginBottom: '12px' }}>Inquiry Sent</h2>
-                <p style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '16px', color: '#6B6560', lineHeight: '1.6', maxWidth: '460px', margin: '0 auto 24px' }}>
+                <h2 style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontSize: '28px', fontWeight: '500', color: '#1C1917', marginBottom: '12px' }}>Inquiry Sent</h2>
+                <p style={{ fontFamily: "var(--font-jost), Arial, sans-serif", fontSize: '16px', color: '#6B6560', lineHeight: '1.6', maxWidth: '460px', margin: '0 auto 24px' }}>
                     Thank you, {formData.contactName.split(' ')[0]}. We have received your group inquiry for {formData.institutionName} and our team will get in touch within 24 hours.
                 </p>
                 <button
@@ -176,11 +178,12 @@ export default function GroupInquiryForm() {
                             groupType: 'School',
                             groupSize: '',
                             travelWindow: '',
-                            additionalDetails: ''
+                            additionalDetails: '',
+                            website: ''
                         });
                     }}
                     style={{
-                        fontFamily: "'Jost', Arial, sans-serif", fontSize: '12px', fontWeight: '600', letterSpacing: '0.2em', color: '#C9933A',
+                        fontFamily: "var(--font-jost), Arial, sans-serif", fontSize: '12px', fontWeight: '600', letterSpacing: '0.2em', color: '#C9933A',
                         background: 'none', border: 'none', cursor: 'pointer', textTransform: 'uppercase'
                     }}
                 >
@@ -329,7 +332,7 @@ export default function GroupInquiryForm() {
             <div style={{ marginBottom: '32px' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
                     <label style={{ ...labelStyle, marginBottom: 0 }}>ADDITIONAL DETAILS</label>
-                    <span style={{ fontFamily: "'Jost', Arial, sans-serif", fontSize: '11px', color: '#9A948F', letterSpacing: '0.05em' }}>OPTIONAL</span>
+                    <span style={{ fontFamily: "var(--font-jost), Arial, sans-serif", fontSize: '11px', color: '#9A948F', letterSpacing: '0.05em' }}>OPTIONAL</span>
                 </div>
                 <textarea
                     name="additionalDetails"
@@ -343,9 +346,17 @@ export default function GroupInquiryForm() {
                 ></textarea>
             </div>
 
+            {/* Honeypot: hidden from people, filled in by bots */}
+            <div aria-hidden="true" style={{ position: 'absolute', left: '-10000px', width: '1px', height: '1px', overflow: 'hidden' }}>
+                <label>
+                    Website
+                    <input name="website" type="text" tabIndex={-1} autoComplete="off" value={formData.website} onChange={handleChange} />
+                </label>
+            </div>
+
             {errors.submit && (
                 <p style={{
-                    fontFamily: "'Jost', Arial, sans-serif",
+                    fontFamily: "var(--font-jost), Arial, sans-serif",
                     fontSize: '13px',
                     color: '#C0392B',
                     marginBottom: '12px',
@@ -357,7 +368,7 @@ export default function GroupInquiryForm() {
                 type="submit"
                 disabled={loading}
                 style={{
-                    fontFamily: "'Jost', Arial, sans-serif",
+                    fontFamily: "var(--font-jost), Arial, sans-serif",
                     fontSize: '13px',
                     fontWeight: '600',
                     letterSpacing: '0.28em',
@@ -388,7 +399,7 @@ export default function GroupInquiryForm() {
             </button>
 
             <p style={{
-                fontFamily: "'Jost', Arial, sans-serif",
+                fontFamily: "var(--font-jost), Arial, sans-serif",
                 fontSize: '12px',
                 color: '#9A948F',
                 textAlign: 'center',

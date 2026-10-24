@@ -192,9 +192,8 @@ export default function HeroSlideshow({
                                 objectFit: 'cover',
                                 objectPosition: 'top',
                             }}
-                            priority={i === 0}
+                            preload={i === 0}
                             sizes="100vw"
-                            unoptimized
                         />
                     </div>
                 ))}

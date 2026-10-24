@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { pageAlternates } from '@/lib/site';
 
 interface LayoutProps {
     children: React.ReactNode;
@@ -6,16 +7,9 @@ interface LayoutProps {
 }
 
 export async function generateMetadata({ params }: LayoutProps): Promise<Metadata> {
-    const { slug } = await params;
-    const siteUrl = 'https://kanmanitours.com';
+    const { locale, slug } = await params;
     return {
-        alternates: {
-            languages: {
-                'ja': `${siteUrl}/ja/gallery/${slug}`,
-                'en': `${siteUrl}/en/gallery/${slug}`,
-                'x-default': `${siteUrl}/ja/gallery/${slug}`,
-            }
-        }
+        alternates: pageAlternates(locale, `/gallery/${slug}`),
     };
 }
 
