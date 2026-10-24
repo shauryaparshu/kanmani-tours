@@ -17,7 +17,8 @@
         "language": "言語",
         "skipToContent": "本文へスキップ",
         "backToTop": "ページの先頭へ",
-        "mainNav": "メインメニュー"
+        "mainNav": "メインメニュー",
+        "breadcrumb": "パンくずリスト"
     },
     "DestinationChoice": {
         "heading": "2つの文化をつなぐ懸け橋",
@@ -257,5 +258,29 @@
         "past": "終了したツアー",
         "upcoming": "開催予定",
         "seatsLeft": "残り{count}席"
+    },
+    "TourDetail": {
+        "dayLabel": "{n}日目",
+        "datesLabel": "日程",
+        "durationLabel": "期間",
+        "durationValue": "{count}日間",
+        "citiesLabel": "訪問地",
+        "seatsLabel": "残席",
+        "seatsValue": "残り{count}席",
+        "statusLabel": "状況",
+        "statusPast": "終了したツアー",
+        "bookingLabel": "予約形態",
+        "bookingPrivate": "プライベートグループ",
+        "bookingGroup": "グループツアー",
+        "guideLabel": "ガイド",
+        "guideJapanese": "日本語ガイド",
+        "bookingClosed": "受付終了",
+        "bookTour": "このツアーを予約",
+        "creditsTitle": "ツアー概要",
+        "viewAllPhotos": "{count}枚の写真をすべて見る",
+        "openPhoto": "{count}枚中{n}枚目の写真を開く",
+        "photoAlt": "{title} 写真{n}",
+        "faqTitle": "このツアーについてのよくある質問",
+        "moreJourneys": "ほかのツアー"
     }
 }

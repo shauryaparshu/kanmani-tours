@@ -17,7 +17,8 @@
         "language": "Language",
         "skipToContent": "Skip to content",
         "backToTop": "Back to top",
-        "mainNav": "Main"
+        "mainNav": "Main",
+        "breadcrumb": "Breadcrumb"
     },
     "DestinationChoice": {
         "heading": "Two Cultures, One Bridge",
@@ -257,5 +258,29 @@
         "past": "Past tour",
         "upcoming": "Upcoming",
         "seatsLeft": "{count} seats left"
+    },
+    "TourDetail": {
+        "dayLabel": "Day {n}",
+        "datesLabel": "Dates",
+        "durationLabel": "Duration",
+        "durationValue": "{count, plural, one {# day} other {# days}}",
+        "citiesLabel": "Cities",
+        "seatsLabel": "Seats",
+        "seatsValue": "{count} left",
+        "statusLabel": "Status",
+        "statusPast": "Past tour",
+        "bookingLabel": "Booking",
+        "bookingPrivate": "Private group",
+        "bookingGroup": "Group tour",
+        "guideLabel": "Guide",
+        "guideJapanese": "Japanese-speaking",
+        "bookingClosed": "Booking closed",
+        "bookTour": "Book this tour",
+        "creditsTitle": "Tour details",
+        "viewAllPhotos": "View all {count} photos",
+        "openPhoto": "Open photo {n} of {count}",
+        "photoAlt": "{title}, photo {n}",
+        "faqTitle": "Questions about this tour",
+        "moreJourneys": "More journeys"
     }
 }

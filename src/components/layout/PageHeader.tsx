@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/routing';
 import styles from './PageHeader.module.css';
 
@@ -12,16 +13,17 @@ interface PageHeaderProps {
     lead?: ReactNode;
     /** Trail above the title; the last item is the current page and is not linked. */
     breadcrumbs?: Crumb[];
-    breadcrumbLabel?: string;
 }
 
 // The opening of every inner page: a quiet trail, one large title, one line of intro.
-export default function PageHeader({ title, lead, breadcrumbs, breadcrumbLabel = 'Breadcrumb' }: PageHeaderProps) {
+export default function PageHeader({ title, lead, breadcrumbs }: PageHeaderProps) {
+    const t = useTranslations('Navigation');
+
     return (
         <header className={styles.header} data-ds>
             <div className={styles.inner}>
                 {breadcrumbs && breadcrumbs.length > 0 ? (
-                    <nav aria-label={breadcrumbLabel}>
+                    <nav aria-label={t('breadcrumb')}>
                         <ol className={styles.trail}>
                             {breadcrumbs.map((crumb, i) => (
                                 <li key={`${crumb.label}-${i}`}>

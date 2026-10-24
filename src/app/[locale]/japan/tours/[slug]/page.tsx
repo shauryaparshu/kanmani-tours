@@ -2,7 +2,8 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { decodeSlug, getTourBySlug, getToursByDestination } from '@/lib/tours';
 import Footer from '@/components/layout/FooterSection';
-import TourDetailClient from '@/components/TourDetailClient';
+import TourDetail from '@/components/tours/detail/TourDetail';
+import { selectJourneys } from '@/components/tours/selectJourneys';
 import { pageAlternates } from '@/lib/site';
 
 interface PageProps {
@@ -58,21 +59,12 @@ export default async function JapanTourDetailPage({ params }: PageProps) {
 
     if (!tour || tour.destination !== 'japan') notFound();
 
-    // Other upcoming tours (exclude current)
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const otherTours = allTours
-        .filter(t => {
-            const start = new Date(t.startDate);
-            start.setHours(0, 0, 0, 0);
-            return t.slug !== slug && start > today;
-        })
-        .slice(0, 3);
+    const moreTours = selectJourneys(allTours, 4, tour.slug);
 
     return (
         <>
-            <main style={{ paddingBottom: '80px' }}>
-                <TourDetailClient tour={tour} otherTours={otherTours} />
+            <main>
+                <TourDetail tour={tour} moreTours={moreTours} />
             </main>
             <Footer />
         </>
