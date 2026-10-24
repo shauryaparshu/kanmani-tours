@@ -118,4 +118,6 @@ Eyebrow labels above headings. Gradient text. Three identical cards. Glass or bl
 ## 11. Migration notes
 
 - `--font-cormorant` and `--font-jost` and the old `:root` variables in `globals.css` (`--primary`, `--bg-color`, and so on) stay until every section is migrated. They are removed in the final step.
+- **`data-ds` marks migrated territory.** `globals.css` still forces every `p` and `li` to 19px with `!important` for the old pages. Each migrated component puts `data-ds` on its root element, which opts it out of that rule. The rule is deleted in the final step.
+- Migrated components live in CSS Modules next to their component (`Navigation.module.css`, and so on) and use only tokens.
 - Each step of the reskin is one local commit on `redesign/premium-reskin`, checked at 390px and 1440px.

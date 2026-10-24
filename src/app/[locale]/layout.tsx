@@ -6,6 +6,8 @@ import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import Navigation from '@/components/layout/Navigation';
+import EnquireTab from '@/components/layout/EnquireTab';
+import BackToTop from '@/components/layout/BackToTop';
 import { Analytics } from '@vercel/analytics/next';
 import { cormorant, dmSans, jost, newsreader, notoSansJp, shipporiMincho } from '../fonts';
 import { SITE_URL, pageOpenGraph } from '@/lib/site';
@@ -48,12 +50,14 @@ export default async function RootLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale} className={[newsreader, dmSans, shipporiMincho, notoSansJp, cormorant, jost].map((f) => f.variable).join(' ')} style={{ scrollbarWidth: 'thin', scrollbarColor: '#C9933A #1C1917' }}>
+    <html lang={locale} className={[newsreader, dmSans, shipporiMincho, notoSansJp, cormorant, jost].map((f) => f.variable).join(' ')}>
       <body>
         <NextIntlClientProvider messages={messages}>
           <Navigation />
-          <div className="nav-desktop-spacer" aria-hidden="true" />
+          <div id="main-content" tabIndex={-1} />
           {children}
+          <EnquireTab />
+          <BackToTop />
         </NextIntlClientProvider>
         <Analytics />
       </body>

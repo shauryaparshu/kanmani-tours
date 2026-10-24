@@ -1,0 +1,32 @@
+.logo {
+  display: block;
+  height: auto;
+  overflow: visible;
+}
+
+.mark { fill: var(--color-accent); }
+.stroke { fill: none; stroke: var(--color-accent); }
+.rule { stroke: var(--color-accent); opacity: 0.45; }
+
+.word {
+  font-family: var(--font-display);
+  font-size: 31px;
+  font-weight: var(--weight-regular);
+  letter-spacing: 0.06em;
+  fill: var(--color-ink);
+}
+
+.tours {
+  font-family: var(--font-body);
+  font-size: 10.5px;
+  font-weight: var(--weight-medium);
+  letter-spacing: 0.62em;
+  fill: var(--color-accent);
+}
+
+/* On ink bands and photos */
+.paper .mark { fill: var(--color-highlight); }
+.paper .stroke,
+.paper .rule { stroke: var(--color-highlight); }
+.paper .word { fill: var(--color-on-ink); }
+.paper .tours { fill: var(--color-highlight); }

@@ -16,6 +16,7 @@
   --color-on-ink-muted: #B5AB9C;   /* secondary text on ink */
   --color-line: #DDD4C5;           /* hairline separators (decorative) */
   --color-line-strong: #8C8276;    /* form field borders, 3:1 */
+  --color-line-on-ink: rgb(181 171 156 / 0.3);  /* hairlines on ink bands */
   --color-accent: #A8352A;         /* vermilion: actions, links, focus */
   --color-accent-deep: #8A2A21;    /* hover and pressed */
   --color-highlight: #C99A2E;      /* turmeric: on ink only, never on paper */
@@ -76,12 +77,19 @@
   --dur-hover: 200ms;
   --dur-reveal: 750ms;
 
+  /* ── Chrome ──────────────────────────────────────────────────────── */
+  --nav-height: 64px;   /* 76px from 1024px, see below */
+
   /* ── Layers ──────────────────────────────────────────────────────── */
   --z-tab: 90;
   --z-nav: 100;
   --z-overlay: 200;
 
   --focus-color: var(--color-accent);
+}
+
+@media (min-width: 1024px) {
+  :root { --nav-height: 76px; }
 }
 
 /* Japanese reads better with more line height and no tracking. */
@@ -111,6 +119,7 @@
 html {
   caret-color: var(--color-accent);
   accent-color: var(--color-accent);
+  scrollbar-color: var(--color-line-strong) var(--color-paper);
 }
 
 ::selection {

@@ -1,0 +1,115 @@
+.footer {
+  border-top: 2px solid var(--color-highlight);
+}
+
+.inner {
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-block: var(--section-pad) calc(var(--space-4) + env(safe-area-inset-bottom, 0px));
+  padding-left: max(var(--gutter), env(safe-area-inset-left, 0px));
+  padding-right: max(var(--gutter), env(safe-area-inset-right, 0px));
+  display: grid;
+  gap: var(--space-7);
+}
+
+/* ── Closing invitation ── */
+.plan {
+  display: grid;
+  gap: var(--space-2);
+  max-width: 40rem;
+}
+.planTitle {
+  margin: 0;
+  font: var(--weight-light) var(--text-heading) / var(--leading-heading) var(--font-display);
+  letter-spacing: var(--tracking-display);
+  color: var(--color-on-ink);
+  text-wrap: balance;
+}
+.planBody {
+  margin: 0;
+  font: var(--weight-regular) var(--text-lead) / var(--leading-lead) var(--font-body);
+  color: var(--color-on-ink-muted);
+}
+.planLink {
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-top: var(--space-2);
+  font: var(--weight-medium) var(--text-label) / 1 var(--font-body);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-highlight);
+  text-decoration: underline;
+}
+.planLink:hover { color: var(--color-on-ink); }
+:lang(ja) .planLink { letter-spacing: 0.06em; }
+
+/* ── Link columns ── */
+.columns {
+  display: grid;
+  gap: var(--space-5) var(--space-4);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--color-line-on-ink);
+}
+.brand { grid-column: 1 / -1; display: grid; gap: var(--space-2); }
+.logoLink { display: inline-block; justify-self: start; }
+.logo { width: 180px; }
+.note {
+  margin: 0;
+  font: var(--weight-regular) var(--text-body) / var(--leading-body) var(--font-body);
+  color: var(--color-on-ink-muted);
+}
+
+.column { display: grid; align-content: start; gap: var(--space-2); }
+/* Full width on phones so the address and email never break mid-word. */
+.office { grid-column: 1 / -1; }
+.heading {
+  margin: 0;
+  font: var(--weight-medium) var(--text-label) / var(--leading-label) var(--font-body);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-highlight);
+}
+:lang(ja) .heading { letter-spacing: 0.06em; }
+
+.column ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+}
+.column a,
+.address span {
+  overflow-wrap: anywhere;
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  font: var(--weight-regular) var(--text-body) / var(--leading-label) var(--font-body);
+  color: var(--color-on-ink);
+  text-decoration: none;
+}
+.column a:hover { color: var(--color-highlight); text-decoration: underline; }
+
+.address {
+  display: grid;
+  font-style: normal;
+}
+.address span { color: var(--color-on-ink-muted); }
+
+.legal {
+  margin: 0;
+  font: var(--weight-regular) var(--text-label) / var(--leading-label) var(--font-body);
+  color: var(--color-on-ink-muted);
+}
+
+@media (min-width: 720px) {
+  .columns { grid-template-columns: 1fr 1fr 1.6fr 1fr; }
+  .office { grid-column: auto; }
+}
+
+@media (min-width: 1100px) {
+  .columns { grid-template-columns: 1.3fr 0.9fr 0.9fr 1.5fr 0.9fr; }
+  .brand { grid-column: auto; align-content: start; }
+}

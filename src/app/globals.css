@@ -76,14 +76,6 @@ img {
   padding: 48px 32px;
 }
 
-.r-grid-footer {
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr;
-  gap: 60px;
-  max-width: 1400px;
-  margin: 0 auto;
-}
-
 .r-grid-faq {
   display: grid;
   grid-template-columns: 28% 65%;
@@ -122,7 +114,6 @@ img {
   .r-grid-3 { grid-template-columns: repeat(2, 1fr); gap: 24px; }
   .r-grid-4 { grid-template-columns: repeat(2, 1fr); gap: 20px; }
   .r-padding { padding: 60px 40px; }
-  .r-grid-footer { grid-template-columns: repeat(2, 1fr); gap: 40px; }
   .r-grid-faq { grid-template-columns: 35% 60%; }
   .r-grid-about-stats { grid-template-columns: repeat(2, 1fr); }
   .r-hero-split-content { padding: 32px; }
@@ -135,7 +126,6 @@ img {
   .r-grid-4 { grid-template-columns: repeat(2, 1fr); gap: 12px; }
   .r-padding { padding: 48px 20px; }
   .r-padding-sm { padding: 32px 20px; }
-  .r-grid-footer { grid-template-columns: 1fr; gap: 32px; }
   .r-grid-faq { display: flex; flex-direction: column; gap: 32px; }
   /* Stats: 2x2 grid on mobile (was 1 column) */
   .r-grid-about-stats { grid-template-columns: repeat(2, 1fr) !important; }
@@ -459,7 +449,9 @@ body {
   line-height: 1.6;
 }
 
-p, li {
+/* Legacy readability rule for sections not yet reskinned. Migrated components
+   mark their root with data-ds and opt out. Removed in the final reskin step. */
+:is(p, li):not(:where([data-ds], [data-ds] *)) {
   font-size: 19px !important;
   line-height: 1.8 !important;
 }
@@ -3808,105 +3800,7 @@ button {
   hyphens: none;
 }
 
-.nav-desktop {
-  display: flex !important;
-}
-.nav-desktop-spacer {
-  display: block !important;
-  width: 100% !important;
-  height: 76px !important;
-}
-.nav-mobile {
-  display: none !important;
-}
-.nav-mobile-spacer {
-  display: none !important;
-  height: 0 !important;
-}
-
-.nav-link-tour .nav-flag-reveal {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  opacity: 0;
-  transform: translateX(-5px);
-  transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  pointer-events: none;
-}
-
-.nav-link-tour:hover .nav-flag-reveal {
-  opacity: 1 !important;
-  transform: translateX(0) !important;
-}
-
-.nav-link-tour:hover {
-  color: #C9933A !important;
-  background-color: rgba(201, 147, 58, 0.08) !important;
-  border-color: rgba(201, 147, 58, 0.14) !important;
-}
-
-@media screen and (max-width: 1280px) {
-  .nav-desktop {
-    display: none !important;
-  }
-  .nav-desktop-spacer {
-    display: none !important;
-    height: 0 !important;
-  }
-  .nav-mobile {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: space-between !important;
-    width: 100% !important;
-    box-sizing: border-box !important;
-    padding: 0 20px !important;
-    position: fixed !important;
-    top: 0 !important;
-    justify-content: space-between !important;
-    width: 100% !important;
-    box-sizing: border-box !important;
-    padding: 0 20px !important;
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    height: 64px !important;
-    z-index: 9999 !important;
-  }
-  .nav-mobile-spacer {
-    display: block !important;
-    height: 64px !important;
-    width: 100% !important;
-  }
-}
-
 /* Responsive Desktop Navbar Adjustments */
-@media screen and (min-width: 1281px) and (max-width: 1650px) {
-  .nav-links-container {
-    gap: 8px !important;
-    padding: 0 8px !important;
-  }
-  .nav-link-wrapper {
-    gap: 8px !important;
-  }
-  .nav-link-item {
-    font-size: 13.5px !important;
-    padding: 6px 8px !important;
-    letter-spacing: 0.07em !important;
-  }
-}
-
-@media screen and (max-width: 1650px) {
-  .nav-email-chip, .nav-divider-email {
-    display: none !important;
-  }
-}
-
-@media screen and (max-width: 1400px) {
-  .nav-phone-chip, .nav-divider-phone {
-    display: none !important;
-  }
-}
 
 .mobile-only-btn {
   display: none !important;

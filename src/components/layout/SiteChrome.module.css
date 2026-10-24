@@ -1,0 +1,69 @@
+/* Fixed page furniture: the Enquire tab and the back-to-top button. */
+
+.enquireTab { display: none; }
+
+@media (min-width: 1024px) {
+  .enquireTab {
+    position: fixed;
+    left: env(safe-area-inset-left, 0px);
+    top: 50%;
+    z-index: var(--z-tab);
+    display: block;
+    padding: var(--space-3) var(--space-1);
+    background: var(--color-accent);
+    color: var(--color-on-ink);
+    text-decoration: none;
+    transform: translateY(-50%);
+    transition: background-color var(--dur-hover) var(--ease-out), padding var(--dur-hover) var(--ease-out);
+  }
+  .enquireTab span {
+    display: block;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font: var(--weight-medium) var(--text-label) / 1 var(--font-body);
+    letter-spacing: var(--tracking-caps);
+    text-transform: uppercase;
+  }
+  /* Japanese reads top to bottom naturally, so it is not rotated. */
+  .enquireTab:lang(ja) span {
+    transform: none;
+    letter-spacing: 0.2em;
+  }
+  .enquireTab:hover {
+    background: var(--color-accent-deep);
+    padding-left: var(--space-2);
+  }
+}
+
+.backToTop {
+  position: fixed;
+  right: calc(var(--space-3) + env(safe-area-inset-right, 0px));
+  bottom: calc(var(--space-3) + env(safe-area-inset-bottom, 0px));
+  z-index: var(--z-tab);
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: 1px solid var(--color-line-strong);
+  border-radius: var(--radius);
+  background: var(--color-paper);
+  color: var(--color-ink);
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(var(--space-1));
+  transition: opacity var(--dur-hover) var(--ease-out), transform var(--dur-hover) var(--ease-out), visibility 0s linear var(--dur-hover), background-color var(--dur-hover) var(--ease-out);
+}
+.backToTop[data-visible="true"] {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition-delay: 0s;
+}
+.backToTop:hover {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-on-ink);
+}
+.backToTop:focus-visible { --focus-color: var(--color-accent); }
