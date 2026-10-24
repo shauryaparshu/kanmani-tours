@@ -1,0 +1,145 @@
+/* ─────────────────────────────────────────────────────────────────────
+   Kanmani Tours design tokens · Direction A "Programme"
+   Source of truth: docs/design-system.md. Once a section is migrated,
+   its components use only these variables: no hex values, font names,
+   or pixel sizes of their own.
+   ───────────────────────────────────────────────────────────────────── */
+
+:root {
+  /* ── Colour ──────────────────────────────────────────────────────── */
+  --color-paper: #F6F1E7;          /* page background */
+  --color-paper-deep: #EDE5D6;     /* alternate band */
+  --color-surface: #FCFAF5;        /* credits panel, form fields */
+  --color-ink: #1F1B17;            /* text, dark bands */
+  --color-ink-muted: #5C554D;      /* secondary text on paper */
+  --color-on-ink: #F6F1E7;         /* text on ink bands and photos */
+  --color-on-ink-muted: #B5AB9C;   /* secondary text on ink */
+  --color-line: #DDD4C5;           /* hairline separators (decorative) */
+  --color-line-strong: #8C8276;    /* form field borders, 3:1 */
+  --color-accent: #A8352A;         /* vermilion: actions, links, focus */
+  --color-accent-deep: #8A2A21;    /* hover and pressed */
+  --color-highlight: #C99A2E;      /* turmeric: on ink only, never on paper */
+  --color-error: #8E2A20;
+  --color-success: #2E6142;
+  --scrim-photo: linear-gradient(to top, rgb(20 16 11 / 0.72) 0%, rgb(20 16 11 / 0.35) 45%, rgb(20 16 11 / 0) 75%);
+
+  /* ── Type ────────────────────────────────────────────────────────── */
+  /* Latin face first; Japanese glyphs fall through to the JP face. */
+  --font-display: var(--font-newsreader), var(--font-shippori), "Yu Mincho", "Hiragino Mincho ProN", Georgia, serif;
+  --font-body: var(--font-dm-sans), var(--font-noto-jp), "Hiragino Sans", "Yu Gothic", system-ui, sans-serif;
+
+  /* Six sizes, fluid from 390px to 1440px viewports. */
+  --text-label: 0.8125rem;                                         /* 13px */
+  --text-body: clamp(1rem, 0.9768rem + 0.095vw, 1.0625rem);        /* 16 → 17px */
+  --text-lead: clamp(1.125rem, 1.0554rem + 0.286vw, 1.3125rem);    /* 18 → 21px */
+  --text-title: clamp(1.375rem, 1.1893rem + 0.762vw, 1.875rem);    /* 22 → 30px */
+  --text-heading: clamp(1.875rem, 1.5036rem + 1.524vw, 2.875rem);  /* 30 → 46px */
+  --text-display: clamp(2.5rem, 1.7571rem + 3.048vw, 4.5rem);      /* 40 → 72px */
+
+  --leading-display: 1.06;
+  --leading-heading: 1.12;
+  --leading-title: 1.2;
+  --leading-lead: 1.5;
+  --leading-body: 1.65;
+  --leading-label: 1.3;
+
+  --tracking-display: -0.01em;
+  --tracking-caps: 0.18em;         /* small uppercase labels and nav */
+
+  --weight-light: 300;
+  --weight-regular: 400;
+  --weight-medium: 500;
+
+  /* ── Space (8px base) ────────────────────────────────────────────── */
+  --space-half: 0.25rem;  /* 4 */
+  --space-1: 0.5rem;      /* 8 */
+  --space-2: 1rem;        /* 16 */
+  --space-3: 1.5rem;      /* 24 */
+  --space-4: 2rem;        /* 32 */
+  --space-5: 3rem;        /* 48 */
+  --space-6: 4rem;        /* 64 */
+  --space-7: 6rem;        /* 96 */
+  --space-8: 8rem;        /* 128 */
+
+  --section-pad: clamp(4rem, 2.5143rem + 6.095vw, 8rem);  /* 64 → 128px, every section */
+  --gutter: clamp(1.25rem, 0.2286rem + 4.19vw, 4rem);     /* 20 → 64px, page side margin */
+  --container: 77.5rem;                                   /* 1240px */
+  --measure: 65ch;                                        /* running text */
+
+  /* ── Shape and depth ─────────────────────────────────────────────── */
+  --radius: 0;
+  --rule: 1px solid var(--color-line);
+  --shadow-float: 0 1px 2px rgb(31 27 23 / 0.06), 0 16px 40px -16px rgb(31 27 23 / 0.28);  /* only for things that float */
+
+  /* ── Motion ──────────────────────────────────────────────────────── */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-hover: 200ms;
+  --dur-reveal: 750ms;
+
+  /* ── Layers ──────────────────────────────────────────────────────── */
+  --z-tab: 90;
+  --z-nav: 100;
+  --z-overlay: 200;
+
+  --focus-color: var(--color-accent);
+}
+
+/* Japanese reads better with more line height and no tracking. */
+:root:lang(ja) {
+  --leading-body: 1.9;
+  --leading-lead: 1.75;
+  --tracking-display: 0;
+}
+
+/* On ink bands, focus and highlights switch to colours that read on dark. */
+.surface-ink {
+  --focus-color: var(--color-highlight);
+  background: var(--color-ink);
+  color: var(--color-on-ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-hover: 1ms;
+    --dur-reveal: 1ms;
+  }
+}
+
+/* ── Browser surfaces ─────────────────────────────────────────────────
+   The parts the browser draws by default, themed from the palette.
+   Safe to apply site-wide before the sections are migrated. */
+html {
+  caret-color: var(--color-accent);
+  accent-color: var(--color-accent);
+}
+
+::selection {
+  background: var(--color-accent);
+  color: var(--color-on-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus-color);
+  outline-offset: 3px;
+}
+
+a {
+  text-underline-offset: 0.22em;
+  text-decoration-thickness: 1px;
+}
+
+.num {
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
