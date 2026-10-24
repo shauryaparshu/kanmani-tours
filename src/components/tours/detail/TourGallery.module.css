@@ -9,6 +9,12 @@
   background: var(--color-paper);
 }
 .tile:first-child { grid-column: span 2; }
+/* Phones: no tile sits alone in a row. */
+@media (max-width: 899px) {
+  .mosaic[data-count="2"] .tile,
+  .mosaic[data-count="4"] .tile:last-child { grid-column: span 2; }
+  .mosaic[data-count="1"] .photo { aspect-ratio: 16 / 9; }
+}
 
 .button {
   display: block;
@@ -63,7 +69,11 @@
   .tile:first-child .button,
   .tile:first-child .photo { height: 100%; }
   .tile:first-child .photo { aspect-ratio: auto; }
-  /* Too few photos to fill a 2 x 2 lead: keep every tile the same shape. */
-  .mosaic:is([data-count="1"], [data-count="2"], [data-count="3"], [data-count="4"]) .tile:first-child { grid-row: auto; }
-  .mosaic:is([data-count="1"], [data-count="2"], [data-count="3"], [data-count="4"]) .tile:first-child .photo { aspect-ratio: 4 / 3; height: auto; }
+  /* Too few photos to fill a 2 x 2 lead: one row of equal tiles instead. */
+  .mosaic[data-count="1"] { grid-template-columns: minmax(0, 1fr); }
+  .mosaic[data-count="2"] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mosaic[data-count="3"] { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .mosaic:is([data-count="1"], [data-count="2"], [data-count="3"], [data-count="4"]) .tile { grid-column: auto; grid-row: auto; }
+  .mosaic:is([data-count="2"], [data-count="3"], [data-count="4"]) .tile:first-child .photo { aspect-ratio: 4 / 3; height: auto; }
+  .mosaic[data-count="1"] .tile:first-child .photo { aspect-ratio: 16 / 9; height: auto; }
 }

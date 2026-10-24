@@ -1,0 +1,209 @@
+/* The viewer sits on the ink ground, like a print held against a dark board. */
+.dialog {
+  --focus-color: var(--color-highlight);
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  background: var(--color-ink);
+  color: var(--color-on-ink);
+  overscroll-behavior: contain;
+}
+
+/* ── Top bar: counter, caption, actions ── */
+.bar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding-top: max(var(--space-2), env(safe-area-inset-top, 0px));
+  padding-bottom: var(--space-2);
+  padding-left: max(var(--gutter), env(safe-area-inset-left, 0px));
+  padding-right: max(var(--gutter), env(safe-area-inset-right, 0px));
+}
+.captions {
+  display: grid;
+  gap: var(--space-half);
+  min-width: 0;
+}
+.counter {
+  margin: 0;
+  font: var(--weight-medium) var(--text-label) / var(--leading-label) var(--font-body);
+  letter-spacing: var(--tracking-caps);
+  color: var(--color-highlight);
+}
+.caption {
+  margin: 0;
+  max-width: 60ch;
+  font: var(--weight-regular) var(--text-lead) / var(--leading-title) var(--font-display);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.subCaption {
+  margin: 0;
+  font: var(--weight-regular) var(--text-label) / var(--leading-label) var(--font-body);
+  letter-spacing: 0.04em;
+  color: var(--color-on-ink-muted);
+}
+
+.actions {
+  flex: none;
+  display: flex;
+  gap: var(--space-1);
+}
+.download,
+.close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  min-width: 44px;
+  height: 44px;
+  padding: 0;
+  background: none;
+  border: 1px solid var(--color-line-on-ink);
+  border-radius: var(--radius);
+  color: var(--color-on-ink);
+  cursor: pointer;
+  text-decoration: none;
+  transition: border-color var(--dur-hover) var(--ease-out), background-color var(--dur-hover) var(--ease-out);
+}
+.download:hover,
+.close:hover { border-color: var(--color-on-ink); background: rgb(252 250 245 / 0.06); }
+.downloadText {
+  display: none;
+  font: var(--weight-medium) var(--text-label) / 1 var(--font-body);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+}
+
+/* A drawn cross for close. */
+.close > span {
+  position: relative;
+  width: 16px;
+  height: 16px;
+}
+.close > span::before,
+.close > span::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 1.5px;
+  background: currentColor;
+  transform: rotate(45deg);
+}
+.close > span::after { transform: rotate(-45deg); }
+
+/* ── Stage: the photo, with square arrows at the sides ── */
+.stage {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+  padding-inline: max(var(--gutter), env(safe-area-inset-left, 0px));
+}
+.photo {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  animation: develop var(--dur-reveal) var(--ease-out) both;
+  touch-action: pan-y;
+}
+@keyframes develop {
+  from { opacity: 0.4; filter: saturate(0.6) brightness(0.9); }
+  to { opacity: 1; filter: none; }
+}
+
+.prev,
+.next {
+  position: absolute;
+  top: 50%;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  background: rgb(20 16 11 / 0.6);
+  border: 1px solid var(--color-line-on-ink);
+  border-radius: var(--radius);
+  color: var(--color-on-ink);
+  cursor: pointer;
+  transform: translateY(-50%);
+  transition: background-color var(--dur-hover) var(--ease-out), border-color var(--dur-hover) var(--ease-out);
+}
+.prev { left: max(var(--gutter), env(safe-area-inset-left, 0px)); }
+.next { right: max(var(--gutter), env(safe-area-inset-right, 0px)); }
+.prev:hover,
+.next:hover { background: var(--color-accent); border-color: var(--color-accent); }
+/* A drawn chevron. */
+.prev > span,
+.next > span {
+  width: 10px;
+  height: 10px;
+  border-top: 1.5px solid currentColor;
+  border-right: 1.5px solid currentColor;
+}
+.prev > span { transform: translateX(2px) rotate(-135deg); }
+.next > span { transform: translateX(-2px) rotate(45deg); }
+
+/* ── Strip of every photo in the set ── */
+.strip {
+  display: flex;
+  gap: var(--space-1);
+  margin: 0;
+  padding-top: var(--space-2);
+  padding-bottom: max(var(--space-2), env(safe-area-inset-bottom, 0px));
+  padding-left: max(var(--gutter), env(safe-area-inset-left, 0px));
+  padding-right: max(var(--gutter), env(safe-area-inset-right, 0px));
+  list-style: none;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.strip::-webkit-scrollbar { display: none; }
+.strip > li { flex: none; }
+.thumb {
+  display: block;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  background: var(--color-ink);
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  opacity: 0.55;
+  cursor: pointer;
+  transition: opacity var(--dur-hover) var(--ease-out), border-color var(--dur-hover) var(--ease-out);
+}
+.thumb:hover { opacity: 0.9; }
+.thumb[aria-current="true"] {
+  opacity: 1;
+  border-color: var(--color-highlight);
+}
+.thumb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (min-width: 640px) {
+  .downloadText { display: inline; }
+  .download { padding: 0 var(--space-2); }
+}
+
+@media (min-width: 900px) {
+  .prev,
+  .next { display: inline-flex; }
+  .stage { padding-inline: calc(var(--gutter) + 64px); }
+  .thumb { width: 56px; height: 56px; }
+  .strip { justify-content: safe center; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .photo { animation: none; }
+}

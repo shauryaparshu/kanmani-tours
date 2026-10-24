@@ -1,26 +1,43 @@
 import type { Metadata } from 'next';
+import { getTranslations } from 'next-intl/server';
 import { client } from '@/sanity/lib/client';
 import { FAQS_QUERY } from '@/sanity/lib/queries';
-import FaqPageClient from './FaqPageClient';
 import FooterSection from '@/components/layout/FooterSection';
-import { pageAlternates } from '@/lib/site';
+import PageHeader from '@/components/layout/PageHeader';
+import FaqList, { type FaqItem } from '@/components/faq/FaqList';
+import { pageAlternates, pageOpenGraph } from '@/lib/site';
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
     const { locale } = await params;
+    const t = await getTranslations({ locale, namespace: 'FAQ' });
+    const title = t('metaTitle');
+    const description = t('metaDescription');
     return {
         alternates: pageAlternates(locale, '/faq'),
+        title,
+        description,
+        openGraph: pageOpenGraph(title, description),
     };
 }
 
+export default async function FaqPage({ params }: { params: Promise<{ locale: string }> }) {
+    const { locale } = await params;
+    const [faqs, t] = await Promise.all([
+        client.fetch<FaqItem[]>(FAQS_QUERY, {}, { next: { revalidate: 60 } }),
+        getTranslations({ locale, namespace: 'FAQ' }),
+    ]);
 
-export default async function FaqPage() {
-  const faqs = await client.fetch(FAQS_QUERY, {}, { 
-    next: { revalidate: 60 } 
-  });
-  return (
-    <>
-      <FaqPageClient faqs={faqs} />
-      <FooterSection />
-    </>
-  );
+    return (
+        <>
+            <main>
+                <PageHeader
+                    title={t('title')}
+                    lead={t('subtitle')}
+                    breadcrumbs={[{ href: '/', label: t('home') }, { label: t('title') }]}
+                />
+                <FaqList faqs={faqs ?? []} />
+            </main>
+            <FooterSection />
+        </>
+    );
 }

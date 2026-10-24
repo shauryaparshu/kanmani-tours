@@ -175,7 +175,14 @@
         "title": "過去のツアーハイライト",
         "subtitle": "過去の旅を映像で振り返る。私たちのツアーを特別にする、リアルな瞬間と繋がりをご覧ください。",
         "breadcrumbHome": "ホーム",
-        "breadcrumbGallery": "ギャラリー"
+        "breadcrumbGallery": "ギャラリー",
+        "metaTitle": "ツアーギャラリー — Kanmani Tours",
+        "metaDescription": "過去のツアーの写真：著名人との出会い、文化の祭典、インド各地への旅。",
+        "filterLabel": "ツアーの種類",
+        "all": "すべて",
+        "photoCount": "{count}枚",
+        "viewTour": "ツアーを見る",
+        "empty": "このカテゴリーの写真はまだありません。"
     },
     "FAQ": {
         "badge": "サポートセンター",
@@ -183,7 +190,23 @@
         "subtitle": "インドへの旅についてのすべてをご案内します。",
         "stillHaveQuestions": "まだご質問がありますか？",
         "contactPrompt": "お探しの内容が見つからない場合、スタッフがお手伝いします。",
-        "contactUs": "お問い合わせ"
+        "contactUs": "お問い合わせ",
+        "metaTitle": "よくあるご質問 — Kanmani Tours",
+        "metaDescription": "ご予約とお支払い、ビザ、安全、お金、ツアー体験について。日本からインドへ旅する方へのご案内です。",
+        "home": "ホーム",
+        "indexLabel": "トピック",
+        "questionCount": "{count}件",
+        "empty": "ご質問は現在準備中です。しばらくお待ちください。",
+        "categories": {
+            "booking": "ご予約とお支払い",
+            "visa": "ビザと渡航書類",
+            "experience": "ツアーについて",
+            "health": "安全と健康",
+            "money": "お金と実用情報",
+            "weather": "天候と時期",
+            "celebrity": "著名人ツアー・特別ツアー",
+            "general": "その他"
+        }
     },
     "Contact": {
         "title": "旅を始めましょう",
@@ -229,8 +252,55 @@
         "requestTransfer": "送迎を申し込む →"
     },
     "About": {
-        "badge": "舞台裏",
-        "ceoTitle": "代表取締役"
+        "metaTitle": "カンマニ博士について — Kanmani Tours",
+        "name": "カンマニ博士",
+        "roles": "博士（学術）・起業家・講演家・人道支援活動家",
+        "quote": "インドに生まれ、日本で過ごした28年に育てられ、その両方から力をもらってきました。私は、自分の中に生きる二つの文化をつなぐ架け橋として歩み続けます。",
+        "portraitAlt": "カンマニ博士",
+        "factsTitle": "プロフィール",
+        "factYears": "日本在住",
+        "factYearsValue": "28年",
+        "factCountries": "訪問国",
+        "factCountriesValue": "41か国",
+        "factPhd": "博士号",
+        "factPhdValue": "名古屋大学",
+        "factLanguages": "言語",
+        "factLanguagesValue": "日本語、タミル語、テルグ語、英語",
+        "storyTitle": "これまでの歩み",
+        "chapters": {
+            "c1": {
+                "title": "The Student Who Stayed",
+                "p1": "I landed in Japan in 1998 — a young woman from Tamil Nadu with one suitcase, a scholarship, and a fire that refused to stay small.",
+                "p2": "My parents gave me one thing for this journey — a one-way ticket. Just one. Everything after that was mine to earn.",
+                "p3": "I didn't speak Japanese. I didn't know many people. The city was vast, the silence was loud, and the loneliness was real. But I didn't come this far to turn back.",
+                "p4": "I learned Japanese — not from textbooks, but from the streets, the people, and over <strong>40 part-time jobs</strong> that taught me more than any classroom ever could. I spoke before I was ready. I failed before I succeeded. And every single time I fell, I got up speaking better, standing taller, and believing harder.",
+                "p5": "Japan didn't hand me anything on a silver plate. I struggled for it. I fought for it. I earned it — <strong>word by word, year by year, trust by trust.</strong>"
+            },
+            "c2": {
+                "title": "A Career Built on Trust",
+                "p1": "I was accepted into <strong>Nagoya University — home to</strong> seven Nobel laureates — and pursued my PhD. I worked with the <strong>United Nations University</strong> in Tokyo on issues that shape the future of nations. When the <strong>2004 Tsunami</strong> struck, I wasn't watching from a distance — I was on the ground, coordinating disaster relief with <strong>JICA</strong>, translating not just languages, but life-or-death urgency. I interpreted for the <strong>Refugee Assistance Headquarters</strong> in Tokyo — proceedings where a single sentence could save a family.",
+                "p2": "I led <strong>India's first Women's Everest Base Camp Expedition</strong> from Tamil Nadu — sponsored by then Chief Minister <strong>Dr. J. Jayalalitha</strong>. I carried <strong>India's flag at the Asian Games</strong>. I presented research alongside <strong>Dr. M.S. Swaminathan</strong> — the father of India's Green Revolution — at international conferences across the world. I was a state-level volleyball player, a striker in Tamil Nadu.",
+                "p3": "<strong>None of it was given. All of it was built — with bare hands and an unbreakable will.</strong>"
+            },
+            "c3": {
+                "title": "And Then There Was the World Beyond",
+                "p1": "Since the year 2000, I have solo backpacked across <strong>forty-one countries</strong> — not as a tourist, but as a student of the world. I took <strong>30 low-cost flights in 30 days</strong> across Europe — before the EU was even formed. One night in Czech Republic, I was pulled off a train by border security in the middle of darkness and taken to a police station. A different woman might have stopped there. But when your will is made of steel — <strong>nothing scares your soul. Nothing can touch your core.</strong>",
+                "p2": "Through it all, Japan showed me something I carry to this day — that true strength is silent, like an undercurrent in the ocean — <strong>invisible, yet unstoppable.</strong> That respect is earned through action, not words. That overwhelming kindness from strangers needs no common language. That discipline and grace can live together in everything you do.",
+                "p3": "And India — my India — reminded me of something equally powerful: <strong>that no matter how far you go, your roots are your greatest strength.</strong>",
+                "p4": "Twenty-eight years in Japan. Four languages — Japanese, Tamil, Telugu, and English. Forty-one countries. Two cultures that live inside me. Countless experiences — some that broke me open, some that built me whole. <strong>One woman who refused to quit.</strong>",
+                "p5": "Now, I'm building the bridge I once wished existed — between India and Japan — in language, culture, knowledge, and opportunity. So the next generation doesn't just dream across borders. <strong>They walk across them.</strong>",
+                "p6": "Because if a girl from Tamil Nadu can land in Japan with nothing but a one-way ticket and turn 28 years of struggle into a life of purpose — <strong>so can you.</strong>"
+            }
+        },
+        "albumsTitle": "写真で見るカンマニの歩み",
+        "albumCount": "{count}枚",
+        "openAlbum": "{album}のアルバムを開く（{count}枚）",
+        "albums": {
+            "celebrity": "著名人との交流",
+            "world-travel": "世界の旅",
+            "achievements": "実績",
+            "student-phd": "留学と博士課程"
+        }
     },
     "Footer": {
         "planTitle": "カンマニ博士と、旅の計画を",
@@ -282,5 +352,16 @@
         "photoAlt": "{title} 写真{n}",
         "faqTitle": "このツアーについてのよくある質問",
         "moreJourneys": "ほかのツアー"
+    },
+    "Lightbox": {
+        "dialogLabel": "写真ビューア",
+        "close": "閉じる",
+        "previous": "前の写真",
+        "next": "次の写真",
+        "download": "ダウンロード",
+        "downloadLabel": "この写真をダウンロード",
+        "counter": "{count}枚中{n}枚目",
+        "showPhoto": "{n}枚目の写真を表示",
+        "thumbnails": "すべての写真"
     }
 }

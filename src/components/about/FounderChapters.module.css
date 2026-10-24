@@ -1,0 +1,110 @@
+.story {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  padding-block: var(--section-pad);
+}
+
+.container {
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-left: max(var(--gutter), env(safe-area-inset-left, 0px));
+  padding-right: max(var(--gutter), env(safe-area-inset-right, 0px));
+}
+
+.storyTitle {
+  margin: 0 0 var(--space-5);
+  font: var(--weight-light) var(--text-heading) / var(--leading-heading) var(--font-display);
+  letter-spacing: var(--tracking-display);
+}
+
+.chapters {
+  display: grid;
+  gap: var(--section-pad);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.chapter {
+  display: grid;
+  gap: var(--space-5);
+  padding-top: var(--space-4);
+  border-top: var(--rule);
+}
+
+.text {
+  display: grid;
+  gap: var(--space-3);
+  align-content: start;
+  min-width: 0;
+}
+
+/* Chapter numbers set like a programme's running order. */
+.number {
+  margin: 0;
+  font: var(--weight-light) var(--text-title) / 1 var(--font-display);
+  color: var(--color-accent);
+}
+
+.title {
+  margin: 0 0 var(--space-1);
+  max-width: 22ch;
+  font: var(--weight-regular) var(--text-heading) / var(--leading-heading) var(--font-display);
+  letter-spacing: var(--tracking-display);
+  text-wrap: balance;
+}
+
+.body {
+  margin: 0;
+  max-width: var(--measure);
+  font: var(--weight-regular) var(--text-body) / var(--leading-body) var(--font-body);
+}
+.body strong {
+  font-weight: var(--weight-medium);
+  color: var(--color-ink);
+}
+
+/* A main photo with a smaller one overlapping its lower corner, like prints laid on a page. */
+.photos {
+  position: relative;
+  align-self: start;
+  padding-bottom: var(--space-6);
+}
+.photos[data-count="1"] { padding-bottom: 0; }
+
+.photoMain,
+.photoInset {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-paper-deep);
+}
+.photoMain {
+  width: 82%;
+  aspect-ratio: 4 / 5;
+}
+.photos[data-count="1"] .photoMain { width: 100%; }
+.photoInset {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 48%;
+  aspect-ratio: 1;
+  outline: var(--space-1) solid var(--color-paper);
+  box-shadow: var(--shadow-float);
+}
+.image { object-fit: cover; }
+
+@media (min-width: 900px) {
+  .chapter[data-has-photos] {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: var(--space-7);
+  }
+  /* Alternate sides so the story reads as a sequence of spreads. */
+  .chapter[data-has-photos]:nth-child(even) {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  }
+  .chapter[data-has-photos]:nth-child(even) .photos { order: -1; }
+  .chapter[data-has-photos]:nth-child(even) .photoMain { margin-left: auto; }
+  .chapter[data-has-photos]:nth-child(even) .photoInset { right: auto; left: 0; }
+  .photos { position: sticky; top: calc(var(--nav-height) + var(--space-4)); }
+}

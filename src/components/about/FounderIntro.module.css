@@ -1,0 +1,110 @@
+.intro {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  border-bottom: var(--rule);
+}
+
+.inner {
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-block: var(--space-5) var(--section-pad);
+  padding-left: max(var(--gutter), env(safe-area-inset-left, 0px));
+  padding-right: max(var(--gutter), env(safe-area-inset-right, 0px));
+  display: grid;
+  gap: var(--space-5);
+}
+
+.portrait {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  max-height: 80svh;
+  background: var(--color-paper-deep);
+}
+.image {
+  object-fit: cover;
+  object-position: center 15%;
+}
+
+.text {
+  display: grid;
+  align-content: center;
+  gap: var(--space-3);
+}
+
+.name {
+  margin: 0;
+  font: var(--weight-light) var(--text-display) / var(--leading-display) var(--font-display);
+  letter-spacing: var(--tracking-display);
+}
+
+.roles {
+  margin: 0;
+  font: var(--weight-medium) var(--text-label) / var(--leading-label) var(--font-body);
+  letter-spacing: 0.08em;
+  color: var(--color-accent);
+}
+
+.quote {
+  margin: var(--space-2) 0;
+  padding-left: var(--space-3);
+  border-left: 1px solid var(--color-accent);
+}
+.quote p {
+  margin: 0;
+  max-width: 34ch;
+  text-wrap: pretty;
+  font: italic var(--weight-light) var(--text-title) / var(--leading-title) var(--font-display);
+}
+:lang(ja) .quote p { font-style: normal; }
+
+.factsTitle {
+  margin: 0 0 var(--space-2);
+  font: var(--weight-medium) var(--text-label) / var(--leading-label) var(--font-body);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+}
+:lang(ja) .factsTitle { letter-spacing: 0.06em; }
+
+/* Credits with dotted leaders, the same grammar as the tour pages. */
+.facts {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  max-width: 32rem;
+}
+.fact {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-1);
+}
+.fact dt {
+  display: flex;
+  flex: 1;
+  align-items: baseline;
+  gap: var(--space-1);
+  font: var(--weight-regular) var(--text-body) / var(--leading-label) var(--font-body);
+  color: var(--color-ink-muted);
+  white-space: nowrap;
+}
+.fact dt::after {
+  content: "";
+  flex: 1;
+  min-width: var(--space-2);
+  border-bottom: 1px dotted var(--color-line-strong);
+  transform: translateY(-0.25em);
+}
+.fact dd {
+  margin: 0;
+  font: var(--weight-regular) var(--text-lead) / var(--leading-label) var(--font-display);
+  text-align: right;
+  text-wrap: balance;
+}
+
+@media (min-width: 900px) {
+  .inner {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    gap: var(--space-7);
+    padding-top: var(--space-6);
+  }
+}

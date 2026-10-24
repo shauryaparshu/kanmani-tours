@@ -48,7 +48,7 @@ export default function TourGallery({ photos, title }: TourGalleryProps) {
                                     src={photo.url}
                                     alt={alt(i + 1)}
                                     fill
-                                    sizes={i === 0 ? '(min-width: 900px) 50vw, 100vw' : '(min-width: 900px) 25vw, 50vw'}
+                                    sizes={shown.length === 1 ? '(min-width: 1240px) 1240px, 100vw' : i === 0 ? '(min-width: 900px) 50vw, 100vw' : '(min-width: 900px) 25vw, 50vw'}
                                     className={styles.image}
                                     placeholder={photo.lqip ? 'blur' : 'empty'}
                                     blurDataURL={photo.lqip}

@@ -88,6 +88,7 @@
   --z-tab: 90;
   --z-nav: 100;
   --z-overlay: 200;
+  --z-modal: 300;     /* photo viewer, above everything */
 
   --focus-color: var(--color-accent);
 }
@@ -101,6 +102,19 @@
   --leading-body: 1.9;
   --leading-lead: 1.75;
   --tracking-display: 0;
+}
+
+/* Japanese line breaking: text may break between characters (it has no
+   spaces), with strict kinsoku so punctuation never starts a line.
+   Headings keep phrases whole where the browser supports auto-phrase. */
+:root:lang(ja) [data-ds] {
+  word-break: normal;
+  overflow-wrap: break-word;
+  line-break: strict;
+}
+:root:lang(ja) [data-ds] :is(h1, h2, h3) {
+  word-break: auto-phrase;
+  overflow-wrap: anywhere;  /* a phrase wider than the screen may still break */
 }
 
 /* On ink bands, focus and highlights switch to colours that read on dark. */

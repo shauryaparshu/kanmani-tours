@@ -1,0 +1,90 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tile:first-child { grid-column: 1 / -1; }
+/* Four albums on a phone: full, two halves, full, so no tile sits alone. */
+.grid[data-count="4"] .tile:last-child { grid-column: 1 / -1; }
+.grid[data-count="4"] .tile:last-child .photo { aspect-ratio: 3 / 2; }
+.grid[data-count="2"] .tile,
+.grid[data-count="1"] .tile { grid-column: 1 / -1; }
+
+.button {
+  --focus-color: var(--color-highlight);
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: var(--color-ink);
+  color: var(--color-on-ink);
+  text-align: left;
+  cursor: pointer;
+}
+
+.photo {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+}
+.tile:first-child .photo { aspect-ratio: 3 / 2; }
+.photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--scrim-hero);
+}
+.image {
+  object-fit: cover;
+  transition: transform var(--dur-reveal) var(--ease-out);
+}
+.button:hover .image { transform: scale(1.03); }
+
+.caption {
+  position: absolute;
+  inset: auto 0 0;
+  display: grid;
+  gap: var(--space-half);
+  padding: var(--space-3);
+}
+.label {
+  font: var(--weight-regular) var(--text-lead) / var(--leading-title) var(--font-display);
+  text-wrap: balance;
+}
+.tile:first-child .label { font-size: var(--text-title); }
+.count {
+  font: var(--weight-medium) var(--text-label) / var(--leading-label) var(--font-body);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-on-ink);
+}
+:lang(ja) .count { letter-spacing: 0.06em; }
+
+@media (prefers-reduced-motion: reduce) {
+  .button:hover .image { transform: none; }
+}
+
+/* Desktop: the largest album fills the left column, the others share the right. */
+@media (min-width: 900px) {
+  .grid[data-count="4"] {
+    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    aspect-ratio: 2 / 1;
+  }
+  .grid[data-count="4"] .tile:first-child { grid-column: 1; grid-row: 1 / span 2; }
+  .grid[data-count="4"] .tile:last-child { grid-column: 2 / span 2; }
+  .grid[data-count="4"] .photo,
+  .grid[data-count="4"] .tile:first-child .photo,
+  .grid[data-count="4"] .tile:last-child .photo { aspect-ratio: auto; height: 100%; }
+
+  .grid[data-count="3"] { grid-template-columns: 2fr 1fr 1fr; }
+  .grid[data-count="3"] .tile:first-child { grid-column: auto; }
+  .grid[data-count="3"] .photo,
+  .grid[data-count="3"] .tile:first-child .photo { aspect-ratio: 4 / 5; }
+}

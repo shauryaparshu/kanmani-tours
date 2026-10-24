@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import { getToursByDestination } from '@/lib/tours';
 import { getAllCategories } from '@/lib/categories';
+import { localizeCategories } from '@/components/tours/categoryLabels';
 import { getAllCountries } from '@/lib/countries';
 import Footer from '@/components/layout/FooterSection';
 import PageHeader from '@/components/layout/PageHeader';
@@ -41,7 +42,7 @@ export default async function IndiaToursPage({ params }: { params: Promise<{ loc
                     breadcrumbs={[{ href: '/', label: t('breadcrumbHome') }, { label: tDest('indiaTitle') }]}
                 />
                 <Suspense fallback={null}>
-                    <TourList tours={tours} categories={categories} countries={countries} />
+                    <TourList tours={tours} categories={localizeCategories(categories, locale, t)} countries={countries} />
                 </Suspense>
             </main>
             <Footer />
