@@ -155,9 +155,20 @@
         "breadcrumbTours": "Tours",
         "loading": "Loading tours...",
         "noToursFound": "No tours found",
-        "clearFilters": "Clear All Filters",
+        "clearFilters": "Clear filters",
         "allYears": "All Years",
-        "clear": "✕ Clear"
+        "filtersLabel": "Filter tours",
+        "statusLabel": "When",
+        "typeLabel": "Tour type",
+        "yearLabel": "Year",
+        "countryLabel": "Country",
+        "allCountries": "All countries",
+        "searchLabel": "Search",
+        "resultCount": "{count, plural, =0 {No tours} one {# tour} other {# tours}}",
+        "noMatch": "No tours match these filters.",
+        "japanLead": "Discover curated journeys across Japan — from educational school trips to immersive cultural and group experiences.",
+        "comingSoonTitle": "Curated Japan journeys",
+        "comingSoonBody": "Japan tours are launching soon. Tell us about your group and we will plan a visit with you."
     },
     "Gallery": {
         "title": "Past Tour Highlights",

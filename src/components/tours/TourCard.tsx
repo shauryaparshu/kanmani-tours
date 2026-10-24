@@ -11,9 +11,11 @@ interface TourCardProps {
     /** `sizes` for the photo, matching how wide the card renders. */
     sizes: string;
     headingLevel?: 'h2' | 'h3';
+    /** `feature`: a wide card in a grid, its photo matching the height of its tall neighbours. */
+    variant?: 'default' | 'feature';
 }
 
-export default function TourCard({ tour, sizes, headingLevel: Heading = 'h3' }: TourCardProps) {
+export default function TourCard({ tour, sizes, headingLevel: Heading = 'h3', variant = 'default' }: TourCardProps) {
     const t = useTranslations('TourCard');
     const locale = useLocale();
 
@@ -29,7 +31,7 @@ export default function TourCard({ tour, sizes, headingLevel: Heading = 'h3' }: 
     const href = tour.destination === 'japan' ? `/japan/tours/${tour.slug}` : `/india/tours/${tour.slug}`;
 
     return (
-        <article className={styles.card}>
+        <article className={styles.card} data-variant={variant}>
             <Link href={href} className={styles.link}>
                 <Develop className={styles.photo}>
                     {tour.coverImage ? (

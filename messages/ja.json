@@ -155,9 +155,20 @@
         "breadcrumbTours": "ツアー",
         "loading": "ツアーを読み込み中...",
         "noToursFound": "ツアーが見つかりません",
-        "clearFilters": "すべてのフィルターをクリア",
+        "clearFilters": "条件をクリア",
         "allYears": "すべての年",
-        "clear": "✕ クリア"
+        "filtersLabel": "ツアーを絞り込む",
+        "statusLabel": "時期",
+        "typeLabel": "ツアーの種類",
+        "yearLabel": "年",
+        "countryLabel": "国",
+        "allCountries": "すべての国",
+        "searchLabel": "検索",
+        "resultCount": "{count}件のツアー",
+        "noMatch": "条件に合うツアーはありません。",
+        "japanLead": "Discover curated journeys across Japan — from educational school trips to immersive cultural and group experiences.",
+        "comingSoonTitle": "Curated Japan journeys",
+        "comingSoonBody": "Japan tours are launching soon. Tell us about your group and we will plan a visit with you."
     },
     "Gallery": {
         "title": "過去のツアーハイライト",
