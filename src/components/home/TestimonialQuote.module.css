@@ -89,3 +89,6 @@
   letter-spacing: 0.1em;
   color: var(--color-ink-muted);
 }
+
+/* Gold theme: letterpressed section title, like the hero. */
+.title { text-shadow: var(--text-emboss); }

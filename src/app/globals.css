@@ -21,7 +21,7 @@ html {
 body {
   min-width: 320px;
   overflow-x: hidden;
-  background: var(--color-paper);
+  background: var(--color-paper);  /* gold theme: champagne; PageFrame adds the grain */
   color: var(--color-ink);
   font: var(--weight-regular) var(--text-body) / var(--leading-body) var(--font-body);
 }

@@ -53,3 +53,6 @@
   }
   .list { grid-template-columns: 1fr 1fr; }
 }
+
+/* Gold theme: letterpressed section title, like the hero. */
+.title { text-shadow: var(--text-emboss); }

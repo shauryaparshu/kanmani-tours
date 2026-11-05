@@ -15,6 +15,18 @@ const SOCIALS = [
     { label: 'YouTube', href: 'https://youtube.com/@kanmanitours' },
 ];
 
+/** Scroll-shaped end piece of a nav plaque (left end; `flip` for the right). */
+function PlaqueEnd({ flip = false }: { flip?: boolean }) {
+    return (
+        <svg className={styles.plaqueEnd} data-flip={flip} viewBox="0 0 22 40" aria-hidden="true" focusable="false">
+            <path d="M22 4.5H13C7.5 4.5 3 11 3 20s4.5 15.5 10 15.5h9" />
+            <path d="M22 8.5h-7.5C11 8.5 8 13.5 8 20s3 11.5 6.5 11.5H22" />
+            <path d="M3 20h-3" />
+            <circle cx="14.5" cy="20" r="1.6" />
+        </svg>
+    );
+}
+
 export default function Navigation() {
     const t = useTranslations('Navigation');
     const tContact = useTranslations('TopBar');
@@ -91,34 +103,39 @@ export default function Navigation() {
         </div>
     );
 
+    // A gold plaque: scroll-shaped ends either side of a row of links.
+    const plaque = (items: typeof links) => (
+        <div className={styles.plaque}>
+            <PlaqueEnd />
+            <ul className={styles.links}>
+                {items.map((link) => (
+                    <li key={link.href}>
+                        <Link
+                            href={link.href}
+                            className={styles.link}
+                            aria-current={isActive(link.href) ? 'page' : undefined}
+                        >
+                            {link.label}
+                        </Link>
+                    </li>
+                ))}
+            </ul>
+            <PlaqueEnd flip />
+        </div>
+    );
+
     return (
         <>
             <a href="#main-content" className={styles.skip}>{t('skipToContent')}</a>
 
             <header className={styles.header} data-scrolled={scrolled || menuOpen}>
+                {/* Phones and tablets: logo, Enquire and the menu button. */}
                 <div className={styles.bar}>
                     <Link href="/" className={styles.logoLink} onClick={() => setMenuOpen(false)}>
-                        <Logo className={styles.logo} />
+                        <Logo variant="wordmark" className={styles.logo} />
                     </Link>
 
-                    <nav className={styles.primary} aria-label={t('mainNav')}>
-                        <ul className={styles.links}>
-                            {links.map((link) => (
-                                <li key={link.href}>
-                                    <Link
-                                        href={link.href}
-                                        className={styles.link}
-                                        aria-current={isActive(link.href) ? 'page' : undefined}
-                                    >
-                                        {link.label}
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
-                    </nav>
-
                     <div className={styles.actions}>
-                        {languageSwitch(styles.langDesktop)}
                         <Link href="/contact" className={styles.enquire}>{t('enquire')}</Link>
                         <button
                             ref={menuButtonRef}
@@ -133,6 +150,29 @@ export default function Navigation() {
                         </button>
                     </div>
                 </div>
+
+                {/* Desktop: two gold plaques of links either side of the logo cartouche. */}
+                <nav className={styles.desk} aria-label={t('mainNav')}>
+                    <div className={styles.deskStart}>
+                        <span className={styles.rail} aria-hidden="true" />
+                        {plaque(links.slice(0, 3))}
+                    </div>
+
+                    <Link href="/" className={styles.cartouche}>
+                        <svg className={styles.cartoucheShape} viewBox="0 0 248 80" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+                            <path className={styles.cartoucheFill} d="M14 1H234A13 13 0 0 0 247 14V66A13 13 0 0 0 234 79H14A13 13 0 0 0 1 66V14A13 13 0 0 0 14 1Z" />
+                            <path className={styles.cartoucheLine} d="M17 6H231A11 11 0 0 0 242 17V63A11 11 0 0 0 231 74H17A11 11 0 0 0 6 63V17A11 11 0 0 0 17 6Z" />
+                        </svg>
+                        <Logo variant="wordmark" className={styles.cartoucheLogo} />
+                    </Link>
+
+                    <div className={styles.deskEnd}>
+                        {plaque(links.slice(3))}
+                        <span className={styles.rail} aria-hidden="true" />
+                        {languageSwitch(styles.langDesktop)}
+                        <Link href="/contact" className={styles.enquire}>{t('enquire')}</Link>
+                    </div>
+                </nav>
             </header>
 
             <div className={styles.spacer} aria-hidden="true" />

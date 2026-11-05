@@ -1,20 +1,33 @@
-/* Homepage hero: copy on paper beside an arch-shaped photo slideshow
-   framed by gold botanical line art (Botanicals.tsx). */
+/* Gold theme homepage hero: embossed title, a filigree panel holding the
+   intro and slide controls, two lacquered buttons, and the photo slideshow
+   inside a gold Mughal arch (ArchFrame.tsx). On desktop it fills the first
+   screen and the slide buttons ride the page frame's bottom rule. */
 .hero {
+  position: relative;
   overflow-x: clip;
-  background: var(--color-paper);
   color: var(--color-ink);
 }
 
+/* Soft light behind the arch, like a lamp on gilt. Fades to plain paper at the edges. */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 40% at 50% 70%, rgb(255 248 228 / 0.7), rgb(255 248 228 / 0) 70%);
+  pointer-events: none;
+}
+
 .inner {
+  position: relative;
   max-width: 120rem;
   margin-inline: auto;
-  padding-top: var(--space-4);
+  padding-top: var(--space-5);
+  padding-bottom: var(--space-4);
   padding-left: max(var(--gutter), env(safe-area-inset-left, 0px));
   padding-right: max(var(--gutter), env(safe-area-inset-right, 0px));
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  grid-template-areas: "copy" "visual" "controls";
+  grid-template-areas: "copy" "visual" "pager";
   row-gap: var(--space-5);
 }
 
@@ -29,153 +42,67 @@
 .eyebrow {
   margin: 0;
   font: var(--weight-medium) var(--text-label) / var(--leading-label) var(--font-body);
-  letter-spacing: 0.12em;
+  letter-spacing: var(--tracking-caps);
   text-transform: uppercase;
-  color: var(--color-gold-deep);
-}
-:lang(ja) .eyebrow { letter-spacing: 0.06em; }
-
-.title {
-  margin: 0;
-  font: var(--weight-light) var(--text-display) / var(--leading-display) var(--font-display);
-  letter-spacing: var(--tracking-display);
-}
-.title span { display: block; }
-
-.intro {
-  margin: 0;
-  max-width: 30em;
-  font: var(--weight-regular) var(--text-body) / var(--leading-body) var(--font-body);
-}
-
-:lang(ja) .intro { word-break: auto-phrase; }
-
-.actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
-  margin-top: var(--space-1);
-}
-.primary,
-.secondary {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-1);
-  min-height: 48px;
-  padding: 0 var(--space-3);
-  border: 1px solid transparent;
-  border-radius: var(--radius-soft);
-  font: var(--weight-medium) var(--text-label) / 1 var(--font-body);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  text-decoration: none;
-  white-space: nowrap;
-  transition: background-color var(--dur-hover) var(--ease-out), border-color var(--dur-hover) var(--ease-out), color var(--dur-hover) var(--ease-out);
-}
-.primary svg,
-.secondary svg {
-  width: 1rem;
-  height: 1rem;
-  stroke-width: 1.5;
-  transition: transform var(--dur-hover) var(--ease-out);
-}
-.primary:hover svg,
-.secondary:hover svg { transform: translateX(3px); }
-:lang(ja) .primary,
-:lang(ja) .secondary { letter-spacing: 0.06em; }
-
-.primary {
-  background: var(--color-accent);
-  color: var(--color-on-ink);
-  box-shadow: var(--shadow-button);
-}
-.primary:hover { background: var(--color-accent-deep); }
-
-.secondary {
-  border-color: var(--color-gold);
   color: var(--color-ink);
 }
-.secondary:hover {
-  border-color: var(--color-gold-deep);
-  background: var(--color-surface);
-}
+:lang(ja) .eyebrow { letter-spacing: 0.08em; }
 
-/* ── Arch photo ──
-   One frame with a fixed shape; the slides crossfade inside it. Each photo
-   covers the frame anchored to its top edge, so heads are never trimmed and
-   only the bottom of a taller photo is cut. A thin gold arch rises above the
-   frame, and the line art sits around it without covering the photo. */
-.visual {
-  grid-area: visual;
-  container-type: inline-size;
-  --dome: 9cqw;           /* height of the arch above the photo */
-  padding-top: calc(var(--dome) + var(--space-2));
+/* Bold, letterpressed serif: a light top edge and a soft shadow below. */
+.title {
+  margin: 0;
+  font: 600 calc(var(--text-display) * 1.02) / 1.02 var(--font-display);
+  letter-spacing: -0.005em;
+  color: var(--color-ink);
+  text-shadow: var(--text-emboss);
 }
+.title span { display: block; }
+:lang(ja) .title { font-weight: var(--weight-medium); line-height: 1.25; }
 
-.frame {
+/* Filigree panel: intro text with the slide counter beneath it. */
+.panel {
   position: relative;
-  isolation: isolate;
-  width: 92%;
-  margin-inline: auto;
-  aspect-ratio: 1.6 / 1;
-}
-
-.frame::before {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  top: calc(-1 * var(--dome));
-  bottom: 0;
-  left: calc(-1 * var(--space-1));
-  right: calc(-1 * var(--space-1));
+  width: 100%;
+  max-width: 34rem;
+  display: grid;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-4) var(--space-3);
+  background: linear-gradient(170deg, rgb(255 251 238 / 0.7), rgb(245 236 216 / 0.35));
   border: 1px solid var(--color-gold);
-  border-bottom: 0;
-  border-radius: 50% 50% 0 0 / calc(var(--dome) * 1.6) calc(var(--dome) * 1.6) 0 0;
-  pointer-events: none;
+  box-shadow: inset 0 0 24px rgb(184 146 79 / 0.12);
 }
-
-.slide {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  background: var(--color-paper-deep);
-  opacity: 0;
-  transition: opacity calc(var(--dur-reveal) * 1.6) var(--ease-out);
+.intro {
+  position: relative;
+  margin: 0;
+  font: var(--weight-regular) var(--text-body) / var(--leading-body) var(--font-body);
+  color: var(--color-ink);
 }
-.slide[data-active="true"] { opacity: 1; z-index: 1; }
+:lang(ja) .intro { word-break: auto-phrase; }
 
-.image {
-  object-fit: cover;
-  object-position: 50% 0%;
-}
-
-/* ── Slide counter, progress line and pause ── */
 .controls {
-  grid-area: controls;
+  position: relative;
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  padding-bottom: var(--space-2);
 }
 .counter {
   font: var(--weight-regular) var(--text-label) / 1 var(--font-body);
-  letter-spacing: 0.08em;
-  color: var(--color-ink-muted);
+  letter-spacing: 0.1em;
+  color: var(--color-ink);
 }
 .track {
   position: relative;
   flex: 1;
-  max-width: 16rem;
   height: 1px;
-  background: var(--color-line-strong);
+  background: var(--color-gold);
 }
 .marker {
   position: absolute;
   top: 50%;
-  width: 7px;
-  height: 7px;
+  width: 9px;
+  height: 9px;
   border-radius: 50%;
-  background: var(--color-gold-deep);
+  background: radial-gradient(circle at 35% 35%, var(--color-gold-light), var(--color-gold-deep));
   transform: translate(-50%, -50%);
   transition: left var(--dur-reveal) var(--ease-out);
 }
@@ -184,49 +111,150 @@
   place-items: center;
   width: 44px;
   height: 44px;
+  margin: calc(-1 * var(--space-1)) calc(-1 * var(--space-1)) calc(-1 * var(--space-1)) 0;
   padding: 0;
   border: 0;
   background: transparent;
-  color: var(--color-ink-muted);
+  color: var(--color-ink);
   cursor: pointer;
   transition: color var(--dur-hover) var(--ease-out);
 }
 .pause:hover { color: var(--color-accent); }
 .iconPause {
-  width: 8px;
-  height: 10px;
-  border-left: 2px solid currentColor;
-  border-right: 2px solid currentColor;
+  width: 9px;
+  height: 12px;
+  border-left: 3px solid currentColor;
+  border-right: 3px solid currentColor;
 }
 .iconPlay {
   width: 0;
   height: 0;
   margin-left: 3px;
-  border-left: 8px solid currentColor;
-  border-top: 5px solid transparent;
-  border-bottom: 5px solid transparent;
+  border-left: 11px solid currentColor;
+  border-top: 7px solid transparent;
+  border-bottom: 7px solid transparent;
 }
 
-/* ── Desktop: copy left, arch right, photo resting on the band below ── */
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3) var(--space-4);
+  margin-top: var(--space-2);
+  padding-inline: 10px;  /* room for the buttons' outer frames and end diamonds */
+}
+
+/* ── Arch ── */
+.visual {
+  grid-area: visual;
+  display: grid;
+  justify-items: center;
+}
+.archPanel {
+  width: min(100%, 34rem);
+}
+
+.photos {
+  position: absolute;
+  inset: 0;
+  background: var(--color-paper-deep);
+}
+.slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity calc(var(--dur-reveal) * 1.6) var(--ease-out);
+}
+.slide[data-active="true"] { opacity: 1; z-index: 1; }
+.image {
+  object-fit: cover;
+  object-position: 50% 0%;
+}
+
+/* ── Slide buttons ── */
+.pager {
+  grid-area: pager;
+  display: flex;
+  justify-content: center;
+  gap: var(--space-5);
+}
+.lozenge {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--color-ink);
+  cursor: pointer;
+  transition: color var(--dur-hover) var(--ease-out), transform var(--dur-hover) var(--ease-out);
+}
+.lozengeShape {
+  position: absolute;
+  inset: 6px 0;
+  width: 100%;
+  height: calc(100% - 12px);
+  overflow: visible;
+}
+.lozengeFill {
+  fill: var(--color-surface);
+  stroke: var(--color-gold);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+.lozengeLine {
+  fill: none;
+  stroke: var(--color-gold);
+  stroke-width: 1;
+  opacity: 0.6;
+  vector-effect: non-scaling-stroke;
+}
+.lozenge svg:not(.lozengeShape) {
+  position: relative;
+  width: 1rem;
+  height: 1rem;
+  stroke-width: 1.75;
+}
+.lozenge:hover { color: var(--color-accent); }
+.lozenge:hover .lozengeFill { fill: var(--color-paper); }
+
+/* ── Desktop: copy left, arch right, filling the first screen ── */
 @media (min-width: 1024px) {
+  .hero {
+    /* First screen, inside the gold page frame. */
+    min-height: calc(100svh - var(--nav-height));
+    display: grid;
+  }
+  .hero::before {
+    background: radial-gradient(ellipse 45% 60% at 72% 48%, rgb(255 248 228 / 0.75), rgb(255 248 228 / 0) 70%),
+      radial-gradient(ellipse 40% 50% at 25% 45%, rgb(255 248 228 / 0.45), rgb(255 248 228 / 0) 70%);
+  }
   .inner {
-    padding-top: var(--space-2);
-    padding-left: max(calc(var(--gutter) + 4vw), env(safe-area-inset-left, 0px));
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.9fr);
-    /* Spacer rows centre the copy and the slide controls against the photo. */
-    grid-template-rows: 1fr auto auto 1fr;
-    grid-template-areas: ". visual" "copy visual" "controls visual" ". visual";
+    position: relative;
+    width: 100%;
+    padding-top: var(--space-4);
+    padding-bottom: calc(var(--frame-inset) + var(--space-6));
+    padding-left: calc(var(--frame-inset) + 4.5rem);
+    padding-right: calc(var(--frame-inset) + 5rem);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-areas: "copy visual";
+    align-items: center;
     column-gap: var(--space-6);
-    row-gap: 0;
   }
-  .copy { padding-top: var(--space-3); }
-  .title { font-size: calc(var(--text-display) * 0.86); }
-  .visual {
-    align-self: end;
+  .title { font-size: calc(var(--text-display) * 1.12); }
+  .visual { justify-items: center; }
+  .archPanel {
+    /* As large as the screen height allows, never wider than its column. */
+    width: min(100%, calc((100svh - var(--nav-height) - 11rem) * 1.08), 44rem);
   }
-  .frame {
-    width: 88%;
-    aspect-ratio: 1.75 / 1;
+  /* The two slide buttons sit on the frame's bottom double rule. */
+  .pager {
+    position: absolute;
+    left: 50%;
+    bottom: calc(var(--frame-inset) - 19px);
+    width: min(46%, 30rem);
+    justify-content: space-between;
+    transform: translateX(-50%);
   }
-  .controls { padding-block: var(--space-4) 0; }
 }

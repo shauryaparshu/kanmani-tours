@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-11-06 Gold theme (branch `redesign/gold-theme`)
+
+- New look from the owner's gold mockup, on its own branch and preview URL; `redesign/premium-reskin` is unchanged.
+- Palette: champagne paper, deep brown ink, metallic gold and red gradients (`tokens.css`). Paper grain and a fixed double gold page frame with filigree corners (`PageFrame`).
+- Nav: gold link plaques with scroll ends either side of a centred logo cartouche (from 1280px); About moves to the left plaque. Phone bar keeps the menu.
+- Hero: embossed bold title, intro and slide controls in a filigree panel, gold and red lacquered buttons (`OrnateLink`), the slideshow inside a bevelled Mughal arch with lattice spandrels (`ArchFrame`), and previous/next lozenges on the frame's bottom rule.
+- Founder link uses `OrnateLink`; homepage section titles are letterpressed. Destination tiles get a dark base under their photos.
+
 ## 2026-11-06 Homepage section transitions
 
 - New `src/components/ui/SectionReveal` wraps the founder, destinations, journeys, why-us and testimonial sections: a gold seal loader, then the section rises in as it scrolls into view. Opacity and transform only (CLS 0); off for reduced motion and no-JS.

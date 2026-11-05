@@ -1,0 +1,66 @@
+/* Gold theme button-link (see OrnateLink.tsx). */
+.link {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  min-height: 52px;
+  padding: 0 var(--space-4);
+  border: 1px solid var(--color-gold-shadow);
+  border-radius: 2px;
+  color: var(--color-on-ink);
+  box-shadow: var(--shadow-button), inset 0 1px 0 rgb(255 240 200 / 0.35), inset 0 -1px 0 rgb(40 25 5 / 0.25);
+  font: var(--weight-medium) var(--text-label) / 1 var(--font-body);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  text-shadow: 0 1px 1px rgb(40 25 5 / 0.45);
+  white-space: nowrap;
+  transition: filter var(--dur-hover) var(--ease-out), transform var(--dur-hover) var(--ease-out);
+}
+.link[data-tone="gold"] { background: var(--gradient-gold); }
+.link[data-tone="red"] { background: var(--gradient-red); }
+:lang(ja) .link { letter-spacing: 0.06em; }
+
+/* Fine light-gold inner frame and a gold outer frame just outside the plate. */
+.link::before,
+.link::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+}
+.link::before {
+  inset: 4px;
+  border: 1px solid var(--color-gold-light);
+  opacity: 0.75;
+}
+.link::after {
+  inset: -5px;
+  z-index: -1;
+  border: 1px solid var(--color-gold);
+}
+
+/* Small gold diamonds riding the outer frame at each end. */
+.notch {
+  position: absolute;
+  top: 50%;
+  width: 7px;
+  height: 7px;
+  background: var(--color-paper);
+  border: 1px solid var(--color-gold);
+  transform: translateY(-50%) rotate(45deg);
+}
+.notch[data-side="start"] { left: -9px; }
+.notch[data-side="end"] { right: -9px; }
+
+.link svg {
+  width: 1rem;
+  height: 1rem;
+  stroke-width: 1.5;
+  transition: transform var(--dur-hover) var(--ease-out);
+}
+.link:hover { filter: brightness(1.1) saturate(1.05); }
+.link:hover svg { transform: translateX(3px); }
+.link:active { transform: translateY(1px); }

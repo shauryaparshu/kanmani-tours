@@ -20,11 +20,19 @@
   padding-top: env(safe-area-inset-top, 0px);
   background: var(--color-paper);
   color: var(--color-ink);
-  border-bottom: var(--rule);
-  border-bottom-color: transparent;
-  transition: border-color var(--dur-hover) var(--ease-out), background-color var(--dur-hover) var(--ease-out), color var(--dur-hover) var(--ease-out);
 }
-.header[data-scrolled="true"] { border-bottom-color: var(--color-line); }
+/* A double gold rule under the bar on phones and tablets. */
+.header::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 4px;
+  border-top: 1px solid var(--color-gold);
+  border-bottom: 1px solid var(--color-gold);
+  opacity: 0.8;
+}
 
 .bar {
   height: var(--nav-height);
@@ -44,32 +52,105 @@
   display: flex;
   align-items: center;
 }
-.logo { width: 136px; }
+.logo { width: 132px; }
 
-/* ── Desktop links ── */
-.primary { display: none; }
+/* ── Desktop: plaque · cartouche · plaque ── */
+.desk { display: none; }
+
+.deskStart,
+.deskEnd {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+.deskEnd { gap: var(--space-2); }
+
+/* Gold rail from the plaques out toward the page frame. */
+.rail {
+  flex: 1;
+  min-width: var(--space-2);
+  height: 4px;
+  border-top: 1px solid var(--color-gold);
+  border-bottom: 1px solid var(--color-gold);
+  opacity: 0.75;
+}
+
+.plaque {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+.plaqueEnd {
+  width: 22px;
+  height: 40px;
+  flex-shrink: 0;
+  fill: none;
+  stroke: var(--color-gold);
+  stroke-width: 1;
+}
+.plaqueEnd circle { fill: var(--color-gold); stroke: none; }
+.plaqueEnd[data-flip="true"] { transform: scaleX(-1); }
+
 .links {
   display: flex;
-  gap: var(--space-4);
+  align-items: center;
+  gap: var(--space-3);
+  height: 40px;
   margin: 0;
-  padding: 0;
+  padding: 0 var(--space-1);
   list-style: none;
+  /* Double gold lines above and below, joining the scroll ends. */
+  border-block: 1px solid var(--color-gold);
+  box-shadow: inset 0 3px 0 -2px var(--color-gold), inset 0 -3px 0 -2px var(--color-gold);
+  background: linear-gradient(to bottom, rgb(255 250 235 / 0.55), rgb(255 250 235 / 0.15));
 }
 .link {
   display: inline-flex;
   align-items: center;
-  min-height: 44px;
+  min-height: 36px;
   font: var(--weight-medium) var(--text-label) / var(--leading-label) var(--font-body);
   letter-spacing: var(--tracking-caps);
   text-transform: uppercase;
   color: var(--color-ink);
   text-decoration: none;
+  white-space: nowrap;
   border-bottom: 1px solid transparent;
   transition: color var(--dur-hover) var(--ease-out), border-color var(--dur-hover) var(--ease-out);
 }
 .link:hover { color: var(--color-accent); }
 .link[aria-current="page"] { border-bottom-color: var(--color-accent); }
 :lang(ja) .link { letter-spacing: 0.06em; }
+
+/* Logo cartouche: hangs over the top of the page frame, in its gap. */
+.cartouche {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 15.5rem;
+  height: calc(var(--nav-height) - 6px);
+  margin-top: 6px;
+  filter: drop-shadow(0 6px 10px rgb(59 42 22 / 0.18));
+}
+.cartoucheShape {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.cartoucheFill {
+  fill: var(--color-surface);
+  stroke: var(--color-gold);
+  stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
+}
+.cartoucheLine {
+  fill: none;
+  stroke: var(--color-gold);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+.cartoucheLogo { position: relative; width: 9.75rem; }
 
 /* ── Right-hand actions ── */
 .actions {
@@ -93,6 +174,7 @@
   font: var(--weight-medium) var(--text-label) / 1 var(--font-body);
   letter-spacing: 0.08em;
   color: var(--color-ink-muted);
+  white-space: nowrap;
   cursor: pointer;
   transition: color var(--dur-hover) var(--ease-out);
 }
@@ -108,23 +190,35 @@
   border-bottom-color: var(--color-ink);
 }
 
+/* Red lacquer button with a fine gold inner border. */
 .enquire {
+  position: relative;
   display: inline-flex;
   align-items: center;
   min-height: 44px;
   padding: 0 var(--space-2);
-  background: var(--color-accent);
+  background: var(--gradient-red);
   color: var(--color-on-ink);
+  border: 1px solid var(--color-gold-shadow);
   border-radius: var(--radius-soft);
-  box-shadow: var(--shadow-button);
+  box-shadow: var(--shadow-button), inset 0 1px 0 rgb(255 220 200 / 0.25);
   font: var(--weight-medium) var(--text-label) / 1 var(--font-body);
   letter-spacing: var(--tracking-caps);
   text-transform: uppercase;
   text-decoration: none;
   white-space: nowrap;
-  transition: background-color var(--dur-hover) var(--ease-out);
+  transition: filter var(--dur-hover) var(--ease-out);
 }
-.enquire:hover { background: var(--color-accent-deep); }
+.enquire::before {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  border: 1px solid var(--color-gold-light);
+  border-radius: 1px;
+  opacity: 0.7;
+  pointer-events: none;
+}
+.enquire:hover { filter: brightness(1.08) saturate(1.05); }
 :lang(ja) .enquire { letter-spacing: 0.06em; }
 
 .menuButton {
@@ -225,17 +319,55 @@
 .menuSocials a:hover { color: var(--color-accent); }
 
 @media (max-width: 380px) {
-  .logo { width: 116px; }
+  .logo { width: 112px; }
   .enquire { padding: 0 var(--space-1); }
 }
 
-@media (min-width: 1024px) {
-  .bar { gap: var(--space-4); }
-  .logo { width: 164px; }
-  .primary { display: block; }
+/* Small desktops: the phone bar, kept clear of the page frame's corners. */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .bar {
+    padding-left: calc(var(--frame-inset) + 4.5rem);
+    padding-right: calc(var(--frame-inset) + 4.5rem);
+  }
+  .header::after { left: calc(var(--frame-inset) + 4rem); right: calc(var(--frame-inset) + 4rem); }
+}
+
+/* The full ornate bar needs room for both plaques beside the logo. */
+@media (min-width: 1280px) {
+  .header::after { display: none; }
+  .bar { display: none; }
+  .desk {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: start;
+    height: var(--nav-height);
+    /* Inside the gold page frame and clear of its corner ornaments. */
+    padding-left: calc(var(--frame-inset) + 4.75rem);
+    padding-right: calc(var(--frame-inset) + var(--space-3));
+  }
+  .deskStart,
+  .deskEnd { height: 100%; padding-top: 8px; }
+  .deskStart { padding-right: var(--space-1); }
+  .deskEnd { padding-left: var(--space-1); }
   .langDesktop { display: flex; }
-  .actions { gap: var(--space-3); }
   .enquire { padding: 0 var(--space-3); }
   .menuButton,
   .menu { display: none; }
+}
+
+@media (min-width: 1280px) and (max-width: 1535px) {
+  .cartouche { width: 13rem; }
+  .cartoucheLogo { width: 8.75rem; }
+  .links { gap: var(--space-2); }
+  .link { letter-spacing: 0.13em; }
+  .deskEnd { gap: var(--space-1); }
+  .enquire { padding: 0 var(--space-2); }
+}
+
+/* Japanese labels run longer: tighten the right-hand group on the narrowest desktops. */
+@media (min-width: 1280px) and (max-width: 1365px) {
+  :lang(ja) .links { gap: 0.75rem; }
+  :lang(ja) .link { letter-spacing: 0.02em; }
+  :lang(ja) .langButton { padding: 0 var(--space-half); }
+  :lang(ja) .enquire { padding: 0 0.75rem; letter-spacing: 0.02em; }
 }

@@ -138,3 +138,7 @@ The owner supplied mockups for the homepage hero and the founder section below i
 - **Soft buttons.** The hero buttons and the nav ENQUIRE button use `--radius-soft` (3px); filled vermilion buttons there carry `--shadow-button`.
 - **Eyebrows.** The hero ("East & West Bound Journeys") and the founder section ("Our Founder's Story", underlined in vermilion) each have one. No other heading gets one.
 - **Botanical line art** (`src/components/home/Botanicals.tsx`) is drawn as SVG paths from code: lotus, leaf sprigs and five-petal flowers, gold strokes with paper fill. Decorative and hidden from assistive tech.
+
+## 13. Gold theme (branch `redesign/gold-theme`, 2026-11-06)
+
+Owner's gold mockup. Champagne paper `#EEE2C6`, deep brown ink `#3B2A16`, gold-deep `#7A5A22` for gold text (4.9:1). Metallic surfaces use `--gradient-gold` / `--gradient-red` with cream text (5:1+ on the darker stops). Shared pieces: `PageFrame` (window border and grain, desktop frame from 1024px), `Filigree` (panel corners), `OrnateLink` (lacquered button), `ArchFrame` (hero arch). The ornate nav needs 1280px; below that the phone bar is used.

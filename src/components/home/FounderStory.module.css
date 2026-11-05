@@ -296,27 +296,9 @@
 }
 
 .cta {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-1);
-  min-height: 52px;
   margin-top: var(--space-5);
-  padding: 0 var(--space-4);
-  border-radius: var(--radius-pill);
-  background: var(--color-accent);
-  color: var(--color-on-ink);
-  box-shadow: var(--shadow-button);
-  font: var(--weight-medium) var(--text-body) / 1 var(--font-body);
-  text-decoration: none;
-  transition: background-color var(--dur-hover) var(--ease-out);
+  margin-left: 10px;  /* room for the button's outer frame */
 }
-.cta svg {
-  width: 1.125rem;
-  height: 1.125rem;
-  transition: transform var(--dur-hover) var(--ease-out);
-}
-.cta:hover { background: var(--color-accent-deep); }
-.cta:hover svg { transform: translateX(3px); }
 
 @media (min-width: 640px) {
   .quote { padding: var(--space-5) var(--space-4) var(--space-4) var(--space-6); }
@@ -339,3 +321,6 @@
   .media { justify-self: start; }
   .bridge { display: block; }
 }
+
+/* Gold theme: letterpressed section title, like the hero. */
+.title { text-shadow: var(--text-emboss); }

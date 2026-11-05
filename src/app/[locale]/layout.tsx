@@ -8,6 +8,7 @@ import { routing } from "@/i18n/routing";
 import Navigation from '@/components/layout/Navigation';
 import EnquireTab from '@/components/layout/EnquireTab';
 import BackToTop from '@/components/layout/BackToTop';
+import PageFrame from '@/components/layout/PageFrame';
 import { Analytics } from '@vercel/analytics/next';
 import { dmSans, newsreader, notoSansJp, shipporiMincho } from '../fonts';
 import { SITE_URL, pageOpenGraph } from '@/lib/site';
@@ -64,6 +65,7 @@ export default async function RootLayout({
           {children}
           <EnquireTab />
           <BackToTop />
+          <PageFrame />
         </NextIntlClientProvider>
         <Analytics />
       </body>

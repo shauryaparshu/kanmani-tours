@@ -1,0 +1,88 @@
+/* Gold theme: fixed window border and paper grain (see PageFrame.tsx). */
+.root {
+  position: fixed;
+  inset: 0;
+  z-index: calc(var(--z-nav) + 1);  /* over the nav bar; the logo cartouche sits in the top gap */
+  pointer-events: none;
+}
+
+/* Paper grain: fractal noise multiplied very lightly over everything. */
+.grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.22;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.45 0 0 0 0 0.35 0 0 0 0 0.18 0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.frame { display: none; }
+
+@media (min-width: 1024px) {
+  .frame {
+    --gap: 5px;             /* between the two gold lines */
+    --logo-gap: 15.5rem;    /* opening at the top centre for the logo cartouche */
+    display: block;
+    position: absolute;
+    inset: var(--frame-inset);
+  }
+
+  /* Each edge is a double line: a border plus an inset shadow line. */
+  .edge {
+    position: absolute;
+    border: 0 solid var(--color-gold);
+  }
+  .topLeft,
+  .topRight {
+    top: 0;
+    height: calc(var(--gap) + 1px);
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+  }
+  .topLeft { left: 4rem; right: calc(50% + var(--logo-gap) / 2); }
+  .topRight { right: 4rem; left: calc(50% + var(--logo-gap) / 2); }
+  .bottom {
+    bottom: 0;
+    left: 4rem;
+    right: 4rem;
+    height: calc(var(--gap) + 1px);
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+  }
+  .left,
+  .right {
+    top: 4rem;
+    bottom: 4rem;
+    width: calc(var(--gap) + 1px);
+    border-left-width: 1px;
+    border-right-width: 1px;
+  }
+  .left { left: 0; }
+  .right { right: 0; }
+
+  .corner {
+    position: absolute;
+    width: 4rem;
+    height: 4rem;
+    overflow: visible;
+    fill: none;
+    stroke: var(--color-gold);
+    stroke-width: 1;
+    vector-effect: non-scaling-stroke;
+  }
+  .corner * { vector-effect: non-scaling-stroke; }
+  .corner circle { fill: var(--color-gold); stroke: none; }
+  /* The SVG lines sit 2px and 8px in; nudge so they meet the edge lines. */
+  .tl { top: -2px; left: -2px; }
+  .tr { top: -2px; right: -2px; transform: scaleX(-1); }
+  .bl { bottom: -2px; left: -2px; transform: scaleY(-1); }
+  .br { bottom: -2px; right: -2px; transform: scale(-1, -1); }
+}
+
+/* Below 1280px the nav has no centre cartouche, so the top rule runs unbroken. */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .frame { --logo-gap: 0px; }
+}
+
+@media (min-width: 1280px) and (max-width: 1535px) {
+  .frame { --logo-gap: 13rem; }
+}

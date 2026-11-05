@@ -3,12 +3,30 @@ import styles from './Logo.module.css';
 interface LogoProps {
     /** `ink` for paper backgrounds, `paper` for ink bands and photos. */
     tone?: 'ink' | 'paper';
+    /** `full`: lotus mark and wordmark. `wordmark`: the centred name only, for the nav cartouche. */
+    variant?: 'full' | 'wordmark';
     className?: string;
 }
 
 // The Kanmani lotus mark and wordmark. Paths are unchanged from the original
 // logo; only the colours now come from the design tokens.
-export default function Logo({ tone = 'ink', className }: LogoProps) {
+export default function Logo({ tone = 'ink', variant = 'full', className }: LogoProps) {
+    if (variant === 'wordmark') {
+        return (
+            <svg
+                className={[styles.logo, styles[tone], className].filter(Boolean).join(' ')}
+                viewBox="0 0 170 50"
+                role="img"
+                aria-label="Kanmani Tours"
+            >
+                <text className={styles.word} x="85" y="29" textAnchor="middle">Kanmani</text>
+                <line className={styles.rule} x1="34" y1="42" x2="56" y2="42" strokeWidth="0.6" />
+                <text className={styles.tours} x="87" y="46" textAnchor="middle">TOURS</text>
+                <line className={styles.rule} x1="114" y1="42" x2="136" y2="42" strokeWidth="0.6" />
+            </svg>
+        );
+    }
+
     return (
         <svg
             className={[styles.logo, styles[tone], className].filter(Boolean).join(' ')}

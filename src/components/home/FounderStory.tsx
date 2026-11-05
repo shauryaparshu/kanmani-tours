@@ -1,9 +1,9 @@
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import {
-    ArrowRight, BriefcaseBusiness, Earth, GraduationCap, HandHeart, HeartHandshake, Mic, UsersRound, type LucideIcon,
+    BriefcaseBusiness, Earth, GraduationCap, HandHeart, HeartHandshake, Mic, UsersRound, type LucideIcon,
 } from 'lucide-react';
-import { Link } from '@/i18n/routing';
+import OrnateLink from '@/components/ui/OrnateLink';
 import styles from './FounderStory.module.css';
 
 const CARDS: { key: 'born' | 'trust' | 'intimate'; Icon: LucideIcon }[] = [
@@ -116,10 +116,7 @@ export default function FounderStory() {
                         ))}
                     </ul>
 
-                    <Link href="/about" className={styles.cta}>
-                        {t('storyCta')}
-                        <ArrowRight aria-hidden="true" />
-                    </Link>
+                    <OrnateLink href="/about" tone="red" className={styles.cta}>{t('storyCta')}</OrnateLink>
                 </div>
             </div>
         </section>
