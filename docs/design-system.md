@@ -127,3 +127,14 @@ The migration finished on 2026-11-05. Every page uses these tokens and CSS Modul
 - The `data-ds` markers, the legacy `p, li` rule, the old `:root` variables and the Cormorant Garamond and Jost fonts are gone.
 - Japanese line-breaking rules in `tokens.css` apply site-wide (`:root:lang(ja) body`).
 - Shared form styles live in `src/components/forms/Form.module.css`; the enquiry page layout in `src/components/contact/EnquiryPage.module.css`; the services pages in `src/components/services/ServicePage.module.css`.
+
+## 12. Homepage exceptions (owner's mockup, approved 2026-11-05)
+
+The owner supplied a mockup for the homepage hero and the band below it. It deliberately departs from some rules above; these departures apply **only** where listed.
+
+- **Gold on paper.** `--color-gold` (#B8924F) is for line art, frames, icons and button borders only, never text (2.6 : 1). Gold text on paper uses `--color-gold-deep` (#87652A, 4.7 : 1): the hero eyebrow, the logo wordmark, the founder's script line. Turmeric (`--color-highlight`) is still ink-only.
+- **Arches.** The hero photo and the founder portrait are arch-shaped (`border-radius` on the top corners), with a thin gold outline. Everything else stays square.
+- **Soft buttons.** The hero buttons and the nav ENQUIRE button use `--radius-soft` (3px); filled vermilion buttons there carry `--shadow-button`.
+- **Eyebrow.** The hero has one eyebrow line ("East & West Bound Journeys"). No other heading gets one.
+- **Script line.** `--font-script` (Great Vibes) is used once, for "Founder & Expert Guide". Japanese falls back to the display face.
+- **Botanical line art** (`src/components/home/Botanicals.tsx`) is drawn as SVG paths from code: lotus, leaf sprigs and five-petal flowers, gold strokes with paper fill. Decorative and hidden from assistive tech.

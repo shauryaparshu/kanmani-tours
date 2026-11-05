@@ -1,5 +1,12 @@
 # Changelog
 
+## [2026-11-05] Homepage hero and trust band from the owner's mockup (branch `redesign/premium-reskin`)
+### Changed
+- Homepage hero: copy on paper beside an arch-shaped photo slideshow framed by gold botanical line art (`HomeHero`, `Botanicals`). The cinema-banner group photo opens the slideshow
+- New band under the hero (`TrustBand`): Dr. Kanmani's portrait in a gold arch frame, the story in brief, and "The Kanmani Experience" list. Replaces `FounderStory`
+- Navigation: solid paper bar on every page (no longer transparent over the homepage), gold logo, `EN | 日本語` divider, ENQUIRE button with soft corners and a shadow
+- New tokens: `--color-gold`, `--color-gold-deep`, `--radius-soft`, `--shadow-button`, `--font-script` (Great Vibes, SIL OFL)
+
 ## [2026-11-05] Premium reskin, direction A "Programme" (branch `redesign/premium-reskin`)
 ### Changed
 - Every page now uses the design system (`src/app/tokens.css` + CSS Modules): shared shell, homepage, tour lists and detail, About, Gallery and gallery albums, FAQ, contact, Japan group inquiry, services, moving, airport transfer, the RMK private gallery and its login, and a new localised 404 page

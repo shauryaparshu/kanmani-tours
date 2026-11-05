@@ -4,16 +4,16 @@
   overflow: visible;
 }
 
-.mark { fill: var(--color-accent); }
-.stroke { fill: none; stroke: var(--color-accent); }
-.rule { stroke: var(--color-accent); opacity: 0.45; }
+.mark { fill: var(--color-gold); }
+.stroke { fill: none; stroke: var(--color-gold); }
+.rule { stroke: var(--color-gold); opacity: 0.6; }
 
 .word {
   font-family: var(--font-display);
   font-size: 31px;
   font-weight: var(--weight-regular);
   letter-spacing: 0.06em;
-  fill: var(--color-ink);
+  fill: var(--color-gold-deep);
 }
 
 .tours {
@@ -21,7 +21,7 @@
   font-size: 10.5px;
   font-weight: var(--weight-medium);
   letter-spacing: 0.62em;
-  fill: var(--color-accent);
+  fill: var(--color-gold-deep);
 }
 
 /* On ink bands and photos */

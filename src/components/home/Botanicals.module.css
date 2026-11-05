@@ -1,0 +1,48 @@
+/* Placed inside the hero's .visual box, which is position: relative. */
+.art {
+  position: absolute;
+  z-index: 2;
+  height: auto;
+  overflow: visible;
+  pointer-events: none;
+}
+
+/* Leaves and petals are filled with paper so they sit cleanly over the photo. */
+.fill {
+  fill: var(--color-paper);
+  stroke: var(--color-gold);
+  stroke-width: 1.1;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+.vein,
+.stem {
+  fill: none;
+  stroke: var(--color-gold);
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+.vein { stroke-width: 0.8; opacity: 0.85; }
+.stem { stroke-width: 1.1; }
+.dot { fill: var(--color-gold); }
+
+.topLeft {
+  left: -9%;
+  top: -2%;
+  width: 21%;
+}
+.bottomLeft {
+  left: -11%;
+  bottom: -3%;
+  width: 26%;
+}
+.topRight {
+  right: -7%;
+  top: -6%;
+  width: 22%;
+}
+.bottomRight {
+  right: -5%;
+  bottom: -2%;
+  width: 19%;
+}

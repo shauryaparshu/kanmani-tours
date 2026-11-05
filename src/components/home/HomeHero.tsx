@@ -3,9 +3,10 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
+import { ArrowRight } from 'lucide-react';
 import { Link } from '@/i18n/routing';
 import { useReducedMotion } from '@/components/ui/useReducedMotion';
-import ArrowBox from '@/components/ui/ArrowBox';
+import Botanicals from './Botanicals';
 import styles from './HomeHero.module.css';
 
 const INTERVAL_MS = 6000;
@@ -33,45 +34,55 @@ export default function HomeHero({ images }: HomeHeroProps) {
     // Only the previous, current and next photos are mounted, so the page
     // loads one photo up front and the next one quietly in the background.
     const mounted = count === 0 ? [] : [...new Set([(index - 1 + count) % count, index, (index + 1) % count])];
+    const progress = count > 1 ? index / (count - 1) : 0;
 
     return (
         <section className={styles.hero} aria-labelledby="home-hero-title">
-            <div className={styles.stage}>
-                {mounted.map((i) => (
-                    <div key={images[i]} className={styles.slide} data-active={i === index}>
-                        <Image
-                            src={images[i]}
-                            alt={i === index ? t('heroAlt') : ''}
-                            fill
-                            sizes="100vw"
-                            preload={i === 0}
-                            className={styles.image}
-                        />
-                    </div>
-                ))}
-            </div>
-
-            <div className={styles.content}>
+            <div className={styles.inner}>
                 <div className={styles.copy}>
-                    <h1 id="home-hero-title" className={styles.title}>{tDest('heading')}</h1>
-                    <p className={styles.line}>{t('heroLine')}</p>
+                    <p className={styles.eyebrow}>{t('heroEyebrow')}</p>
+                    <h1 id="home-hero-title" className={styles.title}>
+                        <span>{t('heroTitleA')}</span> <span>{t('heroTitleB')}</span>
+                    </h1>
+                    <p className={styles.intro}>{t('heroIntro')}</p>
+
+                    <div className={styles.actions}>
+                        <Link href="/india/tours" className={styles.primary}>
+                            {tDest('indiaCta')}
+                            <ArrowRight aria-hidden="true" />
+                        </Link>
+                        <Link href="/japan/tours" className={styles.secondary}>
+                            {tDest('japanCta')}
+                            <ArrowRight aria-hidden="true" />
+                        </Link>
+                    </div>
                 </div>
 
-                <nav className={styles.paths} aria-label={t('heroPaths')}>
-                    <Link href="/india/tours" className={styles.path}>
-                        <span>{tDest('indiaTitle')}</span>
-                        <ArrowBox />
-                    </Link>
-                    <Link href="/japan/tours" className={styles.path}>
-                        <span>{tDest('japanTitle')}</span>
-                        <ArrowBox />
-                    </Link>
-                </nav>
+                <div className={styles.visual}>
+                    <div className={styles.arch}>
+                        {mounted.map((i) => (
+                            <div key={images[i]} className={styles.slide} data-active={i === index}>
+                                <Image
+                                    src={images[i]}
+                                    alt={i === index ? t('heroAlt') : ''}
+                                    fill
+                                    sizes="(min-width: 1024px) 52vw, 100vw"
+                                    preload={i === 0}
+                                    className={styles.image}
+                                />
+                            </div>
+                        ))}
+                    </div>
+                    <Botanicals />
+                </div>
 
                 {count > 1 ? (
                     <div className={styles.controls}>
                         <span className={`${styles.counter} num`} aria-live="off">
                             {String(index + 1).padStart(2, '0')} / {String(count).padStart(2, '0')}
+                        </span>
+                        <span className={styles.track} aria-hidden="true">
+                            <span className={styles.marker} style={{ left: `${progress * 100}%` }} />
                         </span>
                         {!reduceMotion ? (
                             <button

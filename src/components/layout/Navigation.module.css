@@ -26,22 +26,6 @@
 }
 .header[data-scrolled="true"] { border-bottom-color: var(--color-line); }
 
-/* Transparent over the homepage hero; the hero supplies a scrim behind the bar. */
-.header[data-over-hero="true"] {
-  --focus-color: var(--color-highlight);
-  background: transparent;
-  border-bottom-color: transparent;
-  color: var(--color-on-ink);
-}
-.header[data-over-hero="true"] .link,
-.header[data-over-hero="true"] .langButton[aria-pressed="true"] { color: var(--color-on-ink); }
-.header[data-over-hero="true"] .langButton { color: var(--color-on-ink-muted); }
-.header[data-over-hero="true"] .langButton[aria-pressed="true"] { border-bottom-color: var(--color-on-ink); }
-.header[data-over-hero="true"] .link:hover { color: var(--color-highlight); }
-.header[data-over-hero="true"] .menuButton { border-color: var(--color-on-ink); }
-.header[data-over-hero="true"] .menuIcon,
-.header[data-over-hero="true"] .menuIcon::before { background: var(--color-on-ink); }
-
 .bar {
   height: var(--nav-height);
   display: flex;
@@ -112,6 +96,12 @@
   cursor: pointer;
   transition: color var(--dur-hover) var(--ease-out);
 }
+.langDivider {
+  align-self: center;
+  width: 1px;
+  height: 0.875rem;
+  background: var(--color-line-strong);
+}
 .langButton:hover { color: var(--color-ink); }
 .langButton[aria-pressed="true"] {
   color: var(--color-ink);
@@ -125,7 +115,8 @@
   padding: 0 var(--space-2);
   background: var(--color-accent);
   color: var(--color-on-ink);
-  border-radius: var(--radius);
+  border-radius: var(--radius-soft);
+  box-shadow: var(--shadow-button);
   font: var(--weight-medium) var(--text-label) / 1 var(--font-body);
   letter-spacing: var(--tracking-caps);
   text-transform: uppercase;

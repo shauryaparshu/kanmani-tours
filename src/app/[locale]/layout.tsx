@@ -9,7 +9,7 @@ import Navigation from '@/components/layout/Navigation';
 import EnquireTab from '@/components/layout/EnquireTab';
 import BackToTop from '@/components/layout/BackToTop';
 import { Analytics } from '@vercel/analytics/next';
-import { dmSans, newsreader, notoSansJp, shipporiMincho } from '../fonts';
+import { dmSans, greatVibes, newsreader, notoSansJp, shipporiMincho } from '../fonts';
 import { SITE_URL, pageOpenGraph } from '@/lib/site';
 
 const SITE_TITLE = "Kanmani Tours | Exclusive Japan-India Journeys";
@@ -56,7 +56,7 @@ export default async function RootLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale} className={[newsreader, dmSans, shipporiMincho, notoSansJp].map((f) => f.variable).join(' ')}>
+    <html lang={locale} className={[newsreader, dmSans, shipporiMincho, notoSansJp, greatVibes].map((f) => f.variable).join(' ')}>
       <body>
         <NextIntlClientProvider messages={messages}>
           <Navigation />

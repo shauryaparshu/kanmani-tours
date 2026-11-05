@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 import { Link, usePathname, useRouter } from '@/i18n/routing';
 import { SHOW_SERVICES_NAV } from '@/lib/featureFlags';
@@ -42,9 +42,6 @@ export default function Navigation() {
 
     const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
 
-    // On the homepage the bar is transparent over the hero photo until the visitor scrolls.
-    const overHero = pathname === '/' && !scrolled && !menuOpen;
-
     useEffect(() => {
         const onScroll = () => setScrolled(window.scrollY > 8);
         onScroll();
@@ -77,17 +74,19 @@ export default function Navigation() {
 
     const languageSwitch = (className: string) => (
         <div className={className} role="group" aria-label={t('language')}>
-            {locales.map((code) => (
-                <button
-                    key={code}
-                    type="button"
-                    className={styles.langButton}
-                    aria-pressed={locale === code}
-                    lang={code}
-                    onClick={() => switchLocale(code)}
-                >
-                    {code === 'en' ? 'EN' : '日本語'}
-                </button>
+            {locales.map((code, i) => (
+                <Fragment key={code}>
+                    {i > 0 ? <span className={styles.langDivider} aria-hidden="true" /> : null}
+                    <button
+                        type="button"
+                        className={styles.langButton}
+                        aria-pressed={locale === code}
+                        lang={code}
+                        onClick={() => switchLocale(code)}
+                    >
+                        {code === 'en' ? 'EN' : '日本語'}
+                    </button>
+                </Fragment>
             ))}
         </div>
     );
@@ -96,10 +95,10 @@ export default function Navigation() {
         <>
             <a href="#main-content" className={styles.skip}>{t('skipToContent')}</a>
 
-            <header className={styles.header} data-scrolled={scrolled || menuOpen} data-over-hero={overHero}>
+            <header className={styles.header} data-scrolled={scrolled || menuOpen}>
                 <div className={styles.bar}>
                     <Link href="/" className={styles.logoLink} onClick={() => setMenuOpen(false)}>
-                        <Logo tone={overHero ? 'paper' : 'ink'} className={styles.logo} />
+                        <Logo className={styles.logo} />
                     </Link>
 
                     <nav className={styles.primary} aria-label={t('mainNav')}>

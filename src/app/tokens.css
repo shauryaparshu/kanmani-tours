@@ -20,6 +20,8 @@
   --color-accent: #A8352A;         /* vermilion: actions, links, focus */
   --color-accent-deep: #8A2A21;    /* hover and pressed */
   --color-highlight: #C99A2E;      /* turmeric: on ink only, never on paper */
+  --color-gold: #B8924F;           /* homepage line art, frames and icons: decoration only, never text */
+  --color-gold-deep: #87652A;      /* gold text on paper, 4.7:1 */
   --color-error: #8E2A20;
   --color-success: #2E6142;
   --scrim-photo: linear-gradient(to top, rgb(20 16 11 / 0.72) 0%, rgb(20 16 11 / 0.35) 45%, rgb(20 16 11 / 0) 75%);
@@ -32,6 +34,7 @@
   /* Latin face first; Japanese glyphs fall through to the JP face. */
   --font-display: var(--font-newsreader), var(--font-shippori), "Yu Mincho", "Hiragino Mincho ProN", Georgia, serif;
   --font-body: var(--font-dm-sans), var(--font-noto-jp), "Hiragino Sans", "Yu Gothic", system-ui, sans-serif;
+  --font-script: var(--font-great-vibes), var(--font-display);  /* one signature line under the founder portrait */
 
   /* Six sizes, fluid from 390px to 1440px viewports. */
   --text-label: 0.8125rem;                                         /* 13px */
@@ -73,6 +76,8 @@
 
   /* ── Shape and depth ─────────────────────────────────────────────── */
   --radius: 0;
+  --radius-soft: 3px;              /* homepage and nav buttons */
+  --shadow-button: 0 2px 6px -1px rgb(138 42 33 / 0.35);  /* filled vermilion buttons */
   --rule: 1px solid var(--color-line);
   --shadow-float: 0 1px 2px rgb(31 27 23 / 0.06), 0 16px 40px -16px rgb(31 27 23 / 0.28);  /* only for things that float */
 
