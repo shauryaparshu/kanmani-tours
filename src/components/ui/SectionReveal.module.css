@@ -1,0 +1,76 @@
+/* Section-to-section transition on the homepage (see SectionReveal.tsx). */
+.reveal {
+  position: relative;
+}
+
+/* ── Loader: two gold rules either side of a small diamond seal ── */
+.loader {
+  position: absolute;
+  top: calc(var(--section-pad) * 0.4);  /* inside the section's top padding */
+  left: 50%;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  width: min(70%, 18rem);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+.rule {
+  flex: 1;
+  height: 1px;
+  background: var(--color-gold);
+  transform: scaleX(0);
+  transition: transform calc(var(--dur-reveal) * 0.8) var(--ease-out);
+}
+.rule:first-child { transform-origin: right center; }
+.rule:last-child { transform-origin: left center; }
+.seal {
+  flex-shrink: 0;
+  width: 0.5rem;
+  height: 0.5rem;
+  border: 1px solid var(--color-gold);
+  background: var(--color-paper);
+  transform: rotate(45deg);
+}
+
+.content {
+  transition:
+    opacity var(--dur-reveal) var(--ease-out),
+    transform calc(var(--dur-reveal) * 1.2) var(--ease-out);
+}
+
+/* Waiting below the fold: content lowered and hidden, the seal pulses. */
+.reveal[data-reveal="waiting"] .content {
+  opacity: 0;
+  transform: translateY(3rem);
+}
+.reveal[data-reveal="waiting"] .seal {
+  animation: pulse 1.2s var(--ease-out) infinite;
+}
+
+/* In view: the rules draw out from the seal, then the section rises in
+   and the loader fades away. */
+.reveal[data-reveal="shown"] .rule { transform: scaleX(1); }
+.reveal[data-reveal="shown"] .seal { background: var(--color-gold); }
+.reveal[data-reveal="shown"] .loader {
+  opacity: 0;
+  transition: opacity calc(var(--dur-reveal) * 0.6) var(--ease-out) calc(var(--dur-reveal) * 0.9);
+}
+.reveal[data-reveal="shown"] .content {
+  opacity: 1;
+  transform: none;
+  transition-delay: calc(var(--dur-reveal) * 0.45);
+}
+
+.reveal[data-reveal="static"] .loader { display: none; }
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.35; transform: rotate(45deg) scale(0.8); }
+  50% { opacity: 1; transform: rotate(45deg) scale(1.15); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loader { display: none; }
+  .reveal .content { opacity: 1; transform: none; transition: none; }
+}

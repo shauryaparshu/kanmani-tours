@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-11-06 Homepage section transitions
+
+- New `src/components/ui/SectionReveal` wraps the founder, destinations, journeys, why-us and testimonial sections: a gold seal loader, then the section rises in as it scrolls into view. Opacity and transform only (CLS 0); off for reduced motion and no-JS.
+
 ## [2026-11-05] Homepage hero and trust band from the owner's mockup (branch `redesign/premium-reskin`)
 ### Changed
 - Homepage hero: copy on paper beside an arch-shaped photo slideshow framed by gold botanical line art (`HomeHero`, `Botanicals`). The cinema-banner group photo opens the slideshow

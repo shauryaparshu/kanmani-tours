@@ -90,7 +90,7 @@ Rules:
 
 - One idea per section. The site's signature: **photos develop**, fading up from slightly muted to full colour as they enter the screen.
 - Hover and focus: `--dur-hover` (200ms). Reveals: `--dur-reveal` (750ms). Easing: `--ease-out`.
-- Everything starts from a visible resting state; content is never hidden waiting for scroll.
+- Everything starts from a visible resting state; content is never hidden waiting for scroll. One owner-approved exception (2026-11-06): homepage sections below the hero use `SectionReveal`. Once JavaScript runs, a section still below the fold waits behind a pulsing gold seal; on entering view the seal draws out into a gold rule and the section rises in. Server render, no-JS, reduced motion and sections already on screen stay plainly visible.
 - `prefers-reduced-motion` sets every duration to 1ms (already wired in `tokens.css`).
 
 ## 7. Component contracts (built from step 2 onwards)

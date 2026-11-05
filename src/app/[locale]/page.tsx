@@ -5,6 +5,7 @@ import Destinations from '@/components/home/Destinations';
 import Journeys from '@/components/home/Journeys';
 import WhyUs from '@/components/home/WhyUs';
 import TestimonialQuote from '@/components/home/TestimonialQuote';
+import SectionReveal from '@/components/ui/SectionReveal';
 import Footer from '@/components/layout/FooterSection';
 import { selectJourneys } from '@/components/tours/selectJourneys';
 import { getImages } from '@/lib/server-images';
@@ -43,11 +44,11 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         <>
             <main>
                 <HomeHero images={heroImages} />
-                <FounderStory />
-                <Destinations />
-                <Journeys tours={selectJourneys(allTours, JOURNEY_LIMIT)} />
-                <WhyUs />
-                <TestimonialQuote testimonials={testimonials} />
+                <SectionReveal><FounderStory /></SectionReveal>
+                <SectionReveal><Destinations /></SectionReveal>
+                <SectionReveal><Journeys tours={selectJourneys(allTours, JOURNEY_LIMIT)} /></SectionReveal>
+                <SectionReveal><WhyUs /></SectionReveal>
+                <SectionReveal><TestimonialQuote testimonials={testimonials} /></SectionReveal>
             </main>
             <Footer />
         </>
