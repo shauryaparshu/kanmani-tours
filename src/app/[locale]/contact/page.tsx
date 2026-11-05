@@ -41,7 +41,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
                             <ContactForm />
                         </div>
 
-                        <aside className={styles.aside}>
+                        <aside className={`${styles.aside} ${styles.sticky}`}>
                             <div className={styles.block}>
                                 <h2 className={styles.blockTitle}>{t('directTitle')}</h2>
                                 <ContactDetails />

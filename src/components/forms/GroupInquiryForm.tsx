@@ -1,10 +1,25 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useId, useState } from 'react';
+import { useTranslations } from 'next-intl';
+import { AlertCircle, CheckCircle2 } from 'lucide-react';
 import PhoneInput, { isValidPhoneNumber } from 'react-phone-number-input';
 import 'react-phone-number-input/style.css';
+import styles from './Form.module.css';
+
+// Option values go into the enquiry email; only the visible labels come from messages.
+const GROUP_TYPES = [
+    { value: 'School', key: 'school' },
+    { value: 'University', key: 'university' },
+    { value: 'Corporate', key: 'corporate' },
+    { value: 'Other', key: 'other' },
+] as const;
 
 export default function GroupInquiryForm() {
+    const t = useTranslations('GroupForm');
+    const uid = useId();
+    const id = (name: string) => `${uid}-${name}`;
+
     const [formData, setFormData] = useState({
         contactName: '',
         institutionName: '',
@@ -20,39 +35,38 @@ export default function GroupInquiryForm() {
     const [errors, setErrors] = useState<Record<string, string>>({});
     const [submitted, setSubmitted] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [focusedField, setFocusedField] = useState<string | null>(null);
 
     const validateField = (name: string, value: string) => {
         let error = '';
         if (name === 'contactName') {
             const sanitized = value.replace(/[<>]/g, '').trim();
-            if (sanitized.length < 2) error = 'Please enter your full name (min 2 characters).';
-            if (/[0-9]/.test(sanitized)) error = 'Name should not contain numbers.';
+            if (sanitized.length < 2) error = t('errors.contactNameShort');
+            if (/[0-9]/.test(sanitized)) error = t('errors.contactNameDigits');
         }
         if (name === 'institutionName') {
             const sanitized = value.replace(/[<>]/g, '').trim();
-            if (sanitized.length < 2) error = 'Please enter your institution name (min 2 characters).';
+            if (sanitized.length < 2) error = t('errors.institutionShort');
         }
         if (name === 'email') {
             const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-            if (!emailRegex.test(value.trim())) error = 'Please enter a valid email address.';
+            if (!emailRegex.test(value.trim())) error = t('errors.emailInvalid');
         }
         if (name === 'phone') {
             if (!value) {
-                error = 'Please enter a phone number.';
+                error = t('errors.phoneMissing');
             } else if (!isValidPhoneNumber(value)) {
-                error = 'Please enter a valid phone number.';
+                error = t('errors.phoneInvalid');
             }
         }
         if (name === 'groupSize') {
             const num = parseInt(value, 10);
             if (!value || isNaN(num) || num < 1) {
-                error = 'Please enter an approximate group size.';
+                error = t('errors.groupSize');
             }
         }
         if (name === 'travelWindow') {
             if (!value.trim()) {
-                error = 'Please enter a preferred travel window (e.g. March 2027).';
+                error = t('errors.travelWindow');
             }
         }
         return error;
@@ -71,7 +85,6 @@ export default function GroupInquiryForm() {
     };
 
     const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-        setFocusedField(null);
         const { name, value } = e.target;
         const error = validateField(name, value);
         if (error) setErrors(prev => ({ ...prev, [name]: error }));
@@ -121,53 +134,68 @@ export default function GroupInquiryForm() {
             if (result.success) {
                 setSubmitted(true);
             } else {
-                setErrors({ submit: result.error || 'Something went wrong. Please email us directly at kanmanitours@gmail.com.' });
+                setErrors({ submit: result.error || t('errors.submitFailed') });
             }
         } catch {
-            setErrors({ submit: 'Connection error. Please email kanmanitours@gmail.com' });
+            setErrors({ submit: t('errors.connection') });
         } finally {
             setLoading(false);
         }
     };
 
-    const inputStyle = (name: string) => ({
-        fontFamily: "var(--font-jost), Arial, sans-serif",
-        fontSize: '15px',
-        color: '#1C1917',
-        backgroundColor: focusedField === name ? '#FFFFFF' : '#FAFAF7',
-        border: '1px solid',
-        borderColor: focusedField === name ? '#C9933A' : '#E8E4DC',
-        padding: '14px 16px',
-        width: '100%',
-        outline: 'none',
-        borderRadius: 0,
-        transition: 'all 0.3s ease',
-        boxSizing: 'border-box' as const
+    const fieldError = (name: string) =>
+        errors[name] ? (
+            <p id={id(`${name}-error`)} className={styles.error}>
+                <AlertCircle aria-hidden="true" />
+                {errors[name]}
+            </p>
+        ) : null;
+
+    const invalidProps = (name: string) => ({
+        'aria-invalid': errors[name] ? true : undefined,
+        'aria-describedby': errors[name] ? id(`${name}-error`) : undefined,
     });
 
-    const labelStyle = {
-        fontFamily: "var(--font-jost), Arial, sans-serif",
-        fontSize: '12px',
-        fontWeight: '500',
-        letterSpacing: '0.18em',
-        color: '#1C1917',
-        textTransform: 'uppercase' as const,
-        marginBottom: '8px',
-        display: 'block'
-    };
+    const label = (name: string, text: string) => (
+        <label htmlFor={id(name)} className={styles.label}>
+            {text}
+            <span className={styles.required} aria-hidden="true">*</span>
+        </label>
+    );
+
+    const textInput = (name: 'contactName' | 'institutionName' | 'email' | 'travelWindow', type: string, autoComplete?: string) => (
+        <div className={styles.field}>
+            {label(name, t(name))}
+            <input
+                id={id(name)}
+                name={name}
+                type={type}
+                autoComplete={autoComplete}
+                value={formData[name]}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                className={styles.input}
+                placeholder={t(`${name}Placeholder`)}
+                required
+                {...invalidProps(name)}
+            />
+            {fieldError(name)}
+        </div>
+    );
 
     if (submitted) {
         return (
-            <div style={{ textAlign: 'center', padding: '40px 0' }}>
-                <div style={{
-                    width: '64px', height: '64px', borderRadius: '50%', backgroundColor: 'rgba(201,147,58,0.1)',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 24px', color: '#C9933A', fontSize: '32px'
-                }}>✓</div>
-                <h2 style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontSize: '28px', fontWeight: '500', color: '#1C1917', marginBottom: '12px' }}>Inquiry Sent</h2>
-                <p style={{ fontFamily: "var(--font-jost), Arial, sans-serif", fontSize: '16px', color: '#6B6560', lineHeight: '1.6', maxWidth: '460px', margin: '0 auto 24px' }}>
-                    Thank you, {formData.contactName.split(' ')[0]}. We have received your group inquiry for {formData.institutionName} and our team will get in touch within 24 hours.
+            <div className={styles.success} role="status">
+                <h2 className={styles.successTitle}>
+                    <CheckCircle2 aria-hidden="true" />
+                    {t('sentTitle')}
+                </h2>
+                <p className={styles.successBody}>
+                    {t('sentBody', { name: formData.contactName.split(' ')[0], institution: formData.institutionName })}
                 </p>
                 <button
+                    type="button"
+                    className={styles.textButton}
                     onClick={() => {
                         setSubmitted(false);
                         setFormData({
@@ -182,232 +210,116 @@ export default function GroupInquiryForm() {
                             website: ''
                         });
                     }}
-                    style={{
-                        fontFamily: "var(--font-jost), Arial, sans-serif", fontSize: '12px', fontWeight: '600', letterSpacing: '0.2em', color: '#C9933A',
-                        background: 'none', border: 'none', cursor: 'pointer', textTransform: 'uppercase'
-                    }}
                 >
-                    Send Another Inquiry
+                    {t('sendAnother')}
                 </button>
             </div>
         );
     }
 
     return (
-        <form onSubmit={handleSubmit} noValidate>
-            {/* Contact Name and Institution Name */}
-            <div className="r-grid-2" style={{ gap: '20px', marginBottom: '24px' }}>
-                <div>
-                    <label style={labelStyle}>CONTACT NAME <span style={{ color: '#d49a36' }}>*</span></label>
-                    <input
-                        name="contactName"
-                        type="text"
-                        value={formData.contactName}
-                        onChange={handleChange}
-                        onFocus={() => setFocusedField('contactName')}
-                        onBlur={handleBlur}
-                        style={inputStyle('contactName')}
-                        placeholder="e.g. Dr. Ramesh Kumar"
-                        required
-                    />
-                    {errors.contactName && <span style={{ color: '#E53E3E', fontSize: '12px', marginTop: '4px', display: 'block' }}>{errors.contactName}</span>}
-                </div>
-                <div>
-                    <label style={labelStyle}>INSTITUTION NAME <span style={{ color: '#d49a36' }}>*</span></label>
-                    <input
-                        name="institutionName"
-                        type="text"
-                        value={formData.institutionName}
-                        onChange={handleChange}
-                        onFocus={() => setFocusedField('institutionName')}
-                        onBlur={handleBlur}
-                        style={inputStyle('institutionName')}
-                        placeholder="e.g. Delhi Public School / IIT Madras"
-                        required
-                    />
-                    {errors.institutionName && <span style={{ color: '#E53E3E', fontSize: '12px', marginTop: '4px', display: 'block' }}>{errors.institutionName}</span>}
-                </div>
+        <form onSubmit={handleSubmit} noValidate className={styles.form}>
+            <div className={styles.row}>
+                {textInput('contactName', 'text', 'name')}
+                {textInput('institutionName', 'text', 'organization')}
             </div>
 
-            {/* Email and Phone */}
-            <div className="r-grid-2" style={{ gap: '20px', marginBottom: '24px' }}>
-                <div>
-                    <label style={labelStyle}>EMAIL ADDRESS <span style={{ color: '#d49a36' }}>*</span></label>
-                    <input
-                        name="email"
-                        type="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        onFocus={() => setFocusedField('email')}
-                        onBlur={handleBlur}
-                        style={inputStyle('email')}
-                        placeholder="coordinator@institution.edu"
-                        required
-                    />
-                    {errors.email && <span style={{ color: '#E53E3E', fontSize: '12px', marginTop: '4px', display: 'block' }}>{errors.email}</span>}
-                </div>
-                <div>
-                    <label style={labelStyle}>PHONE NUMBER <span style={{ color: '#d49a36' }}>*</span></label>
-                    <div style={{ 
-                        backgroundColor: focusedField === 'phone' ? '#FFFFFF' : '#FAFAF7',
-                        border: '1px solid',
-                        borderColor: focusedField === 'phone' ? '#C9933A' : '#E8E4DC',
-                        transition: 'all 0.3s ease',
-                        height: '52px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        padding: '0 16px',
-                        boxSizing: 'border-box'
-                    }}>
+            <div className={styles.row}>
+                {textInput('email', 'email', 'email')}
+                <div className={styles.field}>
+                    {label('phone', t('phone'))}
+                    <div className={styles.phone} data-invalid={errors.phone ? 'true' : undefined}>
                         <PhoneInput
+                            id={id('phone')}
                             international
                             defaultCountry="IN"
                             value={formData.phone}
                             onChange={(val) => setFormData(prev => ({ ...prev, phone: val || '' }))}
-                            onFocus={() => setFocusedField('phone')}
-                            onBlur={() => setFocusedField(null)}
-                            className="custom-phone-input"
                             maxLength={15}
+                            {...invalidProps('phone')}
                         />
                     </div>
-                    {errors.phone && <span style={{ color: '#E53E3E', fontSize: '12px', marginTop: '4px', display: 'block' }}>{errors.phone}</span>}
+                    {fieldError('phone')}
                 </div>
             </div>
 
-            {/* Group Type and Group Size */}
-            <div className="r-grid-2" style={{ gap: '20px', marginBottom: '24px' }}>
-                <div>
-                    <label style={labelStyle}>GROUP TYPE <span style={{ color: '#d49a36' }}>*</span></label>
-                    <select
-                        name="groupType"
-                        value={formData.groupType}
-                        onChange={handleChange}
-                        onFocus={() => setFocusedField('groupType')}
-                        onBlur={() => setFocusedField(null)}
-                        style={inputStyle('groupType')}
-                        required
-                    >
-                        <option value="School">School</option>
-                        <option value="University">University</option>
-                        <option value="Corporate">Corporate</option>
-                        <option value="Other">Other</option>
-                    </select>
+            <div className={styles.row}>
+                <div className={styles.field}>
+                    {label('groupType', t('groupType'))}
+                    <div className={styles.select}>
+                        <select
+                            id={id('groupType')}
+                            name="groupType"
+                            value={formData.groupType}
+                            onChange={handleChange}
+                            className={styles.input}
+                            required
+                        >
+                            {GROUP_TYPES.map((g) => (
+                                <option key={g.value} value={g.value}>{t(`groupTypes.${g.key}`)}</option>
+                            ))}
+                        </select>
+                    </div>
                 </div>
-                <div>
-                    <label style={labelStyle}>APPROXIMATE GROUP SIZE <span style={{ color: '#d49a36' }}>*</span></label>
+                <div className={styles.field}>
+                    {label('groupSize', t('groupSize'))}
                     <input
+                        id={id('groupSize')}
                         name="groupSize"
                         type="number"
                         min="1"
+                        inputMode="numeric"
                         value={formData.groupSize}
                         onChange={handleChange}
-                        onFocus={() => setFocusedField('groupSize')}
                         onBlur={handleBlur}
-                        style={inputStyle('groupSize')}
-                        placeholder="e.g. 25"
+                        className={styles.input}
+                        placeholder={t('groupSizePlaceholder')}
                         required
+                        {...invalidProps('groupSize')}
                     />
-                    {errors.groupSize && <span style={{ color: '#E53E3E', fontSize: '12px', marginTop: '4px', display: 'block' }}>{errors.groupSize}</span>}
+                    {fieldError('groupSize')}
                 </div>
             </div>
 
-            {/* Preferred Travel Window */}
-            <div style={{ marginBottom: '24px' }}>
-                <label style={labelStyle}>PREFERRED TRAVEL WINDOW <span style={{ color: '#d49a36' }}>*</span></label>
-                <input
-                    name="travelWindow"
-                    type="text"
-                    value={formData.travelWindow}
-                    onChange={handleChange}
-                    onFocus={() => setFocusedField('travelWindow')}
-                    onBlur={handleBlur}
-                    style={inputStyle('travelWindow')}
-                    placeholder="e.g. March 2027 / Autumn 2026"
-                    required
-                />
-                {errors.travelWindow && <span style={{ color: '#E53E3E', fontSize: '12px', marginTop: '4px', display: 'block' }}>{errors.travelWindow}</span>}
-            </div>
+            {textInput('travelWindow', 'text')}
 
-            {/* Additional Details (optional) */}
-            <div style={{ marginBottom: '32px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                    <label style={{ ...labelStyle, marginBottom: 0 }}>ADDITIONAL DETAILS</label>
-                    <span style={{ fontFamily: "var(--font-jost), Arial, sans-serif", fontSize: '11px', color: '#9A948F', letterSpacing: '0.05em' }}>OPTIONAL</span>
+            <div className={styles.field}>
+                <div className={styles.labelRow}>
+                    <label htmlFor={id('additionalDetails')} className={styles.label}>{t('additionalDetails')}</label>
+                    <span className={styles.optional}>{t('optional')}</span>
                 </div>
                 <textarea
+                    id={id('additionalDetails')}
                     name="additionalDetails"
                     rows={4}
                     value={formData.additionalDetails}
                     onChange={handleChange}
-                    onFocus={() => setFocusedField('additionalDetails')}
                     onBlur={handleBlur}
-                    style={{ ...inputStyle('additionalDetails'), minHeight: '120px', resize: 'vertical' }}
-                    placeholder="Tell us about specific learning objectives, destinations of interest, or custom requirements..."
+                    className={styles.input}
+                    placeholder={t('additionalDetailsPlaceholder')}
                 ></textarea>
             </div>
 
             {/* Honeypot: hidden from people, filled in by bots */}
-            <div aria-hidden="true" style={{ position: 'absolute', left: '-10000px', width: '1px', height: '1px', overflow: 'hidden' }}>
+            <div aria-hidden="true" className={styles.honeypot}>
                 <label>
                     Website
                     <input name="website" type="text" tabIndex={-1} autoComplete="off" value={formData.website} onChange={handleChange} />
                 </label>
             </div>
 
-            {errors.submit && (
-                <p style={{
-                    fontFamily: "var(--font-jost), Arial, sans-serif",
-                    fontSize: '13px',
-                    color: '#C0392B',
-                    marginBottom: '12px',
-                    textAlign: 'center'
-                }}>{errors.submit}</p>
-            )}
-
-            <button
-                type="submit"
-                disabled={loading}
-                style={{
-                    fontFamily: "var(--font-jost), Arial, sans-serif",
-                    fontSize: '13px',
-                    fontWeight: '600',
-                    letterSpacing: '0.28em',
-                    color: '#1C1917',
-                    backgroundColor: loading ? '#9A8F85' : '#C9933A',
-                    border: 'none',
-                    padding: '18px',
-                    width: '100%',
-                    textTransform: 'uppercase',
-                    cursor: loading ? 'not-allowed' : 'pointer',
-                    marginTop: '8px',
-                    transition: 'all 0.3s ease'
-                }}
-                onMouseOver={(e) => {
-                    if (!loading) {
-                        e.currentTarget.style.backgroundColor = '#1C1917';
-                        e.currentTarget.style.color = '#C9933A';
-                    }
-                }}
-                onMouseOut={(e) => {
-                    if (!loading) {
-                        e.currentTarget.style.backgroundColor = '#C9933A';
-                        e.currentTarget.style.color = '#1C1917';
-                    }
-                }}
-            >
-                {loading ? 'SENDING INQUIRY...' : 'SUBMIT GROUP INQUIRY'}
-            </button>
-
-            <p style={{
-                fontFamily: "var(--font-jost), Arial, sans-serif",
-                fontSize: '12px',
-                color: '#9A948F',
-                textAlign: 'center',
-                marginTop: '12px',
-                letterSpacing: '0.04em'
-            }}>
-                Our institutional coordinator will respond within 24 hours
-            </p>
+            <div className={styles.actions}>
+                {errors.submit && (
+                    <p className={styles.alert} role="alert">
+                        <AlertCircle aria-hidden="true" />
+                        {errors.submit}
+                    </p>
+                )}
+                <button type="submit" disabled={loading} className={styles.submit}>
+                    {loading ? t('sending') : t('submit')}
+                </button>
+                <p className={styles.note}>{t('respondNote')}</p>
+            </div>
         </form>
     );
 }

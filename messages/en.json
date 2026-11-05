@@ -387,5 +387,79 @@
         "indiaTours": "India tours",
         "gallery": "Gallery",
         "contact": "Ask us"
+    },
+    "Groups": {
+        "metaTitle": "Japan Group & Institutional Inquiries — Kanmani Tours",
+        "metaDescription": "Custom educational, university, and corporate group cultural exchange visits to Japan from India. Guided cultural experiences, full logistics, and chaperone coordination.",
+        "breadcrumbHome": "Home",
+        "breadcrumbGroups": "Group visits to Japan",
+        "title": "Group Cultural Exchange Visits to Japan",
+        "lead": "Educational and cultural exchange journeys to Japan for Indian schools, universities, and corporate delegations, planned and hosted with 28 years of local expertise.",
+        "programTitle": "Custom institutional programmes",
+        "programIntro": "We partner directly with academic institutions and corporate organisations to deliver group study tours across Japan. Each programme is built around your institution's curriculum, learning objectives and travel schedule:",
+        "highlights": {
+            "culturalTitle": "Guided cultural experiences.",
+            "culturalBody": "Cultural workshops, historical explorations, and academic or institutional interactions across Japan.",
+            "logisticsTitle": "End-to-end group logistics.",
+            "logisticsBody": "Ground transport, Shinkansen group reservations, vetted student-friendly accommodation, and dietary-aligned dining.",
+            "safetyTitle": "Safety and chaperone coordination.",
+            "safetyBody": "24/7 bilingual on-ground coordination, chaperone guidance, emergency management, and institutional protocol compliance."
+        },
+        "formNote": "Send your group's requirements below. Our institutional coordinator will follow up directly to discuss timelines, group size and a programme outline.",
+        "formTitle": "Tell us about your group",
+        "cohortsTitle": "Who we host",
+        "cohorts": {
+            "schoolsTitle": "K-12 and high schools",
+            "schoolsBody": "Cultural discovery, STEAM workshops, and sister-school interactions.",
+            "universitiesTitle": "Colleges and universities",
+            "universitiesBody": "Industry immersion, academic exchanges, and research delegation visits.",
+            "corporateTitle": "Corporate and leadership",
+            "corporateBody": "Executive benchmarking, business delegations, and professional workshops."
+        },
+        "directTitle": "Direct inquiry",
+        "directBody": "Prefer to talk first? Reach our institutional team directly.",
+        "quote": "With 28 years residing and operating in Japan, our mission is to provide Indian students and teams with an authentic, safe, and inspiring educational journey.",
+        "quoteBy": "Dr. Kanmani, Founder"
+    },
+    "GroupForm": {
+        "contactName": "Contact name",
+        "contactNamePlaceholder": "e.g. Dr. Ramesh Kumar",
+        "institutionName": "Institution name",
+        "institutionNamePlaceholder": "e.g. Delhi Public School / IIT Madras",
+        "email": "Email address",
+        "emailPlaceholder": "coordinator@institution.edu",
+        "phone": "Phone number",
+        "groupType": "Group type",
+        "groupTypes": {
+            "school": "School",
+            "university": "University",
+            "corporate": "Corporate",
+            "other": "Other"
+        },
+        "groupSize": "Approximate group size",
+        "groupSizePlaceholder": "e.g. 25",
+        "travelWindow": "Preferred travel window",
+        "travelWindowPlaceholder": "e.g. March 2027 / Autumn 2026",
+        "additionalDetails": "Additional details",
+        "optional": "Optional",
+        "additionalDetailsPlaceholder": "Learning objectives, destinations of interest, or special requirements",
+        "errors": {
+            "contactNameShort": "Please enter your full name (min 2 characters).",
+            "contactNameDigits": "Name should not contain numbers.",
+            "institutionShort": "Please enter your institution name (min 2 characters).",
+            "emailInvalid": "Please enter a valid email address.",
+            "phoneMissing": "Please enter a phone number.",
+            "phoneInvalid": "Please enter a valid phone number.",
+            "groupSize": "Please enter an approximate group size.",
+            "travelWindow": "Please enter a preferred travel window (e.g. March 2027).",
+            "submitFailed": "Something went wrong. Please email us directly at kanmanitours@gmail.com.",
+            "connection": "Connection error. Please email kanmanitours@gmail.com"
+        },
+        "submit": "Submit group inquiry",
+        "sending": "Sending inquiry…",
+        "respondNote": "Our institutional coordinator will respond within 24 hours",
+        "sentTitle": "Inquiry sent",
+        "sentBody": "Thank you, {name}. We have received your group inquiry for {institution} and our team will get in touch within 24 hours.",
+        "sendAnother": "Send another inquiry"
     }
 }
