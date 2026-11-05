@@ -189,7 +189,7 @@ export default function ContactForm() {
                         defaultCountry="JP"
                         value={formData.phone}
                         onChange={(val) => setFormData(prev => ({ ...prev, phone: val || '' }))}
-                        maxLength={15}
+                        limitMaxLength
                         {...invalidProps('phone')}
                     />
                 </div>
