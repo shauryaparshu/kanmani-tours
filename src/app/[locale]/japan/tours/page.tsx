@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { getTranslations } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { getToursByDestination } from '@/lib/tours';
 import { getAllCategories } from '@/lib/categories';
 import { getAllCountries } from '@/lib/countries';
@@ -10,6 +10,9 @@ import PageHeader from '@/components/layout/PageHeader';
 import TourList from '@/components/tours/TourList';
 import ToursComingSoon from '@/components/tours/ToursComingSoon';
 import { pageAlternates, pageOpenGraph } from '@/lib/site';
+
+// Static with incremental regeneration: Sanity edits appear within 60 seconds.
+export const revalidate = 60;
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
     const { locale } = await params;
@@ -25,6 +28,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 
 export default async function JapanToursPage({ params }: { params: Promise<{ locale: string }> }) {
     const { locale } = await params;
+    setRequestLocale(locale);
 
     // Japan tours must never render in Japanese under any circumstance
     if (locale === 'ja') {

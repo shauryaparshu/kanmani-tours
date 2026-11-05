@@ -11,6 +11,10 @@ import { getImages } from '@/lib/server-images';
 import { getAllTours } from '@/lib/tours';
 import { getTestimonials } from '@/lib/testimonials';
 import { pageAlternates } from '@/lib/site';
+import { setRequestLocale } from 'next-intl/server';
+
+// Static with incremental regeneration: Sanity edits appear within 60 seconds.
+export const revalidate = 60;
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
     const { locale } = await params;
@@ -23,6 +27,7 @@ const JOURNEY_LIMIT = 8;
 
 export default async function Home({ params }: { params: Promise<{ locale: string }> }) {
     const { locale } = await params;
+    setRequestLocale(locale);
     const heroImages = getImages('/assets/img/home/hero');
 
     const [allTours, testimonials] = await Promise.all([

@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "../tokens.css";
 import "../globals.css";
 import { NextIntlClientProvider } from "next-intl";
-import { getMessages } from "next-intl/server";
+import { getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import Navigation from '@/components/layout/Navigation';
@@ -36,6 +36,11 @@ export const viewport: Viewport = {
   maximumScale: 5,
 };
 
+// Both locales are prerendered; pages opt into 60-second revalidation where they read Sanity.
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
+}
+
 export default async function RootLayout({
   children,
   params
@@ -47,6 +52,7 @@ export default async function RootLayout({
   if (!routing.locales.includes(locale as (typeof routing.locales)[number])) {
     notFound();
   }
+  setRequestLocale(locale);
   const messages = await getMessages();
 
   return (

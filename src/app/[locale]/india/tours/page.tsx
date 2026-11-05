@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import type { Metadata } from 'next';
-import { getTranslations } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { getToursByDestination } from '@/lib/tours';
 import { getAllCategories } from '@/lib/categories';
 import { localizeCategories } from '@/components/tours/categoryLabels';
@@ -9,6 +9,9 @@ import Footer from '@/components/layout/FooterSection';
 import PageHeader from '@/components/layout/PageHeader';
 import TourList from '@/components/tours/TourList';
 import { pageAlternates, pageOpenGraph } from '@/lib/site';
+
+// Static with incremental regeneration: Sanity edits appear within 60 seconds.
+export const revalidate = 60;
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
     const { locale } = await params;
@@ -24,6 +27,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 
 export default async function IndiaToursPage({ params }: { params: Promise<{ locale: string }> }) {
     const { locale } = await params;
+    setRequestLocale(locale);
 
     const [tours, categories, countries, t, tDest] = await Promise.all([
         getToursByDestination('india', locale),

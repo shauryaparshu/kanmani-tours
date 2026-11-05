@@ -5,6 +5,10 @@ import Footer from '@/components/layout/FooterSection';
 import TourDetail from '@/components/tours/detail/TourDetail';
 import { selectJourneys } from '@/components/tours/selectJourneys';
 import { pageAlternates } from '@/lib/site';
+import { setRequestLocale } from 'next-intl/server';
+
+// Static with incremental regeneration: Sanity edits appear within 60 seconds.
+export const revalidate = 60;
 
 interface PageProps {
     params: Promise<{ locale: string; slug: string }>;
@@ -48,6 +52,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function TourDetailPage({ params }: PageProps) {
     const { locale, slug: rawSlug } = await params;
+    setRequestLocale(locale);
     const slug = decodeSlug(rawSlug);
     const [tour, allTours] = await Promise.all([
         getTourBySlug(slug, locale),

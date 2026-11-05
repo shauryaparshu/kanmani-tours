@@ -9,6 +9,9 @@ import DriveGallery from './DriveGallery';
 import styles from './Memories.module.css';
 import { MEMORIES_COOKIE, hasMemoriesAccess } from '@/lib/server/memoriesAuth';
 
+// The private RMK gallery and its login are always rendered per request.
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
     title: `Japan Tour ${TOUR_GROUP.dateLabel} | ${TOUR_GROUP.schoolName}`,
     description: `Private guest photo gallery archive for ${TOUR_GROUP.schoolName}.`,

@@ -2,12 +2,15 @@ import type { Metadata } from 'next';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { notFound } from 'next/navigation';
-import { getTranslations } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import FooterSection from '@/components/layout/FooterSection';
 import PageHeader from '@/components/layout/PageHeader';
 import GalleryAlbum from '@/components/gallery/GalleryAlbum';
 import { formatTourDates } from '@/components/tours/tourDates';
 import { pageOpenGraph } from '@/lib/site';
+
+// Static with incremental regeneration, so the 'tour has ended' check stays current.
+export const revalidate = 60;
 
 interface IndexMedia {
     type: 'image' | 'video';
@@ -25,16 +28,26 @@ interface IndexTour {
 
 // public/assets/gallery-index.json is written by scripts/generate-gallery-index.mjs
 // before every dev and build run. Only tours that have ended get a gallery.
-async function findTour(slug: string): Promise<IndexTour | null> {
+async function readIndex(): Promise<IndexTour[]> {
     try {
         const file = path.join(process.cwd(), 'public', 'assets', 'gallery-index.json');
         const data = JSON.parse(await readFile(file, 'utf8')) as { tours?: IndexTour[] };
-        const tour = data.tours?.find((t) => t.slug === slug);
-        if (!tour || !(new Date(tour.endDate) < new Date())) return null;
-        return tour;
+        return data.tours ?? [];
     } catch {
-        return null;
+        return [];
     }
+}
+
+const hasEnded = (tour: IndexTour) => new Date(tour.endDate) < new Date();
+
+async function findTour(slug: string): Promise<IndexTour | null> {
+    const tour = (await readIndex()).find((t) => t.slug === slug);
+    return tour && hasEnded(tour) ? tour : null;
+}
+
+// Prerender the albums of tours that have already ended (the locale comes from the layout).
+export async function generateStaticParams() {
+    return (await readIndex()).filter(hasEnded).map((tour) => ({ slug: tour.slug }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string; slug: string }> }): Promise<Metadata> {
@@ -48,6 +61,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 
 export default async function GalleryDetailPage({ params }: { params: Promise<{ locale: string; slug: string }> }) {
     const { locale, slug } = await params;
+    setRequestLocale(locale);
     const [tour, t] = await Promise.all([findTour(slug), getTranslations({ locale, namespace: 'Gallery' })]);
     if (!tour) notFound();
 

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { getTranslations } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { client } from '@/sanity/lib/client';
 import { FOUNDER_PHOTOS_QUERY } from '@/sanity/lib/queries';
 import Footer from '@/components/layout/FooterSection';
@@ -19,6 +19,9 @@ import {
 import { pageAlternates } from '@/lib/site';
 import styles from './page.module.css';
 
+// Static with incremental regeneration: Sanity edits appear within 60 seconds.
+export const revalidate = 60;
+
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
     const { locale } = await params;
     const t = await getTranslations({ locale, namespace: 'About' });
@@ -33,6 +36,7 @@ const CHAPTER_ALBUMS = ['student-phd', 'achievements', 'world-travel'] as const;
 
 export default async function AboutPage({ params }: { params: Promise<{ locale: string }> }) {
     const { locale } = await params;
+    setRequestLocale(locale);
     const t = await getTranslations({ locale, namespace: 'About' });
     const founderPhotos: FounderPhoto[] =
         (await client.fetch(FOUNDER_PHOTOS_QUERY, {}, { next: { revalidate: 60 } })) ?? [];

@@ -3,6 +3,9 @@ import { notFound } from 'next/navigation';
 import { TOUR_GROUP } from '@/lib/tourGroup';
 import MemoriesLoginForm from './MemoriesLoginForm';
 
+// The private RMK gallery and its login are always rendered per request.
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
     title: `Japan Tour ${TOUR_GROUP.dateLabel} | ${TOUR_GROUP.schoolName}`,
     description: `Private guest photo gallery access for ${TOUR_GROUP.schoolName}.`,

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { getTranslations } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { client } from '@/sanity/lib/client';
 import { GALLERY_QUERY } from '@/sanity/lib/queries';
 import { galleryImageUrl } from '@/sanity/lib/image';
@@ -11,6 +11,9 @@ import { formatTourDates } from '@/components/tours/tourDates';
 import { getAllCategories } from '@/lib/categories';
 import { localizeCategories } from '@/components/tours/categoryLabels';
 import { pageAlternates, pageOpenGraph } from '@/lib/site';
+
+// Static with incremental regeneration: Sanity edits appear within 60 seconds.
+export const revalidate = 60;
 
 interface GalleryImage {
     asset?: { url?: string; metadata?: { lqip?: string } };
@@ -53,6 +56,7 @@ function toPhoto(image: GalleryImage | undefined): GalleryPhoto | null {
 
 export default async function GalleryPage({ params }: { params: Promise<{ locale: string }> }) {
     const { locale } = await params;
+    setRequestLocale(locale);
     const [tours, allCategories, t, tTours] = await Promise.all([
         client.fetch<GalleryTour[]>(GALLERY_QUERY),
         getAllCategories(locale),

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { getTranslations } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import FooterSection from '@/components/layout/FooterSection';
 import PageHeader from '@/components/layout/PageHeader';
 import GroupInquiryForm from '@/components/forms/GroupInquiryForm';
@@ -27,6 +27,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 // Unlinked on purpose: the owner shares this page with schools directly.
 export default async function JapanGroupsPage({ params }: { params: Promise<{ locale: string }> }) {
     const { locale } = await params;
+    setRequestLocale(locale);
 
     // Japan groups page must never render in Japanese
     if (locale === 'ja') {
