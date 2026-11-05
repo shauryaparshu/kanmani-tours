@@ -120,7 +120,8 @@
             "speaker": "Global Speaker",
             "humanitarian": "Humanitarian"
         },
-        "storyCta": "Read Our Full Story"
+        "storyCta": "Read Our Full Story",
+        "storyQuoteRole": "Founder, Kanmani Tours"
     },
     "Buttons": {
         "learnMore": "Learn More →",

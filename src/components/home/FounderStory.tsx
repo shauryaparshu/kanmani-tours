@@ -1,16 +1,23 @@
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import { ArrowRight, Earth, HandHeart, Landmark, ShieldCheck, Sparkles, UsersRound, type LucideIcon } from 'lucide-react';
+import {
+    ArrowRight, BriefcaseBusiness, Earth, GraduationCap, HandHeart, HeartHandshake, Mic, UsersRound, type LucideIcon,
+} from 'lucide-react';
 import { Link } from '@/i18n/routing';
 import styles from './FounderStory.module.css';
 
-const CARDS: { key: 'born' | 'trust' | 'intimate'; icons: LucideIcon[] }[] = [
-    { key: 'born', icons: [Landmark, Earth] },
-    { key: 'trust', icons: [HandHeart, ShieldCheck] },
-    { key: 'intimate', icons: [UsersRound, Sparkles] },
+const CARDS: { key: 'born' | 'trust' | 'intimate'; Icon: LucideIcon }[] = [
+    { key: 'born', Icon: Earth },
+    { key: 'trust', Icon: HandHeart },
+    { key: 'intimate', Icon: UsersRound },
 ];
 
-const ROLES = ['phd', 'entrepreneur', 'speaker', 'humanitarian'] as const;
+const ROLES: { key: 'phd' | 'entrepreneur' | 'speaker' | 'humanitarian'; Icon: LucideIcon }[] = [
+    { key: 'phd', Icon: GraduationCap },
+    { key: 'entrepreneur', Icon: BriefcaseBusiness },
+    { key: 'speaker', Icon: Mic },
+    { key: 'humanitarian', Icon: HeartHandshake },
+];
 
 /** Thin-line suspension bridge between the portrait and the cards. */
 function Bridge() {
@@ -73,33 +80,39 @@ export default function FounderStory() {
                     <h2 id="founder-story-title" className={styles.title}>{t('storyTitle')}</h2>
 
                     <ol className={styles.cards}>
-                        {CARDS.map(({ key, icons }, i) => (
+                        {CARDS.map(({ key, Icon }, i) => (
                             <li key={key} className={styles.card}>
-                                <span className={styles.icons} aria-hidden="true">
-                                    {icons.map((Icon, n) => <Icon key={n} />)}
+                                <span className={`${styles.numeral} num`} aria-hidden="true">
+                                    {String(i + 1).padStart(2, '0')}
                                 </span>
-                                <h3 className={styles.cardTitle}>
-                                    <span className="num">{i + 1}.</span> {t(`storyCards.${key}.title`)}
-                                </h3>
+                                <span className={styles.medallion} aria-hidden="true">
+                                    <Icon />
+                                </span>
+                                <h3 className={styles.cardTitle}>{t(`storyCards.${key}.title`)}</h3>
+                                <span className={styles.cardRule} aria-hidden="true" />
                                 <p className={styles.cardBody}>{t(`storyCards.${key}.body`)}</p>
                             </li>
                         ))}
                     </ol>
 
                     <figure className={styles.quote}>
-                        <blockquote>
-                            <p>
-                                <span className={styles.mark} aria-hidden="true">&ldquo;</span>
-                                {t('storyQuote')}
-                                <span className={styles.mark} aria-hidden="true">&rdquo;</span>
-                            </p>
+                        <span className={styles.glyph} aria-hidden="true">&ldquo;</span>
+                        <blockquote className={styles.quoteText}>
+                            <p>{t('storyQuote')}</p>
                         </blockquote>
-                        <figcaption>{t('founderName')}</figcaption>
+                        <figcaption className={styles.attribution}>
+                            <span className={styles.attributionRule} aria-hidden="true" />
+                            <span className={styles.attributionName}>{t('founderName')}</span>
+                            <span className={styles.attributionRole}>{t('storyQuoteRole')}</span>
+                        </figcaption>
                     </figure>
 
                     <ul className={styles.roles} aria-label={t('storyRolesLabel')}>
-                        {ROLES.map((role) => (
-                            <li key={role} className={styles.role}>{t(`storyRoles.${role}`)}</li>
+                        {ROLES.map(({ key, Icon }) => (
+                            <li key={key} className={styles.role}>
+                                <Icon aria-hidden="true" />
+                                {t(`storyRoles.${key}`)}
+                            </li>
                         ))}
                     </ul>
 

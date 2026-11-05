@@ -6,6 +6,7 @@
 - Hero slideshow sits in one fixed, larger frame (1.75 : 1 on desktop, 1.6 : 1 on phones; the hero grows to 1920px on wide screens). Photos fill it anchored to their top edge, so heads are never trimmed and only the bottom of taller photos is cut. The gold arch rises above the frame and the line art sits outside the photo
 - The 9 hero photos were colour-corrected: partial white balance, adaptive brightening of dark shots, mild clarity and vibrance with skin-tone protection, chroma denoise and light sharpening (originals are in git history)
 - Founder section rebuilt from the owner's second mockup (`FounderStory`): gold-framed portrait, a line-drawn bridge, three story cards that lift and highlight on hover, the founder's quote, role pills and a "Read Our Full Story" link to About. Its text is now translated in `ja.json`
+- Founder section polish: cards carry a gold programme numeral, the icon in a gold ring and a short rule (ring fills vermilion and the rule extends on hover); the quote sits in a paper panel with a large gold quotation mark and the attribution on its own line ("Dr. Kanmani" never splits); the roles are icon badges in a 2 x 2 grid
 - Navigation: solid paper bar on every page (no longer transparent over the homepage), gold logo, `EN | 日本語` divider, ENQUIRE button with soft corners and a shadow
 - New tokens: `--color-gold`, `--color-gold-deep`, `--radius-soft`, `--radius-card`, `--radius-photo`, `--radius-pill`, `--shadow-button`, `--shadow-card`, `--shadow-card-hover`
 

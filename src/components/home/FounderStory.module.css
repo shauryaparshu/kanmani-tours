@@ -106,7 +106,8 @@
   text-wrap: balance;
 }
 
-/* Cards: lift, take a gold edge and a deeper shadow on hover; icons turn vermilion. */
+/* Cards: a gold programme numeral, the icon in a gold ring, a short rule.
+   On hover the card lifts, the ring fills vermilion and the rule extends. */
 .cards {
   width: 100%;
   margin: 0;
@@ -119,8 +120,10 @@
   position: relative;
   display: grid;
   align-content: start;
+  justify-items: start;
   gap: var(--space-2);
-  padding: var(--space-3);
+  padding: var(--space-4) var(--space-3) var(--space-4);
+  overflow: hidden;
   background: var(--color-surface);
   border: 1px solid var(--color-line);
   border-radius: var(--radius-card);
@@ -136,22 +139,52 @@
   box-shadow: var(--shadow-card-hover);
 }
 
-.icons {
-  display: flex;
-  gap: var(--space-2);
-  color: var(--color-ink);
+.numeral {
+  position: absolute;
+  top: var(--space-1);
+  right: var(--space-2);
+  font: var(--weight-light) var(--text-heading) / 1 var(--font-display);
+  color: var(--color-gold-deep);   /* 4.7 : 1, a programme number, not a watermark */
   transition: color var(--dur-hover) var(--ease-out);
 }
-.icons svg {
-  width: 2.75rem;
-  height: 2.75rem;
-  stroke-width: 1.1;
+.card:hover .numeral { color: var(--color-accent); }
+
+.medallion {
+  display: grid;
+  place-items: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  margin-bottom: var(--space-1);
+  border: 1px solid var(--color-gold);
+  border-radius: 50%;
+  background: var(--color-paper);
+  color: var(--color-gold-deep);
+  transition: background-color var(--dur-hover) var(--ease-out), border-color var(--dur-hover) var(--ease-out), color var(--dur-hover) var(--ease-out);
 }
-.card:hover .icons { color: var(--color-accent); }
+.medallion svg {
+  width: 1.625rem;
+  height: 1.625rem;
+  stroke-width: 1.25;
+}
+.card:hover .medallion {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-on-ink);
+}
 
 .cardTitle {
-  margin: var(--space-1) 0 0;
-  font: var(--weight-medium) var(--text-lead) / var(--leading-title) var(--font-body);
+  margin: 0;
+  font: var(--weight-regular) calc(var(--text-lead) * 1.15) / var(--leading-title) var(--font-display);
+}
+.cardRule {
+  width: var(--space-4);
+  height: 1px;
+  background: var(--color-gold);
+  transition: width calc(var(--dur-hover) * 2) var(--ease-out), background-color var(--dur-hover) var(--ease-out);
+}
+.card:hover .cardRule {
+  width: var(--space-6);
+  background: var(--color-accent);
 }
 .cardBody {
   margin: 0;
@@ -159,44 +192,107 @@
   color: var(--color-ink-muted);
 }
 
-/* Quote, attributed inline: "…" — Dr. Kanmani */
+/* Quote panel: a large gold quotation mark behind the words, and the
+   attribution on its own line, never split across lines. */
 .quote {
   position: relative;
+  width: 100%;
   margin: var(--space-6) 0 0;
-  padding-left: var(--space-5);
-  font: italic var(--weight-light) var(--text-title) / var(--leading-title) var(--font-display);
+  padding: var(--space-5) var(--space-3) var(--space-4) var(--space-5);
+  overflow: hidden;
+  background: var(--color-paper-deep);
+  border-radius: var(--radius-card);
 }
-.quote blockquote,
-.quote blockquote p,
-.quote figcaption { display: inline; margin: 0; }
-.quote figcaption::before { content: " \2014\00a0"; }
-.mark {
-  color: var(--color-accent);
-  font-style: normal;
-  font-weight: var(--weight-medium);
-}
-.mark:first-child {
+.glyph {
   position: absolute;
-  left: 0;
-  top: -0.05em;
-  font-size: 2.2em;
-  line-height: 1;
+  top: calc(-1 * var(--space-1));
+  left: var(--space-2);
+  font: var(--weight-regular) calc(var(--text-display) * 2) / 1 var(--font-display);
+  color: var(--color-gold);
+  opacity: 0.45;
+  pointer-events: none;
 }
-:lang(ja) .quote { font-style: normal; }
+.quoteText { position: relative; margin: 0; }
+.quoteText p {
+  margin: 0;
+  font: italic var(--weight-light) var(--text-title) / var(--leading-title) var(--font-display);
+  text-wrap: pretty;
+}
+:lang(ja) .quoteText p { font-style: normal; }
 
-.roles {
+.attribution {
+  position: relative;
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-1);
+  align-items: center;
+  gap: var(--space-1) var(--space-2);
+  margin-top: var(--space-3);
+}
+.attributionRule {
+  width: var(--space-5);
+  height: 1px;
+  background: var(--color-accent);
+}
+.attributionName {
+  font: var(--weight-medium) var(--text-label) / var(--leading-label) var(--font-body);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.attributionRole {
+  font: var(--weight-regular) var(--text-label) / var(--leading-label) var(--font-body);
+  letter-spacing: 0.04em;
+  color: var(--color-ink-muted);
+  white-space: nowrap;
+}
+:lang(ja) .attributionName { letter-spacing: 0.08em; }
+
+/* Role badges: an icon in a small round seal, label in small caps. */
+.roles {
+  /* Phones: one column, every badge as wide as the widest. */
+  display: grid;
+  grid-template-columns: max-content;
+  gap: var(--space-1) var(--space-2);
   margin: var(--space-4) 0 0;
   padding: 0;
   list-style: none;
 }
 .role {
-  padding: var(--space-half) var(--space-2);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: 2.75rem;
+  padding: var(--space-half) var(--space-2) var(--space-half) var(--space-half);
+  background: var(--color-surface);
   border: 1px solid var(--color-gold);
   border-radius: var(--radius-pill);
-  font: var(--weight-regular) var(--text-body) / var(--leading-label) var(--font-body);
+  box-shadow: var(--shadow-card);
+  font: var(--weight-medium) var(--text-label) / 1 var(--font-body);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: transform var(--dur-hover) var(--ease-out), border-color var(--dur-hover) var(--ease-out);
+}
+:lang(ja) .role { letter-spacing: 0.04em; text-transform: none; }
+.role svg {
+  flex-shrink: 0;
+  box-sizing: content-box;
+  width: 1.125rem;
+  height: 1.125rem;
+  padding: 0.4375rem;
+  border-radius: 50%;
+  background: var(--color-paper-deep);
+  color: var(--color-gold-deep);
+  stroke-width: 1.5;
+  transition: background-color var(--dur-hover) var(--ease-out), color var(--dur-hover) var(--ease-out);
+}
+.role:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-accent);
+}
+.role:hover svg {
+  background: var(--color-accent);
+  color: var(--color-on-ink);
 }
 
 .cta {
@@ -223,7 +319,14 @@
 .cta:hover svg { transform: translateX(3px); }
 
 @media (min-width: 640px) {
+  .quote { padding: var(--space-5) var(--space-4) var(--space-4) var(--space-6); }
   .cards { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  /* Four equal badges in a 2 x 2 grid rather than a ragged wrap. */
+  .roles {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: min(100%, 32rem);
+  }
 }
 
 @media (min-width: 1024px) {
