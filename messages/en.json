@@ -74,7 +74,6 @@
         "pauseSlides": "Pause slideshow",
         "playSlides": "Play slideshow",
         "storyTitle": "Built on two decades of trust",
-        "storyP1": "Kanmani Tours was born from a unique position — a deep understanding of both Japanese and Indian culture, built over more than two decades of living between two worlds.",
         "founderName": "Dr. Kanmani",
         "storyPortraitAlt": "Dr. Kanmani",
         "journeysTitle": "Upcoming and recent journeys",
@@ -98,12 +97,30 @@
         "heroTitleA": "Two Cultures,",
         "heroTitleB": "One Bridge.",
         "heroIntro": "Deeply immersive, personally curated journeys connecting the vibrant heritage of India and Japan, led by Dr. Kanmani.",
-        "founderRole": "Founder & Expert Guide",
-        "experienceTitle": "The Kanmani Experience",
-        "experienceGuiding": "Expert-Led Guiding",
-        "experienceImmersion": "Cultural Immersion",
-        "experienceGroups": "Intimate Group Sizes",
-        "experienceItineraries": "Meticulous Itineraries"
+        "storyEyebrow": "Our Founder's Story",
+        "storyCards": {
+            "born": {
+                "title": "Born & Shaped",
+                "body": "A life lived between India & Japan, bridging both cultures for over 28 years."
+            },
+            "trust": {
+                "title": "Built on Trust",
+                "body": "Personally curated, small-group journeys backed by over two decades of expertise."
+            },
+            "intimate": {
+                "title": "Intimate Experiences",
+                "body": "Thoughtfully crafted itineraries that avoid large, crowded tour buses."
+            }
+        },
+        "storyQuote": "I walk forward as a bridge between the two cultures that live within me.",
+        "storyRolesLabel": "Roles",
+        "storyRoles": {
+            "phd": "PhD Scholar",
+            "entrepreneur": "Entrepreneur",
+            "speaker": "Global Speaker",
+            "humanitarian": "Humanitarian"
+        },
+        "storyCta": "Read Our Full Story"
     },
     "Buttons": {
         "learnMore": "Learn More →",

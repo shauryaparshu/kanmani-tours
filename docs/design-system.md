@@ -130,11 +130,11 @@ The migration finished on 2026-11-05. Every page uses these tokens and CSS Modul
 
 ## 12. Homepage exceptions (owner's mockup, approved 2026-11-05)
 
-The owner supplied a mockup for the homepage hero and the band below it. It deliberately departs from some rules above; these departures apply **only** where listed.
+The owner supplied mockups for the homepage hero and the founder section below it. It deliberately departs from some rules above; these departures apply **only** where listed.
 
-- **Gold on paper.** `--color-gold` (#B8924F) is for line art, frames, icons and button borders only, never text (2.6 : 1). Gold text on paper uses `--color-gold-deep` (#87652A, 4.7 : 1): the hero eyebrow, the logo wordmark, the founder's script line. Turmeric (`--color-highlight`) is still ink-only.
-- **Arches.** The hero photo and the founder portrait are arch-shaped (`border-radius` on the top corners), with a thin gold outline. Everything else stays square.
+- **Gold on paper.** `--color-gold` (#B8924F) is for line art, frames, icons, pill and button borders only, never text (2.6 : 1). Gold text on paper uses `--color-gold-deep` (#87652A, 4.7 : 1): the hero eyebrow and the logo wordmark. Turmeric (`--color-highlight`) is still ink-only.
+- **Hero photos are never cropped.** Each slide is drawn at the photo's own shape; a thin gold arch rises around and above it, and the botanical line art sits outside the photo.
+- **Rounded shapes.** The founder portrait (`--radius-photo`) in a gold frame with heavier corner accents, the story cards (`--radius-card`, `--shadow-card`, lifting to `--shadow-card-hover` on hover) and the role pills and founder link (`--radius-pill`). Everything else stays square.
 - **Soft buttons.** The hero buttons and the nav ENQUIRE button use `--radius-soft` (3px); filled vermilion buttons there carry `--shadow-button`.
-- **Eyebrow.** The hero has one eyebrow line ("East & West Bound Journeys"). No other heading gets one.
-- **Script line.** `--font-script` (Great Vibes) is used once, for "Founder & Expert Guide". Japanese falls back to the display face.
+- **Eyebrows.** The hero ("East & West Bound Journeys") and the founder section ("Our Founder's Story", underlined in vermilion) each have one. No other heading gets one.
 - **Botanical line art** (`src/components/home/Botanicals.tsx`) is drawn as SVG paths from code: lotus, leaf sprigs and five-petal flowers, gold strokes with paper fill. Decorative and hidden from assistive tech.

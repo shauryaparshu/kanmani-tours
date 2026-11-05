@@ -1,8 +1,8 @@
-import { DM_Sans, Great_Vibes, Newsreader, Noto_Sans_JP, Shippori_Mincho } from 'next/font/google';
+import { DM_Sans, Newsreader, Noto_Sans_JP, Shippori_Mincho } from 'next/font/google';
 
 // Self-hosted via next/font. Components use the role tokens in tokens.css
 // (--font-display, --font-body), never these family variables directly.
-// All five families are SIL Open Font License (checked in google/fonts METADATA).
+// All four families are SIL Open Font License (checked in google/fonts METADATA).
 
 // Display serif for Latin text. Variable, with optical sizing for large headings.
 export const newsreader = Newsreader({
@@ -35,14 +35,5 @@ export const notoSansJp = Noto_Sans_JP({
     subsets: ['latin'],
     display: 'swap',
     variable: '--font-noto-jp',
-    preload: false,
-});
-
-// Script face for the single "Founder & Expert Guide" line on the homepage.
-export const greatVibes = Great_Vibes({
-    subsets: ['latin'],
-    weight: '400',
-    display: 'swap',
-    variable: '--font-great-vibes',
     preload: false,
 });

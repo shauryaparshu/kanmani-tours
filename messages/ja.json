@@ -73,8 +73,7 @@
         "heroPaths": "行き先",
         "pauseSlides": "スライドショーを一時停止",
         "playSlides": "スライドショーを再生",
-        "storyTitle": "Built on two decades of trust",
-        "storyP1": "Kanmani Tours was born from a unique position — a deep understanding of both Japanese and Indian culture, built over more than two decades of living between two worlds.",
+        "storyTitle": "20年以上の信頼を礎に",
         "founderName": "カンマニ博士",
         "storyPortraitAlt": "カンマニ博士",
         "journeysTitle": "これからの旅、これまでの旅",
@@ -98,12 +97,30 @@
         "heroTitleA": "2つの文化を",
         "heroTitleB": "つなぐ懸け橋。",
         "heroIntro": "インドと日本、それぞれの豊かな文化をつなぐ旅を、カンマニ博士が一つひとつ企画し、自ら案内します。",
-        "founderRole": "創業者・専任ガイド",
-        "experienceTitle": "カンマニツアーの特長",
-        "experienceGuiding": "専門ガイドによる案内",
-        "experienceImmersion": "文化に深く触れる体験",
-        "experienceGroups": "少人数制のグループ",
-        "experienceItineraries": "細部まで練られた旅程"
+        "storyEyebrow": "創業者の物語",
+        "storyCards": {
+            "born": {
+                "title": "生まれと歩み",
+                "body": "インドと日本を行き来しながら28年以上、2つの文化をつないできました。"
+            },
+            "trust": {
+                "title": "信頼を礎に",
+                "body": "20年以上の経験に裏打ちされた、少人数制の手づくりの旅。"
+            },
+            "intimate": {
+                "title": "心に残る体験",
+                "body": "大型バスの団体旅行ではない、丁寧に練り上げた旅程。"
+            }
+        },
+        "storyQuote": "私は、自分の中に息づく2つの文化の懸け橋として歩み続けます。",
+        "storyRolesLabel": "肩書き",
+        "storyRoles": {
+            "phd": "博士（PhD）",
+            "entrepreneur": "起業家",
+            "speaker": "国際講演者",
+            "humanitarian": "人道活動家"
+        },
+        "storyCta": "ストーリーを読む"
     },
     "Buttons": {
         "learnMore": "詳細を見る →",

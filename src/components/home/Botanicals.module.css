@@ -1,7 +1,8 @@
-/* Placed inside the hero's .visual box, which is position: relative. */
+/* Placed inside each hero photo frame (HomeHero .frame), which is position: relative. */
 .art {
   position: absolute;
   z-index: 2;
+  max-width: 9.5rem;
   height: auto;
   overflow: visible;
   pointer-events: none;
@@ -26,23 +27,25 @@
 .stem { stroke-width: 1.1; }
 .dot { fill: var(--color-gold); }
 
+/* Positions are relative to the photo frame. Every piece sits outside the
+   photo (beside it, or above it on the arch), so no part of a photo is covered. */
 .topLeft {
-  left: -9%;
-  top: -2%;
-  width: 21%;
-}
-.bottomLeft {
-  left: -11%;
-  bottom: -3%;
-  width: 26%;
+  left: -5%;
+  bottom: 100%;
+  width: 17%;
 }
 .topRight {
-  right: -7%;
-  top: -6%;
-  width: 22%;
+  right: -6%;
+  bottom: 100%;
+  width: 18%;
+}
+.bottomLeft {
+  right: calc(100% + 2px);
+  bottom: 0;
+  width: 16%;
 }
 .bottomRight {
-  right: -5%;
-  bottom: -2%;
-  width: 19%;
+  left: calc(100% + 2px);
+  bottom: 0;
+  width: 13%;
 }

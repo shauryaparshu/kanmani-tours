@@ -100,45 +100,58 @@
   background: var(--color-surface);
 }
 
-/* ── Arch photo ── */
+/* ── Arch photo ──
+   The stage has a fixed size, so changing slides never moves the page.
+   Inside it each photo is drawn at its own shape (--ratio, from the file),
+   fitted to the stage and resting on its floor. The gold arch is drawn
+   around and above the photo, never over it: nothing is cropped. */
 .visual {
   grid-area: visual;
   position: relative;
-  width: 86%;
-  margin-inline: auto;
 }
 
-/* A thin gold arch drawn just outside the photo. */
-.visual::before {
-  content: "";
-  position: absolute;
-  inset: calc(-1 * var(--space-1)) calc(-1 * var(--space-1)) 0;
-  border: 1px solid var(--color-gold);
-  border-bottom: 0;
-  border-radius: 50% 50% 0 0 / 40% 40% 0 0;
-  pointer-events: none;
-}
-
-.arch {
+.stage {
+  --dome: 16cqh;          /* room above the photo for the arch */
+  --arch-gap: var(--space-1);
   position: relative;
-  aspect-ratio: 1 / 1;
-  overflow: hidden;
-  border-radius: 50% 50% 0 0 / 40% 40% 0 0;
-  background: var(--color-paper-deep);
+  aspect-ratio: 1.35 / 1;
+  container-type: size;
 }
 
 .slide {
   position: absolute;
   inset: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
   opacity: 0;
   transition: opacity calc(var(--dur-reveal) * 1.6) var(--ease-out);
 }
 .slide[data-active="true"] { opacity: 1; z-index: 1; }
 
-.image {
-  object-fit: cover;
-  object-position: center 40%;
+.frame {
+  position: relative;
+  isolation: isolate;
+  aspect-ratio: var(--ratio);
+  /* 6% of the stage is kept free on each side for the line art. */
+  width: min(88cqw, (100cqh - var(--dome)) * var(--ratio));
 }
+
+/* The arch: a thin gold line rising from beside the photo into a dome above it. */
+.frame::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: calc(-1 * var(--dome));
+  bottom: 0;
+  left: calc(-1 * var(--arch-gap));
+  right: calc(-1 * var(--arch-gap));
+  border: 1px solid var(--color-gold);
+  border-bottom: 0;
+  border-radius: 50% 50% 0 0 / calc(var(--dome) * 1.6) calc(var(--dome) * 1.6) 0 0;
+}
+
+.image { z-index: 1; object-fit: cover; }
 
 /* ── Slide counter, progress line and pause ── */
 .controls {
@@ -215,14 +228,9 @@
   }
   .title { font-size: calc(var(--text-display) * 0.86); }
   .visual {
-    width: auto;
     margin: var(--space-2) 0 0;
     align-self: end;
   }
-  .visual::before { border-radius: 50% 50% 0 0 / 62% 62% 0 0; }
-  .arch {
-    aspect-ratio: 1.7 / 1;
-    border-radius: 50% 50% 0 0 / 62% 62% 0 0;
-  }
+  .stage { aspect-ratio: 1.5 / 1; }
   .controls { padding-bottom: var(--space-3); }
 }
