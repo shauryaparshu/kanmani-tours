@@ -500,5 +500,40 @@
             "cta": "Ask about moving support"
         },
         "airportMetaTitle": "Airport Pickup & Drop in India — Kanmani Tours"
+    },
+    "Memories": {
+        "title": "Japan Tour Memories",
+        "instructions": "Tap any photo to open it, and use the download icon in the viewer to save it. To save a whole day, open that day's folder in Google Drive and choose Download.",
+        "openDrive": "Open in Google Drive",
+        "rights": "Photos and videos are the property of kanmanitours.com (Infirise Private Limited), shared only with parents and the school team of {school}.",
+        "preparing": "The gallery is being prepared. Please check back soon.",
+        "iframeTitle": "Tour Memories Google Drive Gallery",
+        "back": "Back",
+        "allFolders": "All folders",
+        "breadcrumb": "Folders",
+        "downloadDay": "Download this day",
+        "downloadDayNote": "Google will prepare a zip of the whole folder.",
+        "loading": "Loading memories…",
+        "empty": "No photos in this folder yet",
+        "openDay": "Open day",
+        "playsInDrive": "Plays in Google Drive",
+        "download": "Download {name}",
+        "openPhoto": "Open {name}",
+        "playVideo": "Play {name} in Google Drive",
+        "folderFallback": "Folder",
+        "errorFallback": "Unable to connect to Google Drive",
+        "errorStatus": "Error {status}: Failed to load contents",
+        "login": {
+            "privateGallery": "Private gallery",
+            "helper": "Enter the password shared with parents and the school team.",
+            "passwordLabel": "Tour password",
+            "passwordPlaceholder": "Enter password",
+            "unlock": "Unlock gallery",
+            "verifying": "Verifying…",
+            "errEmpty": "Please enter a password.",
+            "errWrong": "Incorrect password. Please try again.",
+            "errConnection": "Unable to authenticate. Please check your connection and try again.",
+            "returnHome": "Return to homepage"
+        }
     }
 }

@@ -1,7 +1,11 @@
 'use client';
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { useTranslations } from 'next-intl';
+import { Download, ExternalLink, Folder, Play } from 'lucide-react';
 import UnifiedLightbox from '@/components/ui/UnifiedLightbox';
+import ArrowBox from '@/components/ui/ArrowBox';
+import styles from './Memories.module.css';
 
 export interface DriveFolderItem {
     id: string;
@@ -31,6 +35,7 @@ interface DriveGalleryProps {
 }
 
 export default function DriveGallery({ rootFolderId }: DriveGalleryProps) {
+    const t = useTranslations('Memories');
     const [folders, setFolders] = useState<DriveFolderItem[]>([]);
     const [files, setFiles] = useState<DriveFileItem[]>([]);
     const [currentFolder, setCurrentFolder] = useState<{ id: string; name: string } | null>(null);
@@ -58,7 +63,7 @@ export default function DriveGallery({ rootFolderId }: DriveGalleryProps) {
 
             if (!res.ok) {
                 const data = await res.json().catch(() => ({}));
-                throw new Error(data.error || `Error ${res.status}: Failed to load contents`);
+                throw new Error(data.error || t('errorStatus', { status: res.status }));
             }
 
             const data: ApiResponse = await res.json();
@@ -68,21 +73,21 @@ export default function DriveGallery({ rootFolderId }: DriveGalleryProps) {
             setFiles(data.files || []);
 
             if (folderId) {
-                const resolvedName = data.current?.name || knownName || 'Folder';
+                const resolvedName = data.current?.name || knownName || t('folderFallback');
                 setCurrentFolder({ id: folderId, name: resolvedName });
             } else {
                 setCurrentFolder(null);
             }
         } catch (err: unknown) {
             if (currentReq !== requestIdRef.current) return;
-            const msg = err instanceof Error ? err.message : 'Unable to connect to Google Drive';
+            const msg = err instanceof Error ? err.message : t('errorFallback');
             setError(msg);
         } finally {
             if (currentReq === requestIdRef.current) {
                 setLoading(false);
             }
         }
-    }, []);
+    }, [t]);
 
     const navigateTo = useCallback((folderId: string | null, folderName?: string, push = true) => {
         if (typeof window !== 'undefined') {
@@ -140,86 +145,35 @@ export default function DriveGallery({ rootFolderId }: DriveGalleryProps) {
             ? `https://drive.google.com/drive/folders/${rootFolderId}`
             : 'https://drive.google.com';
 
+    const showEmpty = (!currentFolder && folders.length === 0 && files.length === 0) || (currentFolder && files.length === 0);
+
     return (
-        <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 24px 60px' }}>
-            {/* Navigation Bar / Breadcrumb */}
-            <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                flexWrap: 'wrap',
-                gap: '16px',
-                marginBottom: '28px',
-                paddingBottom: '16px',
-                borderBottom: '1px solid rgba(201, 147, 58, 0.15)',
-            }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap', flex: '1 1 auto', minWidth: 0 }}>
+        <div className={styles.body}>
+            {/* Navigation bar / breadcrumb */}
+            <div className={styles.toolbar}>
+                <div className={styles.trail}>
                     {currentFolder && (
-                        <button
-                            id="gallery-back-button"
-                            type="button"
-                            onClick={handleBack}
-                            style={{
-                                display: 'inline-flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                gap: '6px',
-                                minHeight: '44px',
-                                minWidth: '44px',
-                                padding: '8px 16px',
-                                backgroundColor: '#23201D',
-                                border: '1px solid rgba(201, 147, 58, 0.3)',
-                                borderRadius: '4px',
-                                color: '#C9933A',
-                                fontFamily: "var(--font-jost), Arial, sans-serif",
-                                fontSize: '11px',
-                                fontWeight: '600',
-                                letterSpacing: '0.12em',
-                                textTransform: 'uppercase',
-                                cursor: 'pointer',
-                                transition: 'all 0.2s ease',
-                            }}
-                        >
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                                <polyline points="15 18 9 12 15 6" />
-                            </svg>
-                            <span>Back</span>
+                        <button id="gallery-back-button" type="button" onClick={handleBack} className={styles.backButton}>
+                            <ArrowBox direction="left" />
+                            <span>{t('back')}</span>
                         </button>
                     )}
 
-                    <nav aria-label="Breadcrumb" style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '8px',
-                        fontFamily: "var(--font-jost), Arial, sans-serif",
-                        fontSize: '13px',
-                        minHeight: '44px',
-                    }}>
+                    <nav aria-label={t('breadcrumb')} className={styles.crumbs}>
                         <button
                             id="gallery-breadcrumb-root"
                             type="button"
                             onClick={() => navigateTo(null, undefined)}
-                            style={{
-                                background: 'none',
-                                border: 'none',
-                                padding: '8px 4px',
-                                minHeight: '44px',
-                                display: 'inline-flex',
-                                alignItems: 'center',
-                                color: currentFolder ? '#C9933A' : '#F5F1EB',
-                                cursor: currentFolder ? 'pointer' : 'default',
-                                textDecoration: currentFolder ? 'underline' : 'none',
-                                fontWeight: currentFolder ? '500' : '600',
-                                fontSize: '13px',
-                                fontFamily: "var(--font-jost), Arial, sans-serif",
-                            }}
+                            className={styles.crumbButton}
+                            disabled={!currentFolder}
+                            aria-current={currentFolder ? undefined : 'page'}
                         >
-                            All Folders
+                            {t('allFolders')}
                         </button>
                         {currentFolder && (
                             <>
-                                <span style={{ color: '#9A948F' }}>/</span>
-                                <span id="gallery-breadcrumb-current" style={{ color: '#F5F1EB', fontWeight: '600', display: 'inline-flex', alignItems: 'center', minHeight: '44px' }}>
+                                <span className={styles.crumbSep} aria-hidden="true">/</span>
+                                <span id="gallery-breadcrumb-current" className={styles.crumbCurrent} aria-current="page">
                                     {currentFolder.name}
                                 </span>
                             </>
@@ -227,359 +181,148 @@ export default function DriveGallery({ rootFolderId }: DriveGalleryProps) {
                     </nav>
                 </div>
 
-                {/* In-folder "Download this day" Action */}
+                {/* In-folder "Download this day" action */}
                 {currentFolder && (
-                    <div className="gallery-download-day-container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '4px' }}>
+                    <div className={styles.dayAction}>
                         <a
                             href={`https://drive.google.com/drive/folders/${currentFolder.id}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="gallery-download-day-btn"
-                            style={{
-                                display: 'inline-flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                gap: '8px',
-                                minHeight: '44px',
-                                minWidth: '44px',
-                                backgroundColor: '#C9933A',
-                                color: '#1C1917',
-                                padding: '10px 18px',
-                                borderRadius: '4px',
-                                fontFamily: "var(--font-jost), Arial, sans-serif",
-                                fontSize: '11px',
-                                fontWeight: '600',
-                                letterSpacing: '0.15em',
-                                textTransform: 'uppercase',
-                                textDecoration: 'none',
-                                transition: 'all 0.2s ease',
-                                boxShadow: '0 4px 12px rgba(201, 147, 58, 0.2)',
-                            }}
+                            className={styles.primary}
                         >
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                                <polyline points="7 10 12 15 17 10" />
-                                <line x1="12" y1="15" x2="12" y2="3" />
-                            </svg>
-                            <span>Download this day</span>
+                            <Download aria-hidden="true" />
+                            <span>{t('downloadDay')}</span>
                         </a>
-                        <span 
-                            className="gallery-download-day-note"
-                            style={{
-                                fontFamily: "var(--font-jost), Arial, sans-serif",
-                                fontSize: '12px',
-                                color: '#9A948F',
-                                fontStyle: 'italic',
-                            }}
-                        >
-                            Google will prepare a zip of the whole folder.
-                        </span>
+                        <span className={styles.dayNote}>{t('downloadDayNote')}</span>
                     </div>
                 )}
             </div>
 
-            {/* Loading State */}
+            {/* Loading state */}
             {loading && (
-                <div style={{ padding: '80px 24px', textAlign: 'center' }}>
-                    <div style={{
-                        width: '40px',
-                        height: '40px',
-                        margin: '0 auto 16px',
-                        border: '3px solid rgba(201, 147, 58, 0.2)',
-                        borderTopColor: '#C9933A',
-                        borderRadius: '50%',
-                        animation: 'spin 0.8s linear infinite',
-                    }} />
-                    <p style={{
-                        fontFamily: "var(--font-jost), Arial, sans-serif",
-                        fontSize: '14px',
-                        color: '#9A948F',
-                        letterSpacing: '0.05em',
-                        margin: 0,
-                    }}>
-                        Loading memories...
-                    </p>
+                <div className={styles.state} role="status">
+                    <div className={styles.spinner} aria-hidden="true" />
+                    <p className={styles.stateText}>{t('loading')}</p>
                 </div>
             )}
 
-            {/* Error State */}
+            {/* Error state */}
             {!loading && error && (
-                <div style={{
-                    padding: '48px 24px',
-                    textAlign: 'center',
-                    backgroundColor: '#23201D',
-                    borderRadius: '8px',
-                    border: '1px solid rgba(201, 147, 58, 0.25)',
-                    maxWidth: '560px',
-                    margin: '20px auto',
-                    boxShadow: '0 10px 30px rgba(0,0,0,0.4)',
-                }}>
-                    <p style={{
-                        fontFamily: "var(--font-jost), Arial, sans-serif",
-                        fontSize: '15px',
-                        color: '#E07A5F',
-                        lineHeight: '1.6',
-                        marginBottom: '24px',
-                    }}>
-                        {error}
-                    </p>
-                    <a
-                        href={driveOpenUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{
-                            display: 'inline-flex',
-                            alignItems: 'center',
-                            gap: '8px',
-                            backgroundColor: '#C9933A',
-                            color: '#1C1917',
-                            padding: '12px 24px',
-                            borderRadius: '4px',
-                            fontFamily: "var(--font-jost), Arial, sans-serif",
-                            fontSize: '11px',
-                            fontWeight: '600',
-                            letterSpacing: '0.15em',
-                            textTransform: 'uppercase',
-                            textDecoration: 'none',
-                        }}
-                    >
-                        <span>Open in Google Drive</span>
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                            <polyline points="15 3 21 3 21 9" />
-                            <line x1="10" y1="14" x2="21" y2="3" />
-                        </svg>
+                <div className={styles.state} role="alert">
+                    <p className={`${styles.stateText} ${styles.stateError}`}>{error}</p>
+                    <a href={driveOpenUrl} target="_blank" rel="noopener noreferrer" className={styles.secondary}>
+                        <span>{t('openDrive')}</span>
+                        <ExternalLink aria-hidden="true" />
                     </a>
                 </div>
             )}
 
-            {/* Content Display */}
+            {/* Content */}
             {!loading && !error && (
-                <div>
-                    {/* Folders Section - ONE LEVEL ONLY: Only render folder tiles at root */}
+                <>
+                    {/* Folders: one level only, shown at the root */}
                     {!currentFolder && folders.length > 0 && (
-                        <div style={{ marginBottom: files.length > 0 ? '48px' : '20px' }}>
-                            <div className="drive-folders-grid">
-                                {folders.map((f) => (
+                        <ul className={styles.folders}>
+                            {folders.map((f) => (
+                                <li key={f.id}>
                                     <button
-                                        key={f.id}
                                         id={`folder-${f.name.toLowerCase().replace(/\s+/g, '-')}`}
                                         type="button"
                                         onClick={() => navigateTo(f.id, f.name)}
-                                        className="drive-folder-card"
+                                        className={styles.folder}
                                     >
-                                        <div style={{
-                                            width: '44px',
-                                            height: '44px',
-                                            borderRadius: '6px',
-                                            backgroundColor: 'rgba(201, 147, 58, 0.12)',
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                            flexShrink: 0,
-                                            color: '#C9933A',
-                                        }}>
-                                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
-                                            </svg>
-                                        </div>
-                                        <div style={{ flex: 1, minWidth: 0, textAlign: 'left' }}>
-                                            <span style={{
-                                                fontFamily: "var(--font-cormorant), Georgia, serif",
-                                                fontSize: '22px',
-                                                fontWeight: '500',
-                                                color: '#F5F1EB',
-                                                display: 'block',
-                                                overflow: 'hidden',
-                                                textOverflow: 'ellipsis',
-                                                whiteSpace: 'nowrap',
-                                                lineHeight: '1.2',
-                                            }}>
-                                                {f.name}
-                                            </span>
-                                            <span style={{
-                                                fontFamily: "var(--font-jost), Arial, sans-serif",
-                                                fontSize: '10px',
-                                                letterSpacing: '0.15em',
-                                                textTransform: 'uppercase',
-                                                color: '#C9933A',
-                                                display: 'inline-flex',
-                                                alignItems: 'center',
-                                                gap: '4px',
-                                                marginTop: '6px',
-                                                fontWeight: '600',
-                                            }}>
-                                                Open Day &rarr;
-                                            </span>
-                                        </div>
+                                        <Folder className={styles.folderIcon} aria-hidden="true" />
+                                        <span className={styles.folderName}>{f.name}</span>
+                                        <span className={styles.folderOpen}>
+                                            <span className="sr-only">{t('openDay')}</span>
+                                            <ArrowBox />
+                                        </span>
                                     </button>
-                                ))}
-                            </div>
-                        </div>
+                                </li>
+                            ))}
+                        </ul>
                     )}
 
-                    {/* Files Section (Photos & Videos) */}
+                    {/* Photos and videos */}
                     {files.length > 0 && (
-                        <div className="drive-gallery-grid">
+                        <ul className={styles.grid}>
                             {files.map((file, idx) => {
                                 const isVideo = file.kind === 'video';
 
                                 return (
-                                    <div
-                                        key={file.id}
-                                        id={`media-tile-${idx}`}
-                                        className="drive-media-tile"
-                                        onClick={() => {
-                                            if (isVideo) {
-                                                window.open(
-                                                    `https://drive.google.com/file/d/${file.id}/view`,
-                                                    '_blank',
-                                                    'noopener,noreferrer'
-                                                );
-                                            } else {
-                                                const imgIndex = imageFiles.findIndex((img) => img.id === file.id);
-                                                if (imgIndex !== -1) {
-                                                    setLightboxIndex(imgIndex);
-                                                }
-                                            }
-                                        }}
-                                    >
-                                        {/* Image / Video Thumbnail */}
-                                        <img
-                                            src={file.thumb}
-                                            alt={file.name}
-                                            loading="lazy"
-                                            onError={(e) => {
-                                                const fallback = `https://drive.google.com/thumbnail?id=${file.id}&sz=w480`;
-                                                if (e.currentTarget.src !== fallback) {
-                                                    e.currentTarget.src = fallback;
+                                    <li key={file.id} id={`media-tile-${idx}`} className={styles.tile}>
+                                        <button
+                                            type="button"
+                                            className={styles.tileButton}
+                                            data-video={isVideo ? '' : undefined}
+                                            aria-label={isVideo ? t('playVideo', { name: file.name }) : t('openPhoto', { name: file.name })}
+                                            onClick={() => {
+                                                if (isVideo) {
+                                                    window.open(
+                                                        `https://drive.google.com/file/d/${file.id}/view`,
+                                                        '_blank',
+                                                        'noopener,noreferrer'
+                                                    );
+                                                } else {
+                                                    const imgIndex = imageFiles.findIndex((img) => img.id === file.id);
+                                                    if (imgIndex !== -1) {
+                                                        setLightboxIndex(imgIndex);
+                                                    }
                                                 }
                                             }}
-                                            style={{
-                                                width: '100%',
-                                                height: '100%',
-                                                objectFit: 'cover',
-                                                display: 'block',
-                                                transition: 'transform 0.35s ease',
-                                            }}
-                                        />
+                                        >
+                                            {/* eslint-disable-next-line @next/next/no-img-element -- Drive thumbnails, with a fallback URL on error */}
+                                            <img
+                                                src={file.thumb}
+                                                alt={file.name}
+                                                loading="lazy"
+                                                className={styles.tileImage}
+                                                onError={(e) => {
+                                                    const fallback = `https://drive.google.com/thumbnail?id=${file.id}&sz=w480`;
+                                                    if (e.currentTarget.src !== fallback) {
+                                                        e.currentTarget.src = fallback;
+                                                    }
+                                                }}
+                                            />
+                                        </button>
 
-                                        {/* Corner Download Button */}
+                                        {/* Video play overlay */}
+                                        {isVideo && (
+                                            <div className={styles.video} aria-hidden="true">
+                                                <Play />
+                                                <span className={styles.videoLabel}>{t('playsInDrive')}</span>
+                                            </div>
+                                        )}
+
+                                        {/* Corner download button */}
                                         <a
                                             id={`download-button-${idx}`}
                                             href={file.download}
                                             download={file.name}
                                             target={isVideo ? '_blank' : undefined}
                                             rel={isVideo ? 'noopener noreferrer' : 'noopener'}
-                                            onClick={(e) => e.stopPropagation()}
-                                            title={`Download ${file.name}`}
-                                            style={{
-                                                position: 'absolute',
-                                                top: '8px',
-                                                right: '8px',
-                                                zIndex: 4,
-                                                width: '44px',
-                                                height: '44px',
-                                                minWidth: '44px',
-                                                minHeight: '44px',
-                                                borderRadius: '4px',
-                                                backgroundColor: 'rgba(28, 25, 23, 0.85)',
-                                                border: '1px solid rgba(201, 147, 58, 0.4)',
-                                                color: '#C9933A',
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                justifyContent: 'center',
-                                                cursor: 'pointer',
-                                                textDecoration: 'none',
-                                                transition: 'all 0.2s ease',
-                                                boxShadow: '0 2px 6px rgba(0,0,0,0.5)',
-                                            }}
+                                            title={t('download', { name: file.name })}
+                                            aria-label={t('download', { name: file.name })}
+                                            className={styles.download}
                                         >
-                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                                                <polyline points="7 10 12 15 17 10" />
-                                                <line x1="12" y1="15" x2="12" y2="3" />
-                                            </svg>
+                                            <Download aria-hidden="true" />
                                         </a>
-
-                                        {/* Video Play Overlay */}
-                                        {isVideo && (
-                                            <>
-                                                <div style={{
-                                                    position: 'absolute',
-                                                    inset: 0,
-                                                    display: 'flex',
-                                                    alignItems: 'center',
-                                                    justifyContent: 'center',
-                                                    backgroundColor: 'rgba(10, 8, 7, 0.35)',
-                                                    pointerEvents: 'none',
-                                                }}>
-                                                    <div style={{
-                                                        width: '46px',
-                                                        height: '46px',
-                                                        borderRadius: '50%',
-                                                        backgroundColor: 'rgba(201, 147, 58, 0.9)',
-                                                        display: 'flex',
-                                                        alignItems: 'center',
-                                                        justifyContent: 'center',
-                                                        color: '#1C1917',
-                                                        boxShadow: '0 4px 14px rgba(0, 0, 0, 0.5)',
-                                                    }}>
-                                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                                                            <polygon points="6 4 20 12 6 20 6 4" />
-                                                        </svg>
-                                                    </div>
-                                                </div>
-                                                <span style={{
-                                                    position: 'absolute',
-                                                    bottom: '8px',
-                                                    left: '8px',
-                                                    zIndex: 3,
-                                                    fontFamily: "var(--font-jost), Arial, sans-serif",
-                                                    fontSize: '10px',
-                                                    color: '#9A948F',
-                                                    backgroundColor: 'rgba(10, 8, 7, 0.75)',
-                                                    padding: '3px 7px',
-                                                    borderRadius: '3px',
-                                                    pointerEvents: 'none',
-                                                    letterSpacing: '0.04em',
-                                                    lineHeight: '1.2',
-                                                }}>
-                                                    Plays in Google Drive
-                                                </span>
-                                            </>
-                                        )}
-                                    </div>
+                                    </li>
                                 );
                             })}
-                        </div>
+                        </ul>
                     )}
 
-                    {/* Empty State */}
-                    {((!currentFolder && folders.length === 0 && files.length === 0) || (currentFolder && files.length === 0)) && (
-                        <div style={{
-                            padding: '64px 24px',
-                            textAlign: 'center',
-                            backgroundColor: '#23201D',
-                            borderRadius: '8px',
-                            border: '1px solid rgba(201, 147, 58, 0.2)',
-                            maxWidth: '480px',
-                            margin: '24px auto',
-                        }}>
-                            <p style={{
-                                fontFamily: "var(--font-jost), Arial, sans-serif",
-                                fontSize: '15px',
-                                color: '#9A948F',
-                                margin: 0,
-                            }}>
-                                No photos in this folder yet
-                            </p>
+                    {/* Empty state */}
+                    {showEmpty && (
+                        <div className={styles.state}>
+                            <p className={styles.stateText}>{t('empty')}</p>
                         </div>
                     )}
-                </div>
+                </>
             )}
 
-            {/* Fullscreen Photo Lightbox */}
+            {/* Fullscreen photo lightbox */}
             {lightboxIndex !== null && imageFiles.length > 0 && (
                 <UnifiedLightbox
                     images={imageFiles.map((img) => {
@@ -601,97 +344,6 @@ export default function DriveGallery({ rootFolderId }: DriveGalleryProps) {
                     onClose={() => setLightboxIndex(null)}
                 />
             )}
-
-            {/* Responsive Styling */}
-            <style jsx global>{`
-                @keyframes spin {
-                    from { transform: rotate(0deg); }
-                    to { transform: rotate(360deg); }
-                }
-
-                .drive-folders-grid {
-                    display: grid;
-                    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-                    gap: 16px;
-                }
-
-                .drive-folder-card {
-                    display: flex;
-                    align-items: center;
-                    gap: 16px;
-                    padding: 20px 18px;
-                    background-color: #23201D;
-                    border: 1px solid rgba(201, 147, 58, 0.25);
-                    border-radius: 8px;
-                    cursor: pointer;
-                    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
-                    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
-                }
-
-                .drive-folder-card:hover {
-                    border-color: #C9933A;
-                    transform: translateY(-2px);
-                    box-shadow: 0 8px 24px rgba(201, 147, 58, 0.18);
-                }
-
-                .drive-gallery-grid {
-                    display: grid;
-                    grid-template-columns: repeat(2, 1fr);
-                    gap: 12px;
-                }
-
-                @media (min-width: 768px) {
-                    .drive-gallery-grid {
-                        grid-template-columns: repeat(3, 1fr);
-                        gap: 16px;
-                    }
-                }
-
-                @media (min-width: 1024px) {
-                    .drive-gallery-grid {
-                        grid-template-columns: repeat(4, 1fr);
-                        gap: 18px;
-                    }
-                }
-
-                .drive-media-tile {
-                    position: relative;
-                    width: 100%;
-                    aspect-ratio: 1 / 1;
-                    overflow: hidden;
-                    border-radius: 4px;
-                    background-color: #0D0C0B;
-                    cursor: pointer;
-                    border: 1px solid rgba(201, 147, 58, 0.15);
-                    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-                }
-
-                .drive-media-tile:hover {
-                    border-color: #C9933A;
-                    transform: translateY(-2px);
-                    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-                }
-
-                .drive-media-tile:hover img {
-                    transform: scale(1.04);
-                }
-
-                @media (max-width: 640px) {
-                    .gallery-download-day-container {
-                        width: 100% !important;
-                        align-items: stretch !important;
-                        margin-top: 10px !important;
-                    }
-                    .gallery-download-day-btn {
-                        width: 100% !important;
-                        justify-content: center !important;
-                    }
-                    .gallery-download-day-note {
-                        text-align: center !important;
-                        font-size: 12px !important;
-                    }
-                }
-            `}</style>
         </div>
     );
 }

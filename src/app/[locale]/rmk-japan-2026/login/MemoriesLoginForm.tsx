@@ -2,9 +2,15 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
+import { AlertCircle } from 'lucide-react';
 import { TOUR_GROUP } from '@/lib/tourGroup';
+import ArrowBox from '@/components/ui/ArrowBox';
+import formStyles from '@/components/forms/Form.module.css';
+import styles from '../Memories.module.css';
 
 export default function MemoriesLoginForm() {
+    const t = useTranslations('Memories.login');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -12,7 +18,7 @@ export default function MemoriesLoginForm() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!password.trim()) {
-            setError('Please enter a password.');
+            setError(t('errEmpty'));
             return;
         }
 
@@ -31,112 +37,30 @@ export default function MemoriesLoginForm() {
                 window.location.href = `/en/${TOUR_GROUP.slug}`;
             } else {
                 const data = await res.json().catch(() => ({}));
-                setError(data.error || 'Incorrect password. Please try again.');
+                setError(data.error || t('errWrong'));
                 setLoading(false);
             }
         } catch {
-            setError('Unable to authenticate. Please check your connection and try again.');
+            setError(t('errConnection'));
             setLoading(false);
         }
     };
 
     return (
-        <div style={{
-            minHeight: '100vh',
-            backgroundColor: '#1C1917',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-            padding: '32px 16px',
-            color: '#F5F1EB',
-        }}>
-            <div style={{
-                width: '100%',
-                maxWidth: '460px',
-                backgroundColor: '#23201D',
-                borderRadius: '8px',
-                border: '1px solid rgba(201, 147, 58, 0.25)',
-                padding: 'clamp(32px, 6vw, 48px) clamp(20px, 5vw, 40px)',
-                boxShadow: '0 20px 50px rgba(0, 0, 0, 0.4)',
-                textAlign: 'center',
-            }}>
-                {/* Brand / Eyebrow */}
-                <span style={{
-                    fontFamily: "var(--font-jost), Arial, sans-serif",
-                    fontSize: '11px',
-                    fontWeight: '600',
-                    letterSpacing: '0.28em',
-                    textTransform: 'uppercase',
-                    color: '#C9933A',
-                    display: 'block',
-                    marginBottom: '16px',
-                }}>
-                    Private Gallery
-                </span>
-
-                {/* Heading */}
-                <h1 style={{
-                    fontFamily: "var(--font-cormorant), Georgia, serif",
-                    fontSize: 'clamp(26px, 3.5vw, 32px)',
-                    fontWeight: '500',
-                    color: '#F5F1EB',
-                    margin: '0 0 10px',
-                    lineHeight: '1.25',
-                }}>
-                    {TOUR_GROUP.schoolName}
-                </h1>
-
-                {/* Subtitle */}
-                <p style={{
-                    fontFamily: "var(--font-jost), Arial, sans-serif",
-                    fontSize: '13px',
-                    fontWeight: '500',
-                    letterSpacing: '0.1em',
-                    textTransform: 'uppercase',
-                    color: '#C9933A',
-                    margin: '0 0 16px',
-                }}>
-                    {TOUR_GROUP.tourName} · {TOUR_GROUP.dateLabel}
+        <main className={styles.login} data-ds>
+            <div className={styles.card}>
+                <p className={styles.meta}>
+                    <span>{t('privateGallery')}</span>
+                    <span>{TOUR_GROUP.tourName}</span>
+                    <span className="num">{TOUR_GROUP.dateLabel}</span>
                 </p>
+                <h1 className={styles.cardTitle}>{TOUR_GROUP.schoolName}</h1>
+                <p className={styles.lead}>{t('helper')}</p>
 
-                {/* Accent rule */}
-                <div style={{
-                    width: '40px',
-                    height: '1px',
-                    backgroundColor: '#C9933A',
-                    margin: '0 auto 20px',
-                }} />
-
-                {/* Helper text */}
-                <p style={{
-                    fontFamily: "var(--font-jost), Arial, sans-serif",
-                    fontSize: '14px',
-                    fontWeight: '300',
-                    color: '#9A948F',
-                    lineHeight: '1.6',
-                    margin: '0 0 32px',
-                }}>
-                    Enter the password shared with parents and the school team.
-                </p>
-
-                {/* Form */}
-                <form onSubmit={handleSubmit} style={{ textAlign: 'left' }}>
-                    <div style={{ marginBottom: '24px' }}>
-                        <label
-                            htmlFor="memories-password"
-                            style={{
-                                display: 'block',
-                                fontFamily: "var(--font-jost), Arial, sans-serif",
-                                fontSize: '11px',
-                                fontWeight: '500',
-                                letterSpacing: '0.15em',
-                                textTransform: 'uppercase',
-                                color: '#C9933A',
-                                marginBottom: '8px',
-                            }}
-                        >
-                            Tour Password
+                <form onSubmit={handleSubmit} className={formStyles.form} noValidate>
+                    <div className={formStyles.field}>
+                        <label htmlFor="memories-password" className={formStyles.label}>
+                            {t('passwordLabel')}
                         </label>
                         <input
                             id="memories-password"
@@ -147,104 +71,31 @@ export default function MemoriesLoginForm() {
                                 setPassword(e.target.value);
                                 if (error) setError(null);
                             }}
-                            placeholder="Enter password"
+                            placeholder={t('passwordPlaceholder')}
                             disabled={loading}
-                            style={{
-                                width: '100%',
-                                boxSizing: 'border-box',
-                                minHeight: '48px',
-                                padding: '14px 16px',
-                                fontFamily: "var(--font-jost), Arial, sans-serif",
-                                fontSize: '16px',
-                                backgroundColor: 'rgba(255, 255, 255, 0.04)',
-                                border: '1px solid rgba(201, 147, 58, 0.3)',
-                                borderRadius: '4px',
-                                color: '#F5F1EB',
-                                outline: 'none',
-                                transition: 'border-color 0.2s ease',
-                            }}
-                            onFocus={(e) => {
-                                e.currentTarget.style.borderColor = '#C9933A';
-                            }}
-                            onBlur={(e) => {
-                                e.currentTarget.style.borderColor = 'rgba(201, 147, 58, 0.3)';
-                            }}
+                            className={formStyles.input}
+                            aria-invalid={error ? true : undefined}
+                            aria-describedby={error ? 'memories-password-error' : undefined}
                         />
                     </div>
 
-                    {/* Error display */}
                     {error && (
-                        <div style={{
-                            backgroundColor: 'rgba(239, 83, 80, 0.1)',
-                            border: '1px solid rgba(239, 83, 80, 0.4)',
-                            borderRadius: '4px',
-                            padding: '12px 14px',
-                            marginBottom: '20px',
-                            color: '#FF8A80',
-                            fontFamily: "var(--font-jost), Arial, sans-serif",
-                            fontSize: '14px',
-                            lineHeight: '1.4',
-                        }}>
+                        <p id="memories-password-error" className={formStyles.alert} role="alert">
+                            <AlertCircle aria-hidden="true" />
                             {error}
-                        </div>
+                        </p>
                     )}
 
-                    {/* Submit Button */}
-                    <button
-                        type="submit"
-                        disabled={loading}
-                        style={{
-                            width: '100%',
-                            minHeight: '48px',
-                            backgroundColor: loading ? '#8A6D3B' : '#C9933A',
-                            color: '#1C1917',
-                            padding: '16px 24px',
-                            border: 'none',
-                            borderRadius: '4px',
-                            fontFamily: "var(--font-jost), Arial, sans-serif",
-                            fontSize: '12px',
-                            fontWeight: '600',
-                            letterSpacing: '0.24em',
-                            textTransform: 'uppercase',
-                            cursor: loading ? 'not-allowed' : 'pointer',
-                            transition: 'all 0.3s ease',
-                            boxShadow: '0 4px 15px rgba(201, 147, 58, 0.3)',
-                        }}
-                    >
-                        {loading ? 'Verifying...' : 'Unlock Gallery'}
+                    <button type="submit" disabled={loading} className={formStyles.submit}>
+                        {loading ? t('verifying') : t('unlock')}
                     </button>
                 </form>
 
-                {/* Back Link */}
-                <div style={{ marginTop: '28px' }}>
-                    <Link
-                        href="/"
-                        id="login-return-link"
-                        style={{
-                            display: 'inline-flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            minHeight: '44px',
-                            minWidth: '44px',
-                            padding: '12px 18px',
-                            fontFamily: "var(--font-jost), Arial, sans-serif",
-                            fontSize: '13px',
-                            color: '#9A948F',
-                            textDecoration: 'none',
-                            letterSpacing: '0.08em',
-                            transition: 'color 0.2s ease',
-                        }}
-                        onMouseEnter={(e) => {
-                            e.currentTarget.style.color = '#C9933A';
-                        }}
-                        onMouseLeave={(e) => {
-                            e.currentTarget.style.color = '#9A948F';
-                        }}
-                    >
-                        ← Return to Homepage
-                    </Link>
-                </div>
+                <Link href="/" id="login-return-link" className={styles.returnLink}>
+                    <ArrowBox direction="left" />
+                    {t('returnHome')}
+                </Link>
             </div>
-        </div>
+        </main>
     );
 }
