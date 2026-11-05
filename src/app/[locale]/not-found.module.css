@@ -1,0 +1,37 @@
+.section {
+  background: var(--color-paper);
+  color: var(--color-ink);
+}
+
+.inner {
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-block: var(--space-4) var(--section-pad);
+  padding-left: max(var(--gutter), env(safe-area-inset-left, 0px));
+  padding-right: max(var(--gutter), env(safe-area-inset-right, 0px));
+}
+
+/* A short contents list, ruled like the FAQ topic index. */
+.links {
+  display: grid;
+  max-width: 32rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: var(--rule);
+}
+.links li { border-bottom: var(--rule); }
+
+.link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  min-height: 56px;
+  font: var(--weight-regular) var(--text-lead) / var(--leading-title) var(--font-display);
+  color: var(--color-ink);
+  text-decoration: none;
+}
+.link > span { color: var(--color-accent); }
+.link:hover { color: var(--color-accent); --arrow-fill: var(--color-accent); }
+.link:hover > span { color: var(--color-on-ink); }

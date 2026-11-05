@@ -182,7 +182,8 @@
         "all": "All",
         "photoCount": "{count, plural, one {# photo} other {# photos}}",
         "viewTour": "View the tour",
-        "empty": "No photos in this category yet."
+        "empty": "No photos in this category yet.",
+        "albumEmpty": "Photographs from this tour will appear here soon."
     },
     "FAQ": {
         "badge": "Support Center",
@@ -363,5 +364,13 @@
         "counter": "Photo {n} of {count}",
         "showPhoto": "Show photo {n}",
         "thumbnails": "All photos"
+    },
+    "NotFound": {
+        "title": "This page is not on the programme",
+        "body": "The page may have moved, or the link may be mistyped. These are good places to start again.",
+        "home": "Home",
+        "indiaTours": "India tours",
+        "gallery": "Gallery",
+        "contact": "Ask us"
     }
 }
