@@ -1,6 +1,6 @@
 # Kanmani Tours: Design System
 
-Status: v1. Direction A "Programme" approved by the owner on 2026-10-24. The palette was approved with the direction; the type scale, spacing and motion values below were proposed in reskin step 1 and are awaiting the owner's confirmation.
+Status: v1, approved. Direction A "Programme" and its palette were approved by the owner on 2026-10-24. The type scale, spacing and motion values below were approved as they are on 2026-11-05.
 
 Code: `src/app/tokens.css` (values) and `src/app/fonts.ts` (font loading). Rules for working here: `docs/design-principles.md`.
 

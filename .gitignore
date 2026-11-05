@@ -50,3 +50,5 @@ next-env.d.ts
 
 .vercel
 dist/
+# local verification output (Playwright MCP screenshots and logs)
+/.playwright-mcp/
