@@ -6,7 +6,7 @@
 }
 
 .inner {
-  max-width: 90rem;
+  max-width: 120rem;  /* matches the hero */
   margin-inline: auto;
   padding-block: var(--section-pad);
   padding-left: max(var(--gutter), env(safe-area-inset-left, 0px));

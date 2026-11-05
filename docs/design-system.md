@@ -133,7 +133,7 @@ The migration finished on 2026-11-05. Every page uses these tokens and CSS Modul
 The owner supplied mockups for the homepage hero and the founder section below it. It deliberately departs from some rules above; these departures apply **only** where listed.
 
 - **Gold on paper.** `--color-gold` (#B8924F) is for line art, frames, icons, pill and button borders only, never text (2.6 : 1). Gold text on paper uses `--color-gold-deep` (#87652A, 4.7 : 1): the hero eyebrow and the logo wordmark. Turmeric (`--color-highlight`) is still ink-only.
-- **Hero photos are never cropped.** Each slide is drawn at the photo's own shape; a thin gold arch rises around and above it, and the botanical line art sits outside the photo.
+- **Hero frame.** One fixed frame (1.75 : 1 desktop, 1.6 : 1 phone); photos cover it anchored to the top (`object-position: 50% 0`), so faces stay and only the bottom is trimmed. A thin gold arch rises above it; the botanical line art sits outside the photo. New hero photos should keep people in the upper part of the picture.
 - **Rounded shapes.** The founder portrait (`--radius-photo`) in a gold frame with heavier corner accents, the story cards (`--radius-card`, `--shadow-card`, lifting to `--shadow-card-hover` on hover) and the role pills and founder link (`--radius-pill`). Everything else stays square.
 - **Soft buttons.** The hero buttons and the nav ENQUIRE button use `--radius-soft` (3px); filled vermilion buttons there carry `--shadow-button`.
 - **Eyebrows.** The hero ("East & West Bound Journeys") and the founder section ("Our Founder's Story", underlined in vermilion) each have one. No other heading gets one.

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, type CSSProperties } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { ArrowRight } from 'lucide-react';
@@ -11,24 +11,18 @@ import styles from './HomeHero.module.css';
 
 const INTERVAL_MS = 6000;
 
-interface HeroSlide {
-    src: string;
-    /** width / height of the photo file */
-    ratio: number;
-}
-
 interface HomeHeroProps {
-    slides: HeroSlide[];
+    images: string[];
 }
 
-export default function HomeHero({ slides }: HomeHeroProps) {
+export default function HomeHero({ images }: HomeHeroProps) {
     const t = useTranslations('Home');
     const tDest = useTranslations('DestinationChoice');
     const reduceMotion = useReducedMotion();
 
     const [index, setIndex] = useState(0);
     const [paused, setPaused] = useState(false);
-    const count = slides.length;
+    const count = images.length;
     const playing = count > 1 && !paused && !reduceMotion;
 
     useEffect(() => {
@@ -64,25 +58,23 @@ export default function HomeHero({ slides }: HomeHeroProps) {
                     </div>
                 </div>
 
-                {/* Each photo keeps its own shape inside a gold arch drawn around it,
-                    so the whole picture is always visible. The line art moves with it. */}
+                {/* One fixed frame; only the photo inside changes. Photos fill it from
+                    the top, so faces are never cut and any trimming comes off the bottom. */}
                 <div className={styles.visual}>
-                    <div className={styles.stage}>
+                    <div className={styles.frame}>
                         {mounted.map((i) => (
-                            <div key={slides[i].src} className={styles.slide} data-active={i === index}>
-                                <div className={styles.frame} style={{ '--ratio': slides[i].ratio } as CSSProperties}>
-                                    <Image
-                                        src={slides[i].src}
-                                        alt={i === index ? t('heroAlt') : ''}
-                                        fill
-                                        sizes="(min-width: 1024px) 52vw, 100vw"
-                                        preload={i === 0}
-                                        className={styles.image}
-                                    />
-                                    <Botanicals />
-                                </div>
+                            <div key={images[i]} className={styles.slide} data-active={i === index}>
+                                <Image
+                                    src={images[i]}
+                                    alt={i === index ? t('heroAlt') : ''}
+                                    fill
+                                    sizes="(min-width: 1024px) 60vw, 94vw"
+                                    preload={i === 0}
+                                    className={styles.image}
+                                />
                             </div>
                         ))}
+                        <Botanicals />
                     </div>
                 </div>
 

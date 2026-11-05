@@ -8,7 +8,6 @@ import TestimonialQuote from '@/components/home/TestimonialQuote';
 import Footer from '@/components/layout/FooterSection';
 import { selectJourneys } from '@/components/tours/selectJourneys';
 import { getImages } from '@/lib/server-images';
-import { readImageSize } from '@/lib/image-size';
 import { getAllTours } from '@/lib/tours';
 import { getTestimonials } from '@/lib/testimonials';
 import { pageAlternates } from '@/lib/site';
@@ -31,13 +30,9 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
     const { locale } = await params;
     setRequestLocale(locale);
     // The group photo with the cinema banner opens the slideshow; the rest follow in folder order.
-    const heroSlides = getImages('/assets/img/home/hero').sort(
+    const heroImages = getImages('/assets/img/home/hero').sort(
         (a, b) => Number(b.includes(HERO_FIRST)) - Number(a.includes(HERO_FIRST)),
-    ).map((src) => {
-        // Each photo is shown at its true shape, so nobody is cropped.
-        const size = readImageSize(src);
-        return { src, ratio: size ? size.width / size.height : 3 / 2 };
-    });
+    );
 
     const [allTours, testimonials] = await Promise.all([
         getAllTours(locale),
@@ -47,7 +42,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
     return (
         <>
             <main>
-                <HomeHero slides={heroSlides} />
+                <HomeHero images={heroImages} />
                 <FounderStory />
                 <Destinations />
                 <Journeys tours={selectJourneys(allTours, JOURNEY_LIMIT)} />
