@@ -53,7 +53,7 @@ export default async function FaqList({ faqs }: { faqs: FaqItem[] }) {
         .filter((group) => group.items.length > 0);
 
     return (
-        <section className={styles.section} data-ds>
+        <section className={styles.section}>
             <div className={styles.inner}>
                 {groups.length === 0 ? (
                     <p className={styles.empty}>{t('empty')}</p>

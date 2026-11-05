@@ -20,7 +20,7 @@ export default function TestimonialQuote({ testimonials }: TestimonialQuoteProps
     const go = (step: 1 | -1) => setIndex((i) => (i + step + count) % count);
 
     return (
-        <section className={styles.section} data-ds aria-labelledby="testimonials-title">
+        <section className={styles.section} aria-labelledby="testimonials-title">
             <div className={styles.inner}>
                 <h2 id="testimonials-title" className={styles.title}>{t('happyClients')}</h2>
                 <p className={styles.lead}>{t('happyClientsSubtitle')}</p>

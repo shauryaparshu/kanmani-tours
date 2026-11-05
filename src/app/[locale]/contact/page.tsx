@@ -35,7 +35,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
                     lead={t('lead')}
                     breadcrumbs={[{ href: '/', label: t('breadcrumbHome') }, { label: t('breadcrumbContact') }]}
                 />
-                <section className={styles.section} aria-labelledby="contact-form-title" data-ds>
+                <section className={styles.section} aria-labelledby="contact-form-title">
                     <div className={styles.inner}>
                         <div className={styles.panel}>
                             <h2 id="contact-form-title" className={styles.panelTitle}>{t('formTitle')}</h2>

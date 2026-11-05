@@ -39,7 +39,7 @@ export default async function ServicesPage({ params }: { params: Promise<{ local
                     lead={t('lead')}
                     breadcrumbs={[{ href: '/', label: t('breadcrumbHome') }, { label: t('breadcrumbServices') }]}
                 />
-                <section className={styles.section} data-ds>
+                <section className={styles.section}>
                     <div className={styles.inner}>
                         <ol className={styles.services}>
                             {SERVICES.map((service) => (

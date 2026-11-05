@@ -27,7 +27,7 @@ export default async function FounderChapters({ photos }: FounderChaptersProps) 
     const strong = (chunks: ReactNode) => <strong>{chunks}</strong>;
 
     return (
-        <section className={styles.story} aria-labelledby="founder-story-title" data-ds>
+        <section className={styles.story} aria-labelledby="founder-story-title">
             <div className={styles.container}>
                 <h2 id="founder-story-title" className={styles.storyTitle}>{t('storyTitle')}</h2>
 

@@ -88,12 +88,12 @@ Windows gotcha: Git Bash rewrites `/path` arguments to native programs into Wind
 | `/japan/tours`, `/japan/tours/[slug]` | `src/app/[locale]/japan/tours/...` | Redesigned |
 | `/about` | `src/app/[locale]/about/page.tsx` | Redesigned |
 | `/gallery` | `src/app/[locale]/gallery/page.tsx` | Redesigned |
-| `/gallery/[slug]` | `src/app/[locale]/gallery/[slug]/page.tsx` | **Not yet** (old classes) |
+| `/gallery/[slug]` | `src/app/[locale]/gallery/[slug]/page.tsx` | Redesigned |
 | `/faq` | `src/app/[locale]/faq/page.tsx` | Redesigned |
-| `/contact` | `src/app/[locale]/contact/page.tsx` + `components/forms/ContactForm.tsx` | **Not yet. Owner OK required.** |
-| `/japan/groups` | `src/app/[locale]/japan/groups/page.tsx` + `GroupInquiryForm.tsx` | **Not yet** (unlinked group inquiry page; form, so owner OK required) |
-| `/services`, `/services/moving`, `/airport-transfer` | under `src/app/[locale]/` | **Not yet** (`SHOW_SERVICES_NAV = false`, so the nav hides them) |
-| `/en/rmk-japan-2026` (+ `/login`) | `src/app/[locale]/rmk-japan-2026/...` | **Not yet.** May be restyled; auth lines untouched. English only (ja returns 404). |
+| `/contact` | `src/app/[locale]/contact/page.tsx` + `components/forms/ContactForm.tsx` | Redesigned (restyle only) |
+| `/japan/groups` | `src/app/[locale]/japan/groups/page.tsx` + `GroupInquiryForm.tsx` | Redesigned (restyle only; unlinked, English only) |
+| `/services`, `/services/moving`, `/airport-transfer` | under `src/app/[locale]/` | Redesigned (`SHOW_SERVICES_NAV = false`, so the nav hides them) |
+| `/en/rmk-japan-2026` (+ `/login`) | `src/app/[locale]/rmk-japan-2026/...` | Redesigned; auth lines untouched; always dynamic. English only (ja returns 404). |
 | `/studio` | Sanity Studio | Not part of the site design |
 
 Feature flags: `src/lib/featureFlags.ts` (`SHOW_JAPAN_DESTINATION = true`, `SHOW_SERVICES_NAV = false`). RMK group details: `src/lib/tourGroup.ts`.
@@ -201,7 +201,9 @@ Template: `.env.example` (committed). Real values: `.env.local` (gitignored, exi
 - Type scale, spacing and motion values approved as they are.
 - One local commit per step on `redesign/premium-reskin`. Never push.
 
-### What is left to do (suggested order; confirm with the owner first)
+### Status on 2026-11-05: steps 1–8 below are done and committed locally (not pushed). Only step 9, the owner's decision on pushing and deploying, remains.
+
+### What was left to do (suggested order; confirm with the owner first)
 1. `/contact` page and `ContactForm.tsx` (**get the owner's OK first**; keep the API contract, field names and honeypot unchanged).
 2. `/japan/groups` and `GroupInquiryForm.tsx` (same rule).
 3. `/gallery/[slug]` detail page.

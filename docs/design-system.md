@@ -121,7 +121,9 @@ Eyebrow labels above headings. Gradient text. Three identical cards. Glass or bl
 
 ## 11. Migration notes
 
-- `--font-cormorant` and `--font-jost` and the old `:root` variables in `globals.css` (`--primary`, `--bg-color`, and so on) stay until every section is migrated. They are removed in the final step.
-- **`data-ds` marks migrated territory.** `globals.css` still forces every `p` and `li` to 19px with `!important` for the old pages. Each migrated component puts `data-ds` on its root element, which opts it out of that rule. The rule is deleted in the final step.
-- Migrated components live in CSS Modules next to their component (`Navigation.module.css`, and so on) and use only tokens.
-- Each step of the reskin is one local commit on `redesign/premium-reskin`, checked at 390px and 1440px.
+The migration finished on 2026-11-05. Every page uses these tokens and CSS Modules.
+
+- `src/app/globals.css` is now only a small base (box sizing, reset, body font and colours from the tokens). Do not add component styles there.
+- The `data-ds` markers, the legacy `p, li` rule, the old `:root` variables and the Cormorant Garamond and Jost fonts are gone.
+- Japanese line-breaking rules in `tokens.css` apply site-wide (`:root:lang(ja) body`).
+- Shared form styles live in `src/components/forms/Form.module.css`; the enquiry page layout in `src/components/contact/EnquiryPage.module.css`; the services pages in `src/components/services/ServicePage.module.css`.

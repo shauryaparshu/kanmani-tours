@@ -24,7 +24,6 @@ export default function BackToTop() {
         <button
             type="button"
             className={styles.backToTop}
-            data-ds
             data-visible={visible}
             aria-label={t('backToTop')}
             tabIndex={visible ? 0 : -1}

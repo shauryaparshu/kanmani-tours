@@ -45,7 +45,7 @@ export default async function AirportTransferPage({ params }: { params: Promise<
                         { label: tServices('transfers.title') },
                     ]}
                 />
-                <section className={styles.section} aria-labelledby="airport-story" data-ds>
+                <section className={styles.section} aria-labelledby="airport-story">
                     <div className={styles.inner}>
                         <div className={styles.split}>
                             <div className={styles.column}>

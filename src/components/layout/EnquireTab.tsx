@@ -14,7 +14,7 @@ export default function EnquireTab() {
 
     return (
         <aside aria-label={t('enquire')}>
-            <Link href="/contact" className={styles.enquireTab} data-ds>
+            <Link href="/contact" className={styles.enquireTab}>
                 <span>{t('enquire')}</span>
             </Link>
         </aside>

@@ -36,7 +36,7 @@ export default function GalleryEvents({ events }: { events: GalleryEvent[] }) {
     const shown = category === 'all' ? events : events.filter((event) => event.category === category);
 
     return (
-        <section className={styles.section} data-ds>
+        <section className={styles.section}>
             <div className={styles.inner}>
                 {tabs.length > 1 ? (
                     <div className={styles.tabs} role="group" aria-label={t('filterLabel')}>

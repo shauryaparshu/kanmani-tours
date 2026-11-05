@@ -23,7 +23,7 @@ export default function Destinations() {
     if (locale === 'en') tiles.reverse();
 
     return (
-        <section className={styles.section} data-ds aria-label={tHome('heroPaths')}>
+        <section className={styles.section} aria-label={tHome('heroPaths')}>
             <div className={styles.grid} data-count={tiles.length}>
                 {tiles.map((tile) => (
                     <Link key={tile.key} href={tile.href} className={styles.tile}>

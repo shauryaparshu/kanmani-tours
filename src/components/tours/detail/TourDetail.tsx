@@ -80,7 +80,7 @@ export default function TourDetail({ tour, moreTours }: TourDetailProps) {
     const faq = (tour.faq ?? []).filter((f) => f.question && f.answer);
 
     return (
-        <article className={styles.page} data-ds>
+        <article className={styles.page}>
             {/* ── Hero ── */}
             <header className={styles.hero}>
                 {tour.coverImage ? (

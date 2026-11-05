@@ -72,7 +72,7 @@ export default async function MemoriesPage({ params }: { params: Promise<{ local
 
     return (
         <>
-            <main className={styles.page} data-ds>
+            <main className={styles.page}>
                 {header}
                 {driveFolderId ? (
                     <div className={styles.inner}>

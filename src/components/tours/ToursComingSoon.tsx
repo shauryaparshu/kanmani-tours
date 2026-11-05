@@ -9,7 +9,7 @@ export default function ToursComingSoon() {
     const tNav = useTranslations('Navigation');
 
     return (
-        <section className={styles.section} data-ds aria-labelledby="coming-soon-title">
+        <section className={styles.section} aria-labelledby="coming-soon-title">
             <div className={styles.inner}>
                 <h2 id="coming-soon-title" className={styles.title}>{t('comingSoonTitle')}</h2>
                 <p className={styles.body}>{t('comingSoonBody')}</p>

@@ -20,7 +20,7 @@ export default function PageHeader({ title, lead, breadcrumbs }: PageHeaderProps
     const t = useTranslations('Navigation');
 
     return (
-        <header className={styles.header} data-ds>
+        <header className={styles.header}>
             <div className={styles.inner}>
                 {breadcrumbs && breadcrumbs.length > 0 ? (
                     <nav aria-label={t('breadcrumb')}>

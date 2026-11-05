@@ -68,7 +68,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
 
     return (
         <>
-            <main className={styles.page} data-ds>
+            <main className={styles.page}>
                 <FounderIntro />
                 <FounderChapters photos={chapterPhotos} />
                 {albums.length > 0 ? (

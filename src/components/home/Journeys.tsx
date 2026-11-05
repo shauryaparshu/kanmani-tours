@@ -50,7 +50,7 @@ export default function Journeys({ tours }: JourneysProps) {
     if (tours.length === 0) return null;
 
     return (
-        <section className={styles.section} data-ds aria-labelledby="journeys-title">
+        <section className={styles.section} aria-labelledby="journeys-title">
             <div className={styles.head}>
                 <div className={styles.headText}>
                     <h2 id="journeys-title" className={styles.title}>{t('journeysTitle')}</h2>

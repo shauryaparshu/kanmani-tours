@@ -119,7 +119,6 @@ export default function UnifiedLightbox({ images, initialIndex, onClose }: Unifi
             role="dialog"
             aria-modal="true"
             aria-label={t('dialogLabel')}
-            data-ds
         >
             <div className={styles.bar}>
                 <div className={styles.captions} aria-live="polite">

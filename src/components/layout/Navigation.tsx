@@ -96,7 +96,7 @@ export default function Navigation() {
         <>
             <a href="#main-content" className={styles.skip}>{t('skipToContent')}</a>
 
-            <header className={styles.header} data-ds data-scrolled={scrolled || menuOpen} data-over-hero={overHero}>
+            <header className={styles.header} data-scrolled={scrolled || menuOpen} data-over-hero={overHero}>
                 <div className={styles.bar}>
                     <Link href="/" className={styles.logoLink} onClick={() => setMenuOpen(false)}>
                         <Logo tone={overHero ? 'paper' : 'ink'} className={styles.logo} />
@@ -138,7 +138,7 @@ export default function Navigation() {
 
             <div className={styles.spacer} aria-hidden="true" />
 
-            <nav id="site-menu" className={styles.menu} data-ds hidden={!menuOpen} aria-label={t('mainNav')}>
+            <nav id="site-menu" className={styles.menu} hidden={!menuOpen} aria-label={t('mainNav')}>
                 <ul className={styles.menuLinks}>
                     {[{ href: '/', label: t('home') }, ...links, { href: '/contact', label: t('contact') }].map((link, i) => (
                         <li key={link.href}>

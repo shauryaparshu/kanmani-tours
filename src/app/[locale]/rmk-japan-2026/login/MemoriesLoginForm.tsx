@@ -47,7 +47,7 @@ export default function MemoriesLoginForm() {
     };
 
     return (
-        <main className={styles.login} data-ds>
+        <main className={styles.login}>
             <div className={styles.card}>
                 <p className={styles.meta}>
                     <span>{t('privateGallery')}</span>

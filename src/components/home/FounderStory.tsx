@@ -8,7 +8,7 @@ export default function FounderStory() {
     const t = useTranslations('Home');
 
     return (
-        <section className={styles.section} data-ds aria-labelledby="founder-story-title">
+        <section className={styles.section} aria-labelledby="founder-story-title">
             <div className={styles.inner}>
                 <div className={styles.photos}>
                     <Develop className={styles.portrait}>

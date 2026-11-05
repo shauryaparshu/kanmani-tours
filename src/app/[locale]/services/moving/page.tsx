@@ -36,7 +36,7 @@ export default async function MovingToIndiaPage({ params }: { params: Promise<{ 
                         { label: t('movingPage.title') },
                     ]}
                 />
-                <section className={styles.section} aria-labelledby="moving-includes" data-ds>
+                <section className={styles.section} aria-labelledby="moving-includes">
                     <div className={styles.inner}>
                         <div className={styles.column}>
                             <h2 id="moving-includes" className={styles.heading}>{t('movingPage.includesTitle')}</h2>

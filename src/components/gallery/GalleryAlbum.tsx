@@ -16,7 +16,7 @@ export default function GalleryAlbum({ title, dates, tourHref, photos }: Gallery
     const t = useTranslations('Gallery');
 
     return (
-        <section className={styles.section} data-ds>
+        <section className={styles.section}>
             <div className={styles.inner}>
                 <div className={styles.head}>
                     <p className={styles.meta}>

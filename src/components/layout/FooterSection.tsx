@@ -18,7 +18,7 @@ export default function FooterSection({ plan = true }: { plan?: boolean }) {
     const tContact = useTranslations('TopBar');
 
     return (
-        <footer className={`${styles.footer} surface-ink`} data-ds>
+        <footer className={`${styles.footer} surface-ink`}>
             <div className={styles.inner}>
                 {plan ? (
                     <div className={styles.plan}>

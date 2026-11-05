@@ -44,7 +44,7 @@ export default async function JapanGroupsPage({ params }: { params: Promise<{ lo
                     lead={t('lead')}
                     breadcrumbs={[{ href: '/', label: t('breadcrumbHome') }, { label: t('breadcrumbGroups') }]}
                 />
-                <section className={styles.section} aria-labelledby="groups-programme-title" data-ds>
+                <section className={styles.section} aria-labelledby="groups-programme-title">
                     <div className={styles.inner}>
                         <div className={styles.panel}>
                             <div className={styles.intro}>

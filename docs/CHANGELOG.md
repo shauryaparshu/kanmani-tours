@@ -1,5 +1,19 @@
 # Changelog
 
+## [2026-11-05] Premium reskin, direction A "Programme" (branch `redesign/premium-reskin`)
+### Changed
+- Every page now uses the design system (`src/app/tokens.css` + CSS Modules): shared shell, homepage, tour lists and detail, About, Gallery and gallery albums, FAQ, contact, Japan group inquiry, services, moving, airport transfer, the RMK private gallery and its login, and a new localised 404 page
+- Contact and group inquiry forms restyled only: same fields, validation rules, honeypot, phone input props and `/api/contact` payloads. Labels are tied to fields; errors use `aria-invalid`/`aria-describedby` and an icon
+- All UI strings for the restyled pages are in `messages/en.json` and `messages/ja.json` (English-only pages mirror English in `ja.json`)
+- Static rendering: the locale layout and pages call `setRequestLocale`, both locales are prerendered, and pages that read Sanity revalidate every 60 seconds. The RMK gallery and login stay dynamic
+- Gallery albums (`/gallery/[slug]`) render on the server and return a real 404 for unknown or upcoming tours
+
+### Fixed
+- Tour list filters no longer drop the list from the prerendered HTML (they read the URL after hydration)
+
+### Removed
+- Legacy `globals.css` (3,200 lines, including the `p, li` 19px `!important` rule and the old `:root` variables), the Cormorant Garamond and Jost fonts, the `data-ds` migration markers, `airport-transfer.css` and `MoreDetailsButton`
+
 ## [2026-10-24]
 ### Fixed
 - Webfonts (Cormorant Garamond, Jost, Noto Sans JP) were never loaded; now self-hosted via `next/font`

@@ -7,7 +7,7 @@ export default function WhyUs() {
     const t = useTranslations('Home');
 
     return (
-        <section className={styles.section} data-ds aria-labelledby="why-title">
+        <section className={styles.section} aria-labelledby="why-title">
             <div className={styles.inner}>
                 <h2 id="why-title" className={styles.title}>{t('whyTitle')}</h2>
                 <dl className={styles.list}>

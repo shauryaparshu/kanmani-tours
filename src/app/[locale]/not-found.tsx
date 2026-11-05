@@ -19,7 +19,7 @@ export default function NotFound() {
         <>
             <main>
                 <PageHeader title={t('title')} lead={t('body')} />
-                <nav className={styles.section} aria-label={t('title')} data-ds>
+                <nav className={styles.section} aria-label={t('title')}>
                     <div className={styles.inner}>
                         <ul className={styles.links}>
                             {links.map((link) => (

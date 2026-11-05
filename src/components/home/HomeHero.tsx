@@ -35,7 +35,7 @@ export default function HomeHero({ images }: HomeHeroProps) {
     const mounted = count === 0 ? [] : [...new Set([(index - 1 + count) % count, index, (index + 1) % count])];
 
     return (
-        <section className={styles.hero} data-ds aria-labelledby="home-hero-title">
+        <section className={styles.hero} aria-labelledby="home-hero-title">
             <div className={styles.stage}>
                 {mounted.map((i) => (
                     <div key={images[i]} className={styles.slide} data-active={i === index}>

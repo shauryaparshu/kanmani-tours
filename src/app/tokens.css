@@ -107,12 +107,12 @@
 /* Japanese line breaking: text may break between characters (it has no
    spaces), with strict kinsoku so punctuation never starts a line.
    Headings keep phrases whole where the browser supports auto-phrase. */
-:root:lang(ja) [data-ds] {
+:root:lang(ja) body {
   word-break: normal;
   overflow-wrap: break-word;
   line-break: strict;
 }
-:root:lang(ja) [data-ds] :is(h1, h2, h3) {
+:root:lang(ja) :is(h1, h2, h3) {
   word-break: auto-phrase;
   overflow-wrap: anywhere;  /* a phrase wider than the screen may still break */
 }
@@ -133,7 +133,7 @@
 
 /* ── Browser surfaces ─────────────────────────────────────────────────
    The parts the browser draws by default, themed from the palette.
-   Safe to apply site-wide before the sections are migrated. */
+   */
 html {
   caret-color: var(--color-accent);
   accent-color: var(--color-accent);

@@ -14,7 +14,7 @@ export default function FounderIntro() {
     const t = useTranslations('About');
 
     return (
-        <header className={styles.intro} data-ds>
+        <header className={styles.intro}>
             <div className={styles.inner}>
                 <Develop className={styles.portrait}>
                     <Image
