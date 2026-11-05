@@ -1,139 +1,89 @@
 import type { Metadata } from 'next';
-import React from 'react';
-import Link from 'next/link';
-import Footer from '@/components/layout/FooterSection';
 import { getTranslations } from 'next-intl/server';
-import './airport-transfer.css';
-import { pageAlternates } from '@/lib/site';
+import { Link } from '@/i18n/routing';
+import FooterSection from '@/components/layout/FooterSection';
+import PageHeader from '@/components/layout/PageHeader';
+import styles from '@/components/services/ServicePage.module.css';
+import { pageAlternates, pageOpenGraph } from '@/lib/site';
+
+const FEATURES = [1, 2, 3, 4] as const;
+const STEPS = [1, 2, 3] as const;
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
     const { locale } = await params;
+    const [t, tServices] = await Promise.all([
+        getTranslations({ locale, namespace: 'Airport' }),
+        getTranslations({ locale, namespace: 'Services' }),
+    ]);
+    const title = tServices('airportMetaTitle');
+    const description = t('subtitle');
     return {
         alternates: pageAlternates(locale, '/airport-transfer'),
+        title,
+        description,
+        openGraph: pageOpenGraph(title, description),
     };
 }
 
-
-export default async function AirportTransferPage() {
-    const t = await getTranslations('Airport');
+export default async function AirportTransferPage({ params }: { params: Promise<{ locale: string }> }) {
+    const { locale } = await params;
+    const [t, tServices] = await Promise.all([
+        getTranslations({ locale, namespace: 'Airport' }),
+        getTranslations({ locale, namespace: 'Services' }),
+    ]);
 
     return (
         <>
-            <main className="atp-wrapper">
-                {/* HERO SECTION */}
-                <section className="atp-hero" style={{
-                    backgroundColor: '#1c1918',
-                    padding: '80px 0 72px',
-                    borderBottom: '1px solid rgba(201,147,58,0.2)',
-                    width: '100%',
-                    textAlign: 'left'
-                }}>
-                    <div className="container" style={{
-                        maxWidth: '1200px',
-                        margin: '0 auto',
-                        padding: '0 60px'
-                    }}>
-                        <div style={{ maxWidth: '1000px' }}>
-                            <p style={{
-                                fontFamily: "var(--font-jost), Arial, sans-serif",
-                                fontSize: '11px',
-                                fontWeight: '500',
-                                letterSpacing: '0.32em',
-                                color: '#C9933A',
-                                textTransform: 'uppercase',
-                                marginBottom: '16px'
-                            }}>Arrival & Departure</p>
-                            <h1 className="atp-title" style={{
-                                fontFamily: "var(--font-cormorant), Georgia, serif",
-                                fontSize: 'clamp(36px, 5vw, 64px)',
-                                fontWeight: '500',
-                                color: '#F5F1EB',
-                                letterSpacing: '0.05em',
-                                lineHeight: '1.2',
-                                margin: '0 0 16px',
-                                whiteSpace: 'nowrap',
-                                maxWidth: 'none'
-                            }}>{t('title')}</h1>
-                            <div style={{ width: '56px', height: '1px', backgroundColor: '#C9933A', marginBottom: '20px' }} />
-                            <p className="atp-subtitle" style={{
-                                fontFamily: "var(--font-jost), Arial, sans-serif",
-                                fontSize: '16px',
-                                fontWeight: '300',
-                                color: '#9A948F',
-                                lineHeight: '1.7',
-                                maxWidth: '600px',
-                                margin: 0
-                            }}>
-                                {t('subtitle')}
-                            </p>
+            <main>
+                <PageHeader
+                    title={t('title')}
+                    lead={t('subtitle')}
+                    breadcrumbs={[
+                        { href: '/', label: tServices('breadcrumbHome') },
+                        { href: '/services', label: tServices('breadcrumbServices') },
+                        { label: tServices('transfers.title') },
+                    ]}
+                />
+                <section className={styles.section} aria-labelledby="airport-story" data-ds>
+                    <div className={styles.inner}>
+                        <div className={styles.split}>
+                            <div className={styles.column}>
+                                <h2 id="airport-story" className={styles.heading}>{t('peaceOfMind')}</h2>
+                                <p className={styles.body}>{t('desc1')}</p>
+                                <p className={styles.body}>{t('desc2')}</p>
+                                <h3 className={styles.subheading}>{t('whyChoose')}</h3>
+                                <ul className={styles.bullets}>
+                                    {FEATURES.map((n) => (
+                                        <li key={n}>
+                                            <strong>{t(`feature${n}Title`)}</strong> {t(`feature${n}Desc`)}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+
+                            <div className={styles.panel}>
+                                <h2 className={styles.subheading}>{t('howItWorks')}</h2>
+                                <ol className={styles.steps}>
+                                    {STEPS.map((n) => (
+                                        <li key={n} className={styles.step}>
+                                            <span className={`${styles.stepNumber} num`} aria-hidden="true">{n}</span>
+                                            <div>
+                                                <h3 className={styles.stepTitle}>{t(`step${n}Title`)}</h3>
+                                                <p className={styles.stepBody}>{t(`step${n}Desc`)}</p>
+                                            </div>
+                                        </li>
+                                    ))}
+                                </ol>
+                                <p className={styles.note}>
+                                    <strong>{t('pricingNote')}</strong> {t('pricingNoteDesc')}
+                                </p>
+                                <Link href="/contact" className={styles.primary}>{t('requestTransfer')}</Link>
+                            </div>
                         </div>
                     </div>
                 </section>
-
-                <div className="container atp-content">
-                    <div className="atp-grid">
-                        {/* DESCRIPTION */}
-                        <div className="atp-text-section">
-                            <h2>{t('peaceOfMind')}</h2>
-                            <p className="atp-para">
-                                {t('desc1')}
-                            </p>
-                            <p className="atp-para">
-                                {t('desc2')}
-                            </p>
-
-                            <div className="atp-features">
-                                <h3>{t('whyChoose')}</h3>
-                                <ul className="atp-list">
-                                    <li><strong>{t('feature1Title')}</strong> {t('feature1Desc')}</li>
-                                    <li><strong>{t('feature2Title')}</strong> {t('feature2Desc')}</li>
-                                    <li><strong>{t('feature3Title')}</strong> {t('feature3Desc')}</li>
-                                    <li><strong>{t('feature4Title')}</strong> {t('feature4Desc')}</li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        {/* HOW IT WORKS */}
-                        <div className="atp-steps-section">
-                            <h3>{t('howItWorks')}</h3>
-                            <div className="atp-steps">
-                                <div className="atp-step">
-                                    <div className="atp-step-num">1</div>
-                                    <div className="atp-step-content">
-                                        <h4>{t('step1Title')}</h4>
-                                        <p>{t('step1Desc')}</p>
-                                    </div>
-                                </div>
-                                <div className="atp-step">
-                                    <div className="atp-step-num">2</div>
-                                    <div className="atp-step-content">
-                                        <h4>{t('step2Title')}</h4>
-                                        <p>{t('step2Desc')}</p>
-                                    </div>
-                                </div>
-                                <div className="atp-step">
-                                    <div className="atp-step-num">3</div>
-                                    <div className="atp-step-content">
-                                        <h4>{t('step3Title')}</h4>
-                                        <p>{t('step3Desc')}</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="atp-pricing-note">
-                                <p><strong>{t('pricingNote')}</strong> {t('pricingNoteDesc')}</p>
-                            </div>
-
-                            <div className="atp-cta-box">
-                                <Link href="/contact" className="btn-primary atp-cta">
-                                    {t('requestTransfer')}
-                                </Link>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </main>
-            <Footer />
+            <FooterSection />
         </>
     );
 }

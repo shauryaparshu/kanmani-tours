@@ -1,122 +1,55 @@
 import type { Metadata } from 'next';
-import Footer from '@/components/layout/FooterSection';
-import Link from 'next/link';
-import { pageAlternates } from '@/lib/site';
+import { getTranslations } from 'next-intl/server';
+import { Link } from '@/i18n/routing';
+import FooterSection from '@/components/layout/FooterSection';
+import PageHeader from '@/components/layout/PageHeader';
+import styles from '@/components/services/ServicePage.module.css';
+import { pageAlternates, pageOpenGraph } from '@/lib/site';
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
     const { locale } = await params;
+    const t = await getTranslations({ locale, namespace: 'Services' });
+    const title = t('movingPage.metaTitle');
+    const description = t('movingPage.lead');
     return {
         alternates: pageAlternates(locale, '/services/moving'),
+        title,
+        description,
+        openGraph: pageOpenGraph(title, description),
     };
 }
 
+export default async function MovingToIndiaPage({ params }: { params: Promise<{ locale: string }> }) {
+    const { locale } = await params;
+    const t = await getTranslations({ locale, namespace: 'Services' });
 
-export default function MovingToIndiaPage() {
-  return (
-    <>
-      <main>
-        {/* HERO */}
-        <div style={{
-          backgroundColor: '#1C1917',
-          padding: '80px 60px 72px',
-          borderBottom: '1px solid rgba(201,147,58,0.2)'
-        }}>
-          <p style={{
-            fontFamily: "var(--font-jost), Arial, sans-serif",
-            fontSize: '11px',
-            fontWeight: '500',
-            letterSpacing: '0.32em',
-            color: '#C9933A',
-            textTransform: 'uppercase',
-            marginBottom: '16px'
-          }}>SERVICES</p>
-          <h1 style={{
-            fontFamily: "var(--font-cormorant), Georgia, serif",
-            fontSize: 'clamp(36px, 5vw, 64px)',
-            fontWeight: '500',
-            color: '#F5F1EB',
-            letterSpacing: '0.05em',
-            lineHeight: '1.15',
-            marginBottom: '16px'
-          }}>Moving to India Support</h1>
-          <div style={{
-            width: '56px', height: '1px',
-            backgroundColor: '#C9933A', marginBottom: '20px'
-          }}/>
-          <p style={{
-            fontFamily: "var(--font-jost), Arial, sans-serif",
-            fontSize: '16px',
-            fontWeight: '300',
-            color: '#9A948F',
-            lineHeight: '1.7',
-            maxWidth: '560px'
-          }}>
-            Relocating from Japan to India is a major life decision. We provide end-to-end support for Japanese nationals moving to Indian cities for work, family, or lifestyle reasons.
-          </p>
-        </div>
-
-        {/* CONTENT */}
-        <div style={{
-          backgroundColor: '#FAFAF7',
-          padding: '80px 60px'
-        }}>
-          <div style={{
-            maxWidth: '900px',
-            margin: '0 auto',
-            backgroundColor: '#FFFFFF',
-            padding: '48px',
-            border: '1px solid #E8E4DC'
-          }}>
-            <h2 style={{
-              fontFamily: "var(--font-cormorant), Georgia, serif",
-              fontSize: '32px',
-              fontWeight: '500',
-              color: '#1C1917',
-              marginBottom: '24px'
-            }}>Our Support Includes</h2>
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-              {[
-                'Neighbourhood orientation tours',
-                'School and international community introductions',
-                'Administrative support and local registration',
-                'Japanese expat community connections',
-                'Ongoing settling-in assistance'
-              ].map((item, i) => (
-                <li key={i} style={{
-                  display: 'flex',
-                  alignItems: 'flex-start',
-                  gap: '12px',
-                  marginBottom: '16px',
-                  fontFamily: "var(--font-jost), Arial, sans-serif",
-                  fontSize: '16px',
-                  color: '#4A4540',
-                  lineHeight: '1.5'
-                }}>
-                  <span style={{ color: '#C9933A', marginTop: '2px' }}>✦</span>
-                  {item}
-                </li>
-              ))}
-            </ul>
-            <div style={{ marginTop: '48px' }}>
-              <Link href="/contact" style={{
-                fontFamily: "var(--font-jost), Arial, sans-serif",
-                fontSize: '13px',
-                fontWeight: '600',
-                letterSpacing: '0.2em',
-                color: '#1C1917',
-                backgroundColor: '#C9933A',
-                padding: '16px 40px',
-                textDecoration: 'none',
-                textTransform: 'uppercase',
-                display: 'inline-block'
-              }}>
-                CONTACT FOR ASSISTANCE
-              </Link>
-            </div>
-          </div>
-        </div>
-      </main>
-      <Footer />
-    </>
-  );
+    return (
+        <>
+            <main>
+                <PageHeader
+                    title={t('movingPage.title')}
+                    lead={t('movingPage.lead')}
+                    breadcrumbs={[
+                        { href: '/', label: t('breadcrumbHome') },
+                        { href: '/services', label: t('breadcrumbServices') },
+                        { label: t('movingPage.title') },
+                    ]}
+                />
+                <section className={styles.section} aria-labelledby="moving-includes" data-ds>
+                    <div className={styles.inner}>
+                        <div className={styles.column}>
+                            <h2 id="moving-includes" className={styles.heading}>{t('movingPage.includesTitle')}</h2>
+                            <ul className={styles.bullets}>
+                                {(t.raw('moving.items') as string[]).map((item) => (
+                                    <li key={item}>{item}</li>
+                                ))}
+                            </ul>
+                            <Link href="/contact" className={styles.primary}>{t('movingPage.cta')}</Link>
+                        </div>
+                    </div>
+                </section>
+            </main>
+            <FooterSection />
+        </>
+    );
 }

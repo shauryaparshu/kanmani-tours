@@ -265,7 +265,7 @@
         "step3Desc": "Walk out of the arrivals hall and look for your name. Your ride is waiting!",
         "pricingNote": "Pricing Note:",
         "pricingNoteDesc": "Rates vary by city and distance (e.g., Chennai City vs. Outstation). Contact us for a personalized quote.",
-        "requestTransfer": "Request Transfer →"
+        "requestTransfer": "Request transfer"
     },
     "About": {
         "metaTitle": "About Dr. Kanmani — Kanmani Tours",
@@ -461,5 +461,44 @@
         "sentTitle": "Inquiry sent",
         "sentBody": "Thank you, {name}. We have received your group inquiry for {institution} and our team will get in touch within 24 hours.",
         "sendAnother": "Send another inquiry"
+    },
+    "Services": {
+        "metaTitle": "Services — Kanmani Tours",
+        "metaDescription": "Airport transfers and moving-to-India support from Kanmani Tours, with Japanese-speaking help.",
+        "breadcrumbHome": "Home",
+        "breadcrumbServices": "Services",
+        "title": "Our services",
+        "lead": "Beyond our tours, we offer personal services that make your time in India easier from start to finish.",
+        "moreDetails": "More details",
+        "transfers": {
+            "title": "Airport transfers",
+            "body": "Pickup and drop between airports and hotels across all major Indian cities. Available 24 hours, with Japanese-speaking drivers on request. We track your flight and adjust for delays.",
+            "items": [
+                "All major Indian airports covered",
+                "Japanese-speaking drivers available",
+                "Flight tracking, so no waiting for delays",
+                "Private air-conditioned vehicles",
+                "Meet and greet at arrivals"
+            ]
+        },
+        "moving": {
+            "title": "Moving to India support",
+            "body": "Relocating from Japan to India is a major life decision. We support Japanese nationals moving to Indian cities for work, family or lifestyle reasons.",
+            "items": [
+                "Neighbourhood orientation tours",
+                "School and international community introductions",
+                "Administrative support and local registration",
+                "Japanese expat community connections",
+                "Ongoing settling-in assistance"
+            ]
+        },
+        "movingPage": {
+            "metaTitle": "Moving to India Support — Kanmani Tours",
+            "title": "Moving to India support",
+            "lead": "Relocating from Japan to India is a major life decision. We support Japanese nationals moving to Indian cities for work, family or lifestyle reasons.",
+            "includesTitle": "Our support includes",
+            "cta": "Ask about moving support"
+        },
+        "airportMetaTitle": "Airport Pickup & Drop in India — Kanmani Tours"
     }
 }

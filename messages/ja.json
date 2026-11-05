@@ -265,7 +265,7 @@
         "step3Desc": "到着ホールを出てお名前をお探しください。ご乗車をお待ちしています！",
         "pricingNote": "料金について：",
         "pricingNoteDesc": "料金は都市と距離によって異なります（例：チェンナイ市内と郊外）。個別のお見積もりはお問い合わせください。",
-        "requestTransfer": "送迎を申し込む →"
+        "requestTransfer": "送迎を申し込む"
     },
     "About": {
         "metaTitle": "カンマニ博士について — Kanmani Tours",
@@ -461,5 +461,44 @@
         "sentTitle": "Inquiry sent",
         "sentBody": "Thank you, {name}. We have received your group inquiry for {institution} and our team will get in touch within 24 hours.",
         "sendAnother": "Send another inquiry"
+    },
+    "Services": {
+        "metaTitle": "サービス — Kanmani Tours",
+        "metaDescription": "空港送迎とインドへの移住サポート。日本語でお手伝いします。",
+        "breadcrumbHome": "ホーム",
+        "breadcrumbServices": "サービス",
+        "title": "サービス",
+        "lead": "ツアーのほかにも、インドでの滞在を最初から最後まで楽にする、個別のサービスをご用意しています。",
+        "moreDetails": "詳しく見る",
+        "transfers": {
+            "title": "空港送迎",
+            "body": "インド主要都市の空港とホテル間の送迎です。24時間対応、ご希望により日本語を話すドライバーも手配します。フライトを確認し、遅延にも合わせます。",
+            "items": [
+                "インドの主要空港すべてに対応",
+                "日本語を話すドライバーを手配可能",
+                "フライト追跡で、遅延時も安心",
+                "エアコン付きの専用車",
+                "到着ロビーでのお出迎え"
+            ]
+        },
+        "moving": {
+            "title": "インド移住サポート",
+            "body": "日本からインドへの移住は、人生の大きな決断です。仕事、家族、暮らし方の理由でインドの都市へ移る日本の方を支えます。",
+            "items": [
+                "住む地域を知るオリエンテーションツアー",
+                "学校や国際コミュニティのご紹介",
+                "行政手続きと現地登録のサポート",
+                "日本人コミュニティとのつながり",
+                "生活が落ち着くまでの継続サポート"
+            ]
+        },
+        "movingPage": {
+            "metaTitle": "インド移住サポート — Kanmani Tours",
+            "title": "インド移住サポート",
+            "lead": "日本からインドへの移住は、人生の大きな決断です。仕事、家族、暮らし方の理由でインドの都市へ移る日本の方を支えます。",
+            "includesTitle": "サポート内容",
+            "cta": "移住サポートについて問い合わせる"
+        },
+        "airportMetaTitle": "インドの空港送迎 — Kanmani Tours"
     }
 }
