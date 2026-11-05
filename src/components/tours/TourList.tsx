@@ -1,7 +1,7 @@
 'use client';
 
-import { useMemo, useState } from 'react';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useMemo, useState } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import type { Tour } from '@/lib/tours';
 import type { CategoryDef } from '@/lib/categories';
@@ -35,20 +35,32 @@ export default function TourList({ tours, categories, countries }: TourListProps
     const t = useTranslations('Tours');
     const router = useRouter();
     const pathname = usePathname();
-    const searchParams = useSearchParams();
 
-    // Filters start from the URL so a filtered list can be shared as a link.
-    const [status, setStatus] = useState<Status>(() => {
-        const s = searchParams.get('status');
-        return s === 'upcoming' || s === 'past' ? s : 'all';
-    });
-    const [selected, setSelected] = useState<string[]>(() => searchParams.get('category')?.split(',').filter(Boolean) ?? []);
-    const [year, setYear] = useState(() => searchParams.get('year') ?? '');
-    const [country, setCountry] = useState(() => searchParams.get('country') ?? '');
+    const [status, setStatus] = useState<Status>('all');
+    const [selected, setSelected] = useState<string[]>([]);
+    const [year, setYear] = useState('');
+    const [country, setCountry] = useState('');
     const [search, setSearch] = useState('');
 
+    // Filters start from the URL so a filtered list can be shared as a link. The page is
+    // prerendered, so the URL is read after hydration: reading it during render
+    // (useSearchParams) would leave the list out of the static HTML and shift the page.
+    useEffect(() => {
+        const params = new URLSearchParams(window.location.search);
+        const s = params.get('status');
+        /* eslint-disable react-hooks/set-state-in-effect -- one-time sync from the URL after hydration */
+        if (s === 'upcoming' || s === 'past') setStatus(s);
+        const categoryParam = params.get('category');
+        if (categoryParam) setSelected(categoryParam.split(',').filter(Boolean));
+        const yearParam = params.get('year');
+        if (yearParam) setYear(yearParam);
+        const countryParam = params.get('country');
+        if (countryParam) setCountry(countryParam);
+        /* eslint-enable react-hooks/set-state-in-effect */
+    }, []);
+
     const syncUrl = (next: { status?: Status; selected?: string[]; year?: string; country?: string }) => {
-        const params = new URLSearchParams(searchParams.toString());
+        const params = new URLSearchParams(window.location.search);
         const entries: [string, string][] = [
             ['status', (next.status ?? status) === 'all' ? '' : (next.status ?? status)],
             ['category', (next.selected ?? selected).join(',')],
@@ -119,7 +131,7 @@ export default function TourList({ tours, categories, countries }: TourListProps
     const featureFirst = filtered.length >= 3;
 
     return (
-        <section className={styles.section} data-ds aria-label={t('filtersLabel')}>
+        <section className={styles.section} aria-label={t('filtersLabel')}>
             <div className={styles.inner}>
                 <div className={styles.filters}>
                     <div className={styles.statusRow} role="group" aria-label={t('statusLabel')}>
