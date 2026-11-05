@@ -116,22 +116,35 @@
         "requestTransfer": "Request Transfer →"
     },
     "ContactForm": {
-        "name": "Your Name",
-        "namePlaceholder": "Full Name",
-        "email": "Email Address",
-        "emailPlaceholder": "example@domain.com",
-        "phone": "Phone Number (Optional)",
-        "phonePlaceholder": "09012345678",
+        "name": "Full name",
+        "email": "Email address",
+        "phone": "Phone number",
         "subject": "Subject",
-        "subjectOptions": {
-            "enquiry": "Tour Enquiry",
-            "booking": "About Booking",
-            "custom": "Custom Tour Consultation",
-            "other": "Other"
-        },
         "message": "Message",
-        "messagePlaceholder": "Tell us more about what you're looking for...",
-        "submit": "Send Message"
+        "subjects": {
+            "tourEnquiry": "Tour Enquiry",
+            "customTour": "Custom Tour Request",
+            "fieldTrip": "Field Trip",
+            "celebrityTour": "Celebrity Tour Enquiry",
+            "groupBooking": "Group Booking",
+            "bookingAmendment": "Booking Amendment",
+            "generalQuestion": "General Question"
+        },
+        "errors": {
+            "phoneInvalid": "Please enter a valid phone number.",
+            "nameShort": "Please enter your full name (min 2 characters).",
+            "nameDigits": "Name should not contain numbers.",
+            "emailInvalid": "Please enter a valid email address.",
+            "messageShort": "Please enter at least 10 characters.",
+            "submitFailed": "Something went wrong. Please email us directly.",
+            "connection": "Connection error. Please email kanmanitours@gmail.com"
+        },
+        "submit": "Send message",
+        "sending": "Sending…",
+        "respondNote": "We respond within 24 hours",
+        "sentTitle": "Message sent",
+        "sentBody": "Thank you, {name}. We have received your enquiry and will respond within 24 hours.",
+        "sendAnother": "Send another message"
     },
     "Tours": {
         "allCategories": "All Categories",
@@ -210,21 +223,23 @@
         }
     },
     "Contact": {
-        "title": "Let's Start Your Journey",
-        "subtitle": "Expert help is just a message away. Reach out to our team in Chennai.",
+        "metaTitle": "Contact Us — Kanmani Tours",
+        "metaDescription": "Let's plan your journey to India. Our Japanese-speaking team is ready to help you plan the perfect experience.",
         "breadcrumbHome": "Home",
-        "breadcrumbContact": "Contact Us",
-        "sendMessage": "Send us a Message",
-        "contactDirectly": "Contact Directly",
-        "contactDirectlyDesc": "Get in touch with us via phone or email for immediate assistance.",
-        "callUs": "Call Us",
-        "emailUs": "Email Us",
-        "visitOffices": "Visit Our Offices",
-        "tokyoOffice": "Tokyo Office",
-        "tokyoAddress": "Chiyoda City, Tokyo, Japan",
-        "chennaiOffice": "Chennai Office",
-        "chennaiAddress": "Anna Nagar, Chennai, India",
-        "followJourney": "Follow Our Journey"
+        "breadcrumbContact": "Contact",
+        "title": "Let's Plan Your Journey to India",
+        "lead": "Our Japanese-speaking team is ready to help you plan your India experience. We respond to all enquiries within 24 hours.",
+        "formTitle": "Send us a message",
+        "directTitle": "Contact directly",
+        "phoneLabel": "Phone",
+        "emailLabel": "Email",
+        "officeLabel": "Office",
+        "office": "Anna Nagar, Chennai, India",
+        "hoursLabel": "Hours",
+        "hours": "Mon–Sat · 9:00–18:00 IST",
+        "faqTitle": "Have a quick question?",
+        "faqBody": "Many answers about visas, money, safety and the tours are already in our FAQ.",
+        "faqLink": "Read the FAQ"
     },
     "Airport": {
         "title": "Airport Pickup & Drop in India",

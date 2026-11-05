@@ -1,0 +1,225 @@
+/* Shared form grammar (design-system §7 "Forms"): label above the field,
+   strong hairline border, surface fill, error text below with an icon. */
+
+.form {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.row {
+  display: grid;
+  gap: var(--space-3);
+}
+@media (min-width: 640px) {
+  .row { grid-template-columns: 1fr 1fr; }
+}
+
+.field {
+  display: grid;
+  gap: var(--space-1);
+  min-width: 0;
+  align-content: start;
+}
+
+.labelRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.label {
+  font: var(--weight-medium) var(--text-label) / var(--leading-label) var(--font-body);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-ink);
+}
+:lang(ja) .label { letter-spacing: 0.06em; }
+.required { color: var(--color-accent); margin-left: var(--space-half); }
+.optional {
+  font: var(--weight-regular) var(--text-label) / var(--leading-label) var(--font-body);
+  color: var(--color-ink-muted);
+}
+
+.input,
+.phone {
+  width: 100%;
+  min-height: 48px;
+  padding: var(--space-1) var(--space-2);
+  border: 1px solid var(--color-line-strong);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  font: var(--weight-regular) var(--text-body) / var(--leading-label) var(--font-body);
+  color: var(--color-ink);
+  transition: border-color var(--dur-hover) var(--ease-out);
+}
+.input::placeholder { color: var(--color-ink-muted); opacity: 1; }
+.input:hover,
+.phone:hover { border-color: var(--color-ink); }
+.input:focus-visible { outline: 2px solid var(--focus-color); outline-offset: 1px; border-color: var(--color-ink); }
+.input[aria-invalid="true"],
+.phone[data-invalid="true"] { border-color: var(--color-error); }
+
+textarea.input {
+  min-height: 9rem;
+  padding-block: var(--space-2);
+  line-height: var(--leading-body);
+  resize: vertical;
+}
+
+/* A native select with the programme's own thin chevron, drawn by the wrapper. */
+select.input {
+  appearance: none;
+  padding-right: var(--space-5);
+}
+.select {
+  position: relative;
+}
+.select::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: var(--space-2);
+  width: var(--space-1);
+  height: var(--space-1);
+  border-right: 1px solid var(--color-ink);
+  border-bottom: 1px solid var(--color-ink);
+  transform: translateY(-75%) rotate(45deg);
+  pointer-events: none;
+}
+
+/* react-phone-number-input: the country select and the number share one field. */
+.phone {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.phone:focus-within { outline: 2px solid var(--focus-color); outline-offset: 1px; border-color: var(--color-ink); }
+.phone :global(.PhoneInput) {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+  align-self: stretch;
+}
+.phone :global(.PhoneInputCountry) { margin: 0; align-self: stretch; }
+.phone :global(.PhoneInputCountryIcon--border) { box-shadow: none; background: transparent; }
+.phone :global(.PhoneInputCountrySelectArrow) { margin-left: var(--space-1); color: var(--color-ink); opacity: 1; }
+.phone :global(.PhoneInputCountrySelect:focus + .PhoneInputCountryIcon--border) { box-shadow: none; }
+.phone :global(.PhoneInputInput) {
+  min-width: 0;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font: inherit;
+  color: inherit;
+}
+
+.error {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-1);
+  margin: 0;
+  font: var(--weight-regular) var(--text-label) / var(--leading-label) var(--font-body);
+  color: var(--color-error);
+}
+.error svg { flex-shrink: 0; width: 1.15em; height: 1.15em; margin-top: 0.05em; }
+
+.alert {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-1);
+  margin: 0;
+  padding: var(--space-2);
+  border: 1px solid var(--color-error);
+  background: var(--color-surface);
+  font: var(--weight-regular) var(--text-body) / var(--leading-body) var(--font-body);
+  color: var(--color-error);
+}
+.alert svg { flex-shrink: 0; width: 1.25em; height: 1.25em; margin-top: 0.2em; }
+
+.actions {
+  display: grid;
+  gap: var(--space-2);
+  margin-top: var(--space-1);
+}
+
+/* Primary button (design-system §7): filled vermilion, paper text, square. */
+.submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 52px;
+  padding: 0 var(--space-4);
+  border: 0;
+  border-radius: var(--radius);
+  background: var(--color-accent);
+  font: var(--weight-medium) var(--text-label) / 1 var(--font-body);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-on-ink);
+  cursor: pointer;
+  transition: background-color var(--dur-hover) var(--ease-out);
+}
+.submit:hover:not(:disabled) { background: var(--color-accent-deep); }
+.submit:disabled { background: var(--color-ink-muted); cursor: progress; }
+:lang(ja) .submit { letter-spacing: 0.06em; }
+
+.note {
+  margin: 0;
+  font: var(--weight-regular) var(--text-label) / var(--leading-label) var(--font-body);
+  color: var(--color-ink-muted);
+  text-align: center;
+}
+
+/* Bots fill this in; people never see it. */
+.honeypot {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* ── Sent state ── */
+.success {
+  display: grid;
+  gap: var(--space-2);
+  justify-items: start;
+  padding-block: var(--space-3);
+}
+.successTitle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0;
+  font: var(--weight-light) var(--text-title) / var(--leading-title) var(--font-display);
+  color: var(--color-ink);
+}
+.successTitle svg { flex-shrink: 0; width: 1em; height: 1em; color: var(--color-success); }
+.successBody {
+  margin: 0;
+  max-width: var(--measure);
+  font: var(--weight-regular) var(--text-body) / var(--leading-body) var(--font-body);
+  color: var(--color-ink-muted);
+}
+.textButton {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: var(--weight-medium) var(--text-label) / 1 var(--font-body);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: 0.22em;
+  cursor: pointer;
+}
+:lang(ja) .textButton { letter-spacing: 0.06em; }

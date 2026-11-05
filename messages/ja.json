@@ -117,21 +117,34 @@
     },
     "ContactForm": {
         "name": "お名前",
-        "namePlaceholder": "フルネーム",
         "email": "メールアドレス",
-        "emailPlaceholder": "example@domain.com",
-        "phone": "電話番号（任意）",
-        "phonePlaceholder": "09012345678",
+        "phone": "電話番号",
         "subject": "件名",
-        "subjectOptions": {
-            "enquiry": "ツアーのお問い合わせ",
-            "booking": "予約について",
-            "custom": "カスタムツアーのご相談",
-            "other": "その他"
-        },
         "message": "メッセージ",
-        "messagePlaceholder": "ご希望の内容を詳しくお聞かせください...",
-        "submit": "メッセージを送信"
+        "subjects": {
+            "tourEnquiry": "ツアーについて",
+            "customTour": "オーダーメイドツアーのご相談",
+            "fieldTrip": "研修・視察旅行",
+            "celebrityTour": "著名人関連ツアーについて",
+            "groupBooking": "団体でのご予約",
+            "bookingAmendment": "ご予約の変更",
+            "generalQuestion": "その他のご質問"
+        },
+        "errors": {
+            "phoneInvalid": "有効な電話番号を入力してください。",
+            "nameShort": "お名前を2文字以上で入力してください。",
+            "nameDigits": "お名前に数字は使用できません。",
+            "emailInvalid": "有効なメールアドレスを入力してください。",
+            "messageShort": "10文字以上で入力してください。",
+            "submitFailed": "送信できませんでした。お手数ですが、メールで直接ご連絡ください。",
+            "connection": "通信エラーが発生しました。kanmanitours@gmail.com までメールでご連絡ください。"
+        },
+        "submit": "送信する",
+        "sending": "送信中…",
+        "respondNote": "24時間以内にご返信します",
+        "sentTitle": "送信が完了しました",
+        "sentBody": "{name}様、お問い合わせありがとうございます。24時間以内にご返信いたします。",
+        "sendAnother": "別のメッセージを送る"
     },
     "Tours": {
         "allCategories": "すべてのカテゴリー",
@@ -210,21 +223,23 @@
         }
     },
     "Contact": {
-        "title": "旅を始めましょう",
-        "subtitle": "ご質問はメッセージ一つで解決。チェンナイのチームにお問い合わせください。",
+        "metaTitle": "お問い合わせ — Kanmani Tours",
+        "metaDescription": "インドへの旅を一緒に計画しましょう。日本語を話すスタッフが、旅づくりをお手伝いします。",
         "breadcrumbHome": "ホーム",
         "breadcrumbContact": "お問い合わせ",
-        "sendMessage": "メッセージを送る",
-        "contactDirectly": "直接お問い合わせ",
-        "contactDirectlyDesc": "お電話またはメールでお気軽にご連絡ください。",
-        "callUs": "電話する",
-        "emailUs": "メールする",
-        "visitOffices": "オフィスへのアクセス",
-        "tokyoOffice": "東京オフィス",
-        "tokyoAddress": "東京都千代田区",
-        "chennaiOffice": "チェンナイオフィス",
-        "chennaiAddress": "アンナナガル、チェンナイ、インド",
-        "followJourney": "SNSでフォロー"
+        "title": "インドへの旅を、一緒に計画しましょう",
+        "lead": "日本語を話すスタッフが、インドでの旅づくりをお手伝いします。お問い合わせには24時間以内にご返信します。",
+        "formTitle": "メッセージを送る",
+        "directTitle": "直接のお問い合わせ",
+        "phoneLabel": "電話",
+        "emailLabel": "メール",
+        "officeLabel": "オフィス",
+        "office": "インド、チェンナイ、アンナ・ナガル",
+        "hoursLabel": "営業時間",
+        "hours": "月〜土 · 9:00〜18:00（インド標準時）",
+        "faqTitle": "ちょっとした質問ですか？",
+        "faqBody": "ビザ、お金、安全、ツアー内容についての答えは、よくある質問にまとめています。",
+        "faqLink": "よくある質問を見る"
     },
     "Airport": {
         "title": "インドの空港送迎サービス",

@@ -12,18 +12,21 @@ const SOCIALS = [
 ];
 
 // Works as a server component, and as a client component when a client page imports it.
-export default function FooterSection() {
+// `plan={false}` drops the "Plan your journey" call to action on pages that are already the enquiry form.
+export default function FooterSection({ plan = true }: { plan?: boolean }) {
     const t = useTranslations('Footer');
     const tContact = useTranslations('TopBar');
 
     return (
         <footer className={`${styles.footer} surface-ink`} data-ds>
             <div className={styles.inner}>
-                <div className={styles.plan}>
-                    <p className={styles.planTitle}>{t('planTitle')}</p>
-                    <p className={styles.planBody}>{t('planBody')}</p>
-                    <Link href="/contact" className={styles.planLink}>{t('enquire')}</Link>
-                </div>
+                {plan ? (
+                    <div className={styles.plan}>
+                        <p className={styles.planTitle}>{t('planTitle')}</p>
+                        <p className={styles.planBody}>{t('planBody')}</p>
+                        <Link href="/contact" className={styles.planLink}>{t('enquire')}</Link>
+                    </div>
+                ) : null}
 
                 <div className={styles.columns}>
                     <div className={styles.brand}>

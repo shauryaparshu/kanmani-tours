@@ -1,10 +1,28 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useId, useState } from 'react';
+import { useTranslations } from 'next-intl';
+import { AlertCircle, CheckCircle2 } from 'lucide-react';
 import PhoneInput, { isValidPhoneNumber } from 'react-phone-number-input';
 import 'react-phone-number-input/style.css';
+import styles from './Form.module.css';
+
+// Option values are what the API receives; only the visible labels are translated.
+const SUBJECTS = [
+    { value: 'Tour Enquiry', key: 'tourEnquiry' },
+    { value: 'Custom Tour Request', key: 'customTour' },
+    { value: 'Field Trip', key: 'fieldTrip' },
+    { value: 'Celebrity Tour Enquiry', key: 'celebrityTour' },
+    { value: 'Group Booking', key: 'groupBooking' },
+    { value: 'Booking Amendment', key: 'bookingAmendment' },
+    { value: 'General Question', key: 'generalQuestion' },
+] as const;
 
 export default function ContactForm() {
+    const t = useTranslations('ContactForm');
+    const uid = useId();
+    const id = (name: string) => `${uid}-${name}`;
+
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -17,30 +35,29 @@ export default function ContactForm() {
     const [errors, setErrors] = useState<Record<string, string>>({});
     const [submitted, setSubmitted] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [focusedField, setFocusedField] = useState<string | null>(null);
 
     const validateField = (name: string, value: string) => {
         let error = '';
         if (name === 'phone') {
-            if (value && !isValidPhoneNumber(value)) error = 'Please enter a valid phone number.';
+            if (value && !isValidPhoneNumber(value)) error = t('errors.phoneInvalid');
         }
         if (name === 'name') {
             const sanitized = value.replace(/[<>]/g, '').trim();
-            if (sanitized.length < 2) error = 'Please enter your full name (min 2 characters).';
-            if (/[0-9]/.test(sanitized)) error = 'Name should not contain numbers.';
+            if (sanitized.length < 2) error = t('errors.nameShort');
+            if (/[0-9]/.test(sanitized)) error = t('errors.nameDigits');
         }
         if (name === 'email') {
             const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-            if (!emailRegex.test(value.trim())) error = 'Please enter a valid email address.';
+            if (!emailRegex.test(value.trim())) error = t('errors.emailInvalid');
         }
         if (name === 'message') {
-            if (value.trim().length < 10) error = 'Please enter at least 10 characters.';
+            if (value.trim().length < 10) error = t('errors.messageShort');
         }
         return error;
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-        let { name, value } = e.target;
+        const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
         if (errors[name]) {
             setErrors(prev => {
@@ -52,7 +69,6 @@ export default function ContactForm() {
     };
 
     const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-        setFocusedField(null);
         const { name, value } = e.target;
         const error = validateField(name, value);
         if (error) setErrors(prev => ({ ...prev, [name]: error }));
@@ -80,225 +96,160 @@ export default function ContactForm() {
             if (result.success) {
                 setSubmitted(true);
             } else {
-                setErrors({ submit: result.error || 'Something went wrong. Please email us directly.' });
+                setErrors({ submit: result.error || t('errors.submitFailed') });
             }
         } catch {
-            setErrors({ submit: 'Connection error. Please email kanmanitours@gmail.com' });
+            setErrors({ submit: t('errors.connection') });
         } finally {
             setLoading(false);
         }
     };
 
-    const inputStyle = (name: string) => ({
-        fontFamily: "var(--font-jost), Arial, sans-serif",
-        fontSize: '15px',
-        color: '#1C1917',
-        backgroundColor: focusedField === name ? '#FFFFFF' : '#FAFAF7',
-        border: '1px solid',
-        borderColor: focusedField === name ? '#C9933A' : '#E8E4DC',
-        padding: '14px 16px',
-        width: '100%',
-        outline: 'none',
-        borderRadius: 0,
-        transition: 'all 0.3s ease'
+    // Error text under a field, tied to it with aria-describedby.
+    const fieldError = (name: string) =>
+        errors[name] ? (
+            <p id={id(`${name}-error`)} className={styles.error}>
+                <AlertCircle aria-hidden="true" />
+                {errors[name]}
+            </p>
+        ) : null;
+
+    const invalidProps = (name: string) => ({
+        'aria-invalid': errors[name] ? true : undefined,
+        'aria-describedby': errors[name] ? id(`${name}-error`) : undefined,
     });
 
-    const labelStyle = {
-        fontFamily: "var(--font-jost), Arial, sans-serif",
-        fontSize: '12px',
-        fontWeight: '500',
-        letterSpacing: '0.18em',
-        color: '#1C1917',
-        textTransform: 'uppercase' as const,
-        marginBottom: '8px',
-        display: 'block'
-    };
+    const label = (name: string, text: string) => (
+        <label htmlFor={id(name)} className={styles.label}>
+            {text}
+            <span className={styles.required} aria-hidden="true">*</span>
+        </label>
+    );
 
     if (submitted) {
         return (
-            <div style={{ textAlign: 'center', padding: '40px 0' }}>
-                <div style={{
-                    width: '64px', height: '64px', borderRadius: '50%', backgroundColor: 'rgba(201,147,58,0.1)',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 24px', color: '#C9933A', fontSize: '32px'
-                }}>✓</div>
-                <h2 style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontSize: '28px', fontWeight: '500', color: '#1C1917', marginBottom: '12px' }}>Message Sent</h2>
-                <p style={{ fontFamily: "var(--font-jost), Arial, sans-serif", fontSize: '16px', color: '#6B6560', lineHeight: '1.6', maxWidth: '400px', margin: '0 auto 24px' }}>
-                    Thank you, {formData.name.split(' ')[0]}. We have received your enquiry and will respond within 24 hours.
+            <div className={styles.success} role="status">
+                <h2 className={styles.successTitle}>
+                    <CheckCircle2 aria-hidden="true" />
+                    {t('sentTitle')}
+                </h2>
+                <p className={styles.successBody}>
+                    {t('sentBody', { name: formData.name.split(' ')[0] })}
                 </p>
-                <button
-                    onClick={() => setSubmitted(false)}
-                    style={{
-                        fontFamily: "var(--font-jost), Arial, sans-serif", fontSize: '12px', fontWeight: '600', letterSpacing: '0.2em', color: '#C9933A',
-                        background: 'none', border: 'none', cursor: 'pointer', textTransform: 'uppercase'
-                    }}
-                >
-                    Send Another Message
+                <button type="button" className={styles.textButton} onClick={() => setSubmitted(false)}>
+                    {t('sendAnother')}
                 </button>
             </div>
         );
     }
 
     return (
-        <form onSubmit={handleSubmit} noValidate>
-            {/* Name and Email grid */}
-            <div className="r-grid-2" style={{ gap: '20px', marginBottom: '24px' }}>
-                <div>
-                    <label style={labelStyle}>FULL NAME <span style={{ color: '#d49a36' }}>*</span></label>
+        <form onSubmit={handleSubmit} noValidate className={styles.form}>
+            <div className={styles.row}>
+                <div className={styles.field}>
+                    {label('name', t('name'))}
                     <input
+                        id={id('name')}
                         name="name"
                         type="text"
+                        autoComplete="name"
                         value={formData.name}
                         onChange={handleChange}
-                        onFocus={() => setFocusedField('name')}
                         onBlur={handleBlur}
-                        style={inputStyle('name')}
+                        className={styles.input}
                         required
+                        {...invalidProps('name')}
                     />
-                    {errors.name && <span style={{ color: '#E53E3E', fontSize: '12px', marginTop: '4px', display: 'block' }}>{errors.name}</span>}
+                    {fieldError('name')}
                 </div>
-                <div>
-                    <label style={labelStyle}>EMAIL ADDRESS <span style={{ color: '#d49a36' }}>*</span></label>
+                <div className={styles.field}>
+                    {label('email', t('email'))}
                     <input
+                        id={id('email')}
                         name="email"
                         type="email"
+                        autoComplete="email"
                         value={formData.email}
                         onChange={handleChange}
-                        onFocus={() => setFocusedField('email')}
                         onBlur={handleBlur}
-                        style={inputStyle('email')}
+                        className={styles.input}
                         required
+                        {...invalidProps('email')}
                     />
-                    {errors.email && <span style={{ color: '#E53E3E', fontSize: '12px', marginTop: '4px', display: 'block' }}>{errors.email}</span>}
+                    {fieldError('email')}
                 </div>
             </div>
 
-            {/* Phone */}
-            <div style={{ marginBottom: '24px' }}>
-                <label style={labelStyle}>PHONE NUMBER <span style={{ color: '#d49a36' }}>*</span></label>
-                <div style={{ 
-                    backgroundColor: focusedField === 'phone' ? '#FFFFFF' : '#FAFAF7',
-                    border: '1px solid',
-                    borderColor: focusedField === 'phone' ? '#C9933A' : '#E8E4DC',
-                    transition: 'all 0.3s ease',
-                    height: '52px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    padding: '0 16px'
-                }}>
+            <div className={styles.field}>
+                {label('phone', t('phone'))}
+                <div className={styles.phone} data-invalid={errors.phone ? 'true' : undefined}>
                     <PhoneInput
+                        id={id('phone')}
                         international
                         defaultCountry="JP"
                         value={formData.phone}
                         onChange={(val) => setFormData(prev => ({ ...prev, phone: val || '' }))}
-                        onFocus={() => setFocusedField('phone')}
-                        onBlur={() => setFocusedField(null)}
-                        className="custom-phone-input"
                         maxLength={15}
+                        {...invalidProps('phone')}
                     />
                 </div>
-                {errors.phone && <span style={{ color: '#E53E3E', fontSize: '12px', marginTop: '4px', display: 'block' }}>{errors.phone}</span>}
+                {fieldError('phone')}
             </div>
 
-            {/* Subject */}
-            <div style={{ marginBottom: '24px' }}>
-                <label style={labelStyle}>SUBJECT <span style={{ color: '#d49a36' }}>*</span></label>
-                <select
-                    name="subject"
-                    value={formData.subject}
-                    onChange={handleChange}
-                    onFocus={() => setFocusedField('subject')}
-                    onBlur={() => setFocusedField(null)}
-                    style={inputStyle('subject')}
-                    required
-                >
-                    <option value="Tour Enquiry">Tour Enquiry</option>
-                    <option value="Custom Tour Request">Custom Tour Request</option>
-                    <option value="Field Trip">Field Trip</option>
-                    <option value="Celebrity Tour Enquiry">Celebrity Tour Enquiry</option>
-                    <option value="Group Booking">Group Booking</option>
-                    <option value="Booking Amendment">Booking Amendment</option>
-                    <option value="General Question">General Question</option>
-                </select>
+            <div className={styles.field}>
+                {label('subject', t('subject'))}
+                <div className={styles.select}>
+                    <select
+                        id={id('subject')}
+                        name="subject"
+                        value={formData.subject}
+                        onChange={handleChange}
+                        className={styles.input}
+                        required
+                    >
+                        {SUBJECTS.map((s) => (
+                            <option key={s.value} value={s.value}>{t(`subjects.${s.key}`)}</option>
+                        ))}
+                    </select>
+                </div>
             </div>
 
-            {/* Message */}
-            <div style={{ marginBottom: '32px' }}>
-                <label style={labelStyle}>MESSAGE <span style={{ color: '#d49a36' }}>*</span></label>
+            <div className={styles.field}>
+                {label('message', t('message'))}
                 <textarea
+                    id={id('message')}
                     name="message"
                     rows={5}
                     value={formData.message}
                     onChange={handleChange}
-                    onFocus={() => setFocusedField('message')}
                     onBlur={handleBlur}
-                    style={{ ...inputStyle('message'), minHeight: '140px', resize: 'vertical' }}
+                    className={styles.input}
                     required
+                    {...invalidProps('message')}
                 ></textarea>
-                {errors.message && <span style={{ color: '#E53E3E', fontSize: '12px', marginTop: '4px', display: 'block' }}>{errors.message}</span>}
+                {fieldError('message')}
             </div>
 
             {/* Honeypot: hidden from people, filled in by bots */}
-            <div aria-hidden="true" style={{ position: 'absolute', left: '-10000px', width: '1px', height: '1px', overflow: 'hidden' }}>
+            <div aria-hidden="true" className={styles.honeypot}>
                 <label>
                     Website
                     <input name="website" type="text" tabIndex={-1} autoComplete="off" value={formData.website} onChange={handleChange} />
                 </label>
             </div>
 
-            {errors.submit && (
-                <p style={{
-                    fontFamily: "var(--font-jost), Arial, sans-serif",
-                    fontSize: '13px',
-                    color: '#C0392B',
-                    marginBottom: '12px',
-                    textAlign: 'center'
-                }}>{errors.submit}</p>
-            )}
-
-            <button
-                type="submit"
-                disabled={loading}
-                style={{
-                    fontFamily: "var(--font-jost), Arial, sans-serif",
-                    fontSize: '13px',
-                    fontWeight: '600',
-                    letterSpacing: '0.28em',
-                    color: '#1C1917',
-                    backgroundColor: loading ? '#9A8F85' : '#C9933A',
-                    border: 'none',
-                    padding: '18px',
-                    width: '100%',
-                    textTransform: 'uppercase',
-                    cursor: loading ? 'not-allowed' : 'pointer',
-                    marginTop: '8px',
-                    transition: 'all 0.3s ease'
-                }}
-                onMouseOver={(e) => {
-                    if (!loading) {
-                        e.currentTarget.style.backgroundColor = '#1C1917';
-                        e.currentTarget.style.color = '#C9933A';
-                    }
-                }}
-                onMouseOut={(e) => {
-                    if (!loading) {
-                        e.currentTarget.style.backgroundColor = '#C9933A';
-                        e.currentTarget.style.color = '#1C1917';
-                    }
-                }}
-            >
-                {loading ? 'SENDING...' : 'SEND MESSAGE'}
-            </button>
-
-            <p style={{
-                fontFamily: "var(--font-jost), Arial, sans-serif",
-                fontSize: '12px',
-                color: '#9A948F',
-                textAlign: 'center',
-                marginTop: '12px',
-                letterSpacing: '0.04em'
-            }}>
-                We respond within 24 hours
-            </p>
+            <div className={styles.actions}>
+                {errors.submit && (
+                    <p className={styles.alert} role="alert">
+                        <AlertCircle aria-hidden="true" />
+                        {errors.submit}
+                    </p>
+                )}
+                <button type="submit" disabled={loading} className={styles.submit}>
+                    {loading ? t('sending') : t('submit')}
+                </button>
+                <p className={styles.note}>{t('respondNote')}</p>
+            </div>
         </form>
     );
 }
