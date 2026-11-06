@@ -4,146 +4,188 @@ import styles from './Navigation.module.css';
 
 // pathLength={1} on every stroke lets CSS draw the art in on page load.
 
-/** A pointed Mughal arch, open at the bottom: left edge, width, spring line, apex and base. */
+/*
+ * The Taj Mahal, measured from a straight-on photograph and drawn at 0.52 units
+ * per photo pixel, centred on x = 160. Its proportions are the building's own:
+ * nearly twice as wide as tall, a broad rounded dome on a patterned collar, four
+ * roof pavilions, a tall arched portal, two storeys of side arches, four minarets
+ * and a long marble plinth.
+ */
+
+/** A pointed Mughal arch with full shoulders, open at the bottom. */
 function arch(x: number, w: number, spring: number, apex: number, base: number) {
     const c = x + w / 2;
     const rise = spring - apex;
-    return `M${x} ${base}V${spring}C${x} ${spring - rise * 0.6} ${c - w * 0.16} ${apex + rise * 0.25} ${c} ${apex}C${c + w * 0.16} ${apex + rise * 0.25} ${x + w} ${spring - rise * 0.6} ${x + w} ${spring}V${base}`;
+    return `M${x} ${base}V${spring}C${x} ${spring - rise * 0.55} ${c - w * 0.28} ${apex + rise * 0.22} ${c} ${apex}C${c + w * 0.28} ${apex + rise * 0.22} ${x + w} ${spring - rise * 0.55} ${x + w} ${spring}V${base}`;
 }
 
-/** A small onion dome with its pointed tip, sitting on a flat line. */
-function onion(c: number, w: number, base: number, top: number) {
+/** A small rounded dome, used on the pavilions and minarets. */
+function cupola(c: number, hw: number, base: number, top: number) {
     const h = base - top;
-    return `M${c - w * 0.32} ${base}C${c - w * 0.56} ${base - h * 0.3} ${c - w * 0.5} ${base - h * 0.6} ${c - w * 0.16} ${base - h * 0.8}C${c - w * 0.07} ${base - h * 0.88} ${c - w * 0.02} ${base - h * 0.94} ${c} ${top}C${c + w * 0.02} ${base - h * 0.94} ${c + w * 0.07} ${base - h * 0.88} ${c + w * 0.16} ${base - h * 0.8}C${c + w * 0.5} ${base - h * 0.6} ${c + w * 0.56} ${base - h * 0.3} ${c + w * 0.32} ${base}`;
+    return `M${c - hw * 0.9} ${base}C${c - hw * 1.12} ${base - h * 0.42} ${c - hw * 0.85} ${base - h * 0.86} ${c} ${top}C${c + hw * 0.85} ${base - h * 0.86} ${c + hw * 1.12} ${base - h * 0.42} ${c + hw * 0.9} ${base}`;
 }
 
-/** A freestanding minaret: tapering shaft, three balconies and a small domed pavilion. */
-function Minaret({ c, w, top }: { c: number; w: number; top: number }) {
-    const base = 114;
-    const shaftTop = top + (base - top) * 0.2;
-    const inset = w * 0.12;
-    const ring = (y: number) => `M${c - w * 0.72} ${y}H${c + w * 0.72}V${y + 2}H${c - w * 0.72}Z`;
-    const balconies = [0.27, 0.53, 0.79].map((f) => base - (base - shaftTop) * f);
+type MinaretShape = {
+    c: number; // centre
+    base: number; // where the shaft meets the plinth
+    baseHw: number; // half width at the base
+    topHw: number; // half width under the top balcony
+    rings: number[]; // the two lower balconies
+    top: number; // the top balcony
+    pillars: number; // top of the open pavilion
+    dome: number; // top of its dome
+    tip: number; // top of its finial
+    courses?: boolean; // the bands of stone on the larger pair
+};
+
+const FRONT_MINARET: MinaretShape = { c: 38, base: 112, baseHw: 7.6, topHw: 5.4, rings: [84.3, 55.7], top: 25, pillars: 15, dome: 6.5, tip: 2.4, courses: true };
+const REAR_MINARET: MinaretShape = { c: 85, base: 112, baseHw: 4.7, topHw: 3.5, rings: [99.4, 82.2], top: 63, pillars: 56.5, dome: 52, tip: 49 };
+
+function shaftHw(m: MinaretShape, y: number) {
+    return m.topHw + ((m.baseHw - m.topHw) * (y - m.top)) / (m.base - m.top);
+}
+
+function ring(m: MinaretShape, y: number, grow: number) {
+    const hw = shaftHw(m, y) + grow;
+    return `M${m.c - hw} ${y}H${m.c + hw}V${y + grow}L${m.c + hw - grow} ${y + grow * 1.7}H${m.c - hw + grow}L${m.c - hw} ${y + grow}Z`;
+}
+
+function shaft(m: MinaretShape) {
+    return `M${m.c - m.baseHw} ${m.base}L${m.c - m.topHw} ${m.top}H${m.c + m.topHw}L${m.c + m.baseHw} ${m.base}`;
+}
+
+function MinaretFill({ m }: { m: MinaretShape }) {
+    const eave = m.topHw * 1.45;
     return (
         <>
-            <path pathLength={1} d={`M${c - w / 2} ${base}L${c - w / 2 + inset} ${shaftTop}H${c + w / 2 - inset}L${c + w / 2} ${base}`} />
-            {balconies.map((y) => <path key={y} pathLength={1} d={ring(y)} />)}
-            <path className={styles.fine} pathLength={1} d={`M${c} ${base}V${shaftTop}`} />
-            {/* Pavilion on the top balcony */}
-            <path pathLength={1} d={`${ring(shaftTop)}M${c - w * 0.42} ${shaftTop}V${shaftTop - 6}M${c + w * 0.42} ${shaftTop}V${shaftTop - 6}M${c - w * 0.66} ${shaftTop - 6}H${c + w * 0.66}`} />
-            <path pathLength={1} d={onion(c, w * 1.05, shaftTop - 6, top + 2)} />
-            <path pathLength={1} d={`M${c} ${top + 2}V${top - 2}`} />
+            <path className={styles.tajColumn} d={`${shaft(m)}Z`} />
+            <path d={`M${m.c - m.topHw * 1.1} ${m.top}V${m.pillars}H${m.c + m.topHw * 1.1}V${m.top}Z`} />
+            <path d={`M${m.c - eave} ${m.pillars}H${m.c + eave}L${m.c + eave - 1} ${m.pillars - 1.4}H${m.c - eave + 1}Z`} />
+            <path className={styles.tajColumn} d={`${cupola(m.c, m.topHw * 1.2, m.pillars - 1.4, m.dome)}Z`} />
         </>
     );
 }
 
-/** The solid marble under a minaret's outlines. */
-function MinaretFill({ c, w, top }: { c: number; w: number; top: number }) {
-    const base = 114;
-    const shaftTop = top + (base - top) * 0.2;
-    const inset = w * 0.12;
+function Minaret({ m }: { m: MinaretShape }) {
+    const grow = m.courses ? 1.7 : 1.1;
+    const eave = m.topHw * 1.45;
+    const courses = m.courses
+        ? Array.from({ length: 11 }, (_, i) => m.base - 2 - i * 7.6)
+            .filter((y) => y > m.top + 2 && !m.rings.some((r) => Math.abs(y - r) < 3))
+            .map((y) => `M${m.c - shaftHw(m, y)} ${y}H${m.c + shaftHw(m, y)}`)
+            .join('')
+        : '';
+    const posts = [-0.72, 0, 0.72].map((f) => `M${m.c + m.topHw * 1.1 * f} ${m.top}V${m.pillars}`).join('');
     return (
         <>
-            <path d={`M${c - w / 2} ${base}L${c - w / 2 + inset} ${shaftTop}H${c + w / 2 - inset}L${c + w / 2} ${base}Z`} />
-            <path d={`M${c - w * 0.42} ${shaftTop}V${shaftTop - 6}H${c + w * 0.42}V${shaftTop}Z`} />
-            <path d={`${onion(c, w * 1.05, shaftTop - 6, top + 2)}Z`} />
-        </>
-    );
-}
-
-// The front minarets stand free at the plinth's corners; the rear pair shows
-// slimmer and shorter between them and the building, as it does from the gate.
-const FRONT_MINARET = { c: 69, w: 11, top: 26 };
-const REAR_MINARET = { c: 91, w: 7, top: 36 };
-
-/** A roof pavilion (chhatri) beside the great dome. */
-function Chhatri() {
-    return (
-        <>
-            <path pathLength={1} d="M112 66V58M132 66V58M122 66V58" />
-            <path pathLength={1} d="M109.5 58H134.5V56H109.5Z" />
-            <path pathLength={1} d={onion(122, 22, 56, 40)} />
-            <path pathLength={1} d="M122 40V36" />
+            <path pathLength={1} d={shaft(m)} />
+            {courses ? <path className={styles.fine} pathLength={1} d={courses} /> : null}
+            {m.rings.map((y) => <path key={y} className={styles.tajLedge} pathLength={1} d={ring(m, y, grow)} />)}
+            <path className={styles.tajLedge} pathLength={1} d={ring(m, m.top, grow)} />
+            <path className={styles.fine} pathLength={1} d={posts} />
+            <path className={styles.tajLedge} pathLength={1} d={`M${m.c - eave} ${m.pillars}H${m.c + eave}L${m.c + eave - 1} ${m.pillars - 1.4}H${m.c - eave + 1}Z`} />
+            <path pathLength={1} d={cupola(m.c, m.topHw * 1.2, m.pillars - 1.4, m.dome)} />
+            <path pathLength={1} d={`M${m.c} ${m.dome}V${m.tip}`} />
         </>
     );
 }
 
 /** A slim pinnacle (guldasta) on a corner of the facade. */
 function Pinnacle({ x, base, top }: { x: number; base: number; top: number }) {
-    return (
-        <path pathLength={1} d={`M${x - 1.5} ${base}V${top + 4}C${x - 2.2} ${top + 2} ${x - 0.5} ${top + 1} ${x} ${top}C${x + 0.5} ${top + 1} ${x + 2.2} ${top + 2} ${x + 1.5} ${top + 4}V${base}`} />
-    );
+    return <path pathLength={1} d={`M${x - 1} ${base}V${top + 3}H${x + 1}V${base}M${x - 1.5} ${top + 3}C${x - 1.5} ${top + 1.5} ${x - 0.4} ${top + 1} ${x} ${top}C${x + 0.4} ${top + 1} ${x + 1.5} ${top + 1.5} ${x + 1.5} ${top + 3}Z`} />;
 }
+
+const SIDE_ARCHES = [
+    arch(99, 9.4, 80, 71.8, 89.5),
+    arch(99, 9.4, 101.5, 94, 112),
+    arch(115.5, 13.5, 79, 69.8, 89.5),
+    arch(115.5, 13.5, 102, 94, 112),
+];
 
 /** One side of the Taj, drawn on the left; mirrored for the right. Outlines only. */
 function TajSide() {
     return (
         <>
-            <Minaret {...FRONT_MINARET} />
-            <Minaret {...REAR_MINARET} />
-            <Chhatri />
-            <Pinnacle x={102} base={66} top={54} />
-            <Pinnacle x={136} base={54} top={41} />
+            <Minaret m={REAR_MINARET} />
+            <Minaret m={FRONT_MINARET} />
 
-            {/* The facade's side: bevelled corner bay, then the wall, each with two storeys of arches */}
-            <path pathLength={1} d="M102 114V66H136" />
-            <path className={styles.fine} pathLength={1} d="M112 114V66M102 90H136" />
-            <path className={styles.dots} pathLength={1} d="M103 68.5H135" />
-            <path pathLength={1} d={arch(104, 6, 78, 72, 88)} />
-            <path pathLength={1} d={arch(104, 6, 101, 95, 114)} />
-            <path pathLength={1} d={arch(116, 16, 79, 70, 88)} />
-            <path pathLength={1} d={arch(116, 16, 102, 93, 114)} />
-            <path className={styles.fine} pathLength={1} d={arch(119.5, 9, 104, 98, 114)} />
-            <path className={styles.fine} pathLength={1} d={arch(119.5, 9, 81, 75, 88)} />
+            {/* A roof pavilion: three open arches, a wide eave, a rounded dome */}
+            <path pathLength={1} d="M115.7 61.4V53.4M132.3 61.4V53.4" />
+            <path className={styles.fine} pathLength={1} d={`${arch(117, 4.4, 57, 54.4, 61.4)}${arch(121.8, 4.4, 57, 54.4, 61.4)}${arch(126.6, 4.4, 57, 54.4, 61.4)}`} />
+            <path className={styles.tajLedge} pathLength={1} d="M114.2 53.4H133.8L132.6 51.6H115.4Z" />
+            <path pathLength={1} d={cupola(124, 9.4, 51.6, 37.8)} />
+            <path pathLength={1} d="M124 37.8V33.4" />
+
+            <Pinnacle x={96.8} base={61.4} top={46} />
+            <Pinnacle x={109.5} base={61.4} top={48} />
+            <Pinnacle x={135.4} base={54} top={45} />
+
+            {/* The facade's side: bevelled corner bay, then the wall, two storeys of arches each */}
+            <path pathLength={1} d="M96.3 112V61.4H135.4" />
+            <path className={styles.fine} pathLength={1} d="M109.5 112V61.4M96.3 91.6H135.4M112.2 112V65H132.7V112" />
+            <path className={styles.dots} pathLength={1} d="M98 63.2H134" />
+            {SIDE_ARCHES.map((d) => <path key={d} pathLength={1} d={d} />)}
+            <path className={styles.fine} pathLength={1} d={`${arch(119, 6.5, 82, 77, 89.5)}${arch(119, 6.5, 104.5, 99, 112)}`} />
+            <circle className={styles.rosette} pathLength={1} cx="114.2" cy="68" r="1" />
+            <circle className={styles.rosette} pathLength={1} cx="130.7" cy="68" r="1" />
         </>
     );
 }
 
-/** The solid gold-tinted shapes under one side of the Taj's outlines. */
+/** The solid gold under one side of the Taj's outlines. */
 function TajSideFill() {
     return (
         <>
-            <MinaretFill {...FRONT_MINARET} />
-            <MinaretFill {...REAR_MINARET} />
-            <path d="M112 66V58H132V66Z" />
-            <path d="M109.5 58H134.5V56H109.5Z" />
-            <path d={`${onion(122, 22, 56, 40)}Z`} />
+            <MinaretFill m={REAR_MINARET} />
+            <MinaretFill m={FRONT_MINARET} />
+            <path d="M115.7 61.4V53.4H132.3V61.4Z" />
+            <path d="M114.2 53.4H133.8L132.6 51.6H115.4Z" />
+            <path className={styles.tajColumn} d={`${cupola(124, 9.4, 51.6, 37.8)}Z`} />
+            {/* The square block each front minaret stands on */}
+            <path d="M26 112V110H46V112Z" />
         </>
     );
 }
 
-/** The recessed arches on one side, in deep gold. */
+/** The recessed arches on one side, and the bevelled corner in shade. */
 function TajSideDepth() {
     return (
         <>
-            <path d="M102 66H112V114H102Z" className={styles.tajShade} />
-            <path d={`${arch(104, 6, 78, 72, 88)}Z`} />
-            <path d={`${arch(104, 6, 101, 95, 114)}Z`} />
-            <path d={`${arch(116, 16, 79, 70, 88)}Z`} />
-            <path d={`${arch(116, 16, 102, 93, 114)}Z`} />
+            <path className={styles.tajShade} d="M96.3 61.4H109.5V112H96.3Z" />
+            {SIDE_ARCHES.map((d) => <path key={d} d={`${d}Z`} />)}
         </>
     );
 }
 
-// The great onion dome: narrow at the neck, a full shoulder, then a long point.
-const DOME = 'M146 40C137 35 133 29 133 22C133 12 146 8 154 3C157 1 159 -1 160 -4C161 -1 163 1 166 3C174 8 187 12 187 22C187 29 183 35 174 40Z';
+// The great dome: broad and rounded, barely narrower at its foot than at its widest.
+const DOME = 'M135 34.4C132.3 30.6 131.4 26 131.4 21.6C131.4 10.6 145 3.8 160 2.4C175 3.8 188.6 10.6 188.6 21.6C188.6 26 187.7 30.6 185 34.4Z';
+// Its fluted lotus cap, flaring out over the top of the dome.
+const LOTUS_CAP = 'M149 6.4C152.4 5.8 155.6 3.4 157.8 -0.4H162.2C164.4 3.4 167.6 5.8 171 6.4C167.6 7.8 152.4 7.8 149 6.4Z';
+// The blind arches along the plinth, between the minaret blocks.
+const PLINTH_ARCHES = Array.from({ length: 22 }, (_, i) => arch(49 + i * 10.2, 7.6, 120, 116.8, 125.6)).join('');
 
-// The blind arches along the marble plinth.
-const PLINTH_ARCHES = Array.from({ length: 20 }, (_, i) => arch(62 + i * 10, 6, 122, 118.5, 125)).join('');
-
-/** The Taj Mahal in white marble and gold, seen from the gate. The India side of the nav. */
+/** The Taj Mahal in gold, seen straight on from the gate. The India side of the nav. */
 export function TajArt() {
     return (
         <svg className={`${styles.art} ${styles.taj}`} viewBox="0 0 320 130" aria-hidden="true" focusable="false">
             <defs>
                 <linearGradient id="nav-taj-gold" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0" style={{ stopColor: 'var(--color-surface-bright)' }} />
-                    <stop offset="0.75" style={{ stopColor: 'var(--color-surface-bright)' }} />
+                    <stop offset="0" style={{ stopColor: 'var(--color-gold-pale)' }} />
                     <stop offset="1" style={{ stopColor: 'var(--color-gold-light)' }} />
                 </linearGradient>
+                <linearGradient id="nav-taj-column" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0" style={{ stopColor: 'var(--color-gold-light)' }} />
+                    <stop offset="0.4" style={{ stopColor: 'var(--color-gold-pale)' }} />
+                    <stop offset="1" style={{ stopColor: 'var(--color-gold)' }} />
+                </linearGradient>
+                <radialGradient id="nav-taj-dome" cx="0.38" cy="0.32" r="0.78">
+                    <stop offset="0" style={{ stopColor: 'var(--color-surface-bright)' }} />
+                    <stop offset="0.45" style={{ stopColor: 'var(--color-gold-light)' }} />
+                    <stop offset="1" style={{ stopColor: 'var(--color-gold)' }} />
+                </radialGradient>
                 <linearGradient id="nav-taj-depth" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0" style={{ stopColor: 'var(--color-gold)' }} />
-                    <stop offset="1" style={{ stopColor: 'var(--color-gold-deep)' }} />
+                    <stop offset="0" style={{ stopColor: 'var(--color-gold-deep)' }} />
+                    <stop offset="1" style={{ stopColor: 'var(--color-gold)' }} />
                 </linearGradient>
             </defs>
 
@@ -156,53 +198,60 @@ export function TajArt() {
                 <g className={styles.tajFill}>
                     <TajSideFill />
                     <g transform="matrix(-1 0 0 1 320 0)"><TajSideFill /></g>
-                    <path d={DOME} />
-                    <path d="M141 54V40H179V54Z" />
-                    <path d="M102 66H218V114H102Z" />
-                    <path d="M136 54H184V114H136Z" />
-                    <path d="M56 114H264V124H56Z" />
-                    <path d="M48 124H272V128H48Z" />
+                    <path d="M136 54V44.8H184V54Z" />
+                    <path d="M134.5 44.8V34.4H185.5V44.8Z" />
+                    <path className={styles.tajDomeFill} d={DOME} />
+                    <path d={LOTUS_CAP} />
+                    <path d="M96.3 61.4H223.7V112H96.3Z" />
+                    <path d="M135.4 54H184.6V112H135.4Z" />
+                    <path d="M26 112H294V128H26Z" />
                 </g>
                 <g className={styles.tajDepth}>
                     <TajSideDepth />
                     <g transform="matrix(-1 0 0 1 320 0)"><TajSideDepth /></g>
-                    <path d={`${arch(146, 28, 87, 66, 114)}Z`} />
+                    <path d={`${arch(144.4, 31.2, 81.2, 64.6, 112)}Z`} />
                 </g>
 
                 <g className={styles.drawn}>
-                    {/* Ground and the wide marble plinth with its blind arches */}
-                    <path pathLength={1} d="M4 128H316" />
-                    <path pathLength={1} d="M48 128V124H272V128" />
-                    <path pathLength={1} d="M56 124V114H264V124" />
+                    {/* The ground, and the long marble plinth with its row of blind arches */}
+                    <path pathLength={1} d="M2 128H318" />
+                    <path pathLength={1} d="M26 128V112H294V128" />
+                    <path className={styles.fine} pathLength={1} d="M26 114.6H294M46 112V128M274 112V128" />
                     <path className={styles.fine} pathLength={1} d={PLINTH_ARCHES} />
-                    <path className={styles.dots} pathLength={1} d="M58 116.5H262" />
+                    <path className={styles.fine} pathLength={1} d={`${arch(31, 10, 120, 116.4, 126)}${arch(279, 10, 120, 116.4, 126)}`} />
 
                     <TajSide />
                     <g transform="matrix(-1 0 0 1 320 0)"><TajSide /></g>
 
-                    {/* Drum, with a band of gold beading and lotus petals at the dome's foot */}
-                    <path pathLength={1} d="M141 54V40H179V54" />
-                    <path className={styles.dots} pathLength={1} d="M143 47H177" />
-                    <path className={styles.fine} pathLength={1} d="M146 40C148 36 150 36 152 40C154 36 156 36 158 40C160 36 162 36 164 40C166 36 168 36 170 40C172 36 173 36 174 40" />
+                    {/* The drum, and the dome's patterned collar */}
+                    <path pathLength={1} d="M136 54V44.8H184V54" />
+                    <path pathLength={1} d="M134.5 44.8V34.4H185.5V44.8Z" />
+                    <path className={styles.fine} pathLength={1} d="M134.5 37.6H185.5M134.5 41.6H185.5" />
+                    <path className={styles.dots} pathLength={1} d="M136 39.6H184" />
 
-                    {/* The great dome, with its lotus crown and gold crescent finial */}
+                    {/* The great dome, its fluted lotus cap, and the finial of stacked gold balls and a crescent */}
                     <path pathLength={1} d={DOME} />
-                    <path className={styles.fine} pathLength={1} d="M150 5.5C152 8 154 8 155.5 6C157 8.5 158.5 8.5 160 6.5C161.5 8.5 163 8.5 164.5 6C166 8 168 8 170 5.5" />
-                    <path pathLength={1} d="M160 -4V-11" />
-                    <circle className={styles.rosette} pathLength={1} cx="160" cy="-6" r="1.5" />
-                    <circle className={styles.rosette} pathLength={1} cx="160" cy="-9" r="1.1" />
-                    <path pathLength={1} d="M157 -15C157.5 -11.5 162.5 -11.5 163 -15" />
+                    <path className={styles.tajLedge} pathLength={1} d={LOTUS_CAP} />
+                    <path className={styles.fine} pathLength={1} d="M153 6.8L158.6 0M156.6 7.4L159.2 0M160 7.6V0M163.4 7.4L160.8 0M167 6.8L161.4 0" />
+                    <path pathLength={1} d="M160 -0.4V-15" />
+                    <circle className={styles.finialBall} pathLength={1} cx="160" cy="-2.4" r="1.2" />
+                    <circle className={styles.finialBall} pathLength={1} cx="160" cy="-6" r="2" />
+                    <circle className={styles.finialBall} pathLength={1} cx="160" cy="-9.8" r="1.2" />
+                    <path pathLength={1} d="M157 -15.2C157.2 -11.8 162.8 -11.8 163 -15.2" />
+                    <path pathLength={1} d="M160 -15V-17.6" />
 
-                    {/* The great arched portal in its tall frame, with inlaid gold around the arch */}
-                    <path pathLength={1} d="M136 114V54H184V114" />
-                    <path className={styles.dots} pathLength={1} d="M138 56.5H182M138.5 58V114M181.5 58V114" />
-                    <path className={styles.fine} pathLength={1} d="M141 114V59.5H179V114" />
-                    <path className={styles.fine} pathLength={1} d={arch(143, 34, 87, 62, 114)} />
-                    <path pathLength={1} d={arch(146, 28, 87, 66, 114)} />
-                    <path className={styles.fine} pathLength={1} d={`${arch(152, 16, 98, 86, 114)}M160 86V114`} />
-                    <path className={styles.fine} pathLength={1} d="M150 84C154 80 166 80 170 84" />
-                    <circle className={styles.rosette} pathLength={1} cx="146" cy="65" r="1.8" />
-                    <circle className={styles.rosette} pathLength={1} cx="174" cy="65" r="1.8" />
+                    {/* The great arched portal in its tall frame, with gold inlay around the arch */}
+                    <path pathLength={1} d="M135.4 112V54H184.6V112" />
+                    <path className={styles.fine} pathLength={1} d="M139.7 112V59.4H180.3V112" />
+                    <path className={styles.dots} pathLength={1} d="M137.6 56.8H182.4M137.6 58V112M182.4 58V112" />
+                    <path className={styles.fine} pathLength={1} d={arch(142.2, 35.6, 81.2, 61.6, 112)} />
+                    <path pathLength={1} d={arch(144.4, 31.2, 81.2, 64.6, 112)} />
+                    <circle className={styles.rosette} pathLength={1} cx="144.6" cy="65" r="1.7" />
+                    <circle className={styles.rosette} pathLength={1} cx="175.4" cy="65" r="1.7" />
+                    {/* Inside the arch: a window above, a balcony line, a doorway below */}
+                    <path className={styles.tajInner} pathLength={1} d={`${arch(155.4, 9.2, 85, 79.6, 90.6)}M155.4 90.6H164.6M160 79.6V90.6M155.4 85.4H164.6`} />
+                    <path className={styles.tajInner} pathLength={1} d="M147.6 94.2H172.4" />
+                    <path className={styles.tajInner} pathLength={1} d={`${arch(154.4, 11.2, 102.6, 97.2, 112)}M160 97.2V112`} />
                 </g>
             </g>
         </svg>
@@ -213,12 +262,14 @@ export function TajArt() {
 export function MiniTaj({ className }: { className: string }) {
     return (
         <svg className={className} viewBox="0 0 64 44" aria-hidden="true" focusable="false">
-            <path className={styles.miniSolid} d="M32 1C33 5 40 7 41 13C41.5 16 39 18 37 19H27C25 18 22.5 16 23 13C24 7 31 5 32 1Z" />
-            <path className={styles.miniSolid} d="M15 39V24H22V19H42V24H49V39Z" />
-            <path className={styles.miniSolid} d="M4 39L5 13H8L9 39ZM55 39L56 13H59L60 39Z" />
-            <path className={styles.miniLine} d="M32 1C33 5 40 7 41 13C41.5 16 39 18 37 19H27C25 18 22.5 16 23 13C24 7 31 5 32 1ZM15 39V24H22V19H42V24H49V39M4 39L5 13H8L9 39M55 39L56 13H59L60 39M1 39H63V43H1Z" />
-            <path className={styles.miniDepth} d="M27 39V31C27 29 30 28 32 25C34 28 37 29 37 31V39Z" />
-            <path className={styles.miniLine} d="M4.5 11C4.5 9 6.5 8 6.5 6C6.5 8 8.5 9 8.5 11ZM55.5 11C55.5 9 57.5 8 57.5 6C57.5 8 59.5 9 59.5 11Z" />
+            <path className={styles.miniSolid} d="M4.2 39L5.2 15H8L9 39ZM55 39L56 15H58.8L59.8 39Z" />
+            <path className={styles.miniSolid} d="M15 39V23.5H23.5V21H40.5V23.5H49V39Z" />
+            <path className={styles.miniSolid} d="M23.5 21V17.5H40.5V21Z" />
+            <path className={styles.miniSolid} d="M24 17.5C21.4 13 24.5 6.5 32 5C39.5 6.5 42.6 13 40 17.5Z" />
+            <path className={styles.miniSolid} d="M1 39H63V43H1Z" />
+            <path className={styles.miniLine} d="M4.2 39L5.2 15H8L9 39M55 39L56 15H58.8L59.8 39M15 39V23.5H23.5V21H40.5V23.5H49V39M23.5 21V17.5H40.5V21M24 17.5C21.4 13 24.5 6.5 32 5C39.5 6.5 42.6 13 40 17.5M1 39H63V43H1ZM32 5V1M3.8 15H9.4M54.6 15H60.2M6.6 15V11.5M57.4 15V11.5" />
+            <path className={styles.miniDepth} d="M27 39V31C27 29 30 27.5 32 25C34 27.5 37 29 37 31V39Z" />
+            <path className={styles.miniDepth} d="M18 39V34C18 32.8 19.2 32 20.5 30.5C21.8 32 23 32.8 23 34V39ZM41 39V34C41 32.8 42.2 32 43.5 30.5C44.8 32 46 32.8 46 34V39Z" />
         </svg>
     );
 }

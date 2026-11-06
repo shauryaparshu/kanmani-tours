@@ -31,12 +31,19 @@
   --gradient-gold-line: linear-gradient(90deg, #8C6A2C, #E9D39A 45%, #B8924F 60%, #8C6A2C);
   --gradient-red: linear-gradient(160deg, #8A2A21 0%, #A8352A 45%, #B6453A 60%, #8A2A21 100%);
   --text-emboss: 0 1px 0 rgb(255 248 228 / 0.7), 0 2px 3px rgb(59 42 22 / 0.28);
-  --color-nav-india: #F7D795;       /* nav band, India side: warm saffron */
-  --color-nav-india-deep: #F2C46E;  /* its far left end */
-  --color-nav-japan: #FFFFFF;       /* nav band, Japan side: white, with the red sun */
-  --color-sakura: #EDBBC6;          /* nav story: blossoms, petal, lotus; decoration only */
+  --color-gold-pale: #F6E9C4;       /* the lit side of the Taj's gold */
+  --color-nav-band: #FFFFFF;        /* nav band, both sides */
+  --color-sakura: #EDBBC6;          /* nav story: blossoms and petal; decoration only */
   --color-sakura-deep: #C98796;
-  --color-peacock: #1F6F6B;         /* nav story: the peacock; decoration only */
+  --color-lotus: #F4A9C0;           /* nav story: the lotus; decoration only */
+  --color-lotus-light: #FCDDE7;
+  --color-lotus-deep: #C2527B;
+  --color-peacock: #1F6F6B;         /* nav story: the peacock's train; decoration only */
+  --color-peacock-bright: #2F9E90;
+  --color-peacock-blue: #1C5C8C;    /* its neck and breast */
+  --color-peacock-deep: #123F5C;
+  --color-horse: #8A5A2B;           /* nav story: the horse; decoration only */
+  --color-horse-dark: #5A3818;
   --color-error: #8E2A20;
   --color-success: #2E6142;
   --scrim-photo: linear-gradient(to top, rgb(20 16 11 / 0.72) 0%, rgb(20 16 11 / 0.35) 45%, rgb(20 16 11 / 0) 75%);

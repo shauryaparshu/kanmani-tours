@@ -126,14 +126,18 @@
 }
 .rosette { fill: var(--color-gold) !important; }
 
-.tajFill path {
-  fill: url(#nav-taj-gold);
-}
+.tajFill path { fill: url(#nav-taj-gold); }
+.tajFill .tajColumn { fill: url(#nav-taj-column); }
+.tajFill .tajDomeFill { fill: url(#nav-taj-dome); }
 .tajDepth path {
   fill: url(#nav-taj-depth);
-  opacity: 0.55;
+  opacity: 0.72;
 }
-.tajDepth .tajShade { opacity: 0.18; }
+.tajDepth .tajShade { opacity: 0.2; }
+/* Ledges and the lotus cap are solid gold; the lines inside the arch read pale. */
+.drawn .tajLedge { fill: var(--color-gold-light); }
+.drawn .tajInner { stroke: var(--color-gold-light); stroke-width: 0.7; }
+.drawn .finialBall { fill: var(--color-gold); }
 
 /* Fuji: opaque first, so the setting sun disappears behind the gold. */
 .mountainFill { fill: var(--band-right); }
@@ -216,7 +220,7 @@
 .india .mini { right: 3.75rem; }
 .japan .mini { left: 3.75rem; }
 .country:hover .mini { transform: translateY(-1px); }
-.miniSolid { fill: var(--color-surface-bright); }
+.miniSolid { fill: var(--color-gold-light); }
 .miniDepth { fill: var(--color-gold-deep); opacity: 0.55; }
 .miniSun { fill: var(--color-accent); }
 .miniLine {
@@ -483,7 +487,7 @@
 
   /* The band lines up with the gold page frame and continues its double line. */
   .band {
-    --band-right: var(--color-nav-japan);
+    --band-right: var(--color-nav-band);
     --art-h: 104px;           /* drawing height */
     --art-scale: 0.8;         /* band pixels per drawing unit: height / 130 */
     --art-offset: 15.5rem;    /* drawings' distance from the band's centre */
@@ -491,8 +495,7 @@
     display: block;
     height: calc(var(--nav-height) - 16px);
     margin: 10px var(--frame-inset) 0;
-    /* Warm saffron for India, white for Japan, meeting behind the shield. */
-    background: linear-gradient(90deg, var(--color-nav-india-deep) 0%, var(--color-nav-india) 46%, var(--band-right) 54%);
+    background: var(--color-nav-band);
     border: 1px solid var(--color-gold);
     box-shadow: var(--shadow-card);
     transition: height var(--dur-shrink) var(--ease-out);
