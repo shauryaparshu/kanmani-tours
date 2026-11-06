@@ -1,3 +1,5 @@
+import { FujiBirds, TajLotus, TajPeacock } from './NavStory';
+import story from './NavStory.module.css';
 import styles from './Navigation.module.css';
 
 // pathLength={1} on every stroke lets CSS draw the art in on page load.
@@ -6,6 +8,11 @@ import styles from './Navigation.module.css';
 export function TajArt() {
     return (
         <svg className={`${styles.art} ${styles.taj}`} viewBox="0 0 320 130" aria-hidden="true" focusable="false">
+            <g className={story.storyRoot}>
+                <TajPeacock />
+                <TajLotus />
+            </g>
+            <g className={`${styles.drawn} ${story.storyRoot} ${story.tajDusk}`}>
             {/* Ground */}
             <path pathLength={1} d="M4 128H316" />
             {/* Left minaret */}
@@ -36,6 +43,7 @@ export function TajArt() {
             {/* Side arches */}
             <path pathLength={1} d="M96 128V108C96 104 102 101 108 97C114 101 120 104 120 108V128" />
             <path pathLength={1} d="M200 128V108C200 104 206 101 212 97C218 101 224 104 224 108V128" />
+            </g>
         </svg>
     );
 }
@@ -44,9 +52,12 @@ export function TajArt() {
 export function FujiArt() {
     return (
         <svg className={`${styles.art} ${styles.fuji}`} viewBox="0 0 320 130" aria-hidden="true" focusable="false">
-            <circle className={styles.sun} cx="160" cy="34" r="22" />
+            <g className={`${story.storyRoot} ${story.sunPath}`}>
+                <circle className={styles.sun} cx="160" cy="34" r="22" />
+            </g>
             {/* The mountain is filled with the band's colour so the sun sets behind it. */}
             <path className={styles.mountainFill} d="M4 128C60 118 104 92 132 52C137 45 142 40 148 40H172C178 40 183 45 188 52C216 92 260 118 316 128Z" />
+            <g className={styles.drawn}>
             <path pathLength={1} d="M4 128C60 118 104 92 132 52C137 45 142 40 148 40H172C178 40 183 45 188 52C216 92 260 118 316 128" />
             {/* Snow line */}
             <path pathLength={1} d="M120 68C126 72 130 66 136 72C142 78 146 66 152 74C158 82 162 68 168 74C174 80 178 68 184 72C190 76 194 68 200 68" />
@@ -54,6 +65,10 @@ export function FujiArt() {
             <path pathLength={1} d="M146 84C138 98 120 112 96 122" />
             <path pathLength={1} d="M160 88V118" />
             <path pathLength={1} d="M174 84C182 98 200 112 224 122" />
+            </g>
+            <g className={story.storyRoot}>
+                <FujiBirds />
+            </g>
         </svg>
     );
 }

@@ -5,6 +5,7 @@ import { useLocale, useTranslations } from 'next-intl';
 import { Link, usePathname, useRouter } from '@/i18n/routing';
 import { SHOW_SERVICES_NAV } from '@/lib/featureFlags';
 import { FujiArt, NavBadge, TajArt } from './NavArt';
+import { NavStory } from './NavStory';
 import styles from './Navigation.module.css';
 
 const SOCIALS = [
@@ -124,6 +125,7 @@ export default function Navigation() {
                 <nav className={styles.band} aria-label={t('mainNav')}>
                     <TajArt />
                     <FujiArt />
+                    <NavStory />
 
                     <div className={styles.main}>
                         <Link href={links[0].href} className={`${styles.destination} ${styles.toIndia}`} aria-current={isActive(links[0].href) ? 'page' : undefined}>
