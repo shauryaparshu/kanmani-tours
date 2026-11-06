@@ -4,7 +4,7 @@
 
 - New look from the owner's gold mockup, on its own branch and preview URL; `redesign/premium-reskin` is unchanged.
 - Palette: champagne paper, deep brown ink, metallic gold and red gradients (`tokens.css`). Paper grain and a fixed double gold page frame with filigree corners (`PageFrame`).
-- Nav: gold link plaques with scroll ends either side of a centred logo cartouche (from 1280px); About moves to the left plaque. Phone bar keeps the menu.
+- Nav (owner's second mockup): a two-tone band with a line-drawn Taj Mahal and Mount Fuji, To India and To Japan either side of a gold shield logo, About, Gallery and FAQ as pointed buttons below it, Enquire then language at the top right. The art draws in on load, the sun rises, and hovering a destination lights its side. On scroll the band shrinks to one line and the page buttons move left. Phone bar keeps the menu.
 - Hero: embossed bold title, intro and slide controls in a filigree panel, gold and red lacquered buttons (`OrnateLink`), the slideshow inside a bevelled gold frame on a lattice panel with a Mughal crest (`PhotoFrame`), each photo filling it edge to edge from its top edge, so any trimming comes off the bottom, and previous/next lozenges on the frame's bottom rule.
 - Founder link uses `OrnateLink`; homepage section titles are letterpressed. Destination tiles get a dark base under their photos.
 

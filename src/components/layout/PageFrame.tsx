@@ -15,25 +15,22 @@ function Corner({ className }: { className: string }) {
 }
 
 /**
- * Gold theme page furniture: a fixed double gold border with filigree
- * corners around the whole window, and a faint paper grain over the page.
+ * Gold theme page furniture: a fixed double gold border down the sides and
+ * along the bottom of the window, with filigree corners, meeting the nav band
+ * at the top; and a faint paper grain over the page.
  * Decorative only, never catches clicks. Desktop only; phones get the grain.
  */
 export default function PageFrame() {
     return (
-        <div className={styles.root} aria-hidden="true">
-            <div className={styles.grain} />
-            <div className={styles.frame}>
-                <span className={`${styles.edge} ${styles.topLeft}`} />
-                <span className={`${styles.edge} ${styles.topRight}`} />
+        <>
+            <div className={styles.grain} aria-hidden="true" />
+            <div className={styles.frame} aria-hidden="true">
                 <span className={`${styles.edge} ${styles.bottom}`} />
                 <span className={`${styles.edge} ${styles.left}`} />
                 <span className={`${styles.edge} ${styles.right}`} />
-                <Corner className={styles.tl} />
-                <Corner className={styles.tr} />
                 <Corner className={styles.bl} />
                 <Corner className={styles.br} />
             </div>
-        </div>
+        </>
     );
 }

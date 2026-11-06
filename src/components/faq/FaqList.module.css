@@ -110,7 +110,7 @@
   min-width: 0;
 }
 .group {
-  scroll-margin-top: calc(var(--nav-height) + var(--space-3));
+  scroll-margin-top: calc(var(--nav-compact) + var(--space-3));
 }
 .groupHead {
   display: flex;
@@ -201,6 +201,6 @@
   }
   .side {
     position: sticky;
-    top: calc(var(--nav-height) + var(--space-4));
+    top: calc(var(--nav-compact) + var(--space-4));
   }
 }

@@ -106,5 +106,5 @@
   .chapter[data-has-photos]:nth-child(even) .photos { order: -1; }
   .chapter[data-has-photos]:nth-child(even) .photoMain { margin-left: auto; }
   .chapter[data-has-photos]:nth-child(even) .photoInset { right: auto; left: 0; }
-  .photos { position: sticky; top: calc(var(--nav-height) + var(--space-4)); }
+  .photos { position: sticky; top: calc(var(--nav-compact) + var(--space-4)); }
 }

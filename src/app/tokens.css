@@ -10,6 +10,8 @@
   --color-paper: #EEE2C6;          /* page background: champagne (gold theme) */
   --color-paper-deep: #E9DBBB;     /* alternate band */
   --color-surface: #F5ECD8;        /* panels, cards, form fields */
+  --color-surface-bright: #FBF7EC; /* the India half of the nav band, button faces */
+  --color-surface-warm: #F1E6CE;   /* the Japan half of the nav band */
   --color-ink: #3B2A16;            /* text, dark bands: deep brown */
   --color-ink-muted: #5E4A2E;      /* secondary text on paper */
   --color-on-ink: #FBF3DF;         /* text on ink bands and photos */
@@ -97,9 +99,11 @@
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --dur-hover: 200ms;
   --dur-reveal: 750ms;
+  --dur-shrink: 350ms;  /* nav band shrinking on scroll */
 
   /* ── Chrome ──────────────────────────────────────────────────────── */
-  --nav-height: 64px;   /* 84px from 1024px, see below */
+  --nav-height: 64px;   /* full bar; 152px from 1024px, see below */
+  --nav-compact: 64px;  /* bar once scrolled, for sticky offsets; 88px from 1024px */
   --frame-inset: 6px;   /* gold page border; 14px from 1024px */
 
   /* ── Layers ──────────────────────────────────────────────────────── */
@@ -112,7 +116,7 @@
 }
 
 @media (min-width: 1024px) {
-  :root { --nav-height: 84px; --frame-inset: 14px; }
+  :root { --nav-height: 152px; --nav-compact: 88px; --frame-inset: 14px; }
 }
 
 /* Japanese reads better with more line height and no tracking. */
@@ -146,6 +150,7 @@
   :root {
     --dur-hover: 1ms;
     --dur-reveal: 1ms;
+    --dur-shrink: 1ms;
   }
 }
 

@@ -4,7 +4,7 @@ import { Fragment, useEffect, useRef, useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 import { Link, usePathname, useRouter } from '@/i18n/routing';
 import { SHOW_SERVICES_NAV } from '@/lib/featureFlags';
-import Logo from './Logo';
+import { FujiArt, NavBadge, TajArt } from './NavArt';
 import styles from './Navigation.module.css';
 
 const SOCIALS = [
@@ -14,18 +14,6 @@ const SOCIALS = [
     { label: 'LINE', href: 'https://line.me/kanmanitours' },
     { label: 'YouTube', href: 'https://youtube.com/@kanmanitours' },
 ];
-
-/** Scroll-shaped end piece of a nav plaque (left end; `flip` for the right). */
-function PlaqueEnd({ flip = false }: { flip?: boolean }) {
-    return (
-        <svg className={styles.plaqueEnd} data-flip={flip} viewBox="0 0 22 40" aria-hidden="true" focusable="false">
-            <path d="M22 4.5H13C7.5 4.5 3 11 3 20s4.5 15.5 10 15.5h9" />
-            <path d="M22 8.5h-7.5C11 8.5 8 13.5 8 20s3 11.5 6.5 11.5H22" />
-            <path d="M3 20h-3" />
-            <circle cx="14.5" cy="20" r="1.6" />
-        </svg>
-    );
-}
 
 export default function Navigation() {
     const t = useTranslations('Navigation');
@@ -55,7 +43,7 @@ export default function Navigation() {
     const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
 
     useEffect(() => {
-        const onScroll = () => setScrolled(window.scrollY > 8);
+        const onScroll = () => setScrolled(window.scrollY > 40);
         onScroll();
         window.addEventListener('scroll', onScroll, { passive: true });
         return () => window.removeEventListener('scroll', onScroll);
@@ -103,27 +91,6 @@ export default function Navigation() {
         </div>
     );
 
-    // A gold plaque: scroll-shaped ends either side of a row of links.
-    const plaque = (items: typeof links) => (
-        <div className={styles.plaque}>
-            <PlaqueEnd />
-            <ul className={styles.links}>
-                {items.map((link) => (
-                    <li key={link.href}>
-                        <Link
-                            href={link.href}
-                            className={styles.link}
-                            aria-current={isActive(link.href) ? 'page' : undefined}
-                        >
-                            {link.label}
-                        </Link>
-                    </li>
-                ))}
-            </ul>
-            <PlaqueEnd flip />
-        </div>
-    );
-
     return (
         <>
             <a href="#main-content" className={styles.skip}>{t('skipToContent')}</a>
@@ -132,7 +99,7 @@ export default function Navigation() {
                 {/* Phones and tablets: logo, Enquire and the menu button. */}
                 <div className={styles.bar}>
                     <Link href="/" className={styles.logoLink} onClick={() => setMenuOpen(false)}>
-                        <Logo variant="wordmark" className={styles.logo} />
+                        <NavBadge id="nav-badge-bar" className={styles.barBadge} />
                     </Link>
 
                     <div className={styles.actions}>
@@ -151,26 +118,38 @@ export default function Navigation() {
                     </div>
                 </div>
 
-                {/* Desktop: two gold plaques of links either side of the logo cartouche. */}
-                <nav className={styles.desk} aria-label={t('mainNav')}>
-                    <div className={styles.deskStart}>
-                        <span className={styles.rail} aria-hidden="true" />
-                        {plaque(links.slice(0, 3))}
+                {/* Desktop: the India and Japan sides either side of the gold shield,
+                    the page buttons below it, Enquire and language at the top right.
+                    On scroll the band shrinks and the page buttons move to the left. */}
+                <nav className={styles.band} aria-label={t('mainNav')}>
+                    <TajArt />
+                    <FujiArt />
+
+                    <div className={styles.main}>
+                        <Link href={links[0].href} className={`${styles.destination} ${styles.toIndia}`} aria-current={isActive(links[0].href) ? 'page' : undefined}>
+                            {links[0].label}
+                        </Link>
+                        <Link href="/" className={styles.shieldLink}>
+                            <NavBadge id="nav-badge-band" />
+                        </Link>
+                        <Link href={links[1].href} className={`${styles.destination} ${styles.toJapan}`} aria-current={isActive(links[1].href) ? 'page' : undefined}>
+                            {links[1].label}
+                        </Link>
                     </div>
 
-                    <Link href="/" className={styles.cartouche}>
-                        <svg className={styles.cartoucheShape} viewBox="0 0 248 80" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-                            <path className={styles.cartoucheFill} d="M14 1H234A13 13 0 0 0 247 14V66A13 13 0 0 0 234 79H14A13 13 0 0 0 1 66V14A13 13 0 0 0 14 1Z" />
-                            <path className={styles.cartoucheLine} d="M17 6H231A11 11 0 0 0 242 17V63A11 11 0 0 0 231 74H17A11 11 0 0 0 6 63V17A11 11 0 0 0 17 6Z" />
-                        </svg>
-                        <Logo variant="wordmark" className={styles.cartoucheLogo} />
-                    </Link>
+                    <ul className={styles.pages}>
+                        {links.slice(2).map((link) => (
+                            <li key={link.href}>
+                                <Link href={link.href} className={styles.pageButton} aria-current={isActive(link.href) ? 'page' : undefined}>
+                                    <span>{link.label}</span>
+                                </Link>
+                            </li>
+                        ))}
+                    </ul>
 
-                    <div className={styles.deskEnd}>
-                        {plaque(links.slice(3))}
-                        <span className={styles.rail} aria-hidden="true" />
-                        {languageSwitch(styles.langDesktop)}
+                    <div className={styles.topRight}>
                         <Link href="/contact" className={styles.enquire}>{t('enquire')}</Link>
+                        {languageSwitch(styles.langDesktop)}
                     </div>
                 </nav>
             </header>

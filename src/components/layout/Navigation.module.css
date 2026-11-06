@@ -52,113 +52,205 @@
   display: flex;
   align-items: center;
 }
-.logo { width: 132px; }
 
-/* ── Desktop: plaque · cartouche · plaque ── */
-.desk { display: none; }
-
-.deskStart,
-.deskEnd {
-  display: flex;
-  align-items: center;
-  min-width: 0;
-}
-.deskEnd { gap: var(--space-2); }
-
-/* Gold rail from the plaques out toward the page frame. */
-.rail {
-  flex: 1;
-  min-width: var(--space-2);
-  height: 4px;
-  border-top: 1px solid var(--color-gold);
-  border-bottom: 1px solid var(--color-gold);
-  opacity: 0.75;
-}
-
-.plaque {
-  display: flex;
-  align-items: center;
-  flex-shrink: 0;
-}
-.plaqueEnd {
-  width: 22px;
-  height: 40px;
-  flex-shrink: 0;
-  fill: none;
-  stroke: var(--color-gold);
-  stroke-width: 1;
-}
-.plaqueEnd circle { fill: var(--color-gold); stroke: none; }
-.plaqueEnd[data-flip="true"] { transform: scaleX(-1); }
-
-.links {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-  height: 40px;
-  margin: 0;
-  padding: 0 var(--space-1);
-  list-style: none;
-  /* Double gold lines above and below, joining the scroll ends. */
-  border-block: 1px solid var(--color-gold);
-  box-shadow: inset 0 3px 0 -2px var(--color-gold), inset 0 -3px 0 -2px var(--color-gold);
-  background: linear-gradient(to bottom, rgb(255 250 235 / 0.55), rgb(255 250 235 / 0.15));
-}
-.link {
-  display: inline-flex;
-  align-items: center;
-  min-height: 36px;
-  font: var(--weight-medium) var(--text-label) / var(--leading-label) var(--font-body);
-  letter-spacing: var(--tracking-caps);
-  text-transform: uppercase;
-  color: var(--color-ink);
-  text-decoration: none;
-  white-space: nowrap;
-  border-bottom: 1px solid transparent;
-  transition: color var(--dur-hover) var(--ease-out), border-color var(--dur-hover) var(--ease-out);
-}
-.link:hover { color: var(--color-accent); }
-.link[aria-current="page"] { border-bottom-color: var(--color-accent); }
-:lang(ja) .link { letter-spacing: 0.06em; }
-
-/* Logo cartouche: hangs over the top of the page frame, in its gap. */
-.cartouche {
-  position: relative;
-  display: grid;
-  place-items: center;
-  width: 15.5rem;
-  height: calc(var(--nav-height) - 6px);
-  margin-top: 6px;
-  filter: drop-shadow(0 6px 10px rgb(59 42 22 / 0.18));
-}
-.cartoucheShape {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+/* ── Gold shield logo ── */
+.badge {
+  display: block;
+  height: auto;
   overflow: visible;
+  filter: drop-shadow(0 3px 5px rgb(59 42 22 / 0.35));
 }
-.cartoucheFill {
-  fill: var(--color-surface);
-  stroke: var(--color-gold);
-  stroke-width: 1.5;
-  vector-effect: non-scaling-stroke;
-}
-.cartoucheLine {
+.barBadge { width: 5.75rem; }
+.scrollwork path {
   fill: none;
-  stroke: var(--color-gold);
-  stroke-width: 1;
-  vector-effect: non-scaling-stroke;
+  stroke: var(--color-gold-shadow);
+  stroke-width: 0.9;
+  stroke-linecap: round;
 }
-.cartoucheLogo { position: relative; width: 9.75rem; }
+.badgeWord {
+  font-family: var(--font-display);
+  font-size: 31px;
+  font-weight: 600;
+  fill: var(--color-ink);
+}
+.badgeTours {
+  font-family: var(--font-body);
+  font-size: 10.5px;
+  font-weight: var(--weight-medium);
+  letter-spacing: 0.3em;
+  fill: var(--color-ink);
+}
+/* A band of light crosses the shield on load and on hover. */
+.badgeShine {
+  animation: badgeShine 1.4s var(--ease-out) 1.2s 1 both;
+}
+.shieldLink:hover .badgeShine {
+  animation: badgeShineHover 0.9s var(--ease-out) 1 both;
+}
+@keyframes badgeShine { from { transform: translateX(0); } to { transform: translateX(350px); } }
+@keyframes badgeShineHover { from { transform: translateX(0); } to { transform: translateX(350px); } }
 
-/* ── Right-hand actions ── */
-.actions {
+/* ── Desktop band ── */
+.band { display: none; }
+
+/* Line art: draws itself in once when the page loads. */
+.art {
+  position: absolute;
+  bottom: 6px;
+  height: 104px;
+  width: auto;
+  aspect-ratio: 320 / 130;
+  overflow: visible;
+  pointer-events: none;
+  transition: opacity var(--dur-reveal) var(--ease-out), transform var(--dur-reveal) var(--ease-out), filter var(--dur-reveal) var(--ease-out);
+}
+.art path:not(.mountainFill),
+.art circle:not(.sun) {
+  fill: none;
+  stroke: var(--color-gold-deep);
+  stroke-width: 1.25;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  animation: artDraw 2.2s var(--ease-out) 0.1s 1 both;
+}
+@keyframes artDraw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+
+.mountainFill { fill: var(--band-right); }
+/* The sun rises from behind the mountain on load, and a little more on hover. */
+.sun {
+  fill: var(--color-accent);
+  transition: transform var(--dur-reveal) var(--ease-out);
+  animation: sunRise 2s var(--ease-out) 0.4s 1 backwards;
+}
+@keyframes sunRise { from { transform: translateY(38px); } to { transform: translateY(0); } }
+
+.band:has(.toJapan:hover) .sun { transform: translateY(-8px); }
+.band:has(.toIndia:hover) .taj { filter: drop-shadow(0 0 5px rgb(184 146 79 / 0.85)); }
+.band:has(.toJapan:hover) .fuji { filter: drop-shadow(0 0 5px rgb(184 146 79 / 0.6)); }
+
+/* India, the shield, Japan. */
+.main {
+  position: absolute;
+  top: 3px;
+  left: 50%;
   display: flex;
   align-items: center;
   gap: var(--space-2);
+  transform: translateX(-50%);
+}
+.shieldLink { display: block; }
+.shieldLink .badge {
+  width: 9rem;
+  transform-origin: 50% 0;
+  transition: transform var(--dur-shrink) var(--ease-out);
+}
+.shieldLink:hover .badge { transform: scale(1.03); }
+
+/* The two main destinations, with a gold line that grows from the centre. */
+.destination {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 6.5rem;
+  min-height: 44px;
+  font: var(--weight-medium) 0.9375rem / 1.2 var(--font-body);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--color-ink);
+  text-decoration: none;
+  transition: color var(--dur-hover) var(--ease-out), transform var(--dur-shrink) var(--ease-out);
+}
+.destination::after {
+  content: "";
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  bottom: 6px;
+  height: 2px;
+  background: var(--gradient-gold-line);
+  transform: scaleX(0);
+  transition: transform calc(var(--dur-hover) * 1.5) var(--ease-out);
+}
+.destination:hover { color: var(--color-accent-deep); }
+.destination:hover::after,
+.destination[aria-current="page"]::after { transform: scaleX(1); }
+:lang(ja) .destination { letter-spacing: 0.06em; }
+
+/* About, Gallery, FAQ: cream plates with pointed ends, below the shield.
+   On hover the plate fills with gold and lifts. */
+.pages {
+  position: absolute;
+  left: 50%;
+  top: 92px;
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  transform: translateX(-50%);
+  transform-origin: 0 50%;
+  transition: transform var(--dur-shrink) var(--ease-out);
+}
+.pageButton {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 34px;
+  padding: 0 1.25rem;
+  font: var(--weight-medium) 0.75rem / 1 var(--font-body);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--color-ink);
+  text-decoration: none;
+  transition: color var(--dur-hover) var(--ease-out), transform var(--dur-hover) var(--ease-out);
+}
+:lang(ja) .pageButton { letter-spacing: 0.04em; }
+/* Outline and face are both cut to the pointed shape; focus rings stay unclipped. */
+.pageButton::before,
+.pageButton::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  clip-path: polygon(10px 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 10px 100%, 0 50%);
+}
+.pageButton::before {
+  inset: 0;
+  background: var(--color-gold);
+}
+.pageButton::after {
+  inset: 1px;
+  background: linear-gradient(to bottom, var(--color-surface-bright), var(--color-surface));
+  transition: opacity var(--dur-hover) var(--ease-out);
+}
+.pageButton:hover {
+  color: var(--color-on-ink);
+  transform: translateY(-2px);
+}
+.pageButton:hover::before { background: var(--gradient-gold); }
+.pageButton:hover::after { opacity: 0; }
+.pageButton[aria-current="page"] { color: var(--color-on-ink); }
+.pageButton[aria-current="page"]::before { background: var(--gradient-gold); }
+.pageButton[aria-current="page"]::after { opacity: 0; }
+
+/* Enquire, then the language choice, at the top right. */
+.topRight {
+  position: absolute;
+  top: 6px;
+  right: 12px;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  transition: transform var(--dur-shrink) var(--ease-out);
 }
 
+/* ── Language ── */
 .langDesktop { display: none; }
 .langDesktop,
 .langMenu {
@@ -190,35 +282,48 @@
   border-bottom-color: var(--color-ink);
 }
 
-/* Red lacquer button with a fine gold inner border. */
+/* ── Enquire: red lacquer with pointed ends and a gold edge ── */
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
 .enquire {
   position: relative;
+  isolation: isolate;
   display: inline-flex;
   align-items: center;
   min-height: 44px;
-  padding: 0 var(--space-2);
-  background: var(--gradient-red);
+  padding: 0 var(--space-3);
   color: var(--color-on-ink);
-  border: 1px solid var(--color-gold-shadow);
-  border-radius: var(--radius-soft);
-  box-shadow: var(--shadow-button), inset 0 1px 0 rgb(255 220 200 / 0.25);
   font: var(--weight-medium) var(--text-label) / 1 var(--font-body);
   letter-spacing: var(--tracking-caps);
   text-transform: uppercase;
   text-decoration: none;
   white-space: nowrap;
-  transition: filter var(--dur-hover) var(--ease-out);
+  transition: transform var(--dur-hover) var(--ease-out), filter var(--dur-hover) var(--ease-out);
 }
-.enquire::before {
+.enquire::before,
+.enquire::after {
   content: "";
   position: absolute;
-  inset: 3px;
-  border: 1px solid var(--color-gold-light);
-  border-radius: 1px;
-  opacity: 0.7;
-  pointer-events: none;
+  z-index: -1;
+  clip-path: polygon(12px 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 12px 100%, 0 50%);
 }
-.enquire:hover { filter: brightness(1.08) saturate(1.05); }
+.enquire::before {
+  inset: 0;
+  background: var(--color-gold-light);
+}
+.enquire::after {
+  inset: 1.5px;
+  background: linear-gradient(100deg, var(--color-accent-deep) 0%, var(--color-accent) 40%, #C4574A 50%, var(--color-accent) 60%, var(--color-accent-deep) 100%);
+  background-size: 300% 100%;
+  background-position: 100% 0;
+  transition: background-position calc(var(--dur-reveal) * 0.9) var(--ease-out);
+}
+/* On hover a band of light runs across the lacquer. */
+.enquire:hover { transform: translateY(-1px); }
+.enquire:hover::after { background-position: 0 0; }
 :lang(ja) .enquire { letter-spacing: 0.06em; }
 
 .menuButton {
@@ -319,55 +424,78 @@
 .menuSocials a:hover { color: var(--color-accent); }
 
 @media (max-width: 380px) {
-  .logo { width: 112px; }
-  .enquire { padding: 0 var(--space-1); }
-}
-
-/* Small desktops: the phone bar, kept clear of the page frame's corners. */
-@media (min-width: 1024px) and (max-width: 1279px) {
-  .bar {
-    padding-left: calc(var(--frame-inset) + 4.5rem);
-    padding-right: calc(var(--frame-inset) + 4.5rem);
-  }
-  .header::after { left: calc(var(--frame-inset) + 4rem); right: calc(var(--frame-inset) + 4rem); }
-}
-
-/* The full ornate bar needs room for both plaques beside the logo. */
-@media (min-width: 1280px) {
-  .header::after { display: none; }
-  .bar { display: none; }
-  .desk {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-    align-items: start;
-    height: var(--nav-height);
-    /* Inside the gold page frame and clear of its corner ornaments. */
-    padding-left: calc(var(--frame-inset) + 4.75rem);
-    padding-right: calc(var(--frame-inset) + var(--space-3));
-  }
-  .deskStart,
-  .deskEnd { height: 100%; padding-top: 8px; }
-  .deskStart { padding-right: var(--space-1); }
-  .deskEnd { padding-left: var(--space-1); }
-  .langDesktop { display: flex; }
-  .enquire { padding: 0 var(--space-3); }
-  .menuButton,
-  .menu { display: none; }
-}
-
-@media (min-width: 1280px) and (max-width: 1535px) {
-  .cartouche { width: 13rem; }
-  .cartoucheLogo { width: 8.75rem; }
-  .links { gap: var(--space-2); }
-  .link { letter-spacing: 0.13em; }
-  .deskEnd { gap: var(--space-1); }
+  .barBadge { width: 5rem; }
   .enquire { padding: 0 var(--space-2); }
 }
 
-/* Japanese labels run longer: tighten the right-hand group on the narrowest desktops. */
-@media (min-width: 1280px) and (max-width: 1365px) {
-  :lang(ja) .links { gap: 0.75rem; }
-  :lang(ja) .link { letter-spacing: 0.02em; }
-  :lang(ja) .langButton { padding: 0 var(--space-half); }
-  :lang(ja) .enquire { padding: 0 0.75rem; letter-spacing: 0.02em; }
+@media (min-width: 1024px) {
+  .header::after,
+  .bar,
+  .menuButton,
+  .menu { display: none; }
+
+  /* The band lines up with the gold page frame and continues its double line. */
+  .band {
+    --band-right: var(--color-surface-warm);
+    position: relative;
+    display: block;
+    height: calc(var(--nav-height) - 16px);
+    margin: 10px var(--frame-inset) 0;
+    background: linear-gradient(90deg, var(--color-surface-bright) 46%, var(--band-right) 54%);
+    border: 1px solid var(--color-gold);
+    box-shadow: var(--shadow-card);
+    transition: height var(--dur-shrink) var(--ease-out);
+  }
+  .band::before {
+    content: "";
+    position: absolute;
+    inset: 4px;
+    border: 1px solid var(--color-gold);
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  .taj { right: calc(50% + 15.5rem); }
+  .fuji { left: calc(50% + 15.5rem); }
+  .langDesktop { display: flex; }
+
+  /* Scrolled: a slim band with everything on one line. */
+  .header[data-scrolled="true"] .band { height: calc(var(--nav-compact) - 16px); }
+  .header[data-scrolled="true"] .art {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  .header[data-scrolled="true"] .shieldLink .badge { transform: translateY(5px) scale(0.583); }
+  .header[data-scrolled="true"] .toIndia { transform: translate(30px, -15px); }
+  .header[data-scrolled="true"] .toJapan { transform: translate(-30px, -15px); }
+  .header[data-scrolled="true"] .pages {
+    /* From the centre of the band to its left end, and up to its middle. */
+    transform: translate(calc(-50vw + 37px), -74px) scale(var(--pages-compact-scale, 1));
+  }
+  .header[data-scrolled="true"] .topRight { transform: translateY(7px); }
+}
+
+/* Smaller art until there is room for Fuji's sun beside the Enquire button. */
+@media (min-width: 1024px) and (max-width: 1439px) {
+  .art { height: 72px; }
+}
+
+/* Narrow desktops: tighter buttons so the slim band fits. */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .taj { right: calc(50% + 14.5rem); }
+  .fuji { left: calc(50% + 14.5rem); }
+  .band { --pages-compact-scale: 0.85; }
+  .destination { min-width: 5.5rem; }
+  .topRight { gap: var(--space-1); }
+  .enquire { padding: 0 var(--space-2); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .art path:not(.mountainFill),
+  .art circle:not(.sun),
+  .sun,
+  .badgeShine,
+  .shieldLink:hover .badgeShine { animation: none; }
+  .badgeShine { display: none; }
+  .band:has(.toJapan:hover) .sun { transform: none; }
 }
