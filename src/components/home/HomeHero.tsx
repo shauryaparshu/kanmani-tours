@@ -97,14 +97,13 @@ export default function HomeHero({ images }: HomeHeroProps) {
                     </div>
                 </div>
 
-                {/* One fixed frame; only the photo inside changes. Every photo is shown
-                    whole; a soft blur of itself fills any space left beside it. */}
+                {/* One fixed frame; only the photo inside changes. Each photo fills it
+                    edge to edge from its top, so faces stay in and trimming comes off the bottom. */}
                 <div className={styles.visual}>
                     <PhotoFrame>
                         <div className={styles.photos}>
                             {mounted.map((i) => (
                                 <div key={images[i]} className={styles.slide} data-active={i === index}>
-                                    <Image src={images[i]} alt="" fill sizes="(min-width: 1024px) 56vw, 86vw" className={styles.backdrop} />
                                     <Image
                                         src={images[i]}
                                         alt={i === index ? t('heroAlt') : ''}

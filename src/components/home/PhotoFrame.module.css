@@ -64,10 +64,11 @@
 .scroll[data-side="start"] { right: 100%; transform: translateY(-50%) scaleX(-1); }
 .scroll[data-side="end"] { left: 100%; transform: translateY(-50%); }
 
-/* The opening is the photo's box; its shape suits the wide hero photos. */
+/* The opening is the photo's box. This wide shape keeps nearly the full width
+   of the widest hero photos; any trimming on the others comes off the bottom. */
 .opening {
   position: relative;
-  aspect-ratio: 1.55 / 1;
+  aspect-ratio: 1.7 / 1;
 }
 
 /* Strokes are centred half a band outside the opening, so the moulding's inner

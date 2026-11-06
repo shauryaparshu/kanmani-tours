@@ -163,13 +163,11 @@
   transition: opacity calc(var(--dur-reveal) * 1.6) var(--ease-out);
 }
 .slide[data-active="true"] { opacity: 1; z-index: 1; }
-/* The whole photo, never cropped. */
-.image { object-fit: contain; }
-/* The same photo, heavily blurred and warmed to a dark glow, fills any space beside it. */
-.backdrop {
+/* Fills the frame with no gaps, anchored to the top of the photo so faces
+   stay in; a taller photo loses only its bottom. */
+.image {
   object-fit: cover;
-  filter: blur(40px) brightness(0.5) sepia(0.35);
-  transform: scale(1.3);
+  object-position: 50% 0%;
 }
 
 /* ── Slide buttons ── */
@@ -249,8 +247,8 @@
   .title { font-size: min(calc(var(--text-display) * 1.12), 14.5cqw); }
   :lang(ja) .title { font-size: min(calc(var(--text-display) * 1.12), 12.5cqw); }
   .visual {
-    /* As large as the screen height allows: panel about 1.42 wide per 1 tall. */
-    width: min(100%, calc((100svh - var(--nav-height) - 13rem) * 1.42));
+    /* As large as the screen height allows: panel about 1.55 wide per 1 tall. */
+    width: min(100%, calc((100svh - var(--nav-height) - 13rem) * 1.55));
     justify-self: center;
     padding-top: var(--space-6);
   }

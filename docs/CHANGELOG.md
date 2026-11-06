@@ -5,7 +5,7 @@
 - New look from the owner's gold mockup, on its own branch and preview URL; `redesign/premium-reskin` is unchanged.
 - Palette: champagne paper, deep brown ink, metallic gold and red gradients (`tokens.css`). Paper grain and a fixed double gold page frame with filigree corners (`PageFrame`).
 - Nav: gold link plaques with scroll ends either side of a centred logo cartouche (from 1280px); About moves to the left plaque. Phone bar keeps the menu.
-- Hero: embossed bold title, intro and slide controls in a filigree panel, gold and red lacquered buttons (`OrnateLink`), the slideshow inside a bevelled gold frame on a lattice panel with a Mughal crest (`PhotoFrame`), showing every photo whole with a blurred fill beside narrower ones, and previous/next lozenges on the frame's bottom rule.
+- Hero: embossed bold title, intro and slide controls in a filigree panel, gold and red lacquered buttons (`OrnateLink`), the slideshow inside a bevelled gold frame on a lattice panel with a Mughal crest (`PhotoFrame`), each photo filling it edge to edge from its top edge, so any trimming comes off the bottom, and previous/next lozenges on the frame's bottom rule.
 - Founder link uses `OrnateLink`; homepage section titles are letterpressed. Destination tiles get a dark base under their photos.
 
 ## 2026-11-06 Homepage section transitions
