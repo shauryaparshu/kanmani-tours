@@ -1,8 +1,8 @@
 {
     "Navigation": {
         "home": "Home",
-        "toIndia": "To India",
-        "toJapan": "To Japan",
+        "indiaTours": "India Tours",
+        "japanTours": "Japan Tours",
         "tours": "Tours",
         "gallery": "Gallery",
         "airport": "Airport Pickup & Drop",

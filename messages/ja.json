@@ -1,8 +1,8 @@
 {
     "Navigation": {
         "home": "ホーム",
-        "toIndia": "インドへ",
-        "toJapan": "日本へ",
+        "indiaTours": "インドツアー",
+        "japanTours": "日本ツアー",
         "tours": "ツアー",
         "gallery": "ギャラリー",
         "airport": "送迎サービス",

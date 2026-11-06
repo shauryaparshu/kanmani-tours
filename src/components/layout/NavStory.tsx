@@ -4,13 +4,14 @@ import styles from './NavStory.module.css';
 /**
  * "The Bridge": the nav band's looping story, always opening from India.
  *
- * 1. The Journey: a steam engine leaves from behind the Taj and goes behind the
- *    logo; a long bullet train comes out and fills the Japan side as the sun rises.
+ * 1. The Journey: a steam engine comes in from the far left edge and goes behind
+ *    the logo; a long bullet train comes out and runs to the far right edge as the
+ *    sun rises.
  * 2. The Gift: the train's wind stirs the sakura into blossom, and one petal
  *    drifts back to India and becomes a lotus.
  * 3. The Return Gift: a peacock bows to the lotus and fans its feathers. One
- *    feather floats to Japan and folds into a paper crane, which flies into the
- *    sunset. Then a puff of steam behind the Taj starts it all again.
+ *    feather floats to Japan and becomes a bird, which flies across the setting
+ *    sun and settles on the sakura. The loop ends there; the engine comes again.
  *
  * All timing lives in NavStory.module.css; everything here is decoration.
  */
@@ -22,7 +23,7 @@ const LOTUS_PETALS = [-64, -40, 40, 64, -18, 18, 0];
 /** The lotus the petal becomes, on still water, left of the Taj. Sits inside the Taj drawing. */
 export function TajLotus() {
     return (
-        <g transform="translate(-24 123)">
+        <g transform="translate(22 123)">
             <g className={styles.water}>
                 <path d="M-24 5H24M-15 9H15" />
             </g>
@@ -40,7 +41,7 @@ const FEATHERS = [-98, -82, -66, -50, -34, -18, -2, 14, 30];
 /** The peacock, facing the lotus. Sits inside the Taj drawing, furthest left. */
 export function TajPeacock() {
     return (
-        <g transform="translate(-72 128)">
+        <g transform="translate(-26 128)">
             <g className={styles.peacock}>
                 <path className={styles.peacockGround} d="M-62 0H24" />
                 <g transform="translate(-12 -14)">
@@ -61,19 +62,6 @@ export function TajPeacock() {
                     <circle className={styles.peacockHead} cx="14" cy="-44" r="3.2" />
                     <path className={styles.peacockLine} d="M17 -44L21.5 -43M14 -47L12 -53M14 -47L15 -54M14 -47L18 -52" />
                 </g>
-            </g>
-        </g>
-    );
-}
-
-/** The paper crane the feather folds into. Sits inside the Fuji drawing, left of the sun. */
-export function FujiCrane() {
-    return (
-        <g className={styles.crane}>
-            <path className={styles.cranePaper} d="M-19 -6L-7 2L6 1L17 -9L13 3L4 8H-5Z" />
-            <path className={styles.craneFold} d="M-7 2L4 8M6 1L4 8" />
-            <g className={styles.craneWing}>
-                <path className={styles.cranePaper} d="M-5 2L6 -16L8 1Z" />
             </g>
         </g>
     );
@@ -105,39 +93,6 @@ function Wheel({ x, r }: { x: number; r: number }) {
     );
 }
 
-/**
- * Behind the drawings: the rail along the whole band, and the steam engine, so
- * it starts out hidden by the Taj and later disappears behind the page buttons.
- */
-export function NavStoryBack() {
-    return (
-        <div className={`${styles.layer} ${styles.storyRoot}`} aria-hidden="true">
-            <div className={styles.rail} />
-            <svg className={styles.engine} viewBox="0 0 78 28" focusable="false">
-                <g className={styles.smoke}>
-                    <circle className={styles.puff} cx="58" cy="2" r="3.5" />
-                    <circle className={styles.puff} cx="52" cy="-2" r="4.5" />
-                    <circle className={styles.puff} cx="45" cy="-6" r="5.5" />
-                </g>
-                <path className={styles.engineBody} d="M6 7H22V20H6Z" />
-                <path className={styles.engineRoof} d="M3 7H25L22 3H6Z" />
-                <path className={styles.engineWindow} d="M10 9H18V14H10Z" />
-                <path className={styles.engineBody} d="M22 10H66C69 10 70 12 70 15C70 18 69 20 66 20H22Z" />
-                <path className={styles.engineFine} d="M34 10V20M46 10V20" />
-                <path className={styles.engineBody} d="M55 10V4H61V10Z" />
-                <path className={styles.engineRoof} d="M53 4H63L61 1H55Z" />
-                <path className={styles.engineBody} d="M38 10C38 7 44 7 44 10Z" />
-                <path className={styles.engineFine} d="M70 20L77 27H66" />
-                <Wheel x={14} r={6} />
-                <Wheel x={32} r={6} />
-                <Wheel x={50} r={6} />
-                <Wheel x={63} r={3.5} />
-            </svg>
-            <div className={styles.whistle} />
-        </div>
-    );
-}
-
 /** One end of the bullet train, drawn as its nose facing right; `.trainTail` mirrors it. */
 function TrainEnd({ className }: { className: string }) {
     return (
@@ -150,13 +105,67 @@ function TrainEnd({ className }: { className: string }) {
 }
 
 /**
- * In front of the drawings, behind the links: the long bullet train, the sakura
- * branch, the petal and the feather. The links come later in the page, so all of
- * this passes behind the logo and the buttons.
+ * The bird the feather becomes, facing right, with its feet at the bottom of the
+ * drawing so it can stand on the branch. It flies with open wings and folds them
+ * when it lands.
+ */
+function Bird() {
+    return (
+        <svg className={styles.bird} viewBox="-15 -13 30 26" focusable="false">
+            <circle className={styles.birdBurst} cx="0" cy="0" r="9" />
+            <g className={styles.birdFlying}>
+                <path className={`${styles.birdWingFar} ${styles.birdFlap}`} d="M4 -2C4 -7 1 -11 -3 -12C-3 -8 -1 -3 1 -1Z" />
+            </g>
+            <path className={styles.birdBody} d="M-7 3L-15 0.5L-14 5L-6 6Z" />
+            <circle className={styles.birdTailEye} cx="-13" cy="3" r="1.4" />
+            <g className={styles.birdPerched}>
+                <path className={styles.birdLegs} d="M-1 6.5V12M-3 12H1.5M3 6V12M1 12H5.5" />
+            </g>
+            <path className={styles.birdBody} d="M-8 3C-5 -2 0 -4 4 -4C4.5 -7 7.5 -8.5 10 -7C11.5 -6 12 -4.5 11.5 -3C10.5 2 6 7 0 7C-4 7 -7 5 -8 3Z" />
+            <path className={styles.birdBeak} d="M11.3 -5L15 -3L11.3 -1.5Z" />
+            <circle className={styles.birdEye} cx="8.5" cy="-4.8" r="1" />
+            <g className={styles.birdPerched}>
+                <path className={styles.birdWing} d="M-6 2C-3 -1 3 -1 5 1C3 5 -2 6 -7 4Z" />
+            </g>
+            <g className={styles.birdFlying}>
+                <path className={`${styles.birdWing} ${styles.birdFlap}`} d="M2 -1C0 -7 -5 -11 -11 -12C-9 -6 -6 -1 -2 2Z" />
+            </g>
+        </svg>
+    );
+}
+
+/**
+ * In front of the drawings, behind the links: the rail, the steam engine, the long
+ * bullet train, the sakura branch, the petal, the feather and the bird. The links
+ * come later in the page, so all of this passes behind the logo and the buttons.
  */
 export function NavStoryFront() {
     return (
         <div className={`${styles.layer} ${styles.storyRoot}`} aria-hidden="true">
+            <div className={styles.rail} />
+            <div className={styles.line}>
+                <svg className={styles.engine} viewBox="0 0 78 28" focusable="false">
+                    <g className={styles.smoke}>
+                        <circle className={styles.puff} cx="58" cy="2" r="3.5" />
+                        <circle className={styles.puff} cx="52" cy="-2" r="4.5" />
+                        <circle className={styles.puff} cx="45" cy="-6" r="5.5" />
+                    </g>
+                    <path className={styles.engineBody} d="M6 7H22V20H6Z" />
+                    <path className={styles.engineRoof} d="M3 7H25L22 3H6Z" />
+                    <path className={styles.engineWindow} d="M10 9H18V14H10Z" />
+                    <path className={styles.engineBody} d="M22 10H66C69 10 70 12 70 15C70 18 69 20 66 20H22Z" />
+                    <path className={styles.engineFine} d="M34 10V20M46 10V20" />
+                    <path className={styles.engineBody} d="M55 10V4H61V10Z" />
+                    <path className={styles.engineRoof} d="M53 4H63L61 1H55Z" />
+                    <path className={styles.engineBody} d="M38 10C38 7 44 7 44 10Z" />
+                    <path className={styles.engineFine} d="M70 20L77 27H66" />
+                    <Wheel x={14} r={6} />
+                    <Wheel x={32} r={6} />
+                    <Wheel x={50} r={6} />
+                    <Wheel x={63} r={3.5} />
+                </svg>
+            </div>
+
             <div className={styles.track}>
                 <div className={styles.bullet}>
                     <TrainEnd className={styles.trainTail} />
@@ -194,6 +203,8 @@ export function NavStoryFront() {
                 <ellipse className={styles.featherEye} cx="0" cy="-17" rx="4" ry="5.5" />
                 <circle className={styles.featherPupil} cx="0" cy="-17" r="1.6" />
             </svg>
+
+            <Bird />
         </div>
     );
 }

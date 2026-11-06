@@ -1,8 +1,8 @@
 /* "The Bridge" (see NavStory.tsx). Every piece runs on the same --dur-story
    clock, so percentages below are one shared timeline:
 
-     The Journey       0-14   steam engine leaves the Taj, goes behind the logo
-                       13-24  bullet train comes out, fills the Japan side
+     The Journey       0-14   steam engine comes in from the far left edge
+                       13-24  bullet train comes out, reaches the far right edge
                        15-26  the sun rises as it arrives
                        28-34  the train leaves
      The Gift          30-37  its wind stirs the branch, sakura blossoms
@@ -12,9 +12,10 @@
                        65-70  it bows
                        70-75  it fans its feathers
                        76-86  one feather floats to Japan
-                       86-95  it folds into a paper crane, which flies up
+                       86-94  it becomes a bird, which flies to the sakura
                        88-97  the Taj glows, the sun sets, all clears
-                       97-100 a puff of steam: it starts again
+                       94-98  the bird sits on the branch: the loop ends here
+                       98-100 the bird and the blossoms fade
 
    Only transform, opacity and filter animate, so nothing shifts the layout.
    Pieces rest hidden, so without animation only the static drawings show.
@@ -24,7 +25,9 @@
    units convert to band pixels with --taj-x, --fuji-x and --art-top below. */
 
 .layer {
-  --branch-w: 7.5rem;
+  --branch-w: 8.5rem;
+  --branch-top: 3.75rem;
+  --bird-w: 30px;
   --art-top: calc(128px - var(--art-h));
   --taj-x: calc(50cqw - var(--art-offset) - 320px * var(--art-scale));
   --fuji-x: calc(50cqw + var(--art-offset));
@@ -40,7 +43,7 @@ header[data-scrolled="true"] .layer { opacity: 0; }
 header[data-scrolled="true"] .storyRoot,
 header[data-scrolled="true"] .storyRoot * { animation-play-state: paused; }
 
-/* ── The rail, with fine gold sleepers, along the whole band ── */
+/* ── The rail, with fine gold sleepers, from edge to edge ── */
 .rail {
   position: absolute;
   left: 6px;
@@ -52,7 +55,13 @@ header[data-scrolled="true"] .storyRoot * { animation-play-state: paused; }
   opacity: 0.7;
 }
 
-/* ── The steam engine ── */
+/* ── The steam engine: comes in from the far left edge, as the bullet train
+   leaves at the far right one, and runs in front of the Taj's base. ── */
+.line {
+  position: absolute;
+  inset: 0 6px;
+  overflow: hidden;
+}
 .engine {
   position: absolute;
   top: calc(100% - 7px - 28px);
@@ -61,13 +70,12 @@ header[data-scrolled="true"] .storyRoot * { animation-play-state: paused; }
   height: 28px;
   overflow: visible;
   opacity: 0;
-  animation: engine var(--dur-story) ease-in-out infinite;
+  animation: engine var(--dur-story) linear infinite;
 }
 @keyframes engine {
-  0% { opacity: 0; transform: translateX(calc(var(--taj-x) + 160px * var(--art-scale) - 39px)); }
-  1.5% { opacity: 1; }
-  13.5% { opacity: 1; transform: translateX(calc(50cqw - 39px)); }
-  14%, 100% { opacity: 0; transform: translateX(calc(50cqw - 39px)); }
+  0% { opacity: 1; transform: translateX(-78px); }
+  13.5% { opacity: 1; transform: translateX(calc(50cqw - 6px - 39px)); }
+  14%, 100% { opacity: 0; transform: translateX(calc(50cqw - 6px - 39px)); }
 }
 .engineBody {
   fill: var(--color-gold-light);
@@ -105,27 +113,6 @@ header[data-scrolled="true"] .storyRoot * { animation-play-state: paused; }
 @keyframes puff {
   from { opacity: 0.9; transform: translate(2px, 6px) scale(0.5); }
   to { opacity: 0; transform: translate(-12px, -10px) scale(1.35); }
-}
-
-/* The puff of steam behind the Taj that starts the next loop. */
-.whistle {
-  position: absolute;
-  top: calc(var(--art-top) + 95px * var(--art-scale));
-  left: calc(var(--taj-x) + 247px * var(--art-scale));
-  width: 12px;
-  height: 12px;
-  border: 1px solid var(--color-gold);
-  border-radius: 50%;
-  background: var(--color-surface-bright);
-  opacity: 0;
-  animation: whistle var(--dur-story) ease-out infinite;
-}
-@keyframes whistle {
-  0% { opacity: 0.7; transform: translateY(-16px) scale(1.2); }
-  2.5%, 96.5% { opacity: 0; transform: translateY(-30px) scale(1.5); }
-  96.6% { opacity: 0; transform: translateY(0) scale(0.5); }
-  98% { opacity: 0.95; transform: translateY(-6px) scale(0.9); }
-  100% { opacity: 0.7; transform: translateY(-16px) scale(1.2); }
 }
 
 /* ── The bullet train: as long as the Japan side, clipped to it ── */
@@ -200,7 +187,7 @@ header[data-scrolled="true"] .storyRoot * { animation-play-state: paused; }
 .sakura {
   position: absolute;
   right: 8px;
-  top: 3.75rem;
+  top: var(--branch-top);
   width: var(--branch-w);
   height: auto;
   overflow: visible;
@@ -212,7 +199,10 @@ header[data-scrolled="true"] .storyRoot * { animation-play-state: paused; }
   30.5% { transform: rotate(-3deg); }
   32.5% { transform: rotate(1.6deg); }
   34.5% { transform: rotate(-0.8deg); }
-  36%, 100% { transform: rotate(0deg); }
+  36%, 93.6% { transform: rotate(0deg); }
+  /* The branch dips a little as the bird lands. */
+  94.6% { transform: rotate(0.9deg); }
+  96%, 100% { transform: rotate(0deg); }
 }
 .branch {
   fill: none;
@@ -226,8 +216,8 @@ header[data-scrolled="true"] .storyRoot * { animation-play-state: paused; }
 }
 @keyframes blossom {
   0%, 31% { opacity: 0; transform: scale(0); }
-  35%, 95% { opacity: 1; transform: scale(1); }
-  98%, 100% { opacity: 0; transform: scale(1); }
+  35%, 98% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1); }
 }
 .blossomPetal {
   fill: var(--color-sakura);
@@ -239,7 +229,7 @@ header[data-scrolled="true"] .storyRoot * { animation-play-state: paused; }
 /* ── One petal crosses, behind the logo, and lands left of the Taj ── */
 .petal {
   --x0: calc(100cqw - var(--branch-w) * 0.55);
-  --x1: calc(var(--taj-x) - 24px * var(--art-scale) - 5px);
+  --x1: calc(var(--taj-x) + 22px * var(--art-scale) - 5px);
   position: absolute;
   top: 0;
   left: 0;
@@ -366,9 +356,9 @@ header[data-scrolled="true"] .storyRoot * { animation-play-state: paused; }
   stroke-linecap: round;
 }
 
-/* ── One feather floats to Japan: high, above To India and To Japan ── */
+/* ── One feather floats to Japan, high over the Taj and behind the logo ── */
 .looseFeather {
-  --fx0: calc(var(--taj-x) - 105px * var(--art-scale));
+  --fx0: calc(var(--taj-x) - 59px * var(--art-scale));
   --fx1: calc(var(--fuji-x) + 112px * var(--art-scale) - 7px);
   --fy1: calc(var(--art-top) + 30px * var(--art-scale) - 20px);
   position: absolute;
@@ -390,36 +380,73 @@ header[data-scrolled="true"] .storyRoot * { animation-play-state: paused; }
   87.5%, 100% { opacity: 0; transform: translate(var(--fx1), var(--fy1)) rotate(80deg); }
 }
 
-/* ── It folds into a paper crane, which flies up past the setting sun ── */
-.crane {
+/* ── It becomes a bird, which crosses the setting sun and lands on the sakura.
+   The perch is the branch's point at (86, 16.7) in its 140-wide drawing, and the
+   bird's feet are at the bottom of its own box. ── */
+.bird {
+  --bx0: calc(var(--fuji-x) + 112px * var(--art-scale) - var(--bird-w) / 2);
+  --by0: calc(var(--art-top) + 30px * var(--art-scale) - var(--bird-w) / 4);
+  --bx1: calc(100cqw - 8px - var(--branch-w) * 0.386 - var(--bird-w) / 2);
+  --by1: calc(var(--branch-top) + var(--branch-w) * 0.119 - var(--bird-w) * 0.83);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--bird-w);
+  height: auto;
+  overflow: visible;
   opacity: 0;
-  animation: crane var(--dur-story) ease-in-out infinite;
+  animation: bird var(--dur-story) ease-in-out infinite;
 }
-@keyframes crane {
-  0%, 86% { opacity: 0; transform: translate(112px, 30px) scale(0.3); }
-  88% { opacity: 1; transform: translate(112px, 30px) scale(1); }
-  89% { transform: translate(114px, 30px) scale(1); }
-  94.5% { opacity: 1; transform: translate(186px, 2px) scale(0.85); }
-  96%, 100% { opacity: 0; transform: translate(196px, -2px) scale(0.8); }
+@keyframes bird {
+  0%, 85.6% { opacity: 0; transform: translate(var(--bx0), var(--by0)) scale(0.2); }
+  87% { opacity: 1; transform: translate(var(--bx0), var(--by0)) scale(1); }
+  88.5% { transform: translate(calc(var(--bx0) + (var(--bx1) - var(--bx0)) * 0.22), calc(var(--by0) - 8px)); }
+  90% { transform: translate(calc(var(--bx0) + (var(--bx1) - var(--bx0)) * 0.48), calc(var(--by0) + 2px)); }
+  /* Below the Enquire button, then a small hop up onto the branch. */
+  91.5% { transform: translate(calc(var(--bx0) + (var(--bx1) - var(--bx0)) * 0.76), calc(var(--by1) + 8px)); }
+  93% { transform: translate(calc(var(--bx1) - 4px), calc(var(--by1) - 3px)); }
+  94%, 98% { opacity: 1; transform: translate(var(--bx1), var(--by1)); }
+  100% { opacity: 0; transform: translate(var(--bx1), var(--by1)); }
 }
-.cranePaper {
-  fill: var(--color-surface-bright);
-  stroke: var(--color-gold-deep);
-  stroke-width: 0.9;
-  stroke-linejoin: round;
+.birdBody { fill: var(--color-peacock); stroke: var(--color-gold-deep); stroke-width: 0.5; }
+.birdTailEye { fill: var(--color-gold-light); }
+.birdBeak { fill: var(--color-gold); stroke: var(--color-gold-deep); stroke-width: 0.4; }
+.birdEye { fill: var(--color-surface-bright); }
+.birdWing { fill: var(--color-gold-light); stroke: var(--color-gold-deep); stroke-width: 0.6; stroke-linejoin: round; }
+.birdWingFar { fill: var(--color-gold); }
+.birdLegs { fill: none; stroke: var(--color-gold-deep); stroke-width: 0.9; stroke-linecap: round; }
+/* Open wings in the air, folded on the branch. */
+.birdFlying { animation: birdFlying var(--dur-story) steps(1) infinite; }
+@keyframes birdFlying {
+  0%, 93.8% { opacity: 1; }
+  93.81%, 100% { opacity: 0; }
 }
-.craneFold {
-  fill: none;
-  stroke: var(--color-gold-deep);
-  stroke-width: 0.6;
+.birdPerched { animation: birdPerched var(--dur-story) steps(1) infinite; }
+@keyframes birdPerched {
+  0%, 93.8% { opacity: 0; }
+  93.81%, 100% { opacity: 1; }
 }
-.craneWing {
-  transform-origin: 0 2px;
-  animation: craneWing 0.8s ease-in-out infinite alternate;
+.birdFlap {
+  transform-origin: 0 0;
+  animation: birdFlap 0.32s ease-in-out infinite alternate;
 }
-@keyframes craneWing {
+@keyframes birdFlap {
   from { transform: scaleY(1); }
-  to { transform: scaleY(0.25); }
+  to { transform: scaleY(-0.35); }
+}
+/* A ring of gold light as the feather turns. */
+.birdBurst {
+  fill: none;
+  stroke: var(--color-gold);
+  stroke-width: 1;
+  opacity: 0;
+  transform-origin: 0 0;
+  animation: birdBurst var(--dur-story) ease-out infinite;
+}
+@keyframes birdBurst {
+  0%, 85.6% { opacity: 0; transform: scale(0.3); }
+  86.2% { opacity: 1; transform: scale(0.6); }
+  88%, 100% { opacity: 0; transform: scale(2); }
 }
 
 /* ── Dusk: the Taj glows ── */
@@ -432,9 +459,12 @@ header[data-scrolled="true"] .storyRoot * { animation-play-state: paused; }
 
 /* Narrower desktops: less room left of the Taj and right of Fuji. */
 @media (max-width: 1279px) {
-  .layer { --branch-w: 4.5rem; }
+  .layer {
+    --branch-w: 4.5rem;
+    --branch-top: 4rem;
+    --bird-w: 22px;
+  }
   .peacock { --walk: -35px; }
-  .sakura { top: 4rem; }
   .trainNose,
   .trainTail { flex-basis: 3.5rem; }
 }

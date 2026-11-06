@@ -10,7 +10,7 @@
   --color-paper: #EEE2C6;          /* page background: champagne (gold theme) */
   --color-paper-deep: #E9DBBB;     /* alternate band */
   --color-surface: #F5ECD8;        /* panels, cards, form fields */
-  --color-surface-bright: #FBF7EC; /* the India half of the nav band, button faces */
+  --color-surface-bright: #FBF7EC; /* marble, button faces */
   --color-surface-warm: #F1E6CE;   /* the Japan half of the nav band */
   --color-ink: #3B2A16;            /* text, dark bands: deep brown */
   --color-ink-muted: #5E4A2E;      /* secondary text on paper */
@@ -31,6 +31,9 @@
   --gradient-gold-line: linear-gradient(90deg, #8C6A2C, #E9D39A 45%, #B8924F 60%, #8C6A2C);
   --gradient-red: linear-gradient(160deg, #8A2A21 0%, #A8352A 45%, #B6453A 60%, #8A2A21 100%);
   --text-emboss: 0 1px 0 rgb(255 248 228 / 0.7), 0 2px 3px rgb(59 42 22 / 0.28);
+  --color-nav-india: #F7D795;       /* nav band, India side: warm saffron */
+  --color-nav-india-deep: #F2C46E;  /* its far left end */
+  --color-nav-japan: #FFFFFF;       /* nav band, Japan side: white, with the red sun */
   --color-sakura: #EDBBC6;          /* nav story: blossoms, petal, lotus; decoration only */
   --color-sakura-deep: #C98796;
   --color-peacock: #1F6F6B;         /* nav story: the peacock; decoration only */

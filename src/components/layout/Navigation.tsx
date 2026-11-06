@@ -4,8 +4,8 @@ import { Fragment, useEffect, useRef, useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 import { Link, usePathname, useRouter } from '@/i18n/routing';
 import { SHOW_SERVICES_NAV } from '@/lib/featureFlags';
-import { FujiArt, NavBadge, TajArt } from './NavArt';
-import { NavStoryBack, NavStoryFront } from './NavStory';
+import { FujiArt, MiniFuji, MiniTaj, NavBadge, TajArt } from './NavArt';
+import { NavStoryFront } from './NavStory';
 import styles from './Navigation.module.css';
 
 const SOCIALS = [
@@ -33,8 +33,8 @@ export default function Navigation() {
     const locales = isJapanDestination ? (['en'] as const) : (['en', 'ja'] as const);
 
     const links = [
-        { href: '/india/tours', label: t('toIndia') },
-        { href: '/japan/tours', label: t('toJapan') },
+        { href: '/india/tours', label: t('indiaTours') },
+        { href: '/japan/tours', label: t('japanTours') },
         { href: '/about', label: t('about') },
         { href: '/gallery', label: t('gallery') },
         { href: '/faq', label: t('faq') },
@@ -119,24 +119,26 @@ export default function Navigation() {
                     </div>
                 </div>
 
-                {/* Desktop: the India and Japan sides either side of the gold shield,
-                    the page buttons below it, Enquire and language at the top right.
-                    On scroll the band shrinks and the page buttons move to the left. */}
+                {/* Desktop: the India and Japan sides either side of the gold shield, each
+                    side a link to its tours, with no words: the Taj and Fuji say it.
+                    The page buttons sit below the shield, Enquire and language at the
+                    top right. On scroll the band shrinks, the page buttons move to the
+                    left and small drawings stand in for the big ones. */}
                 <nav className={styles.band} aria-label={t('mainNav')}>
-                    <NavStoryBack />
                     <TajArt />
                     <FujiArt />
                     <NavStoryFront />
 
+                    <Link href={links[0].href} className={`${styles.country} ${styles.india}`} title={links[0].label} aria-label={links[0].label} aria-current={isActive(links[0].href) ? 'page' : undefined}>
+                        <MiniTaj className={styles.mini} />
+                    </Link>
+                    <Link href={links[1].href} className={`${styles.country} ${styles.japan}`} title={links[1].label} aria-label={links[1].label} aria-current={isActive(links[1].href) ? 'page' : undefined}>
+                        <MiniFuji className={styles.mini} />
+                    </Link>
+
                     <div className={styles.main}>
-                        <Link href={links[0].href} className={`${styles.destination} ${styles.toIndia}`} aria-current={isActive(links[0].href) ? 'page' : undefined}>
-                            {links[0].label}
-                        </Link>
                         <Link href="/" className={styles.shieldLink}>
                             <NavBadge id="nav-badge-band" />
-                        </Link>
-                        <Link href={links[1].href} className={`${styles.destination} ${styles.toJapan}`} aria-current={isActive(links[1].href) ? 'page' : undefined}>
-                            {links[1].label}
                         </Link>
                     </div>
 
