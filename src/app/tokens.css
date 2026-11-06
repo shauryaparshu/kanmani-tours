@@ -103,7 +103,7 @@
   --dur-hover: 200ms;
   --dur-reveal: 750ms;
   --dur-shrink: 350ms;  /* nav band shrinking on scroll */
-  --dur-story: 40s;     /* one full loop of the nav story */
+  --dur-story: 60s;     /* one full loop of the nav story */
 
   /* ── Chrome ──────────────────────────────────────────────────────── */
   --nav-height: 64px;   /* full bar; 152px from 1024px, see below */

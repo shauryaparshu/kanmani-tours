@@ -5,7 +5,7 @@ import { useLocale, useTranslations } from 'next-intl';
 import { Link, usePathname, useRouter } from '@/i18n/routing';
 import { SHOW_SERVICES_NAV } from '@/lib/featureFlags';
 import { FujiArt, NavBadge, TajArt } from './NavArt';
-import { NavStory } from './NavStory';
+import { NavStoryBack, NavStoryFront } from './NavStory';
 import styles from './Navigation.module.css';
 
 const SOCIALS = [
@@ -123,9 +123,10 @@ export default function Navigation() {
                     the page buttons below it, Enquire and language at the top right.
                     On scroll the band shrinks and the page buttons move to the left. */}
                 <nav className={styles.band} aria-label={t('mainNav')}>
+                    <NavStoryBack />
                     <TajArt />
                     <FujiArt />
-                    <NavStory />
+                    <NavStoryFront />
 
                     <div className={styles.main}>
                         <Link href={links[0].href} className={`${styles.destination} ${styles.toIndia}`} aria-current={isActive(links[0].href) ? 'page' : undefined}>

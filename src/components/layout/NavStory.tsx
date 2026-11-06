@@ -2,44 +2,27 @@ import type { CSSProperties } from 'react';
 import styles from './NavStory.module.css';
 
 /**
- * "One Day, Two Countries": the nav band's looping story. One thing moves at a
- * time. The sun rises over Fuji, birds cross, a bullet train passes, a sakura
- * branch blossoms and lets one petal go. The petal drifts behind the logo to
- * India and becomes a lotus, a peacock walks in and fans its feathers, the Taj
- * glows at dusk, and a bird flies back to Japan as the sun sets.
+ * "The Bridge": the nav band's looping story, always opening from India.
+ *
+ * 1. The Journey: a steam engine leaves from behind the Taj and goes behind the
+ *    logo; a long bullet train comes out and fills the Japan side as the sun rises.
+ * 2. The Gift: the train's wind stirs the sakura into blossom, and one petal
+ *    drifts back to India and becomes a lotus.
+ * 3. The Return Gift: a peacock bows to the lotus and fans its feathers. One
+ *    feather floats to Japan and folds into a paper crane, which flies into the
+ *    sunset. Then a puff of steam behind the Taj starts it all again.
+ *
  * All timing lives in NavStory.module.css; everything here is decoration.
  */
 
 const angle = (a: number) => ({ '--a': `${a}deg` }) as CSSProperties;
 
-/** A gull in flight, wings beating. */
-function Bird({ x = 0, y = 0 }: { x?: number; y?: number }) {
-    return (
-        <g transform={`translate(${x} ${y})`}>
-            <path className={styles.bird} d="M-10 0Q-5 -7 0 0Q5 -7 10 0" />
-        </g>
-    );
-}
-
-/** Birds in a V, flying left across Fuji. Sits inside the Fuji drawing. */
-export function FujiBirds() {
-    return (
-        <g className={styles.flock}>
-            <Bird />
-            <Bird x={14} y={-8} />
-            <Bird x={14} y={8} />
-            <Bird x={28} y={-16} />
-            <Bird x={28} y={16} />
-        </g>
-    );
-}
-
 const LOTUS_PETALS = [-64, -40, 40, 64, -18, 18, 0];
 
-/** The lotus the petal becomes, on still water. Sits inside the Taj drawing, right of it. */
+/** The lotus the petal becomes, on still water, left of the Taj. Sits inside the Taj drawing. */
 export function TajLotus() {
     return (
-        <g transform="translate(336 123)">
+        <g transform="translate(-24 123)">
             <g className={styles.water}>
                 <path d="M-24 5H24M-15 9H15" />
             </g>
@@ -54,12 +37,12 @@ export function TajLotus() {
 
 const FEATHERS = [-98, -82, -66, -50, -34, -18, -2, 14, 30];
 
-/** The peacock, facing the Taj. Sits inside the Taj drawing, left of it. */
+/** The peacock, facing the lotus. Sits inside the Taj drawing, furthest left. */
 export function TajPeacock() {
     return (
-        <g transform="translate(-42 128)">
+        <g transform="translate(-72 128)">
             <g className={styles.peacock}>
-                <path className={styles.peacockGround} d="M-56 0H46" />
+                <path className={styles.peacockGround} d="M-62 0H24" />
                 <g transform="translate(-12 -14)">
                     {FEATHERS.map((a) => (
                         <g key={a} className={styles.feather} style={angle(a)}>
@@ -72,9 +55,25 @@ export function TajPeacock() {
                 </g>
                 <path className={styles.peacockLine} d="M-4 -9L-5 0H-1M2 -9L3 0H7" />
                 <path className={styles.peacockBody} d="M-16 -16C-13 -27 4 -29 9 -21C14 -14 6 -8 -4 -8C-11 -8 -17 -11 -16 -16Z" />
-                <path className={styles.peacockNeck} d="M6 -22C11 -28 11 -36 13 -42" />
-                <circle className={styles.peacockHead} cx="14" cy="-44" r="3.2" />
-                <path className={styles.peacockLine} d="M17 -44L21.5 -43M14 -47L12 -53M14 -47L15 -54M14 -47L18 -52" />
+                {/* Neck and head turn together, so the peacock can bow to the lotus. */}
+                <g className={styles.peacockBow}>
+                    <path className={styles.peacockNeck} d="M6 -22C11 -28 11 -36 13 -42" />
+                    <circle className={styles.peacockHead} cx="14" cy="-44" r="3.2" />
+                    <path className={styles.peacockLine} d="M17 -44L21.5 -43M14 -47L12 -53M14 -47L15 -54M14 -47L18 -52" />
+                </g>
+            </g>
+        </g>
+    );
+}
+
+/** The paper crane the feather folds into. Sits inside the Fuji drawing, left of the sun. */
+export function FujiCrane() {
+    return (
+        <g className={styles.crane}>
+            <path className={styles.cranePaper} d="M-19 -6L-7 2L6 1L17 -9L13 3L4 8H-5Z" />
+            <path className={styles.craneFold} d="M-7 2L4 8M6 1L4 8" />
+            <g className={styles.craneWing}>
+                <path className={styles.cranePaper} d="M-5 2L6 -16L8 1Z" />
             </g>
         </g>
     );
@@ -94,22 +93,86 @@ function Blossom({ delay }: { delay: number }) {
     );
 }
 
+/** One spoked wheel of the steam engine. */
+function Wheel({ x, r }: { x: number; r: number }) {
+    return (
+        <g transform={`translate(${x} ${27 - r})`}>
+            <g className={styles.wheel}>
+                <circle className={styles.wheelRim} r={r} />
+                <path className={styles.engineFine} d={`M${-r} 0H${r}M0 ${-r}V${r}`} />
+            </g>
+        </g>
+    );
+}
+
 /**
- * The parts of the story that travel across the band: the train and its rail,
- * the sakura branch, the petal and the bird flying home. Rendered before the
- * links, so all of it passes behind the logo and the buttons.
+ * Behind the drawings: the rail along the whole band, and the steam engine, so
+ * it starts out hidden by the Taj and later disappears behind the page buttons.
  */
-export function NavStory() {
+export function NavStoryBack() {
+    return (
+        <div className={`${styles.layer} ${styles.storyRoot}`} aria-hidden="true">
+            <div className={styles.rail} />
+            <svg className={styles.engine} viewBox="0 0 78 28" focusable="false">
+                <g className={styles.smoke}>
+                    <circle className={styles.puff} cx="58" cy="2" r="3.5" />
+                    <circle className={styles.puff} cx="52" cy="-2" r="4.5" />
+                    <circle className={styles.puff} cx="45" cy="-6" r="5.5" />
+                </g>
+                <path className={styles.engineBody} d="M6 7H22V20H6Z" />
+                <path className={styles.engineRoof} d="M3 7H25L22 3H6Z" />
+                <path className={styles.engineWindow} d="M10 9H18V14H10Z" />
+                <path className={styles.engineBody} d="M22 10H66C69 10 70 12 70 15C70 18 69 20 66 20H22Z" />
+                <path className={styles.engineFine} d="M34 10V20M46 10V20" />
+                <path className={styles.engineBody} d="M55 10V4H61V10Z" />
+                <path className={styles.engineRoof} d="M53 4H63L61 1H55Z" />
+                <path className={styles.engineBody} d="M38 10C38 7 44 7 44 10Z" />
+                <path className={styles.engineFine} d="M70 20L77 27H66" />
+                <Wheel x={14} r={6} />
+                <Wheel x={32} r={6} />
+                <Wheel x={50} r={6} />
+                <Wheel x={63} r={3.5} />
+            </svg>
+            <div className={styles.whistle} />
+        </div>
+    );
+}
+
+/** One end of the bullet train, drawn as its nose facing right; `.trainTail` mirrors it. */
+function TrainEnd({ className }: { className: string }) {
+    return (
+        <svg className={className} viewBox="0 0 70 24" preserveAspectRatio="none" focusable="false">
+            <path className={styles.trainFace} d="M0 1H26C48 2 63 12 69 23H0Z" />
+            <path className={styles.trainStripe} d="M0 15H57L63 19H0Z" />
+            <path className={styles.trainGlass} d="M27 5C36 6 43 9 48 13H27Z" />
+        </svg>
+    );
+}
+
+/**
+ * In front of the drawings, behind the links: the long bullet train, the sakura
+ * branch, the petal and the feather. The links come later in the page, so all of
+ * this passes behind the logo and the buttons.
+ */
+export function NavStoryFront() {
     return (
         <div className={`${styles.layer} ${styles.storyRoot}`} aria-hidden="true">
             <div className={styles.track}>
-                <svg className={styles.train} viewBox="0 0 240 22" focusable="false">
-                    <path className={styles.trainBody} d="M2 20C10 10 28 4 54 3H238V20Z" />
-                    <path className={styles.trainLine} d="M18 14H238" />
-                    <path className={styles.trainLine} d="M36 6L30 11H42L46 6Z" />
-                    <path className={styles.trainWindows} d="M58 8.5H236" />
-                    <path className={styles.trainLine} d="M92 3V20M164 3V20" />
-                </svg>
+                <div className={styles.bullet}>
+                    <TrainEnd className={styles.trainTail} />
+                    <svg className={styles.trainCars} preserveAspectRatio="none" focusable="false">
+                        <defs>
+                            <pattern id="nav-train-car" width="84" height="24" patternUnits="userSpaceOnUse">
+                                <path className={styles.trainWindows} d="M8 8H76" />
+                                <path className={styles.trainDoor} d="M0 3V23M84 3V23" />
+                                <path className={styles.trainStripe} d="M0 15H84V19H0Z" />
+                            </pattern>
+                        </defs>
+                        <rect className={styles.trainFace} width="100%" height="23" y="1" />
+                        <rect fill="url(#nav-train-car)" width="100%" height="24" />
+                    </svg>
+                    <TrainEnd className={styles.trainNose} />
+                </div>
             </div>
 
             <svg className={styles.sakura} viewBox="0 0 140 48" focusable="false">
@@ -125,8 +188,11 @@ export function NavStory() {
                 <path d="M0 -5C4 -3 4 3 0 5C-4 3 -4 -3 0 -5Z" />
             </svg>
 
-            <svg className={styles.homeBird} viewBox="-10 -6 20 12" focusable="false">
-                <path className={styles.bird} d="M-10 0Q-5 -7 0 0Q5 -7 10 0" />
+            <svg className={styles.looseFeather} viewBox="-6 -24 12 48" focusable="false">
+                <path className={styles.featherShaft} d="M0 22V-14" />
+                <path className={styles.featherBarbs} d="M0 6L-4 0M0 6L4 0M0 -3L-4 -9M0 -3L4 -9M0 14L-3 9M0 14L3 9" />
+                <ellipse className={styles.featherEye} cx="0" cy="-17" rx="4" ry="5.5" />
+                <circle className={styles.featherPupil} cx="0" cy="-17" r="1.6" />
             </svg>
         </div>
     );

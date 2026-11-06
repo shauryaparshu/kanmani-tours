@@ -97,7 +97,7 @@
 .art {
   position: absolute;
   bottom: 6px;
-  height: 104px;
+  height: var(--art-h);
   width: auto;
   aspect-ratio: 320 / 130;
   overflow: visible;
@@ -116,7 +116,38 @@
 }
 @keyframes artDraw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
 
+.fine { stroke-width: 0.7 !important; }
+/* Gold beading: round dots along a line. */
+.dots {
+  stroke: var(--color-gold) !important;
+  stroke-width: 1.4 !important;
+  stroke-dasharray: 0.012 0.03 !important;
+  animation: none !important;
+}
+.rosette { fill: var(--color-gold) !important; }
+
+.tajFill path {
+  fill: url(#nav-taj-gold);
+}
+.tajDepth path {
+  fill: url(#nav-taj-depth);
+  opacity: 0.55;
+}
+
+/* Fuji: opaque first, so the setting sun disappears behind the gold. */
 .mountainFill { fill: var(--band-right); }
+.mountainGold {
+  fill: url(#nav-fuji-gold);
+  opacity: 0.6;
+}
+.snowFill { fill: var(--color-surface-bright); }
+.cloudFill { fill: var(--band-right) !important; }
+/* A fine gold ring around the red sun. */
+.sunRing {
+  fill: none;
+  stroke: var(--color-gold);
+  stroke-width: 1;
+}
 /* The sun's journey is in NavStory.module.css; hovering To Japan lifts it a little more. */
 .sun {
   fill: var(--color-accent);
@@ -435,6 +466,9 @@
   /* The band lines up with the gold page frame and continues its double line. */
   .band {
     --band-right: var(--color-surface-warm);
+    --art-h: 104px;           /* drawing height */
+    --art-scale: 0.8;         /* band pixels per drawing unit: height / 130 */
+    --art-offset: 15.5rem;    /* drawings' distance from the band's centre */
     position: relative;
     display: block;
     height: calc(var(--nav-height) - 16px);
@@ -453,8 +487,8 @@
     pointer-events: none;
   }
 
-  .taj { right: calc(50% + 15.5rem); }
-  .fuji { left: calc(50% + 15.5rem); }
+  .taj { right: calc(50% + var(--art-offset)); }
+  .fuji { left: calc(50% + var(--art-offset)); }
   .langDesktop { display: flex; }
 
   /* Scrolled: a slim band with everything on one line. */
@@ -475,14 +509,20 @@
 
 /* Smaller art until there is room for Fuji's sun beside the Enquire button. */
 @media (min-width: 1024px) and (max-width: 1439px) {
-  .art { height: 72px; }
+  .band {
+    --art-h: 84px;
+    --art-scale: 0.646;
+  }
 }
 
 /* Narrow desktops: tighter buttons so the slim band fits. */
 @media (min-width: 1024px) and (max-width: 1279px) {
-  .taj { right: calc(50% + 14.5rem); }
-  .fuji { left: calc(50% + 14.5rem); }
-  .band { --pages-compact-scale: 0.85; }
+  .band {
+    --pages-compact-scale: 0.85;
+    --art-h: 72px;
+    --art-scale: 0.554;
+    --art-offset: 14.5rem;
+  }
   .destination { min-width: 5.5rem; }
   .topRight { gap: var(--space-1); }
   .enquire { padding: 0 var(--space-2); }
