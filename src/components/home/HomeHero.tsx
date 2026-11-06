@@ -7,7 +7,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useReducedMotion } from '@/components/ui/useReducedMotion';
 import Filigree from '@/components/ui/Filigree';
 import OrnateLink from '@/components/ui/OrnateLink';
-import ArchFrame, { ARCH_CLIP_ID } from './ArchFrame';
+import PhotoFrame from './PhotoFrame';
 import styles from './HomeHero.module.css';
 
 const INTERVAL_MS = 6000;
@@ -97,27 +97,26 @@ export default function HomeHero({ images }: HomeHeroProps) {
                     </div>
                 </div>
 
-                {/* One fixed Mughal arch; only the photo inside changes. Photos fill it
-                    from their top edge, so heads stay in and trimming comes off the bottom. */}
+                {/* One fixed frame; only the photo inside changes. Every photo is shown
+                    whole; a soft blur of itself fills any space left beside it. */}
                 <div className={styles.visual}>
-                    <div className={styles.archPanel}>
-                        <ArchFrame>
-                            <div className={styles.photos} style={{ clipPath: `url(#${ARCH_CLIP_ID})` }}>
-                                {mounted.map((i) => (
-                                    <div key={images[i]} className={styles.slide} data-active={i === index}>
-                                        <Image
-                                            src={images[i]}
-                                            alt={i === index ? t('heroAlt') : ''}
-                                            fill
-                                            sizes="(min-width: 1024px) 44vw, 86vw"
-                                            preload={i === 0}
-                                            className={styles.image}
-                                        />
-                                    </div>
-                                ))}
-                            </div>
-                        </ArchFrame>
-                    </div>
+                    <PhotoFrame>
+                        <div className={styles.photos}>
+                            {mounted.map((i) => (
+                                <div key={images[i]} className={styles.slide} data-active={i === index}>
+                                    <Image src={images[i]} alt="" fill sizes="(min-width: 1024px) 56vw, 86vw" className={styles.backdrop} />
+                                    <Image
+                                        src={images[i]}
+                                        alt={i === index ? t('heroAlt') : ''}
+                                        fill
+                                        sizes="(min-width: 1024px) 56vw, 86vw"
+                                        preload={i === 0}
+                                        className={styles.image}
+                                    />
+                                </div>
+                            ))}
+                        </div>
+                    </PhotoFrame>
                 </div>
 
                 {count > 1 ? (

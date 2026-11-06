@@ -1,13 +1,6 @@
 import type { ReactNode } from 'react';
 import Filigree from '@/components/ui/Filigree';
-import styles from './ArchFrame.module.css';
-
-export const ARCH_CLIP_ID = 'home-hero-arch';
-
-// Mughal ogee arch in a 0..1 box: straight jambs, swelling shoulders, pointed crown.
-const ARCH_UNIT = 'M0,1 L0,0.36 C0,0.24 0.1,0.19 0.22,0.15 C0.34,0.11 0.45,0.07 0.5,0 C0.55,0.07 0.66,0.11 0.78,0.15 C0.9,0.19 1,0.24 1,0.36 L1,1 Z';
-// The same arch in a 0..100 box, for the moulding drawn over the photo's edge.
-const ARCH_100 = 'M0,100 L0,36 C0,24 10,19 22,15 C34,11 45,7 50,0 C55,7 66,11 78,15 C90,19 100,24 100,36 L100,100 Z';
+import styles from './PhotoFrame.module.css';
 
 /** Leafy gold scroll that spills out from the side of the panel (left side; CSS mirrors it). */
 function SideScroll({ side }: { side: 'start' | 'end' }) {
@@ -26,13 +19,20 @@ function SideScroll({ side }: { side: 'start' | 'end' }) {
 }
 
 /**
- * The hero's photo frame: a rectangular panel with gold lattice in the
- * spandrels and a heavy, bevelled gold moulding around a Mughal arch.
- * `children` fill the arch opening; clip them with `url(#ARCH_CLIP_ID)`.
+ * The hero's photo frame: a lattice panel with a Mughal crest on top and a
+ * bevelled gold moulding around a plain rectangular opening. The crest and
+ * moulding sit entirely outside the opening, so they never cover the photo.
  */
-export default function ArchFrame({ children }: { children: ReactNode }) {
+export default function PhotoFrame({ children }: { children: ReactNode }) {
     return (
         <div className={styles.root}>
+            <svg className={styles.crest} viewBox="0 0 200 60" aria-hidden="true" focusable="false">
+                <path className={styles.crestFill} d="M0 60C30 60 45 48 65 38 82 30 94 18 100 0c6 18 18 30 35 38 20 10 35 22 65 22Z" />
+                <path className={styles.crestLine} d="M22 60c22-2 36-11 50-18 13-7 23-15 28-27 5 12 15 20 28 27 14 7 28 16 50 18" />
+                <circle className={styles.crestBud} cx="100" cy="39" r="4" />
+                <path className={styles.crestLine} d="M86 52c4-6 9-8 14-8s10 2 14 8" />
+            </svg>
+
             <svg className={styles.lattice} aria-hidden="true" focusable="false">
                 <defs>
                     <pattern id="home-hero-lattice" width="18" height="18" patternUnits="userSpaceOnUse">
@@ -48,12 +48,8 @@ export default function ArchFrame({ children }: { children: ReactNode }) {
             <SideScroll side="end" />
 
             <div className={styles.opening}>
-                {children}
                 <svg className={styles.moulding} viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" focusable="false">
                     <defs>
-                        <clipPath id={ARCH_CLIP_ID} clipPathUnits="objectBoundingBox">
-                            <path d={ARCH_UNIT} />
-                        </clipPath>
                         <linearGradient id="home-hero-gold" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
                             <stop offset="0" stopColor="#E9D39A" />
                             <stop offset="0.3" stopColor="#B8924F" />
@@ -62,12 +58,13 @@ export default function ArchFrame({ children }: { children: ReactNode }) {
                             <stop offset="1" stopColor="#D9BE7C" />
                         </linearGradient>
                     </defs>
-                    <path className={styles.m1} d={ARCH_100} />
-                    <path className={styles.m2} d={ARCH_100} />
-                    <path className={styles.m3} d={ARCH_100} />
-                    <path className={styles.m4} d={ARCH_100} />
-                    <path className={styles.m5} d={ARCH_100} />
+                    <rect className={styles.m1} width="100" height="100" />
+                    <rect className={styles.m2} width="100" height="100" />
+                    <rect className={styles.m3} width="100" height="100" />
+                    <rect className={styles.m4} width="100" height="100" />
+                    <rect className={styles.m5} width="100" height="100" />
                 </svg>
+                {children}
             </div>
         </div>
     );

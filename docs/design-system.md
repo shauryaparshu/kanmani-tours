@@ -141,4 +141,4 @@ The owner supplied mockups for the homepage hero and the founder section below i
 
 ## 13. Gold theme (branch `redesign/gold-theme`, 2026-11-06)
 
-Owner's gold mockup. Champagne paper `#EEE2C6`, deep brown ink `#3B2A16`, gold-deep `#7A5A22` for gold text (4.9:1). Metallic surfaces use `--gradient-gold` / `--gradient-red` with cream text (5:1+ on the darker stops). Shared pieces: `PageFrame` (window border and grain, desktop frame from 1024px), `Filigree` (panel corners), `OrnateLink` (lacquered button), `ArchFrame` (hero arch). The ornate nav needs 1280px; below that the phone bar is used.
+Owner's gold mockup. Champagne paper `#EEE2C6`, deep brown ink `#3B2A16`, gold-deep `#7A5A22` for gold text (4.9:1). Metallic surfaces use `--gradient-gold` / `--gradient-red` with cream text (5:1+ on the darker stops). Shared pieces: `PageFrame` (window border and grain, desktop frame from 1024px), `Filigree` (panel corners), `OrnateLink` (lacquered button), `PhotoFrame` (hero frame: photos are never cropped, the moulding and crest sit outside the opening). The ornate nav needs 1280px; below that the phone bar is used.

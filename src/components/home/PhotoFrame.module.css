@@ -1,0 +1,98 @@
+/* Hero photo frame (see PhotoFrame.tsx). One fixed shape: only the photo inside
+   changes. --band is the moulding's thickness, drawn outward from the opening. */
+.root {
+  --band: 10px;
+  position: relative;
+  width: 100%;
+  padding: calc(var(--band) + 0.625rem);
+  background: linear-gradient(165deg, var(--color-surface) 0%, var(--color-paper) 55%, var(--color-paper-deep) 100%);
+  border: 1px solid var(--color-gold);
+  box-shadow: var(--shadow-frame);
+}
+
+/* Mughal crest rising from the top edge: keeps the arch idea, covers nothing. */
+.crest {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% - 1px);
+  width: min(38%, 15rem);
+  height: auto;
+  overflow: visible;
+  transform: translateX(-50%);
+}
+.crestFill {
+  fill: var(--color-surface);
+  stroke: var(--color-gold);
+  stroke-width: 1.5;
+}
+.crestLine {
+  fill: none;
+  stroke: var(--color-gold);
+  stroke-width: 1;
+}
+.crestBud { fill: var(--color-gold); }
+
+/* Gold lattice on the panel around the moulding. */
+.lattice {
+  position: absolute;
+  inset: 10px;
+  width: calc(100% - 20px);
+  height: calc(100% - 20px);
+}
+.lattice path {
+  fill: none;
+  stroke: var(--color-gold);
+  stroke-width: 0.6;
+  opacity: 0.55;
+}
+.lattice circle { fill: var(--color-gold); opacity: 0.6; }
+
+.scroll {
+  position: absolute;
+  top: 50%;
+  display: none;
+  width: 2.5rem;
+  height: auto;
+  fill: none;
+  stroke: var(--color-gold);
+  stroke-width: 1.1;
+  stroke-linecap: round;
+  overflow: visible;
+  pointer-events: none;
+}
+.scroll circle { fill: var(--color-gold); stroke: none; }
+.scroll[data-side="start"] { right: 100%; transform: translateY(-50%) scaleX(-1); }
+.scroll[data-side="end"] { left: 100%; transform: translateY(-50%); }
+
+/* The opening is the photo's box; its shape suits the wide hero photos. */
+.opening {
+  position: relative;
+  aspect-ratio: 1.55 / 1;
+}
+
+/* Strokes are centred half a band outside the opening, so the moulding's inner
+   edge meets the photo's edge exactly. Concentric strokes make the bevel. */
+.moulding {
+  position: absolute;
+  z-index: 1;
+  inset: calc(var(--band) / -2);
+  width: calc(100% + var(--band));
+  height: calc(100% + var(--band));
+  overflow: visible;
+  pointer-events: none;
+  filter: drop-shadow(0 3px 4px rgb(59 42 22 / 0.45));
+}
+.moulding rect {
+  fill: none;
+  vector-effect: non-scaling-stroke;
+}
+.m1 { stroke: var(--color-gold-shadow); stroke-width: var(--band); }
+.m2 { stroke: url(#home-hero-gold); stroke-width: calc(var(--band) - 2px); }
+.m3 { stroke: var(--color-gold-light); stroke-width: calc(var(--band) * 0.5); opacity: 0.6; }
+.m4 { stroke: url(#home-hero-gold); stroke-width: calc(var(--band) * 0.3); }
+.m5 { stroke: var(--color-gold-shadow); stroke-width: 0.75; opacity: 0.8; }
+
+@media (min-width: 1024px) {
+  .root { --band: 18px; padding: calc(var(--band) + var(--space-3)); }
+  .scroll { display: block; }
+}

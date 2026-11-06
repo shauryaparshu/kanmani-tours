@@ -1,6 +1,6 @@
 /* Gold theme homepage hero: embossed title, a filigree panel holding the
    intro and slide controls, two lacquered buttons, and the photo slideshow
-   inside a gold Mughal arch (ArchFrame.tsx). On desktop it fills the first
+   inside a gold frame with a Mughal crest (PhotoFrame.tsx). On desktop it fills the first
    screen and the slide buttons ride the page frame's bottom rule. */
 .hero {
   position: relative;
@@ -8,7 +8,7 @@
   color: var(--color-ink);
 }
 
-/* Soft light behind the arch, like a lamp on gilt. Fades to plain paper at the edges. */
+/* Soft light behind the frame, like a lamp on gilt. Fades to plain paper at the edges. */
 .hero::before {
   content: "";
   position: absolute;
@@ -143,20 +143,18 @@
   padding-inline: 10px;  /* room for the buttons' outer frames and end diamonds */
 }
 
-/* ── Arch ── */
+/* ── Photo frame ── */
 .visual {
   grid-area: visual;
-  display: grid;
-  justify-items: center;
-}
-.archPanel {
-  width: min(100%, 34rem);
+  /* Room above the panel for its crest (38% of the width, 60:200 in shape). */
+  padding-top: 11.4%;
 }
 
 .photos {
   position: absolute;
   inset: 0;
-  background: var(--color-paper-deep);
+  overflow: hidden;
+  background: var(--color-ink);
 }
 .slide {
   position: absolute;
@@ -165,9 +163,13 @@
   transition: opacity calc(var(--dur-reveal) * 1.6) var(--ease-out);
 }
 .slide[data-active="true"] { opacity: 1; z-index: 1; }
-.image {
+/* The whole photo, never cropped. */
+.image { object-fit: contain; }
+/* The same photo, heavily blurred and warmed to a dark glow, fills any space beside it. */
+.backdrop {
   object-fit: cover;
-  object-position: 50% 0%;
+  filter: blur(40px) brightness(0.5) sepia(0.35);
+  transform: scale(1.3);
 }
 
 /* ── Slide buttons ── */
@@ -237,16 +239,20 @@
     padding-bottom: calc(var(--frame-inset) + var(--space-6));
     padding-left: calc(var(--frame-inset) + 4.5rem);
     padding-right: calc(var(--frame-inset) + 5rem);
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr);
     grid-template-areas: "copy visual";
     align-items: center;
-    column-gap: var(--space-6);
+    column-gap: var(--space-5);
   }
-  .title { font-size: calc(var(--text-display) * 1.12); }
-  .visual { justify-items: center; }
-  .archPanel {
-    /* As large as the screen height allows, never wider than its column. */
-    width: min(100%, calc((100svh - var(--nav-height) - 11rem) * 1.08), 44rem);
+  /* Never wider than the copy column, in either language. */
+  .copy { container-type: inline-size; }
+  .title { font-size: min(calc(var(--text-display) * 1.12), 14.5cqw); }
+  :lang(ja) .title { font-size: min(calc(var(--text-display) * 1.12), 12.5cqw); }
+  .visual {
+    /* As large as the screen height allows: panel about 1.42 wide per 1 tall. */
+    width: min(100%, calc((100svh - var(--nav-height) - 13rem) * 1.42));
+    justify-self: center;
+    padding-top: var(--space-6);
   }
   /* The two slide buttons sit on the frame's bottom double rule. */
   .pager {
