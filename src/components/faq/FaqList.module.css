@@ -202,5 +202,14 @@
   .side {
     position: sticky;
     top: calc(var(--nav-compact) + var(--space-4));
+    align-self: start;  /* its own height, not the whole column's, so it has room to stick */
+    /* On short screens it scrolls inside itself, so the help box stays reachable.
+       The side padding keeps focus rings from being clipped. */
+    max-height: calc(100svh - var(--nav-compact) - var(--space-4) - var(--space-3));
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-gold) transparent;
+    margin-inline: calc(-1 * var(--space-1));
+    padding-inline: var(--space-1);
   }
 }

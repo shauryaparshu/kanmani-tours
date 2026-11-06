@@ -6,7 +6,7 @@
 - Palette: champagne paper, deep brown ink, metallic gold and red gradients (`tokens.css`). Paper grain and a fixed double gold page frame with filigree corners (`PageFrame`).
 - Nav (owner's second mockup): a two-tone band with a line-drawn Taj Mahal and Mount Fuji, To India and To Japan either side of a gold shield logo, About, Gallery and FAQ as pointed buttons below it, Enquire then language at the top right. The art draws in on load, the sun rises, and hovering a destination lights its side. On scroll the band shrinks to one line and the page buttons move left. Phone bar keeps the menu.
 - Hero: embossed bold title, intro and slide controls in a filigree panel, gold and red lacquered buttons (`OrnateLink`), the slideshow inside a bevelled gold frame on a lattice panel with a Mughal crest (`PhotoFrame`), each photo filling it edge to edge from its top edge, so any trimming comes off the bottom, and previous/next lozenges on the frame's bottom rule.
-- Sticky panels work again: `body` used `overflow-x: hidden`, which made it a scroll container and silently stopped every `position: sticky` on the site (Contact aside, About photos). It is now `overflow-x: clip`. Sticky offsets use `--nav-compact`.
+- Sticky panels work again: `body` used `overflow-x: hidden`, which made it a scroll container and silently stopped every `position: sticky` on the site (Contact aside, About photos, FAQ side list). It is now `overflow-x: clip`. The FAQ side list scrolls inside itself on short screens. Sticky offsets use `--nav-compact`.
 - Founder link uses `OrnateLink`; homepage section titles are letterpressed. Destination tiles get a dark base under their photos.
 
 ## 2026-11-06 Homepage section transitions
