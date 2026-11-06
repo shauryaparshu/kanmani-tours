@@ -20,7 +20,7 @@ html {
 
 body {
   min-width: 320px;
-  overflow-x: hidden;
+  overflow-x: clip;  /* clip, not hidden: hidden would make body a scroll container and stop position: sticky working */
   background: var(--color-paper);  /* gold theme: champagne; PageFrame adds the grain */
   color: var(--color-ink);
   font: var(--weight-regular) var(--text-body) / var(--leading-body) var(--font-body);

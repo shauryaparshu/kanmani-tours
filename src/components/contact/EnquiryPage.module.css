@@ -143,7 +143,7 @@
   /* Short asides follow the form down the page; tall ones scroll normally. */
   .sticky {
     position: sticky;
-    top: calc(var(--nav-height) + var(--space-4));
+    top: calc(var(--nav-compact) + var(--space-4));
   }
 }
 
