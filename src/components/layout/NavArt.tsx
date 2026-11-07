@@ -258,34 +258,6 @@ export function TajArt() {
     );
 }
 
-/** A small Taj for the slim band, where the full drawing is hidden. */
-export function MiniTaj({ className }: { className: string }) {
-    return (
-        <svg className={className} viewBox="0 0 64 44" aria-hidden="true" focusable="false">
-            <path className={styles.miniSolid} d="M4.2 39L5.2 15H8L9 39ZM55 39L56 15H58.8L59.8 39Z" />
-            <path className={styles.miniSolid} d="M15 39V23.5H23.5V21H40.5V23.5H49V39Z" />
-            <path className={styles.miniSolid} d="M23.5 21V17.5H40.5V21Z" />
-            <path className={styles.miniSolid} d="M24 17.5C21.4 13 24.5 6.5 32 5C39.5 6.5 42.6 13 40 17.5Z" />
-            <path className={styles.miniSolid} d="M1 39H63V43H1Z" />
-            <path className={styles.miniLine} d="M4.2 39L5.2 15H8L9 39M55 39L56 15H58.8L59.8 39M15 39V23.5H23.5V21H40.5V23.5H49V39M23.5 21V17.5H40.5V21M24 17.5C21.4 13 24.5 6.5 32 5C39.5 6.5 42.6 13 40 17.5M1 39H63V43H1ZM32 5V1M3.8 15H9.4M54.6 15H60.2M6.6 15V11.5M57.4 15V11.5" />
-            <path className={styles.miniDepth} d="M27 39V31C27 29 30 27.5 32 25C34 27.5 37 29 37 31V39Z" />
-            <path className={styles.miniDepth} d="M18 39V34C18 32.8 19.2 32 20.5 30.5C21.8 32 23 32.8 23 34V39ZM41 39V34C41 32.8 42.2 32 43.5 30.5C44.8 32 46 32.8 46 34V39Z" />
-        </svg>
-    );
-}
-
-/** A small Fuji for the slim band, where the full drawing is hidden. */
-export function MiniFuji({ className }: { className: string }) {
-    return (
-        <svg className={className} viewBox="0 0 64 44" aria-hidden="true" focusable="false">
-            <circle className={styles.miniSun} cx="48" cy="12" r="8" />
-            <path className={styles.miniSolid} d="M1 43C12 38 19 27 25 12C26 10 27 9 28 9H36C37 9 38 10 39 12C45 27 52 38 63 43Z" />
-            <path className={styles.miniLine} d="M1 43C12 38 19 27 25 12C26 10 27 9 28 9H36C37 9 38 10 39 12C45 27 52 38 63 43" />
-            <path className={styles.miniLine} d="M21 21C24 24 26 20 28 23C30 26 32 21 34 24C36 26 38 21 43 21" />
-        </svg>
-    );
-}
-
 /** A stylised gold cloud with curled ends, at the foot of Fuji. */
 function FujiCloud({ x, y, flip = false }: { x: number; y: number; flip?: boolean }) {
     return (
@@ -329,6 +301,96 @@ export function FujiArt() {
                 <FujiCloud x={66} y={112} />
                 <FujiCloud x={254} y={112} flip />
             </g>
+        </svg>
+    );
+}
+
+// The ends of a plaque: an ogee, or a straight edge with cut corners. HOME starts
+// the row with a straight left edge and CONTACT ends it with a straight right one.
+const RIGHT_OGEE = 'C176 2 180 5 183 9C186 13 191 13 192 18C193 23 198 26 198 32C198 38 193 41 192 46C191 51 186 51 183 55C180 59 176 62 170 62';
+const LEFT_OGEE = 'C24 62 20 59 17 55C14 51 9 51 8 46C7 41 2 38 2 32C2 26 7 23 8 18C9 13 14 13 17 9C20 5 24 2 30 2Z';
+const RIGHT_STRAIGHT = 'H186C186 6 190 10 196 10V54C190 54 186 58 186 62H170';
+const LEFT_STRAIGHT = 'H14C14 58 10 54 4 54V10C10 10 14 6 14 2H30Z';
+
+function plaquePath(position: 'start' | 'middle' | 'end') {
+    const right = position === 'end' ? RIGHT_STRAIGHT : RIGHT_OGEE;
+    const left = position === 'start' ? LEFT_STRAIGHT : LEFT_OGEE;
+    return `M30 2H170${right}H30${left}`;
+}
+
+const FILIGREE = 'M16 15C20 10 27 10 32 12M16 15C15 19 18 22 21 20C23 18 21 16 19 17M32 12C35 13 36 16 34 17M24 11C24 8 27 7 29 8';
+
+/** The shared gold for every plaque, vine and tassel. Rendered once, at no size. */
+export function NavRowDefs() {
+    return (
+        <svg className={styles.rowDefs} aria-hidden="true" focusable="false">
+            <defs>
+                <linearGradient id="nav-plaque-edge" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0" style={{ stopColor: 'var(--color-plaque-edge)' }} />
+                    <stop offset="0.35" style={{ stopColor: 'var(--color-plaque-light)' }} />
+                    <stop offset="0.6" style={{ stopColor: 'var(--color-plaque-deep)' }} />
+                    <stop offset="1" style={{ stopColor: 'var(--color-plaque-edge)' }} />
+                </linearGradient>
+                <linearGradient id="nav-plaque-face" x1="0" y1="0" x2="1" y2="0.45">
+                    <stop offset="0" style={{ stopColor: 'var(--color-plaque-deep)' }} />
+                    <stop offset="0.28" style={{ stopColor: 'var(--color-plaque-light)' }} />
+                    <stop offset="0.5" style={{ stopColor: 'var(--color-plaque-mid)' }} />
+                    <stop offset="0.74" style={{ stopColor: 'var(--color-plaque-light)' }} />
+                    <stop offset="1" style={{ stopColor: 'var(--color-plaque-deep)' }} />
+                </linearGradient>
+                <pattern id="nav-plaque-brush" width="200" height="3" patternUnits="userSpaceOnUse">
+                    <path d="M0 0.8H200" className={styles.plaqueBrushLine} />
+                </pattern>
+                <linearGradient id="nav-tassel-gold" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0" style={{ stopColor: 'var(--color-plaque-edge)' }} />
+                    <stop offset="0.5" style={{ stopColor: 'var(--color-plaque-light)' }} />
+                    <stop offset="1" style={{ stopColor: 'var(--color-plaque-edge)' }} />
+                </linearGradient>
+                <pattern id="nav-vine" width="72" height="13" patternUnits="userSpaceOnUse">
+                    <path className={styles.vineStem} d="M0 6.5C12 1 24 1 36 6.5S60 12 72 6.5" />
+                    <path className={styles.vineStem} d="M14 3.6C17 1 21 1.6 21 4C21 5.6 18.6 5.8 18.4 4.2M50 9.4C53 12 57 11.4 57 9C57 7.4 54.6 7.2 54.4 8.8" />
+                    <path className={styles.vineLeaf} d="M5 5C7 2 10 1.2 12.6 1.4C11.6 4 8.6 5.6 5 5ZM27 3.4C29 0.8 32 0.4 34.6 1C33.6 3.6 30.6 4.8 27 3.4ZM41 9.6C43 12.2 46 12.6 48.6 12C47.6 9.4 44.6 8.2 41 9.6ZM63 8C65 11 68 11.8 70.6 11.6C69.6 9 66.6 7.4 63 8ZM22 7.4C24 9.4 26.6 9.8 28.6 9C27.4 7 24.8 6.2 22 7.4ZM58 5.6C60 3.6 62.6 3.2 64.6 4C63.4 6 60.8 6.8 58 5.6ZM34 7.6C35.4 9.6 37.6 10.4 39.6 10C38.8 7.8 36.6 6.8 34 7.6ZM36.6 5.2C38 3.2 40.2 2.4 42.2 2.8C41.4 5 39.2 6 36.6 5.2ZM0 7C1.4 9 3.6 9.8 5.6 9.4C4.8 7.2 2.6 6.2 0 7ZM70 5.8C70.6 5.4 71.4 5.2 72 5.2V7.2C71.2 7 70.4 6.4 70 5.8Z" />
+                </pattern>
+            </defs>
+        </svg>
+    );
+}
+
+/** The gold plaque behind a button in the row. */
+export function PlaqueShape({ position }: { position: 'start' | 'middle' | 'end' }) {
+    const d = plaquePath(position);
+    return (
+        <svg className={styles.plaqueShape} viewBox="0 0 200 64" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+            <path className={styles.plaqueEdge} d={d} />
+            <path className={styles.plaqueFace} d={d} transform="translate(100 32) scale(0.945 0.86) translate(-100 -32)" />
+            <path className={styles.plaqueBrush} d={d} transform="translate(100 32) scale(0.945 0.86) translate(-100 -32)" />
+            <path className={styles.plaqueLine} d={d} transform="translate(100 32) scale(0.9 0.74) translate(-100 -32)" />
+            <path className={styles.plaqueFiligree} d={FILIGREE} />
+            <path className={styles.plaqueFiligree} d={FILIGREE} transform="matrix(-1 0 0 1 200 0)" />
+            <path className={styles.plaqueFiligree} d={FILIGREE} transform="matrix(1 0 0 -1 0 64)" />
+            <path className={styles.plaqueFiligree} d={FILIGREE} transform="matrix(-1 0 0 -1 200 64)" />
+        </svg>
+    );
+}
+
+/** A band of gold vine scrolls, along the top or bottom of the row. */
+export function Vine({ className }: { className: string }) {
+    return (
+        <svg className={className} aria-hidden="true" focusable="false">
+            <rect width="100%" height="100%" fill="url(#nav-vine)" />
+        </svg>
+    );
+}
+
+/** The gold tassel that hangs between two plaques. */
+export function Tassel({ className }: { className: string }) {
+    return (
+        <svg className={className} viewBox="0 0 10 30" aria-hidden="true" focusable="false">
+            <path className={styles.tasselCord} d="M5 0V6" />
+            <circle className={styles.tasselGold} cx="5" cy="8" r="2.6" />
+            <path className={styles.tasselGold} d="M3 10.4H7L7.6 13H2.4Z" />
+            <path className={styles.tasselGold} d="M2.6 13H7.4L9 27C9 28.4 7.4 29.4 5 29.4C2.6 29.4 1 28.4 1 27Z" />
+            <path className={styles.tasselStrands} d="M3.6 14L2.8 27.6M5 14V28.4M6.4 14L7.2 27.6" />
         </svg>
     );
 }

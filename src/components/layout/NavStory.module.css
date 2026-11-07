@@ -33,8 +33,8 @@
    units convert to band pixels with --taj-x, --fuji-x and --art-top below. */
 
 .layer {
-  --branch-w: 8.5rem;
-  --branch-top: 3.75rem;
+  --branch-w: 11rem;
+  --branch-top: 1.25rem;
   --cart-w: 122px;
   --deer-w: 62px;
   /* The raised trunk's tip, and the spot left of Fuji where the colours land. */
@@ -366,10 +366,10 @@ header[data-scrolled="true"] .storyRoot * { animation-play-state: paused; }
   animation: petalDrift var(--dur-story) ease-in-out infinite;
 }
 @keyframes petalDrift {
-  0%, 32.3% { transform: translateY(78px); }
-  36.9% { transform: translateY(92px); }
-  41.5% { transform: translateY(74px); }
-  46.2% { transform: translateY(88px); }
+  0%, 32.3% { transform: translateY(calc(var(--branch-top) + var(--branch-w) * 0.2)); }
+  36.9% { transform: translateY(84px); }
+  41.5% { transform: translateY(66px); }
+  46.2% { transform: translateY(82px); }
   50.8%, 100% { transform: translateY(calc(var(--art-top) + 96px * var(--art-scale))); }
 }
 .petalSpin {
@@ -726,8 +726,8 @@ header[data-scrolled="true"] .storyRoot * { animation-play-state: paused; }
 /* Narrower desktops: less room left of the Taj and right of Fuji. */
 @media (max-width: 1279px) {
   .layer {
-    --branch-w: 4.5rem;
-    --branch-top: 4rem;
+    --branch-w: 7rem;
+    --branch-top: 1.5rem;
     --cart-w: 98px;
     --deer-w: 46px;
   }

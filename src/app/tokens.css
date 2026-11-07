@@ -32,7 +32,12 @@
   --gradient-red: linear-gradient(160deg, #8A2A21 0%, #A8352A 45%, #B6453A 60%, #8A2A21 100%);
   --text-emboss: 0 1px 0 rgb(255 248 228 / 0.7), 0 2px 3px rgb(59 42 22 / 0.28);
   --color-gold-pale: #F6E9C4;       /* the lit side of the Taj's gold */
-  --color-nav-band: #FFFFFF;        /* nav band, both sides */
+  --color-nav-band: #FFFFFF;        /* nav band and plaque row */
+  --color-plaque-light: #F6E3A0;    /* the nav's gold plaques, from the owner's design */
+  --color-plaque-mid: #DDB44C;
+  --color-plaque-deep: #BC8F2A;
+  --color-plaque-edge: #7C5A17;
+  --color-plaque-ink: #1C1206;      /* plaque text */
   --color-sakura: #EDBBC6;          /* nav story: blossoms and petal; decoration only */
   --color-sakura-deep: #C98796;
   --color-lotus: #F4A9C0;           /* nav story: the lotus; decoration only */
@@ -122,8 +127,10 @@
   --dur-story: 52s;     /* one full loop of the nav story */
 
   /* ── Chrome ──────────────────────────────────────────────────────── */
-  --nav-height: 64px;   /* full bar; 152px from 1024px, see below */
-  --nav-compact: 64px;  /* bar once scrolled, for sticky offsets; 88px from 1024px */
+  --nav-height: 64px;   /* full header; band and plaque row from 1024px, see below */
+  --nav-compact: 64px;  /* header once scrolled, for sticky offsets; the plaque row from 1024px */
+  --band-top: 10px;     /* the story band, from 1024px */
+  --band-h: 136px;
   --frame-inset: 6px;   /* gold page border; 14px from 1024px */
 
   /* ── Layers ──────────────────────────────────────────────────────── */
@@ -136,7 +143,7 @@
 }
 
 @media (min-width: 1024px) {
-  :root { --nav-height: 152px; --nav-compact: 88px; --frame-inset: 14px; }
+  :root { --nav-height: 236px; --nav-compact: 90px; --frame-inset: 14px; }
 }
 
 /* Japanese reads better with more line height and no tracking. */

@@ -4,7 +4,7 @@ import { Fragment, useEffect, useRef, useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 import { Link, usePathname, useRouter } from '@/i18n/routing';
 import { SHOW_SERVICES_NAV } from '@/lib/featureFlags';
-import { FujiArt, MiniFuji, MiniTaj, NavBadge, TajArt } from './NavArt';
+import { FujiArt, NavBadge, NavRowDefs, PlaqueShape, TajArt, Tassel, Vine } from './NavArt';
 import { NavStoryFront } from './NavStory';
 import styles from './Navigation.module.css';
 
@@ -25,6 +25,8 @@ export default function Navigation() {
 
     const [scrolled, setScrolled] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
+    const [toursOpen, setToursOpen] = useState(false);
+    const toursRef = useRef<HTMLLIElement>(null);
     const menuButtonRef = useRef<HTMLButtonElement>(null);
     const firstMenuLinkRef = useRef<HTMLAnchorElement>(null);
 
@@ -68,6 +70,23 @@ export default function Navigation() {
         };
     }, [menuOpen]);
 
+    // The Tours choice closes on Escape or on a press anywhere else.
+    useEffect(() => {
+        if (!toursOpen) return;
+        const onKey = (e: KeyboardEvent) => {
+            if (e.key === 'Escape') setToursOpen(false);
+        };
+        const onPress = (e: PointerEvent) => {
+            if (!toursRef.current?.contains(e.target as Node)) setToursOpen(false);
+        };
+        document.addEventListener('keydown', onKey);
+        document.addEventListener('pointerdown', onPress);
+        return () => {
+            document.removeEventListener('keydown', onKey);
+            document.removeEventListener('pointerdown', onPress);
+        };
+    }, [toursOpen]);
+
     const switchLocale = (next: 'en' | 'ja') => {
         setMenuOpen(false);
         router.replace(pathname, { locale: next });
@@ -90,6 +109,47 @@ export default function Navigation() {
                 </Fragment>
             ))}
         </div>
+    );
+
+    // The six plaques from the owner's design. Tours opens a choice, because the
+    // site has a tours page for each country and none for both.
+    const rowLinks = [
+        { href: '/', label: t('home') },
+        { href: '/about', label: t('aboutUs') },
+        { href: '/gallery', label: t('gallery') },
+        { href: '/faq', label: t('faq') },
+        ...(SHOW_SERVICES_NAV ? [{ href: '/services', label: t('services') }] : []),
+        { href: '/contact', label: t('contact') },
+    ];
+    const onTours = isActive('/india/tours') || isActive('/japan/tours');
+    const toursPlaque = (
+        <li
+            key="tours"
+            ref={toursRef}
+            className={styles.plaqueItem}
+            onMouseEnter={() => setToursOpen(true)}
+            onMouseLeave={() => setToursOpen(false)}
+        >
+            <button
+                type="button"
+                className={styles.plaque}
+                aria-expanded={toursOpen}
+                aria-controls="nav-tours"
+                data-current={onTours || undefined}
+                onClick={() => setToursOpen((open) => !open)}
+            >
+                <PlaqueShape position="middle" />
+                <span className={styles.plaqueLabel}>{t('tours')}</span>
+            </button>
+            <Tassel className={styles.tassel} />
+            <div id="nav-tours" className={styles.toursMenu} hidden={!toursOpen}>
+                {links.slice(0, 2).map((link) => (
+                    <Link key={link.href} href={link.href} className={styles.toursLink} aria-current={isActive(link.href) ? 'page' : undefined} onClick={() => setToursOpen(false)}>
+                        {link.label}
+                    </Link>
+                ))}
+            </div>
+        </li>
     );
 
     return (
@@ -119,43 +179,50 @@ export default function Navigation() {
                     </div>
                 </div>
 
-                {/* Desktop: the India and Japan sides either side of the gold shield, each
-                    side a link to its tours, with no words: the Taj and Fuji say it.
-                    The page buttons sit below the shield, Enquire and language at the
-                    top right. On scroll the band shrinks, the page buttons move to the
-                    left and small drawings stand in for the big ones. */}
-                <nav className={styles.band} aria-label={t('mainNav')}>
+                {/* Desktop, first row: only the story and the logo. Each side of the
+                    band is a link to that country's tours, with no words. */}
+                <div className={styles.band}>
                     <TajArt />
                     <FujiArt />
                     <NavStoryFront />
 
-                    <Link href={links[0].href} className={`${styles.country} ${styles.india}`} title={links[0].label} aria-label={links[0].label} aria-current={isActive(links[0].href) ? 'page' : undefined}>
-                        <MiniTaj className={styles.mini} />
-                    </Link>
-                    <Link href={links[1].href} className={`${styles.country} ${styles.japan}`} title={links[1].label} aria-label={links[1].label} aria-current={isActive(links[1].href) ? 'page' : undefined}>
-                        <MiniFuji className={styles.mini} />
-                    </Link>
+                    <Link href={links[0].href} className={`${styles.country} ${styles.india}`} title={links[0].label} aria-label={links[0].label} aria-current={isActive(links[0].href) ? 'page' : undefined} />
+                    <Link href={links[1].href} className={`${styles.country} ${styles.japan}`} title={links[1].label} aria-label={links[1].label} aria-current={isActive(links[1].href) ? 'page' : undefined} />
 
                     <div className={styles.main}>
                         <Link href="/" className={styles.shieldLink}>
                             <NavBadge id="nav-badge-band" />
                         </Link>
                     </div>
+                </div>
 
-                    <ul className={styles.pages}>
-                        {links.slice(2).map((link) => (
-                            <li key={link.href}>
-                                <Link href={link.href} className={styles.pageButton} aria-current={isActive(link.href) ? 'page' : undefined}>
-                                    <span>{link.label}</span>
-                                </Link>
-                            </li>
-                        ))}
+                {/* Desktop, second row: the gold plaques between two vines. Once
+                    scrolled, this row is all that stays, with a small logo beside it. */}
+                <nav className={styles.row} aria-label={t('mainNav')}>
+                    <NavRowDefs />
+                    <Vine className={styles.vineTop} />
+                    <Vine className={styles.vineBottom} />
+
+                    <Link href="/" className={styles.rowLogo}>
+                        <NavBadge id="nav-badge-row" />
+                    </Link>
+
+                    <ul className={styles.plaques}>
+                        {rowLinks.map((link, i) => {
+                            const position = i === 0 ? 'start' : i === rowLinks.length - 1 ? 'end' : 'middle';
+                            return (
+                                <li key={link.href} className={styles.plaqueItem}>
+                                    <Link href={link.href} className={styles.plaque} aria-current={(link.href === '/' ? pathname === '/' : isActive(link.href)) ? 'page' : undefined}>
+                                        <PlaqueShape position={position} />
+                                        <span className={styles.plaqueLabel}>{link.label}</span>
+                                    </Link>
+                                    {i < rowLinks.length - 1 ? <Tassel className={styles.tassel} /> : null}
+                                </li>
+                            );
+                        }).flatMap((item, i) => (i === 1 ? [toursPlaque, item] : [item]))}
                     </ul>
 
-                    <div className={styles.topRight}>
-                        <Link href="/contact" className={styles.enquire}>{t('enquire')}</Link>
-                        {languageSwitch(styles.langDesktop)}
-                    </div>
+                    {languageSwitch(styles.langDesktop)}
                 </nav>
             </header>
 

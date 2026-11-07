@@ -1,4 +1,4 @@
-/* Bar height is --nav-height (64px phone, 76px from 1024px). */
+/* Header height is --nav-height: the phone bar, or from 1024px the band and the row of plaques. */
 
 .skip {
   position: absolute;
@@ -91,7 +91,8 @@
 @keyframes badgeShineHover { from { transform: translateX(0); } to { transform: translateX(350px); } }
 
 /* ── Desktop band ── */
-.band { display: none; }
+.band,
+.row { display: none; }
 
 /* Line art: draws itself in once when the page loads. */
 .art {
@@ -174,15 +175,16 @@
   transform: translateX(-50%);
 }
 .shieldLink { display: block; }
+/* Tall enough to hide the line where the cart becomes the train. */
 .shieldLink .badge {
-  width: 9rem;
+  width: 12.5rem;
   transform-origin: 50% 0;
   transition: transform var(--dur-shrink) var(--ease-out);
 }
 .shieldLink:hover .badge { transform: scale(1.03); }
 
 /* Each side of the band is a link to that country's tours. There are no words:
-   the big drawings say it, and the small ones once the band is slim. */
+   the drawings say it. */
 .country {
   position: absolute;
   top: 0;
@@ -206,99 +208,183 @@
   height: 2px;
   background: var(--gradient-gold-line);
 }
-.mini {
-  position: absolute;
-  top: 50%;
-  width: 4rem;
-  height: 2.75rem;
-  margin-top: -1.375rem;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity var(--dur-reveal) var(--ease-out), transform var(--dur-hover) var(--ease-out);
-}
-/* Just outside the slim shield, which is 5.25rem wide. */
-.india .mini { right: 3.75rem; }
-.japan .mini { left: 3.75rem; }
-.country:hover .mini { transform: translateY(-1px); }
-.miniSolid { fill: var(--color-gold-light); }
-.miniDepth { fill: var(--color-gold-deep); opacity: 0.55; }
-.miniSun { fill: var(--color-accent); }
-.miniLine {
-  fill: none;
-  stroke: var(--color-gold-deep);
-  stroke-width: 1;
-  stroke-linejoin: round;
-}
 
-/* About, Gallery, FAQ: cream plates with pointed ends, below the shield.
-   On hover the plate fills with gold and lifts. */
-.pages {
+/* ── The row of gold plaques, between two vines ── */
+.rowDefs {
   position: absolute;
+  width: 0;
+  height: 0;
+}
+.vineStem {
+  fill: none;
+  stroke: var(--color-plaque-deep);
+  stroke-width: 1.1;
+  stroke-linecap: round;
+}
+.vineLeaf { fill: var(--color-plaque-deep); }
+.vineTop,
+.vineBottom {
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  width: calc(100% - 16px);
+  height: 13px;
+  pointer-events: none;
+}
+.vineTop { top: 3px; }
+.vineBottom {
+  bottom: 3px;
+  transform: scaleY(-1);
+}
+.plaques {
+  position: absolute;
+  top: 17px;
   left: 50%;
-  top: 92px;
   display: flex;
-  align-items: center;
-  gap: var(--space-1);
+  align-items: stretch;
+  gap: var(--plaque-gap);
   margin: 0;
   padding: 0;
   list-style: none;
   transform: translateX(-50%);
-  transform-origin: 0 50%;
-  transition: transform var(--dur-shrink) var(--ease-out);
 }
-.pageButton {
+.plaqueItem { position: relative; }
+.plaque {
   position: relative;
   isolation: isolate;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 34px;
-  padding: 0 1.25rem;
-  font: var(--weight-medium) 0.75rem / 1 var(--font-body);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  white-space: nowrap;
-  color: var(--color-ink);
-  text-decoration: none;
-  transition: color var(--dur-hover) var(--ease-out), transform var(--dur-hover) var(--ease-out);
-}
-:lang(ja) .pageButton { letter-spacing: 0.04em; }
-/* Outline and face are both cut to the pointed shape; focus rings stay unclipped. */
-.pageButton::before,
-.pageButton::after {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  clip-path: polygon(10px 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 10px 100%, 0 50%);
-}
-.pageButton::before {
-  inset: 0;
-  background: var(--color-gold);
-}
-.pageButton::after {
-  inset: 1px;
-  background: linear-gradient(to bottom, var(--color-surface-bright), var(--color-surface));
-  transition: opacity var(--dur-hover) var(--ease-out);
-}
-.pageButton:hover {
-  color: var(--color-on-ink);
-  transform: translateY(-2px);
-}
-.pageButton:hover::before { background: var(--gradient-gold); }
-.pageButton:hover::after { opacity: 0; }
-.pageButton[aria-current="page"] { color: var(--color-on-ink); }
-.pageButton[aria-current="page"]::before { background: var(--gradient-gold); }
-.pageButton[aria-current="page"]::after { opacity: 0; }
-
-/* Enquire, then the language choice, at the top right. */
-.topRight {
-  position: absolute;
-  top: 6px;
-  right: 12px;
   display: flex;
   align-items: center;
-  gap: var(--space-2);
-  transition: transform var(--dur-shrink) var(--ease-out);
+  justify-content: center;
+  width: var(--plaque-w);
+  height: 56px;
+  padding: 0 0.75rem;
+  background: none;
+  border: 0;
+  color: var(--color-plaque-ink);
+  font: 700 var(--plaque-text) / 1 var(--font-display);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  filter: drop-shadow(0 2px 2px rgb(59 42 22 / 0.35));
+  transition: transform var(--dur-hover) var(--ease-out), filter var(--dur-hover) var(--ease-out);
+}
+:lang(ja) .plaque {
+  font-size: calc(var(--plaque-text) * 0.86);
+  letter-spacing: 0;
+}
+.plaque:hover {
+  transform: translateY(-1px);
+  filter: drop-shadow(0 3px 4px rgb(59 42 22 / 0.45)) brightness(1.08);
+}
+.plaqueShape {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.plaqueLabel { position: relative; }
+.plaqueEdge {
+  fill: url(#nav-plaque-edge);
+  stroke: var(--color-plaque-edge);
+  stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
+}
+.plaqueFace { fill: url(#nav-plaque-face); }
+.plaqueBrush { fill: url(#nav-plaque-brush); }
+.plaqueBrushLine {
+  fill: none;
+  stroke: var(--color-plaque-light);
+  stroke-width: 0.5;
+  opacity: 0.4;
+}
+.plaqueLine {
+  fill: none;
+  stroke: var(--color-plaque-edge);
+  stroke-width: 0.75;
+  vector-effect: non-scaling-stroke;
+}
+.plaqueFiligree {
+  fill: none;
+  stroke: var(--color-plaque-ink);
+  stroke-width: 1.1;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+  opacity: 0.85;
+}
+/* The page you are on: a darker line inside the plaque. */
+.plaque[aria-current="page"] .plaqueLine,
+.plaque[data-current] .plaqueLine {
+  stroke: var(--color-plaque-ink);
+  stroke-width: 1.75;
+}
+.tassel {
+  position: absolute;
+  z-index: 1;
+  top: 24px;
+  left: calc(100% + (var(--plaque-gap) - 10px) / 2);
+  width: 10px;
+  height: 30px;
+  pointer-events: none;
+}
+.tasselCord {
+  fill: none;
+  stroke: var(--color-plaque-edge);
+  stroke-width: 1;
+}
+.tasselGold {
+  fill: url(#nav-tassel-gold);
+  stroke: var(--color-plaque-edge);
+  stroke-width: 0.4;
+}
+.tasselStrands {
+  fill: none;
+  stroke: var(--color-plaque-edge);
+  stroke-width: 0.4;
+}
+
+/* The India and Japan choice under the Tours plaque. */
+.toursMenu {
+  position: absolute;
+  z-index: 2;
+  top: 100%;
+  left: 50%;
+  min-width: 100%;
+  padding-top: 6px;
+  transform: translateX(-50%);
+}
+.toursMenu[hidden] { display: none; }
+.toursLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 var(--space-3);
+  background: var(--color-nav-band);
+  border: 1px solid var(--color-gold);
+  color: var(--color-plaque-ink);
+  font: 600 var(--plaque-text) / 1 var(--font-display);
+  white-space: nowrap;
+  text-decoration: none;
+  transition: background-color var(--dur-hover) var(--ease-out);
+}
+.toursLink + .toursLink { border-top: 0; }
+.toursLink:hover { background: var(--color-gold-pale); }
+.toursLink[aria-current="page"] { color: var(--color-accent-deep); }
+
+/* The logo beside the plaques, once the band has gone. */
+.rowLogo {
+  position: absolute;
+  top: 50%;
+  left: 14px;
+  width: 5.25rem;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-50%);
+  transition: opacity var(--dur-shrink) var(--ease-out), visibility var(--dur-shrink);
 }
 
 /* ── Language ── */
@@ -486,6 +572,10 @@
   .menu { display: none; }
 
   /* The band lines up with the gold page frame and continues its double line. */
+  .header {
+    height: var(--nav-height);
+    transition: height var(--dur-shrink) var(--ease-out);
+  }
   .band {
     --band-right: var(--color-nav-band);
     --art-h: 104px;           /* drawing height */
@@ -495,12 +585,12 @@
     --ele-s: 1;               /* and its size */
     position: relative;
     display: block;
-    height: calc(var(--nav-height) - 16px);
-    margin: 10px var(--frame-inset) 0;
+    height: var(--band-h);
+    margin: var(--band-top) var(--frame-inset) 0;
     background: var(--color-nav-band);
     border: 1px solid var(--color-gold);
     box-shadow: var(--shadow-card);
-    transition: height var(--dur-shrink) var(--ease-out);
+    transition: opacity var(--dur-shrink) var(--ease-out), transform var(--dur-shrink) var(--ease-out), visibility var(--dur-shrink);
   }
   .band::before {
     content: "";
@@ -513,24 +603,44 @@
 
   .taj { right: calc(50% + var(--art-offset)); }
   .fuji { left: calc(50% + var(--art-offset)); }
-  .langDesktop { display: flex; }
 
-  /* Scrolled: a slim band with everything on one line. */
-  .header[data-scrolled="true"] .band { height: calc(var(--nav-compact) - 16px); }
-  .header[data-scrolled="true"] .art {
+  .row {
+    --plaque-w: 10.5rem;
+    --plaque-gap: 14px;
+    --plaque-text: 1.25rem;
+    position: absolute;
+    top: calc(var(--band-top) + var(--band-h));
+    left: var(--frame-inset);
+    right: var(--frame-inset);
+    display: block;
+    height: var(--nav-compact);
+    background: var(--color-nav-band);
+    box-shadow: var(--shadow-card);
+    transition: transform var(--dur-shrink) var(--ease-out);
+  }
+  .langDesktop {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    display: flex;
+    transform: translateY(-50%);
+  }
+
+  /* Scrolled: the band goes and the row of plaques rises to the top. */
+  .header[data-scrolled="true"] { height: var(--nav-compact); }
+  .header[data-scrolled="true"] .band {
     opacity: 0;
-    transform: translateY(10px);
+    visibility: hidden;
+    transform: translateY(-16px);
   }
-  .header[data-scrolled="true"] .shieldLink .badge { transform: translateY(5px) scale(0.583); }
-  .header[data-scrolled="true"] .mini { opacity: 1; }
-  .header[data-scrolled="true"] .pages {
-    /* From the centre of the band to its left end, and up to its middle. */
-    transform: translate(calc(-50vw + 37px), -74px) scale(var(--pages-compact-scale, 1));
+  .header[data-scrolled="true"] .row { transform: translateY(calc(-1 * (var(--band-top) + var(--band-h)))); }
+  .header[data-scrolled="true"] .rowLogo {
+    opacity: 1;
+    visibility: visible;
   }
-  .header[data-scrolled="true"] .topRight { transform: translateY(7px); }
 }
 
-/* Smaller art until there is room for Fuji's sun beside the Enquire button. */
+/* Smaller art on smaller desktops. */
 @media (min-width: 1024px) and (max-width: 1439px) {
   .band {
     --art-h: 84px;
@@ -538,18 +648,29 @@
   }
 }
 
-/* Narrow desktops: tighter buttons so the slim band fits. */
+/* Smaller plaques on smaller desktops, leaving room for the logo and language. */
+@media (min-width: 1024px) and (max-width: 1439px) {
+  .row {
+    --plaque-w: 8.75rem;
+    --plaque-text: 1.125rem;
+  }
+}
+
+/* Narrow desktops: smaller art and plaques. */
 @media (min-width: 1024px) and (max-width: 1279px) {
   .band {
-    --pages-compact-scale: 0.85;
     --art-h: 72px;
     --art-scale: 0.554;
     --art-offset: 14.5rem;
     --ele-x: -88px;
     --ele-s: 0.85;
   }
-  .topRight { gap: var(--space-1); }
-  .enquire { padding: 0 var(--space-2); }
+  .row {
+    --plaque-w: 6.875rem;
+    --plaque-gap: 12px;
+    --plaque-text: 0.9375rem;
+  }
+  .plaque { padding: 0 0.5rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
