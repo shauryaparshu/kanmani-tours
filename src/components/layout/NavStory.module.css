@@ -29,7 +29,7 @@
    rest hidden, so without animation only the static drawings show.
 
    Positions come from the drawings' sizes, set on the band in
-   Navigation.module.css: --art-h, --art-scale and --art-offset. A drawing's
+   Navigation.module.css: --art-h, --art-scale and --taj-left. A drawing's
    units convert to band pixels with --taj-x, --fuji-x and --art-top below. */
 
 .layer {
