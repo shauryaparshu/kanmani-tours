@@ -33,17 +33,18 @@
    units convert to band pixels with --taj-x, --fuji-x and --art-top below. */
 
 .layer {
-  --branch-w: 11rem;
-  --branch-top: 1.25rem;
-  --cart-w: 122px;
-  --deer-w: 62px;
+  --branch-w: 3rem;
+  --branch-top: 2.125rem;
+  --cart-w: 78px;
+  --deer-w: 38px;
+  --train-h: 1.25rem;
   /* The raised trunk's tip, and the spot left of Fuji where the colours land. */
   --tip-x: calc(var(--taj-x) + (var(--ele-x) + 67px * var(--ele-s)) * var(--art-scale));
   --tip-y: calc(var(--art-top) + (128px - 80px * var(--ele-s)) * var(--art-scale));
   --land-x0: calc(var(--fuji-x) + 78px * var(--art-scale));
-  --art-top: calc(128px - var(--art-h));
-  --taj-x: calc(50cqw - var(--art-offset) - 320px * var(--art-scale));
-  --fuji-x: calc(50cqw + var(--art-offset));
+  --art-top: calc(var(--nav-height) - 8px - var(--art-h));
+  --taj-x: var(--taj-left);
+  --fuji-x: calc(100cqw - 4px - 320px * var(--art-scale));
   position: absolute;
   inset: 0;
   container-type: inline-size;
@@ -59,7 +60,7 @@ header[data-scrolled="true"] .storyRoot * { animation-play-state: paused; }
 /* ── A road on the India side, a rail with fine sleepers on the Japan side ── */
 .road {
   position: absolute;
-  left: 6px;
+  left: 0;
   right: 50%;
   bottom: 7px;
   height: 1px;
@@ -68,7 +69,7 @@ header[data-scrolled="true"] .storyRoot * { animation-play-state: paused; }
 .rail {
   position: absolute;
   left: 50%;
-  right: 6px;
+  right: 0;
   bottom: 7px;
   height: 3px;
   border-bottom: 1px solid var(--color-gold-deep);
@@ -83,7 +84,7 @@ header[data-scrolled="true"] .storyRoot * { animation-play-state: paused; }
   position: absolute;
   top: 0;
   bottom: 0;
-  left: 6px;
+  left: 0;
   right: 50%;
   overflow: hidden;
 }
@@ -97,8 +98,8 @@ header[data-scrolled="true"] .storyRoot * { animation-play-state: paused; }
 }
 @keyframes cartRun {
   0% { opacity: 1; transform: translateX(calc(-1 * var(--cart-w))); }
-  16.7% { opacity: 1; transform: translateX(calc(50cqw - 6px)); }
-  16.8%, 100% { opacity: 0; transform: translateX(calc(50cqw - 6px)); }
+  16.7% { opacity: 1; transform: translateX(50cqw); }
+  16.8%, 100% { opacity: 0; transform: translateX(50cqw); }
 }
 .cart {
   display: block;
@@ -231,9 +232,9 @@ header[data-scrolled="true"] .storyRoot * { animation-play-state: paused; }
 .track {
   position: absolute;
   left: 50%;
-  right: 6px;
+  right: 0;
   bottom: 7px;
-  height: 1.5rem;
+  height: var(--train-h);
   overflow: hidden;
   container-type: inline-size;
 }
@@ -367,9 +368,13 @@ header[data-scrolled="true"] .storyRoot * { animation-play-state: paused; }
 }
 @keyframes petalDrift {
   0%, 32.3% { transform: translateY(calc(var(--branch-top) + var(--branch-w) * 0.2)); }
-  36.9% { transform: translateY(84px); }
-  41.5% { transform: translateY(66px); }
-  46.2% { transform: translateY(82px); }
+  /* Under the language switch, up into the lane above the tabs, along it, and down
+     only once past the Taj. */
+  34.8% { transform: translateY(calc(var(--branch-top) + var(--branch-w) * 0.2)); }
+  37% { transform: translateY(calc(8px + var(--lane) * 0.6)); }
+  41.5% { transform: translateY(8px); }
+  45.5% { transform: translateY(calc(8px + var(--lane) * 0.7)); }
+  49% { transform: translateY(8px); }
   50.8%, 100% { transform: translateY(calc(var(--art-top) + 96px * var(--art-scale))); }
 }
 .petalSpin {
@@ -582,9 +587,10 @@ header[data-scrolled="true"] .storyRoot * { animation-play-state: paused; }
   position: absolute;
   top: 0;
   left: 0;
-  width: 44px;
-  height: 44px;
-  margin: -22px 0 0 -22px;
+  --puff: calc(66px * var(--art-scale));
+  width: var(--puff);
+  height: var(--puff);
+  margin: calc(var(--puff) / -2) 0 0 calc(var(--puff) / -2);
   border-radius: 50%;
   background: radial-gradient(circle, var(--c) 0%, transparent 68%);
   opacity: 0;
@@ -604,9 +610,9 @@ header[data-scrolled="true"] .storyRoot * { animation-play-state: paused; }
   animation-delay: var(--delay);
 }
 @keyframes landPuff {
-  0%, 80.4% { opacity: 0; transform: translate(calc(var(--land-x0) + var(--shift)), 106px) scale(0.3); }
+  0%, 80.4% { opacity: 0; transform: translate(calc(var(--land-x0) + var(--shift) * var(--art-scale) * 1.4), calc(var(--nav-height) - 30px)) scale(0.3); }
   82.4% { opacity: 0.75; }
-  88.5%, 100% { opacity: 0; transform: translate(calc(var(--land-x0) + var(--shift)), 92px) scale(1.7); }
+  88.5%, 100% { opacity: 0; transform: translate(calc(var(--land-x0) + var(--shift) * var(--art-scale) * 1.4), calc(var(--nav-height) - 44px)) scale(1.7); }
 }
 .spark {
   position: absolute;
@@ -620,7 +626,7 @@ header[data-scrolled="true"] .storyRoot * { animation-play-state: paused; }
 }
 @keyframes sparkAcross {
   0%, 65.4% { transform: translateX(var(--tip-x)); }
-  82.7%, 100% { transform: translateX(calc(var(--land-x0) + var(--land-x))); }
+  82.7%, 100% { transform: translateX(calc(var(--land-x0) + var(--land-x) * var(--art-scale) * 1.4)); }
 }
 @keyframes sparkFade {
   0%, 65.4% { opacity: 0; }
@@ -641,16 +647,21 @@ header[data-scrolled="true"] .storyRoot * { animation-play-state: paused; }
   width: calc(var(--size) * 1.7);
   height: calc(var(--size) * 1.7);
 }
+/* Up quickly into the lane above the tabs, along it, and down only past the last tab. */
 @keyframes sparkFall {
   0%, 65.4% {
     transform: translateY(var(--tip-y)) rotate(0deg);
     animation-timing-function: cubic-bezier(0.2, 0.62, 0.42, 1);
   }
-  72.5% {
-    transform: translateY(var(--apex)) rotate(160deg);
-    animation-timing-function: cubic-bezier(0.55, 0, 0.82, 0.5);
+  68% {
+    transform: translateY(calc(4px + var(--lane) * var(--apex))) rotate(90deg);
+    animation-timing-function: linear;
   }
-  82.7%, 100% { transform: translateY(calc(112px - var(--land-y))) rotate(420deg); }
+  80.6% {
+    transform: translateY(calc(6px + var(--lane) * var(--apex))) rotate(340deg);
+    animation-timing-function: cubic-bezier(0.7, 0, 0.95, 0.6);
+  }
+  82.7%, 100% { transform: translateY(calc(var(--nav-height) - 24px - var(--land-y))) rotate(420deg); }
 }
 
 /* ── The Nara deer appears from the colours, a little left of Fuji, facing India.
@@ -723,17 +734,46 @@ header[data-scrolled="true"] .storyRoot * { animation-play-state: paused; }
   98%, 100% { filter: drop-shadow(0 0 0 rgb(201 154 46 / 0)); }
 }
 
-/* Narrower desktops: less room left of the Taj and right of Fuji. */
+/* The story's sizes for each screen; the band's are in Navigation.module.css. */
 @media (max-width: 1279px) {
-  .layer {
-    --branch-w: 7rem;
-    --branch-top: 1.5rem;
-    --cart-w: 98px;
-    --deer-w: 46px;
-  }
   .elephant { --walk: -35px; }
   .trainNose,
-  .trainTail { flex-basis: 3.5rem; }
+  .trainTail { flex-basis: 3rem; }
+}
+@media (min-width: 1280px) {
+  .layer {
+    --branch-w: 4.25rem;
+    --branch-top: 2.25rem;
+    --cart-w: 92px;
+    --deer-w: 46px;
+    --train-h: 1.375rem;
+  }
+}
+@media (min-width: 1440px) {
+  .layer {
+    --branch-w: 5rem;
+    --branch-top: 2.25rem;
+    --cart-w: 104px;
+    --deer-w: 52px;
+    --train-h: 1.5rem;
+  }
+}
+@media (min-width: 1800px) {
+  .layer {
+    --branch-w: 6.5rem;
+    --branch-top: 2.375rem;
+    --cart-w: 132px;
+    --deer-w: 72px;
+    --train-h: 1.875rem;
+  }
+}
+@media (min-width: 2300px) {
+  .layer {
+    --branch-w: 8.5rem;
+    --cart-w: 156px;
+    --deer-w: 86px;
+    --train-h: 2.25rem;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

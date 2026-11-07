@@ -259,7 +259,7 @@ const SPARKS = Array.from({ length: 28 }, (_, i) => ({
     colour: HOLI[i % HOLI.length],
     delay: ((i * 7) % 28) * 0.06,
     size: 5 + ((i * 5) % 6),
-    apex: 10 + ((i * 11) % 26),
+    apex: ((i * 11) % 26) / 26,
     landX: ((i * 13) % 96) - 48,
     landY: (i * 3) % 18,
     star: i % 3 === 0,
@@ -364,7 +364,7 @@ export function NavStoryFront() {
                     style={{
                         '--c': `var(${spark.colour})`,
                         '--delay': `${spark.delay}s`,
-                        '--apex': `${spark.apex}px`,
+                        '--apex': spark.apex,
                         '--land-x': `${spark.landX}px`,
                         '--land-y': `${spark.landY}px`,
                         '--size': `${spark.size}px`,

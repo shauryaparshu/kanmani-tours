@@ -4,7 +4,7 @@ import { Fragment, useEffect, useRef, useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 import { Link, usePathname, useRouter } from '@/i18n/routing';
 import { SHOW_SERVICES_NAV } from '@/lib/featureFlags';
-import { FujiArt, NavBadge, NavRowDefs, PlaqueShape, TajArt, Tassel, Vine } from './NavArt';
+import { FujiArt, NavBadge, TajArt } from './NavArt';
 import { NavStoryFront } from './NavStory';
 import styles from './Navigation.module.css';
 
@@ -111,22 +111,21 @@ export default function Navigation() {
         </div>
     );
 
-    // The six plaques from the owner's design. Tours opens a choice, because the
-    // site has a tours page for each country and none for both.
-    const rowLinks = [
-        { href: '/', label: t('home') },
-        { href: '/about', label: t('aboutUs') },
-        { href: '/gallery', label: t('gallery') },
-        { href: '/faq', label: t('faq') },
-        ...(SHOW_SERVICES_NAV ? [{ href: '/services', label: t('services') }] : []),
-        { href: '/contact', label: t('contact') },
-    ];
+    // The tabs either side of the logo. Tours opens a choice, because the site has a
+    // tours page for each country and none for both.
+    const tab = (href: string, label: string) => (
+        <li key={href} className={styles.tabItem}>
+            <Link href={href} className={styles.tab} aria-current={(href === '/' ? pathname === '/' : isActive(href)) ? 'page' : undefined}>
+                {label}
+            </Link>
+        </li>
+    );
     const onTours = isActive('/india/tours') || isActive('/japan/tours');
-    const toursPlaque = (
+    const toursTab = (
         <li
             key="tours"
             ref={toursRef}
-            className={styles.plaqueItem}
+            className={styles.tabItem}
             // Hover is for a mouse only: on a touch screen a tap would open it here
             // and then close it again through the button's click.
             onPointerEnter={(e) => { if (e.pointerType === 'mouse') setToursOpen(true); }}
@@ -134,16 +133,14 @@ export default function Navigation() {
         >
             <button
                 type="button"
-                className={styles.plaque}
+                className={styles.tab}
                 aria-expanded={toursOpen}
                 aria-controls="nav-tours"
                 data-current={onTours || undefined}
                 onClick={() => setToursOpen((open) => !open)}
             >
-                <PlaqueShape position="middle" />
-                <span className={styles.plaqueLabel}>{t('tours')}</span>
+                {t('tours')}
             </button>
-            <Tassel className={styles.tassel} />
             <div id="nav-tours" className={styles.toursMenu} hidden={!toursOpen}>
                 {links.slice(0, 2).map((link) => (
                     <Link key={link.href} href={link.href} className={styles.toursLink} aria-current={isActive(link.href) ? 'page' : undefined} onClick={() => setToursOpen(false)}>
@@ -181,9 +178,11 @@ export default function Navigation() {
                     </div>
                 </div>
 
-                {/* Desktop, first row: only the story and the logo. Each side of the
-                    band is a link to that country's tours, with no words. */}
-                <div className={styles.band}>
+                {/* Desktop: one row, from the owner's design: the Taj, three tabs, the logo,
+                    three tabs and Fuji. The story runs in lanes around the tabs, so nothing
+                    crosses them. The drawings link to their country's tours. Once scrolled,
+                    the drawings and story go and the tabs and a small logo stay. */}
+                <nav className={styles.band} aria-label={t('mainNav')}>
                     <TajArt />
                     <FujiArt />
                     <NavStoryFront />
@@ -191,37 +190,23 @@ export default function Navigation() {
                     <Link href={links[0].href} className={`${styles.country} ${styles.india}`} title={links[0].label} aria-label={links[0].label} aria-current={isActive(links[0].href) ? 'page' : undefined} />
                     <Link href={links[1].href} className={`${styles.country} ${styles.japan}`} title={links[1].label} aria-label={links[1].label} aria-current={isActive(links[1].href) ? 'page' : undefined} />
 
+                    <ul className={`${styles.tabs} ${styles.tabsLeft}`}>
+                        {tab('/', t('home'))}
+                        {toursTab}
+                        {tab('/about', t('aboutUs'))}
+                    </ul>
+
                     <div className={styles.main}>
                         <Link href="/" className={styles.shieldLink}>
                             <NavBadge id="nav-badge-band" />
                         </Link>
                     </div>
-                </div>
 
-                {/* Desktop, second row: the gold plaques between two vines. Once
-                    scrolled, this row is all that stays, with a small logo beside it. */}
-                <nav className={styles.row} aria-label={t('mainNav')}>
-                    <NavRowDefs />
-                    <Vine className={styles.vineTop} />
-                    <Vine className={styles.vineBottom} />
-
-                    <Link href="/" className={styles.rowLogo}>
-                        <NavBadge id="nav-badge-row" />
-                    </Link>
-
-                    <ul className={styles.plaques}>
-                        {rowLinks.map((link, i) => {
-                            const position = i === 0 ? 'start' : i === rowLinks.length - 1 ? 'end' : 'middle';
-                            return (
-                                <li key={link.href} className={styles.plaqueItem}>
-                                    <Link href={link.href} className={styles.plaque} aria-current={(link.href === '/' ? pathname === '/' : isActive(link.href)) ? 'page' : undefined}>
-                                        <PlaqueShape position={position} />
-                                        <span className={styles.plaqueLabel}>{link.label}</span>
-                                    </Link>
-                                    {i < rowLinks.length - 1 ? <Tassel className={styles.tassel} /> : null}
-                                </li>
-                            );
-                        }).flatMap((item, i) => (i === 1 ? [toursPlaque, item] : [item]))}
+                    <ul className={`${styles.tabs} ${styles.tabsRight}`}>
+                        {tab('/gallery', t('gallery'))}
+                        {tab('/faq', t('faq'))}
+                        {SHOW_SERVICES_NAV ? tab('/services', t('services')) : null}
+                        {tab('/contact', t('contact'))}
                     </ul>
 
                     {languageSwitch(styles.langDesktop)}
