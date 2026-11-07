@@ -127,8 +127,10 @@ export default function Navigation() {
             key="tours"
             ref={toursRef}
             className={styles.plaqueItem}
-            onMouseEnter={() => setToursOpen(true)}
-            onMouseLeave={() => setToursOpen(false)}
+            // Hover is for a mouse only: on a touch screen a tap would open it here
+            // and then close it again through the button's click.
+            onPointerEnter={(e) => { if (e.pointerType === 'mouse') setToursOpen(true); }}
+            onPointerLeave={(e) => { if (e.pointerType === 'mouse') setToursOpen(false); }}
         >
             <button
                 type="button"
