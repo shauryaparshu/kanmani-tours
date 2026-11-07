@@ -214,9 +214,12 @@
 }
 
 /* ── The tabs, in their own lane either side of the logo ── */
+/* Both groups are the same width, and it is whatever is left after the fixed gap
+   beside the Taj or Fuji, so the two sides of the band mirror each other exactly. */
 .tabs {
   position: absolute;
   top: var(--tab-y);
+  width: calc(50% - var(--logo-w) / 2 - var(--logo-gap) - var(--taj-left) - 294px * var(--art-scale) - var(--edge-gap));
   display: flex;
   align-items: center;
   margin: 0;
@@ -230,15 +233,16 @@
 .tabItem {
   position: relative;
   display: flex;
+  flex: 1 1 auto;
   align-items: center;
+  justify-content: center;
 }
-.tabItem + .tabItem { margin-left: var(--tab-gap); }
 /* A small gold dot between tabs. */
 .tabItem + .tabItem::before {
   content: "";
   position: absolute;
   top: 50%;
-  left: calc(var(--tab-gap) / -2 - 2px);
+  left: -2px;
   width: 4px;
   height: 4px;
   margin-top: -2px;
@@ -263,7 +267,7 @@
   transition: color var(--dur-hover) var(--ease-out);
 }
 :lang(ja) .tab {
-  font-size: calc(var(--tab-text) * 0.94);
+  font-size: calc(var(--tab-text) * 0.88);
   letter-spacing: 0;
 }
 /* A gold line grows under a tab on hover, and stays under the page you are on. */
@@ -501,19 +505,21 @@
   .header { height: var(--nav-height); transition: height var(--dur-shrink) var(--ease-out); }
   .band {
     --band-right: var(--color-nav-band);
-    --ele-x: -98px;           /* the elephant's place in the Taj drawing */
+    --ele-x: -133px;          /* the elephant's place in the Taj drawing */
     --ele-s: 1;               /* and its size */
-    --taj-left: calc(160px * var(--art-scale) + 8px);  /* leaves room for the elephant */
-    --art-scale: 0.4;         /* band pixels per drawing unit */
+    /* The Taj and Fuji each stand this far from their edge of the band. The outer
+       space holds the elephant and lotus on one side, the sakura on the other. */
+    --taj-left: calc(14px + 188px * var(--art-scale));
+    --art-scale: 0.34;        /* band pixels per drawing unit */
     --art-h: calc(130px * var(--art-scale));
-    --logo-w: 9.5rem;
+    --logo-w: 8.5rem;
     --logo-top: 8px;
-    --logo-slim: 0.6;         /* its size once scrolled */
-    --tab-y: 44px;            /* the height of the tabs' lane */
+    --logo-slim: 0.68;        /* its size once scrolled */
+    --tab-y: 40px;            /* the height of the tabs' lane */
     --tab-text: 0.8125rem;
-    --tab-gap: 1.25rem;
-    --logo-gap: 1rem;
-    --lane: 13px;             /* how far down the story's upper lane reaches */
+    --logo-gap: 0.75rem;
+    --edge-gap: 14px;         /* between the Taj or Fuji and the tabs */
+    --lane: 8px;              /* how far down the story's upper lane reaches */
     position: relative;
     display: block;
     height: 100%;
@@ -534,7 +540,7 @@
   }
 
   .taj { left: var(--taj-left); }
-  .fuji { right: 4px; }
+  .fuji { right: var(--taj-left); }
   .langDesktop {
     position: absolute;
     top: 6px;
@@ -561,21 +567,30 @@
   .header[data-scrolled="true"] .langDesktop { transform: translateY(16px); }
 }
 
-/* The longer Japanese tabs need a tighter gap on the smallest desktops. */
-@media (min-width: 1024px) and (max-width: 1279px) {
-  :lang(ja) .band { --tab-gap: 1rem; }
+/* A small laptop. */
+@media (min-width: 1280px) {
+  .band {
+    --art-scale: 0.48;
+    --logo-w: 9.5rem;
+    --logo-slim: 0.6;
+    --tab-y: 46px;
+    --tab-text: 0.875rem;
+    --logo-gap: 0.875rem;
+    --edge-gap: 20px;
+    --lane: 15px;
+  }
 }
 
 /* A regular laptop. */
-@media (min-width: 1280px) {
+@media (min-width: 1360px) {
   .band {
     --art-scale: 0.56;
     --logo-w: 11rem;
     --logo-slim: 0.526;
     --tab-y: 52px;
     --tab-text: 0.9375rem;
-    --tab-gap: 1.75rem;
-    --logo-gap: 1.25rem;
+    --logo-gap: 1.125rem;
+    --edge-gap: 28px;
     --lane: 20px;
   }
 }
@@ -583,44 +598,52 @@
 /* A large laptop. */
 @media (min-width: 1440px) {
   .band {
-    --art-scale: 0.66;
-    --logo-w: 12rem;
-    --logo-top: 5px;
-    --logo-slim: 0.48;
-    --tab-y: 56px;
+    --art-scale: 0.6;
     --tab-text: 1rem;
-    --tab-gap: 2.25rem;
-    --logo-gap: 1.75rem;
-    --lane: 22px;
+    --lane: 19px;
+  }
+}
+
+/* A desktop monitor. */
+@media (min-width: 1600px) {
+  .band {
+    --art-scale: 0.7;
+    --logo-w: 12.5rem;
+    --logo-slim: 0.46;
+    --tab-y: 58px;
+    --tab-text: 1.0625rem;
+    --logo-gap: 1.5rem;
+    --edge-gap: 36px;
+    --lane: 24px;
   }
 }
 
 /* A big screen. */
-@media (min-width: 1800px) {
+@media (min-width: 1900px) {
   .band {
-    --art-scale: 0.92;
+    --art-scale: 0.85;
     --logo-w: 14rem;
-    --logo-top: 7px;
+    --logo-top: 9px;
     --logo-slim: 0.41;
     --tab-y: 66px;
     --tab-text: 1.1875rem;
-    --tab-gap: 3rem;
-    --logo-gap: 2.5rem;
+    --logo-gap: 2rem;
+    --edge-gap: 48px;
     --lane: 32px;
   }
 }
 
 /* A very big screen. */
-@media (min-width: 2300px) {
+@media (min-width: 2400px) {
   .band {
     --art-scale: 1.1;
     --logo-w: 16rem;
-    --logo-top: 9px;
+    --logo-top: 10px;
     --logo-slim: 0.36;
     --tab-y: 76px;
     --tab-text: 1.375rem;
-    --tab-gap: 4rem;
-    --logo-gap: 3.5rem;
+    --logo-gap: 3rem;
+    --edge-gap: 64px;
     --lane: 41px;
   }
 }

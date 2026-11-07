@@ -42,8 +42,11 @@
   --color-elephant: #7F7B79;        /* nav story: the elephant; decoration only */
   --color-elephant-light: #A09C99;
   --color-elephant-deep: #5A5654;
-  --color-deer: #B98A55;            /* nav story: the Nara deer; decoration only */
-  --color-deer-deep: #8C6237;
+  --color-deer: #B4733A;            /* nav story: the Nara deer's chestnut coat; decoration only */
+  --color-deer-deep: #734722;
+  --color-deer-neck: #96704A;
+  --color-deer-face: #B99468;
+  --color-deer-pale: #EAD4AE;
   --color-holi-pink: #E8408F;       /* nav story: the Holi colours; decoration only */
   --color-holi-marigold: #F5A524;
   --color-holi-teal: #18A999;
@@ -136,19 +139,22 @@
 }
 
 @media (min-width: 1024px) {
-  :root { --nav-height: 116px; --nav-compact: 72px; --frame-inset: 14px; }
+  :root { --nav-height: 104px; --nav-compact: 72px; --frame-inset: 14px; }
 }
 @media (min-width: 1280px) {
+  :root { --nav-height: 116px; }
+}
+@media (min-width: 1360px) {
   :root { --nav-height: 130px; }
 }
-@media (min-width: 1440px) {
-  :root { --nav-height: 136px; }
+@media (min-width: 1600px) {
+  :root { --nav-height: 146px; }
 }
-@media (min-width: 1800px) {
-  :root { --nav-height: 160px; }
+@media (min-width: 1900px) {
+  :root { --nav-height: 164px; }
 }
-@media (min-width: 2300px) {
-  :root { --nav-height: 184px; }
+@media (min-width: 2400px) {
+  :root { --nav-height: 186px; }
 }
 
 /* Japanese reads better with more line height and no tracking. */

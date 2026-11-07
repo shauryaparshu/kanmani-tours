@@ -10,11 +10,12 @@
                        32.3-50.8  a petal drifts back to India
                        50.2-57.7  the lotus opens
      The Return Gift   54.2-62.3  the royal elephant walks to the lotus
-                       61.5-67    it raises its trunk, and holds it up from here on
-                       65.4-82.7  Holi colours and gold sparkles fly across to Japan
-                       81.2-85.4  they land left of Fuji, and a Nara deer appears
-                       85.4-89.2  the deer bows to India
-                       90.4-94.2  it rises and the trunk comes down, at the same moment:
+                       61.5-66.8  it raises its trunk, and holds it up from here on
+                       67.4-83.5  only then, Holi colours and gold sparkles fly to Japan
+                       83.5       the first colour touches the ground, left of Fuji
+                       84-87.5    only then does the Nara deer appear
+                       87.5-90.8  the deer bows to India
+                       91.6-95    it rises and the trunk comes down, at the same moment:
                                   the loop ends here
                        88.5-98    the Taj glows and the sun sets behind this
                        96-100     everything fades as the cart comes again
@@ -33,18 +34,18 @@
    units convert to band pixels with --taj-x, --fuji-x and --art-top below. */
 
 .layer {
-  --branch-w: 3rem;
+  --branch-w: 4.25rem;
   --branch-top: 2.125rem;
-  --cart-w: 78px;
-  --deer-w: 38px;
-  --train-h: 1.25rem;
-  /* The raised trunk's tip, and the spot left of Fuji where the colours land. */
+  --cart-w: 62px;
+  --deer-w: 32px;
+  --train-h: 1.125rem;
+  /* The raised trunk's tip, and the spot in front of Fuji's left foot where the colours land. */
   --tip-x: calc(var(--taj-x) + (var(--ele-x) + 67px * var(--ele-s)) * var(--art-scale));
   --tip-y: calc(var(--art-top) + (128px - 80px * var(--ele-s)) * var(--art-scale));
-  --land-x0: calc(var(--fuji-x) + 78px * var(--art-scale));
+  --land-x0: calc(var(--fuji-x) + 70px * var(--art-scale));
   --art-top: calc(var(--nav-height) - 8px - var(--art-h));
   --taj-x: var(--taj-left);
-  --fuji-x: calc(100cqw - 4px - 320px * var(--art-scale));
+  --fuji-x: calc(100cqw - var(--taj-left) - 320px * var(--art-scale));
   position: absolute;
   inset: 0;
   container-type: inline-size;
@@ -257,7 +258,7 @@ header[data-scrolled="true"] .storyRoot * { animation-play-state: paused; }
 }
 .trainNose,
 .trainTail {
-  flex: 0 0 4.75rem;
+  flex: 0 0 calc(var(--train-h) * 3.2);
   height: 100%;
   overflow: visible;
 }
@@ -274,6 +275,8 @@ header[data-scrolled="true"] .storyRoot * { animation-play-state: paused; }
   stroke-width: 1;
 }
 .trainStripe { fill: var(--color-gold); }
+.trainSkirt { fill: var(--color-gold-deep); }
+.trainWheels { fill: var(--color-gold-shadow); }
 .trainGlass {
   fill: var(--color-gold-deep);
   opacity: 0.75;
@@ -283,6 +286,7 @@ header[data-scrolled="true"] .storyRoot * { animation-play-state: paused; }
   stroke: var(--color-gold-deep);
   stroke-width: 3.5;
   stroke-dasharray: 5 3;
+  stroke-linecap: butt;
 }
 .trainDoor {
   fill: none;
@@ -342,7 +346,7 @@ header[data-scrolled="true"] .storyRoot * { animation-play-state: paused; }
    up-and-down and turning are three separate layers, so it never pauses. ── */
 .petal {
   --x0: calc(100cqw - var(--branch-w) * 0.55);
-  --x1: calc(var(--taj-x) - 10px * var(--art-scale) - 8px);
+  --x1: calc(var(--taj-x) - 26px * var(--art-scale) - 8px);
   position: absolute;
   top: 0;
   left: 0;
@@ -483,8 +487,8 @@ header[data-scrolled="true"] .storyRoot * { animation-play-state: paused; }
 .trunkJoint { animation: trunkJoint var(--dur-story) ease-in-out infinite; }
 @keyframes trunkJoint {
   0%, 61.5% { transform: rotate(var(--down)); }
-  67%, 90.4% { transform: rotate(var(--up)); }
-  94.2%, 100% { transform: rotate(var(--down)); }
+  66.8%, 91.6% { transform: rotate(var(--up)); }
+  95%, 100% { transform: rotate(var(--down)); }
 }
 .elephantHead {
   transform-origin: 22px -52px;
@@ -492,8 +496,11 @@ header[data-scrolled="true"] .storyRoot * { animation-play-state: paused; }
 }
 @keyframes elephantHead {
   0%, 61.5% { transform: rotate(0deg); }
-  67%, 90.4% { transform: rotate(-4deg); }
-  94.2%, 100% { transform: rotate(0deg); }
+  66.8% { transform: rotate(-3deg); }
+  /* The throw: the head tosses as the colours leave the trunk. */
+  67.6% { transform: rotate(-7deg); }
+  69.4%, 91.6% { transform: rotate(-4deg); }
+  95%, 100% { transform: rotate(0deg); }
 }
 .elephantEar { animation: elephantEar 2.2s ease-in-out infinite alternate; }
 @keyframes elephantEar {
@@ -601,18 +608,18 @@ header[data-scrolled="true"] .storyRoot * { animation-play-state: paused; }
   animation-delay: var(--delay);
 }
 @keyframes throwPuff {
-  0%, 64.8% { opacity: 0; transform: translate(var(--tip-x), var(--tip-y)) scale(0.2); }
-  66.2% { opacity: 0.8; }
-  71%, 100% { opacity: 0; transform: translate(calc(var(--tip-x) + 26px), calc(var(--tip-y) - 12px)) scale(1.5); }
+  0%, 67.2% { opacity: 0; transform: translate(var(--tip-x), var(--tip-y)) scale(0.2); }
+  68.2% { opacity: 0.8; }
+  73%, 100% { opacity: 0; transform: translate(calc(var(--tip-x) + 26px), calc(var(--tip-y) - 12px)) scale(1.5); }
 }
 .landPuff {
   animation: landPuff var(--dur-story) ease-out infinite;
   animation-delay: var(--delay);
 }
 @keyframes landPuff {
-  0%, 80.4% { opacity: 0; transform: translate(calc(var(--land-x0) + var(--shift) * var(--art-scale) * 1.4), calc(var(--nav-height) - 30px)) scale(0.3); }
-  82.4% { opacity: 0.75; }
-  88.5%, 100% { opacity: 0; transform: translate(calc(var(--land-x0) + var(--shift) * var(--art-scale) * 1.4), calc(var(--nav-height) - 44px)) scale(1.7); }
+  0%, 83.4% { opacity: 0; transform: translate(calc(var(--land-x0) + var(--shift) * var(--art-scale) * 1.4), calc(var(--nav-height) - 30px)) scale(0.3); }
+  85% { opacity: 0.75; }
+  90.5%, 100% { opacity: 0; transform: translate(calc(var(--land-x0) + var(--shift) * var(--art-scale) * 1.4), calc(var(--nav-height) - 34px)) scale(1.35); }
 }
 .spark {
   position: absolute;
@@ -625,15 +632,20 @@ header[data-scrolled="true"] .storyRoot * { animation-play-state: paused; }
   animation-delay: var(--delay);
 }
 @keyframes sparkAcross {
-  0%, 65.4% { transform: translateX(var(--tip-x)); }
-  82.7%, 100% { transform: translateX(calc(var(--land-x0) + var(--land-x) * var(--art-scale) * 1.4)); }
+  /* Thrown hard, then slowing, so it has passed the last tab before it starts to fall. */
+  0%, 67.4% {
+    transform: translateX(var(--tip-x));
+    animation-timing-function: cubic-bezier(0.25, 0.6, 0.5, 1);
+  }
+  83.5%, 100% { transform: translateX(calc(var(--land-x0) + var(--land-x) * var(--art-scale) * 1.4)); }
 }
 @keyframes sparkFade {
-  0%, 65.4% { opacity: 0; }
-  66.2%, 82% { opacity: 1; }
-  84.6%, 100% { opacity: 0; }
+  0%, 67.4% { opacity: 0; }
+  68%, 83.6% { opacity: 1; }
+  85%, 100% { opacity: 0; }
 }
 .sparkFall {
+  --spark-h: var(--size);
   width: var(--size);
   height: var(--size);
   border-radius: 50%;
@@ -642,30 +654,31 @@ header[data-scrolled="true"] .storyRoot * { animation-play-state: paused; }
   animation-delay: var(--delay);
 }
 .sparkStar {
+  --spark-h: calc(var(--size) * 1.7);
   border-radius: 0;
   clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%);
   width: calc(var(--size) * 1.7);
   height: calc(var(--size) * 1.7);
 }
-/* Up quickly into the lane above the tabs, along it, and down only past the last tab. */
+/* Up quickly into the lane above the tabs, along it, and down to the ground past the last tab. */
 @keyframes sparkFall {
-  0%, 65.4% {
+  0%, 67.4% {
     transform: translateY(var(--tip-y)) rotate(0deg);
     animation-timing-function: cubic-bezier(0.2, 0.62, 0.42, 1);
   }
-  68% {
-    transform: translateY(calc(4px + var(--lane) * var(--apex))) rotate(90deg);
+  69.2% {
+    transform: translateY(calc(4px + var(--lane) * var(--apex))) rotate(70deg);
     animation-timing-function: linear;
   }
-  80.6% {
-    transform: translateY(calc(6px + var(--lane) * var(--apex))) rotate(340deg);
-    animation-timing-function: cubic-bezier(0.7, 0, 0.95, 0.6);
+  80% {
+    transform: translateY(calc(6px + var(--lane) * var(--apex))) rotate(300deg);
+    animation-timing-function: cubic-bezier(0.55, 0, 0.9, 0.6);
   }
-  82.7%, 100% { transform: translateY(calc(var(--nav-height) - 24px - var(--land-y))) rotate(420deg); }
+  83.5%, 100% { transform: translateY(calc(var(--nav-height) - 8px - var(--spark-h))) rotate(420deg); }
 }
 
-/* ── The Nara deer appears from the colours, a little left of Fuji, facing India.
-   It bows, holds a moment and rises as the elephant's trunk comes down. ── */
+/* ── The Nara deer appears from the colours only once the first has touched the
+   ground. It bows to India and rises as the elephant's trunk comes down. ── */
 .deer {
   position: absolute;
   bottom: 5px;
@@ -676,8 +689,8 @@ header[data-scrolled="true"] .storyRoot * { animation-play-state: paused; }
   animation: deerAppear var(--dur-story) ease-out infinite;
 }
 @keyframes deerAppear {
-  0%, 81.2% { opacity: 0; transform: translateY(6px) scale(0.72); }
-  85.4%, 96% { opacity: 1; transform: translateY(0) scale(1); }
+  0%, 84% { opacity: 0; transform: translateY(6px) scale(0.72); }
+  87.5%, 96% { opacity: 1; transform: translateY(0) scale(1); }
   100% { opacity: 0; transform: translateY(0) scale(1); }
 }
 .deerShape {
@@ -687,44 +700,66 @@ header[data-scrolled="true"] .storyRoot * { animation-play-state: paused; }
   overflow: visible;
 }
 .deerBow {
-  transform-origin: 22px 32px;
+  transform-origin: 25px 33px;
   animation: deerBow var(--dur-story) ease-in-out infinite;
 }
 @keyframes deerBow {
-  0%, 85.4% { transform: rotate(0deg); }
-  89.2%, 90.4% { transform: rotate(-78deg); }
-  94.2%, 100% { transform: rotate(0deg); }
+  0%, 87.5% { transform: rotate(0deg); }
+  90.8%, 91.6% { transform: rotate(-74deg); }
+  95%, 100% { transform: rotate(0deg); }
 }
 .deerLean {
-  transform-origin: 52px 38px;
+  transform-origin: 64px 40px;
   animation: deerLean var(--dur-story) ease-in-out infinite;
 }
 @keyframes deerLean {
-  0%, 85.4% { transform: rotate(0deg); }
-  89.2%, 90.4% { transform: rotate(-6deg); }
-  94.2%, 100% { transform: rotate(0deg); }
+  0%, 87.5% { transform: rotate(0deg); }
+  90.8%, 91.6% { transform: rotate(-5deg); }
+  95%, 100% { transform: rotate(0deg); }
 }
 .deerCoat { fill: var(--color-deer); }
 .deerFar { fill: var(--color-deer-deep); }
+.deerNeck { fill: var(--color-deer-neck); }
+.deerFace { fill: var(--color-deer-face); }
+.deerBelly { fill: var(--color-deer-pale); }
+.deerChin { fill: var(--color-surface-bright); }
 .deerHoof { fill: var(--color-ink); }
-.deerRump { fill: var(--color-surface-bright); stroke: var(--color-deer-deep); stroke-width: 0.4; }
-.deerTail { fill: var(--color-deer-deep); }
-.deerThroat { fill: var(--color-gold-pale); }
-.deerEarInner { fill: var(--color-sakura); }
+.deerRump { fill: var(--color-surface-bright); }
+.deerRumpEdge,
+.deerBack,
+.deerMane {
+  fill: none;
+  stroke: var(--color-deer-deep);
+  stroke-linecap: round;
+}
+.deerRumpEdge { stroke-width: 0.9; }
+.deerBack { stroke-width: 1.2; }
+.deerMane { stroke-width: 1; }
+.deerThroat {
+  fill: none;
+  stroke: var(--color-deer-pale);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+}
+.deerTail { fill: var(--color-surface-bright); stroke: var(--color-deer-deep); stroke-width: 0.5; }
+.deerEarInner { fill: var(--color-deer-pale); }
 .deerNose { fill: var(--color-ink); }
 .deerEye { fill: var(--color-ink); }
+.deerEyeRing { fill: var(--color-deer-pale); }
 .deerSpots {
   fill: none;
   stroke: var(--color-surface-bright);
-  stroke-width: 2.4;
+  stroke-width: 1.9;
   stroke-linecap: round;
 }
-.deerAntler {
+.deerAntler,
+.deerAntlerFar {
   fill: none;
   stroke: var(--color-horse-dark);
-  stroke-width: 1.1;
+  stroke-width: 1.3;
   stroke-linecap: round;
 }
+.deerAntlerFar { stroke-width: 1.1; opacity: 0.8; }
 
 /* ── Dusk: the Taj glows ── */
 .tajDusk { animation: tajDusk var(--dur-story) ease-in-out infinite; }
@@ -737,41 +772,46 @@ header[data-scrolled="true"] .storyRoot * { animation-play-state: paused; }
 /* The story's sizes for each screen; the band's are in Navigation.module.css. */
 @media (max-width: 1279px) {
   .elephant { --walk: -35px; }
-  .trainNose,
-  .trainTail { flex-basis: 3rem; }
 }
 @media (min-width: 1280px) {
   .layer {
-    --branch-w: 4.25rem;
+    --branch-w: 6rem;
     --branch-top: 2.25rem;
-    --cart-w: 92px;
-    --deer-w: 46px;
+    --cart-w: 84px;
+    --deer-w: 44px;
+    --train-h: 1.25rem;
+  }
+}
+@media (min-width: 1360px) {
+  .layer {
+    --branch-w: 7rem;
+    --cart-w: 96px;
+    --deer-w: 52px;
     --train-h: 1.375rem;
   }
 }
-@media (min-width: 1440px) {
+@media (min-width: 1600px) {
   .layer {
-    --branch-w: 5rem;
-    --branch-top: 2.25rem;
-    --cart-w: 104px;
-    --deer-w: 52px;
+    --branch-w: 8.5rem;
+    --cart-w: 108px;
+    --deer-w: 58px;
     --train-h: 1.5rem;
   }
 }
-@media (min-width: 1800px) {
+@media (min-width: 1900px) {
   .layer {
-    --branch-w: 6.5rem;
+    --branch-w: 10.5rem;
     --branch-top: 2.375rem;
-    --cart-w: 132px;
+    --cart-w: 128px;
     --deer-w: 72px;
-    --train-h: 1.875rem;
+    --train-h: 1.75rem;
   }
 }
-@media (min-width: 2300px) {
+@media (min-width: 2400px) {
   .layer {
-    --branch-w: 8.5rem;
-    --cart-w: 156px;
-    --deer-w: 86px;
+    --branch-w: 13.5rem;
+    --cart-w: 150px;
+    --deer-w: 88px;
     --train-h: 2.25rem;
   }
 }

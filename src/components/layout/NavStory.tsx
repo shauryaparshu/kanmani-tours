@@ -26,7 +26,7 @@ const LOTUS_FRONT = [-46, 46, -24, 24, 0];
 /** The lotus the petal becomes, large and open on still water, left of the Taj. Sits inside the Taj drawing. */
 export function TajLotus() {
     return (
-        <g transform="translate(-10 122)">
+        <g transform="translate(-26 122)">
             <g className={styles.water}>
                 <ellipse className={styles.lotusPad} cx="0" cy="3" rx="31" ry="4" />
                 <path className={styles.ripple} d="M-38 6H38M-26 9.5H26" />
@@ -245,9 +245,11 @@ function HorseCart() {
 function TrainEnd({ className }: { className: string }) {
     return (
         <svg className={className} viewBox="0 0 70 24" preserveAspectRatio="none" focusable="false">
-            <path className={styles.trainFace} d="M0 1H26C48 2 63 12 69 23H0Z" />
-            <path className={styles.trainStripe} d="M0 15H57L63 19H0Z" />
-            <path className={styles.trainGlass} d="M27 5C36 6 43 9 48 13H27Z" />
+            <path className={styles.trainFace} d="M0 1H26C48 2 63 12 69 22H0Z" />
+            <path className={styles.trainStripe} d="M0 13H50L56 16.5H0Z" />
+            <path className={styles.trainSkirt} d="M0 16.5H56.4C60 18 65 20 69 22H0Z" />
+            <path className={styles.trainGlass} d="M27 4.6C36 5.6 43 8 48 11.6H27Z" />
+            <path className={styles.trainWheels} d="M10 22H24V23H10ZM14.6 23.2A1.6 1.6 0 1 1 11.4 23.2A1.6 1.6 0 1 1 14.6 23.2ZM22.6 23.2A1.6 1.6 0 1 1 19.4 23.2A1.6 1.6 0 1 1 22.6 23.2Z" />
         </svg>
     );
 }
@@ -261,40 +263,55 @@ const SPARKS = Array.from({ length: 28 }, (_, i) => ({
     size: 5 + ((i * 5) % 6),
     apex: ((i * 11) % 26) / 26,
     landX: ((i * 13) % 96) - 48,
-    landY: (i * 3) % 18,
     star: i % 3 === 0,
 }));
 const HOLI_PUFFS = ['--color-holi-pink', '--color-holi-marigold', '--color-holi-teal', '--color-holi-violet'];
 
-/** The Nara deer, facing India, with its feet at the bottom of the drawing. */
+/**
+ * A Nara deer, drawn from photographs of the sika stags in Nara Park: a chestnut
+ * coat with rows of white spots, a darker line down the back, a thick grey-brown
+ * neck, a pale face with a dark muzzle, large leaf-shaped ears, tall slender antlers
+ * sweeping back, a white rump, and long thin legs with knobbly joints. It faces India.
+ */
 function NaraDeer() {
     return (
-        <svg className={styles.deerShape} viewBox="0 -8 70 74" focusable="false">
-            <path className={styles.deerFar} d="M26 42L28 52L27 63H31L32 52L33 43Z" />
-            <path className={styles.deerFar} d="M41 43L44 51L42 63H46L49 51L50 41Z" />
-            <path className={styles.deerHoof} d="M27 61.4H31V64H27ZM42 61.4H46V64H42Z" />
+        <svg className={styles.deerShape} viewBox="0 -24 84 92" focusable="false">
+            <path className={styles.deerFar} d="M29 40C29 46 30 50 29.5 53L30 66H32.6L33 53C34.2 49 34.5 44 35 40Z" />
+            <path className={styles.deerFar} d="M60 40C62 46 64 49 62.5 53L64 66H66.6L66 53C68.6 49 69 44 68 38Z" />
+            <path className={styles.deerHoof} d="M30 64H32.8V67H30ZM64 64H66.8V67H64Z" />
 
             <g className={styles.deerLean}>
-                <path className={styles.deerTail} d="M59 31C63 30 64 33 62.6 36C61 36.4 59.6 34.6 59 31Z" />
-                <path className={styles.deerCoat} d="M18 30C22 25 34 24 44 25C52 25 58 28 60 34C61 40 57 44 50 45C40 47 28 46 22 44C18 42 16 35 18 30Z" />
-                <path className={styles.deerRump} d="M55.6 29C60 30 62 36 60 41.4C56.6 41 54.6 35 55.6 29Z" />
+                {/* The neck and head bow together, behind the shoulder. */}
                 <g className={styles.deerBow}>
-                    <circle className={styles.deerCoat} cx="24" cy="34.4" r="7" />
-                    <path className={styles.deerCoat} d="M17 37C15.5 27 13 18 12 11L21 8C22.5 14 24 23 26 29L24 38Z" />
-                    <path className={styles.deerThroat} d="M17.6 31C16.4 26 14.4 21 13 15.4L15.4 15C16.4 20 18 25.6 19.6 30Z" />
-                    <path className={styles.deerCoat} d="M19.6 7.4C22.6 3 26.4 2.4 29 3.6C27 7 23.6 9.4 20.4 10Z" />
-                    <path className={styles.deerEarInner} d="M21.6 7.4C23.4 5.2 25.4 4.4 27 4.6C25.6 6.4 23.6 7.6 21.6 8.2Z" />
-                    <path className={styles.deerCoat} d="M12 12C12 7.6 16 5 20 6C21.4 7 22 9 21 11C18 13.6 14 15.4 10 16.2C6 17 2 17 1 15C0 13 2 12 4 11C7 10 10 11 12 12Z" />
-                    <path className={styles.deerNose} d="M0.8 14.6C1 12.8 2.4 12 3.8 11.6L4.2 14.4C3 15.6 1.8 15.6 0.8 14.6Z" />
-                    <circle className={styles.deerEye} cx="13.2" cy="10" r="1.3" />
-                    <path className={styles.deerAntler} d="M17 6C16.4 2 15 -1 12.6 -4.4M15.8 1.4L19.4 -2.6M14 -1.8L10 -2.2M18.6 6C19 3.4 20.6 0.4 23 -2.4M20.4 0.8L24.6 1" />
+                    <circle className={styles.deerNeck} cx="25" cy="34" r="7" />
+                    <path className={styles.deerNeck} d="M18 36C15 28 12 20 11 13L21 8C23 15 26 21 30 27L26 40Z" />
+                    <path className={styles.deerMane} d="M21 9C22.6 15 25.6 20.6 29.6 26.4" />
+                    <path className={styles.deerThroat} d="M12.6 16C13.4 22 15.4 29 18 34" />
+
+                    <path className={styles.deerAntler} d="M18 4C18 -4 21 -12 27 -20M19.4 -4C16.6 -6 15 -9 14.6 -12M22.6 -12C21.4 -15 21.2 -17 21.6 -20" />
+                    <path className={styles.deerAntlerFar} d="M15.4 4C13.6 -4 13 -12 15 -21M14 -5C11.6 -6.6 10 -9 9.6 -11.6" />
+                    <path className={styles.deerCoat} d="M13.6 5C11.4 1.6 8 0 5 0.4C6 3.6 9 6.2 12.6 7Z" />
+                    <path className={styles.deerFace} d="M11 12C11 7 15 3.6 19 4.4C21.6 5 22.6 8 21.4 10.6C18.6 13 14.6 15 10.6 16.2C7 17.4 3 17.8 1.6 16C0.4 14.4 2 12.6 4 11.4C6 10.2 9 11 11 12Z" />
+                    <path className={styles.deerChin} d="M4.4 16C6.6 16.4 9.4 15.6 11 14.6C9 16.6 6 17.6 4 17.2Z" />
+                    <path className={styles.deerNose} d="M1.4 15.8C0.6 14.4 1.6 13 3.2 12L4.4 15C3.6 16.4 2.4 16.6 1.4 15.8Z" />
+                    <circle className={styles.deerEyeRing} cx="12.4" cy="9.6" r="1.8" />
+                    <circle className={styles.deerEye} cx="12.4" cy="9.6" r="1.25" />
+                    <path className={styles.deerCoat} d="M19.6 6C22 1.6 27 -0.4 31.6 0.6C30.4 5 26 8.6 21 9.2Z" />
+                    <path className={styles.deerEarInner} d="M21.6 6.4C23.6 3.6 26.8 2 29.6 2C28.4 4.8 25.2 7.2 22 7.6Z" />
                 </g>
-                <path className={styles.deerSpots} d="M29 30.2H29.1M36 28.8H36.1M43 28.8H43.1M49.6 30.4H49.7M32.6 35.2H32.7M39.6 34H39.7M46 35.4H46.1M53 34.4H53.1" />
+
+                <path className={styles.deerTail} d="M75 27C78 28 78.4 32 76.4 34C75 33 74.6 30 75 27Z" />
+                <path className={styles.deerCoat} d="M20 28C24 22 34 21 44 21C54 20 66 20 72 25C76 29 76 36 73 41C69 45 62 45 56 45C46 46 34 46 27 44C20 41 17 34 20 28Z" />
+                <path className={styles.deerBelly} d="M27 44C34 46 46 46 56 45C58 44 60 43 62 41C52 43 38 43 28 41Z" />
+                <path className={styles.deerRump} d="M70 25C75 27 77 33 74.5 40C71 40 69 34 69.6 28Z" />
+                <path className={styles.deerRumpEdge} d="M69.6 26C68.6 31 69.6 36 72 40.5" />
+                <path className={styles.deerBack} d="M26 24C34 21.5 44 21.5 54 21C60 20.6 66 21 71 24.6" />
+                <path className={styles.deerSpots} d="M34 25.5H34.1M40 25H40.1M46 25H46.1M52 25H52.1M58 25H58.1M64 25.5H64.1M31 30.5H31.1M37 30H37.1M43 30H43.1M49 30H49.1M55 30H55.1M61 30H61.1M67 30.5H67.1M36 35.5H36.1M42 35.5H42.1M48 35.5H48.1M54 35.5H54.1M60 35.5H60.1" />
             </g>
 
-            <path className={styles.deerCoat} d="M21 41L22 52L21 63H25L26 52L27.4 42Z" />
-            <path className={styles.deerCoat} d="M47 42L50 50L48 63H52L55 50L56.6 39Z" />
-            <path className={styles.deerHoof} d="M21 61.4H25V64H21ZM48 61.4H52V64H48Z" />
+            <path className={styles.deerCoat} d="M24 40C24 46 25.6 50 25 53L25.4 66H28L28.6 53C29.6 49 30 45 31 41Z" />
+            <path className={styles.deerCoat} d="M56 41C58 46 60.6 49 59 52.6L60 66H62.8L62.4 53C65 49 66.6 45 66.6 39Z" />
+            <path className={styles.deerHoof} d="M25.2 64H28.2V67H25.2ZM60 64H63V67H60Z" />
         </svg>
     );
 }
@@ -321,16 +338,19 @@ export function NavStoryFront() {
             <div className={styles.track}>
                 <div className={styles.bullet}>
                     <TrainEnd className={styles.trainTail} />
-                    <svg className={styles.trainCars} preserveAspectRatio="none" focusable="false">
+                    {/* Scaled to the train's height, so the body fills it at every size. */}
+                    <svg className={styles.trainCars} viewBox="0 0 4000 24" preserveAspectRatio="xMinYMin slice" focusable="false">
                         <defs>
                             <pattern id="nav-train-car" width="84" height="24" patternUnits="userSpaceOnUse">
-                                <path className={styles.trainWindows} d="M8 8H76" />
-                                <path className={styles.trainDoor} d="M0 3V23M84 3V23" />
-                                <path className={styles.trainStripe} d="M0 15H84V19H0Z" />
+                                <path className={styles.trainWindows} d="M8 7.5H76" />
+                                <path className={styles.trainDoor} d="M0 2V16.5M84 2V16.5" />
+                                <path className={styles.trainStripe} d="M0 13H84V16.5H0Z" />
+                                <path className={styles.trainSkirt} d="M0 16.5H84V22H0Z" />
+                                <path className={styles.trainWheels} d="M10 22H28V23H10ZM56 22H74V23H56ZM15 23.2A1.6 1.6 0 1 1 11.8 23.2A1.6 1.6 0 1 1 15 23.2ZM26.2 23.2A1.6 1.6 0 1 1 23 23.2A1.6 1.6 0 1 1 26.2 23.2ZM61 23.2A1.6 1.6 0 1 1 57.8 23.2A1.6 1.6 0 1 1 61 23.2ZM72.2 23.2A1.6 1.6 0 1 1 69 23.2A1.6 1.6 0 1 1 72.2 23.2Z" />
                             </pattern>
                         </defs>
-                        <rect className={styles.trainFace} width="100%" height="23" y="1" />
-                        <rect fill="url(#nav-train-car)" width="100%" height="24" />
+                        <rect className={styles.trainFace} width="4000" height="21" y="1" />
+                        <rect fill="url(#nav-train-car)" width="4000" height="24" />
                     </svg>
                     <TrainEnd className={styles.trainNose} />
                 </div>
@@ -366,7 +386,6 @@ export function NavStoryFront() {
                         '--delay': `${spark.delay}s`,
                         '--apex': spark.apex,
                         '--land-x': `${spark.landX}px`,
-                        '--land-y': `${spark.landY}px`,
                         '--size': `${spark.size}px`,
                     } as CSSProperties}
                 >

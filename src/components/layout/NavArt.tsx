@@ -286,7 +286,9 @@ export function FujiArt() {
                 <circle className={styles.sun} cx="160" cy="34" r="22" />
             </g>
 
-            {/* The filled mountain hides the sun as it sets. */}
+            {/* The filled mountain hides the sun as it sets. Narrowed to span units 26 to
+                294, the same as the Taj, so the two sides of the band mirror each other. */}
+            <g transform="translate(160 0) scale(0.859 1) translate(-160 0)">
             <path className={styles.mountainFill} d="M4 128C60 118 104 92 132 52C137 45 142 40 148 40H172C178 40 183 45 188 52C216 92 260 118 316 128Z" />
             <path className={styles.mountainGold} d="M4 128C60 118 104 92 132 52C137 45 142 40 148 40H172C178 40 183 45 188 52C216 92 260 118 316 128Z" />
             <path className={styles.snowFill} d="M132 52C137 45 142 40 148 40H172C178 40 183 45 188 52L200 69C194 75 190 66 184 72C178 80 174 66 168 74C162 84 158 68 152 74C146 80 142 66 136 72C130 76 126 73 120 69Z" />
@@ -300,6 +302,7 @@ export function FujiArt() {
                 <path className={styles.dots} pathLength={1} d="M150 60C156 62 164 62 170 60" />
                 <FujiCloud x={66} y={112} />
                 <FujiCloud x={254} y={112} flip />
+            </g>
             </g>
         </svg>
     );
