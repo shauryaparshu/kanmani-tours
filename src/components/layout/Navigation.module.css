@@ -270,6 +270,18 @@
   font-size: calc(var(--tab-text) * 0.88);
   letter-spacing: 0;
 }
+/* Japanese labels differ more in length, so stretching them to fill both groups would
+   leave one side loose and the other tight. Each group sits centred in its space with
+   a set gap instead; the shorter left group gets a little more, so its outer edges
+   stay close to the right group's. */
+:lang(ja) .tabs {
+  justify-content: center;
+  gap: var(--ja-gap);
+}
+:lang(ja) .tabsLeft { --ja-gap: calc(var(--ja-tab-gap) * 1.4); }
+:lang(ja) .tabsRight { --ja-gap: var(--ja-tab-gap); }
+:lang(ja) .tabItem { flex: 0 0 auto; }
+:lang(ja) .tabItem + .tabItem::before { left: calc(var(--ja-gap) / -2 - 2px); }
 /* A gold line grows under a tab on hover, and stays under the page you are on. */
 .tab::after {
   content: "";
@@ -646,6 +658,64 @@
     --edge-gap: 64px;
     --lane: 41px;
   }
+}
+
+:lang(ja) .band { --ja-tab-gap: 12px; }
+
+/* The longer Japanese labels need more room for the tabs, so the drawings and gaps
+   are slightly smaller. The Taj and Fuji still mirror each other. */
+@media (min-width: 1280px) {
+  :lang(ja) .band { --ja-tab-gap: 26px; }
+}
+@media (min-width: 1360px) {
+  :lang(ja) .band {
+    --art-scale: 0.52;
+    --logo-gap: 0.875rem;
+    --edge-gap: 20px;
+    --ja-tab-gap: 22px;
+  }
+}
+@media (min-width: 1440px) {
+  :lang(ja) .band {
+    --art-scale: 0.56;
+    --ja-tab-gap: 24px;
+  }
+}
+@media (min-width: 1520px) {
+  :lang(ja) .band { --ja-tab-gap: 34px; }
+}
+@media (min-width: 1600px) {
+  :lang(ja) .band {
+    --art-scale: 0.66;
+    --logo-gap: 1.125rem;
+    --edge-gap: 24px;
+    --ja-tab-gap: 22px;
+  }
+}
+@media (min-width: 1750px) {
+  :lang(ja) .band { --ja-tab-gap: 40px; }
+}
+@media (min-width: 1900px) {
+  :lang(ja) .band {
+    --art-scale: 0.82;
+    --logo-gap: 1.5rem;
+    --edge-gap: 36px;
+    --ja-tab-gap: 28px;
+  }
+}
+@media (min-width: 2100px) {
+  :lang(ja) .band { --ja-tab-gap: 52px; }
+}
+@media (min-width: 2400px) {
+  :lang(ja) .band {
+    --art-scale: 1.1;
+    --logo-gap: 3rem;
+    --edge-gap: 64px;
+    --ja-tab-gap: 28px;
+  }
+}
+@media (min-width: 2500px) {
+  :lang(ja) .band { --ja-tab-gap: 44px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
