@@ -1,4 +1,4 @@
-import { TajLotus, TajPeacock } from './NavStory';
+import { TajElephant, TajLotus } from './NavStory';
 import story from './NavStory.module.css';
 import styles from './Navigation.module.css';
 
@@ -190,7 +190,7 @@ export function TajArt() {
             </defs>
 
             <g className={story.storyRoot}>
-                <TajPeacock />
+                <TajElephant />
                 <TajLotus />
             </g>
 

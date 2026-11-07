@@ -491,6 +491,8 @@
     --art-h: 104px;           /* drawing height */
     --art-scale: 0.8;         /* band pixels per drawing unit: height / 130 */
     --art-offset: 15.5rem;    /* drawings' distance from the band's centre */
+    --ele-x: -98px;           /* the elephant's place in the Taj drawing */
+    --ele-s: 1;               /* and its size */
     position: relative;
     display: block;
     height: calc(var(--nav-height) - 16px);
@@ -543,6 +545,8 @@
     --art-h: 72px;
     --art-scale: 0.554;
     --art-offset: 14.5rem;
+    --ele-x: -88px;
+    --ele-s: 0.85;
   }
   .topRight { gap: var(--space-1); }
   .enquire { padding: 0 var(--space-2); }

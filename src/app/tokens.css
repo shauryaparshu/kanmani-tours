@@ -38,10 +38,16 @@
   --color-lotus: #F4A9C0;           /* nav story: the lotus; decoration only */
   --color-lotus-light: #FCDDE7;
   --color-lotus-deep: #C2527B;
-  --color-peacock: #1F6F6B;         /* nav story: the peacock's train; decoration only */
-  --color-peacock-bright: #2F9E90;
-  --color-peacock-blue: #1C5C8C;    /* its neck and breast */
-  --color-peacock-deep: #123F5C;
+  --color-leaf: #4E8B6B;            /* nav story: the lily pad */
+  --color-elephant: #7F7B79;        /* nav story: the elephant; decoration only */
+  --color-elephant-light: #A09C99;
+  --color-elephant-deep: #5A5654;
+  --color-deer: #B98A55;            /* nav story: the Nara deer; decoration only */
+  --color-deer-deep: #8C6237;
+  --color-holi-pink: #E8408F;       /* nav story: the Holi colours; decoration only */
+  --color-holi-marigold: #F5A524;
+  --color-holi-teal: #18A999;
+  --color-holi-violet: #7D4FD1;
   --color-horse: #8A5A2B;           /* nav story: the horse; decoration only */
   --color-horse-dark: #5A3818;
   --color-error: #8E2A20;
@@ -113,7 +119,7 @@
   --dur-hover: 200ms;
   --dur-reveal: 750ms;
   --dur-shrink: 350ms;  /* nav band shrinking on scroll */
-  --dur-story: 60s;     /* one full loop of the nav story */
+  --dur-story: 52s;     /* one full loop of the nav story */
 
   /* ── Chrome ──────────────────────────────────────────────────────── */
   --nav-height: 64px;   /* full bar; 152px from 1024px, see below */

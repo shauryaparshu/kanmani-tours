@@ -10,14 +10,14 @@ import styles from './NavStory.module.css';
  *    and out at the far right edge, as the sun rises.
  * 2. The Gift: the train's wind stirs the sakura into blossom, and one petal
  *    drifts back to India and becomes a lotus.
- * 3. The Return Gift: a peacock walks to the lotus, bows and fans its feathers.
- *    One feather floats to Japan and becomes a bird, which flies across the
- *    setting sun and sits on the sakura. The loop ends there; the cart comes again.
+ * 3. The Return Gift: a royal elephant walks to the lotus and raises its trunk,
+ *    throwing Holi colours and gold sparkles across to Japan. They land a little
+ *    left of Fuji, where a Nara deer appears and bows to India. As it rises, the
+ *    trunk comes down at the same moment, and the loop ends. The cart comes again.
  *
  * All timing lives in NavStory.module.css; everything here is decoration.
  */
 
-const fan = (open: number, closed: number) => ({ '--a': `${open}deg`, '--c': `${closed}deg` }) as CSSProperties;
 const angle = (a: number) => ({ '--a': `${a}deg` }) as CSSProperties;
 
 const LOTUS_BACK = [-80, -60, -40, -20, 80, 60, 40, 20];
@@ -48,72 +48,97 @@ export function TajLotus() {
     );
 }
 
-// The long train feathers and the shorter ones over them: where each one stands
-// when the tail is fanned, and where it lies when the tail trails behind.
-const TAIL_LONG = Array.from({ length: 15 }, (_, i) => ({ open: -102 + i * 10.5, closed: -112 + i * 1.6 }));
-const TAIL_SHORT = Array.from({ length: 11 }, (_, i) => ({ open: -92 + i * 13, closed: -108 + i * 1.8 }));
+// The trunk is a chain of joints, so it curls as it lifts. Each joint turns from
+// its pose hanging down to its pose raised, relative to the joint before it.
+const TRUNK = [
+    { down: -8, up: -70, width: 13 },
+    { down: 6, up: -40, width: 11.5 },
+    { down: 6, up: -40, width: 10 },
+    { down: 2, up: -25, width: 8.5 },
+    { down: -12, up: -10, width: 7 },
+    { down: -24, up: 25, width: 5.5 },
+];
+const TRUNK_JOINT = 8.2;
 
-/** One filled train feather with its gold eye, growing upward from the origin. */
-function TailFeather({ short = false }: { short?: boolean }) {
+function Trunk({ joint = 0 }: { joint?: number }) {
+    const part = TRUNK[joint];
+    if (!part) return null;
+    const half = part.width / 2 - 0.6;
     return (
-        <g transform={short ? 'scale(0.7)' : undefined}>
-            <path className={styles.featherVane} d="M0 0C-1.6 -12 -5 -32 -5.4 -46C-5.8 -55 5.8 -55 5.4 -46C5 -32 1.6 -12 0 0Z" />
-            <path className={styles.featherShaft} d="M0 0V-42" />
-            <ellipse className={styles.featherEye} cx="0" cy="-47" rx="4" ry="5" />
-            <ellipse className={styles.featherIris} cx="0" cy="-47" rx="2.6" ry="3.4" />
-            <circle className={styles.featherPupil} cx="0" cy="-47" r="1.4" />
+        <g className={styles.trunkJoint} style={{ '--down': `${part.down}deg`, '--up': `${part.up}deg` } as CSSProperties}>
+            <path className={styles.trunkPart} style={{ strokeWidth: part.width }} d={`M0 0V${TRUNK_JOINT}`} />
+            <path className={styles.trunkCrease} d={`M${-half} ${TRUNK_JOINT * 0.3}H${half}M${-half} ${TRUNK_JOINT * 0.7}H${half}`} />
+            <g transform={`translate(0 ${TRUNK_JOINT})`}>
+                <Trunk joint={joint + 1} />
+            </g>
         </g>
     );
 }
 
-/** The peacock, full-bodied, facing the lotus. Sits inside the Taj drawing, furthest left. */
-export function TajPeacock() {
+/** A pillar leg with toenails and a gold anklet. */
+function ElephantLeg({ x, far = false, step }: { x: number; far?: boolean; step: string }) {
     return (
-        <g transform="translate(-74 128)">
-            <g className={styles.peacock}>
-                {/* The far leg, behind everything */}
-                <g transform="translate(-5 -11)">
-                    <g className={styles.legB}>
-                        <path className={styles.peacockFarLeg} d="M0 0L-1 6L1 11M1 11H-3M1 11H5" />
+        <g transform={`translate(${x} -26)`}>
+            <g className={step}>
+                <path className={far ? styles.elephantFar : styles.elephantSkin} d="M-8 -3H8L8.6 22C8.6 25 7 26 5 26H-5C-7 26 -8.6 25 -8.6 22Z" />
+                <path className={styles.elephantAnklet} d="M-8.6 15H8.6V18.4H-8.6Z" />
+                {far ? null : <path className={styles.elephantNails} d="M-6 25.4C-6 23.6 -3 23.6 -3 25.4M-1.5 25.4C-1.5 23.6 1.5 23.6 1.5 25.4M3 25.4C3 23.6 6 23.6 6 25.4" />}
+            </g>
+        </g>
+    );
+}
+
+/** The royal elephant, facing the lotus and Japan, with its feet on the ground at y = 0. Sits inside the Taj drawing. */
+export function TajElephant() {
+    return (
+        <g className={styles.elephantPlace}>
+            <g className={styles.elephant}>
+                <ElephantLeg x={-23} far step={styles.legB} />
+                <ElephantLeg x={26} far step={styles.legA} />
+
+                <g transform="translate(-46 -50)">
+                    <g className={styles.elephantTail}>
+                        <path className={styles.elephantTailLine} d="M0 0C-4 6 -5.5 14 -4.5 23" />
+                        <path className={styles.elephantFarFill} d="M-4.5 22C-7 25 -6.6 29 -4.4 31C-2.6 29 -2.2 25 -4.5 22Z" />
                     </g>
                 </g>
 
-                <g transform="translate(-16 -21)">
-                    {TAIL_LONG.map(({ open, closed }) => (
-                        <g key={open} className={styles.feather} style={fan(open, closed)}>
-                            <TailFeather />
-                        </g>
-                    ))}
-                    {TAIL_SHORT.map(({ open, closed }) => (
-                        <g key={open} className={styles.feather} style={fan(open, closed)}>
-                            <TailFeather short />
-                        </g>
-                    ))}
-                </g>
+                <path className={styles.elephantSkin} d="M-47 -30C-49 -48 -37 -64 -14 -66C2 -67 15 -65 24 -60L31 -32C26 -21 14 -18 -2 -18C-20 -18 -37 -18 -45 -24Z" />
+                <ElephantLeg x={-33} step={styles.legA} />
+                <ElephantLeg x={15} step={styles.legB} />
 
-                {/* The near leg, jointed, with toes */}
-                <g transform="translate(1 -11)">
-                    <g className={styles.legA}>
-                        <path className={styles.peacockLeg} d="M0 0L-1 6L1 11M1 11H-3M1 11H5.5" />
+                {/* The royal cloth, in red and gold */}
+                <path className={styles.elephantCloth} d="M-36 -62C-22 -67 0 -67 11 -63L13 -35C6 -28 -28 -28 -38 -35Z" />
+                <path className={styles.elephantClothInner} d="M-32 -59C-20 -63 -2 -63 8 -60L9.6 -37C3 -32 -25 -32 -34 -37Z" />
+                <circle className={styles.elephantGold} cx="-12" cy="-47" r="6.4" />
+                <circle className={styles.elephantJewel} cx="-12" cy="-47" r="2.8" />
+                <path className={styles.elephantFringe} d="M-37 -33.5C-27 -27.5 5 -27.5 12.6 -33.5" />
+
+                {/* The howdah: a gold seat under a small dome */}
+                <path className={styles.howdahCurtain} d="M-25 -72H1V-84H-25Z" />
+                <path className={styles.howdahPost} d="M-25 -72V-85M1 -72V-85M-12 -72V-85" />
+                <path className={styles.elephantGold} d="M-30 -65L-31 -72H7L6 -65Z" />
+                <path className={styles.elephantGold} d="M-30 -85C-25 -97 -1 -97 6 -85Z" />
+                <path className={styles.howdahPost} d="M-12 -94V-100" />
+
+                {/* The head lifts a little with the trunk */}
+                <g className={styles.elephantHead}>
+                    <path className={styles.elephantTusk} d="M41 -38C45 -30 52 -27 59 -29C54 -32 49 -36 46 -41Z" />
+                    <path className={styles.elephantSkin} d="M18 -66C28 -75 43 -73 48 -60C52 -50 50 -40 45 -36C38 -31 27 -34 21 -41C15 -48 13 -60 18 -66Z" />
+                    <g transform="translate(45 -48)">
+                        <Trunk />
                     </g>
-                </g>
-
-                {/* A plump body with a bronze wing */}
-                <path className={styles.peacockBody} d="M-25 -18C-23 -29 -8 -33 5 -30C14 -28 17 -21 13 -15C8 -8.5 -6 -7 -16 -9C-22 -10.5 -26 -14 -25 -18Z" />
-                <path className={styles.peacockWing} d="M-22 -19C-17 -27 -5 -29 3 -25C5 -20 1 -14 -6 -12.5C-13 -11.5 -20 -14 -22 -19Z" />
-                <path className={styles.peacockBars} d="M-16 -22.5L-12 -13.5M-10 -25L-6 -13M-4 -26.5L0 -15" />
-
-                {/* The neck and head turn together, so the peacock can bow to the lotus. */}
-                <g className={styles.peacockBow}>
-                    <path className={styles.peacockNeck} d="M3 -30C8 -34 10 -41 9 -48C8.6 -52 9.6 -56 12.5 -57.5C15.6 -59 18.6 -56.6 17.6 -53.4C16.2 -49 17.5 -43 17 -36.5C16.5 -29 14.5 -22 10.5 -17C9.5 -23 7 -27.5 3 -30Z" />
-                    <path className={styles.peacockCheek} d="M15.4 -57.4C17 -57.2 18.4 -56.2 18.2 -54.8C17.2 -55 16 -55.8 15.4 -57.4Z" />
-                    <circle className={styles.peacockEye} cx="15.6" cy="-55.6" r="0.9" />
-                    <path className={styles.peacockBeak} d="M18 -56.8L23.2 -54.4L17.8 -53.4Z" />
-                    <path className={styles.peacockCrest} d="M13 -58.5L9.5 -66M14.2 -59L13 -67.5M15.4 -58.8L16.6 -67M16.4 -58L20 -65.4" />
-                    <circle className={styles.crestTip} cx="9.5" cy="-66.4" r="1.2" />
-                    <circle className={styles.crestTip} cx="13" cy="-68" r="1.2" />
-                    <circle className={styles.crestTip} cx="16.6" cy="-67.5" r="1.2" />
-                    <circle className={styles.crestTip} cx="20.2" cy="-65.8" r="1.2" />
+                    <g transform="translate(23 -58)">
+                        <g className={styles.elephantEar}>
+                            <path className={styles.elephantEarFill} d="M0 -8C-10 -15 -23 -9 -24 3C-25 14 -16 24 -6 24C0 22 3 11 3 1Z" />
+                            <path className={styles.elephantEarRim} d="M-2 -8C-11 -12 -21 -7 -21.6 3C-22 12 -15 21 -7 21.4" />
+                        </g>
+                    </g>
+                    {/* The gold headpiece and jewel */}
+                    <path className={styles.elephantGold} d="M29 -71C37 -72 43 -67 45.5 -60L39 -48L33 -56Z" />
+                    <circle className={styles.elephantJewel} cx="39" cy="-61" r="2.2" />
+                    <path className={styles.elephantEyeWhite} d="M34.6 -52.4C36 -54.4 39 -54.4 40.4 -52.4C39 -50.8 36 -50.8 34.6 -52.4Z" />
+                    <circle className={styles.elephantEye} cx="37.6" cy="-52.5" r="1.3" />
                 </g>
             </g>
         </g>
@@ -227,35 +252,56 @@ function TrainEnd({ className }: { className: string }) {
     );
 }
 
-/** The bird the feather becomes, facing right, with its feet at the bottom of the drawing. */
-function Bird() {
+// The colours the elephant throws. Each piece follows its own arc across, slightly
+// after the one before, so they travel as a drifting cloud and land scattered.
+const HOLI = ['--color-holi-pink', '--color-holi-marigold', '--color-holi-teal', '--color-holi-violet', '--color-gold'];
+const SPARKS = Array.from({ length: 28 }, (_, i) => ({
+    colour: HOLI[i % HOLI.length],
+    delay: ((i * 7) % 28) * 0.06,
+    size: 5 + ((i * 5) % 6),
+    apex: 10 + ((i * 11) % 26),
+    landX: ((i * 13) % 96) - 48,
+    landY: (i * 3) % 18,
+    star: i % 3 === 0,
+}));
+const HOLI_PUFFS = ['--color-holi-pink', '--color-holi-marigold', '--color-holi-teal', '--color-holi-violet'];
+
+/** The Nara deer, facing India, with its feet at the bottom of the drawing. */
+function NaraDeer() {
     return (
-        <svg className={styles.birdShape} viewBox="-15 -13 30 26" focusable="false">
-            <circle className={styles.birdBurst} cx="0" cy="0" r="9" />
-            <g className={styles.birdFlying}>
-                <path className={`${styles.birdWingFar} ${styles.birdFlap}`} d="M4 -2C4 -7 1 -11 -3 -12C-3 -8 -1 -3 1 -1Z" />
+        <svg className={styles.deerShape} viewBox="0 -8 70 74" focusable="false">
+            <path className={styles.deerFar} d="M26 42L28 52L27 63H31L32 52L33 43Z" />
+            <path className={styles.deerFar} d="M41 43L44 51L42 63H46L49 51L50 41Z" />
+            <path className={styles.deerHoof} d="M27 61.4H31V64H27ZM42 61.4H46V64H42Z" />
+
+            <g className={styles.deerLean}>
+                <path className={styles.deerTail} d="M59 31C63 30 64 33 62.6 36C61 36.4 59.6 34.6 59 31Z" />
+                <path className={styles.deerCoat} d="M18 30C22 25 34 24 44 25C52 25 58 28 60 34C61 40 57 44 50 45C40 47 28 46 22 44C18 42 16 35 18 30Z" />
+                <path className={styles.deerRump} d="M55.6 29C60 30 62 36 60 41.4C56.6 41 54.6 35 55.6 29Z" />
+                <g className={styles.deerBow}>
+                    <circle className={styles.deerCoat} cx="24" cy="34.4" r="7" />
+                    <path className={styles.deerCoat} d="M17 37C15.5 27 13 18 12 11L21 8C22.5 14 24 23 26 29L24 38Z" />
+                    <path className={styles.deerThroat} d="M17.6 31C16.4 26 14.4 21 13 15.4L15.4 15C16.4 20 18 25.6 19.6 30Z" />
+                    <path className={styles.deerCoat} d="M19.6 7.4C22.6 3 26.4 2.4 29 3.6C27 7 23.6 9.4 20.4 10Z" />
+                    <path className={styles.deerEarInner} d="M21.6 7.4C23.4 5.2 25.4 4.4 27 4.6C25.6 6.4 23.6 7.6 21.6 8.2Z" />
+                    <path className={styles.deerCoat} d="M12 12C12 7.6 16 5 20 6C21.4 7 22 9 21 11C18 13.6 14 15.4 10 16.2C6 17 2 17 1 15C0 13 2 12 4 11C7 10 10 11 12 12Z" />
+                    <path className={styles.deerNose} d="M0.8 14.6C1 12.8 2.4 12 3.8 11.6L4.2 14.4C3 15.6 1.8 15.6 0.8 14.6Z" />
+                    <circle className={styles.deerEye} cx="13.2" cy="10" r="1.3" />
+                    <path className={styles.deerAntler} d="M17 6C16.4 2 15 -1 12.6 -4.4M15.8 1.4L19.4 -2.6M14 -1.8L10 -2.2M18.6 6C19 3.4 20.6 0.4 23 -2.4M20.4 0.8L24.6 1" />
+                </g>
+                <path className={styles.deerSpots} d="M29 30.2H29.1M36 28.8H36.1M43 28.8H43.1M49.6 30.4H49.7M32.6 35.2H32.7M39.6 34H39.7M46 35.4H46.1M53 34.4H53.1" />
             </g>
-            <path className={styles.birdBody} d="M-7 3L-15 0.5L-14 5L-6 6Z" />
-            <circle className={styles.birdTailEye} cx="-13" cy="3" r="1.4" />
-            <g className={styles.birdPerched}>
-                <path className={styles.birdLegs} d="M-1 6.5V12M-3 12H1.5M3 6V12M1 12H5.5" />
-            </g>
-            <path className={styles.birdBody} d="M-8 3C-5 -2 0 -4 4 -4C4.5 -7 7.5 -8.5 10 -7C11.5 -6 12 -4.5 11.5 -3C10.5 2 6 7 0 7C-4 7 -7 5 -8 3Z" />
-            <path className={styles.birdBeak} d="M11.3 -5L15 -3L11.3 -1.5Z" />
-            <circle className={styles.birdEye} cx="8.5" cy="-4.8" r="1" />
-            <g className={styles.birdPerched}>
-                <path className={styles.birdWing} d="M-6 2C-3 -1 3 -1 5 1C3 5 -2 6 -7 4Z" />
-            </g>
-            <g className={styles.birdFlying}>
-                <path className={`${styles.birdWing} ${styles.birdFlap}`} d="M2 -1C0 -7 -5 -11 -11 -12C-9 -6 -6 -1 -2 2Z" />
-            </g>
+
+            <path className={styles.deerCoat} d="M21 41L22 52L21 63H25L26 52L27.4 42Z" />
+            <path className={styles.deerCoat} d="M47 42L50 50L48 63H52L55 50L56.6 39Z" />
+            <path className={styles.deerHoof} d="M21 61.4H25V64H21ZM48 61.4H52V64H48Z" />
         </svg>
     );
 }
 
 /**
  * In front of the drawings, behind the links: the road and rail, the horse cart,
- * the long bullet train, the sakura branch, the petal, the feather and the bird.
+ * the long bullet train, the sakura branch, the petal, the Holi colours and the deer.
  * The links come later in the page, so all of this passes behind the logo and the
  * buttons. Things that float are nested: one layer carries them across, one lifts
  * and lowers them, one turns them, so no direction ever has to wait for another.
@@ -307,23 +353,33 @@ export function NavStoryFront() {
                 </div>
             </div>
 
-            <div className={styles.looseFeather}>
-                <div className={styles.featherDrift}>
-                    <svg className={styles.featherRock} viewBox="-9 -56 18 60" focusable="false">
-                        <path className={styles.looseVane} d="M0 -14C-3 -22 -8 -34 -7.5 -44C-7 -52 -3 -55 0 -55C3 -55 7 -52 7.5 -44C8 -34 3 -22 0 -14Z" />
-                        <path className={styles.looseBarbs} d="M0 -18L-5 -27M0 -18L5 -27M0 -24L-6.5 -34M0 -24L6.5 -34M0 -30L-7 -41M0 -30L7 -41M0 -8L-3 -14M0 -8L3 -14M0 -2L-2 -6M0 -2L2 -6" />
-                        <path className={styles.looseQuill} d="M1 3C0 -10 -0.6 -24 0 -40" />
-                        <ellipse className={styles.featherEye} cx="0" cy="-45" rx="4.4" ry="5.6" />
-                        <ellipse className={styles.featherIris} cx="0" cy="-45" rx="2.9" ry="3.8" />
-                        <circle className={styles.featherPupil} cx="0" cy="-45" r="1.6" />
-                    </svg>
-                </div>
-            </div>
+            {HOLI_PUFFS.map((colour, i) => (
+                <div key={colour} className={styles.throwPuff} style={{ '--c': `var(${colour})`, '--delay': `${i * 0.28}s` } as CSSProperties} />
+            ))}
 
-            <div className={styles.bird}>
-                <div className={styles.birdRise}>
-                    <Bird />
+            {SPARKS.map((spark, i) => (
+                <div
+                    key={i}
+                    className={styles.spark}
+                    style={{
+                        '--c': `var(${spark.colour})`,
+                        '--delay': `${spark.delay}s`,
+                        '--apex': `${spark.apex}px`,
+                        '--land-x': `${spark.landX}px`,
+                        '--land-y': `${spark.landY}px`,
+                        '--size': `${spark.size}px`,
+                    } as CSSProperties}
+                >
+                    <div className={`${styles.sparkFall} ${spark.star ? styles.sparkStar : ''}`} />
                 </div>
+            ))}
+
+            {HOLI_PUFFS.map((colour, i) => (
+                <div key={colour} className={styles.landPuff} style={{ '--c': `var(${colour})`, '--delay': `${i * 0.3}s`, '--shift': `${(i - 1.5) * 26}px` } as CSSProperties} />
+            ))}
+
+            <div className={styles.deer}>
+                <NaraDeer />
             </div>
         </div>
     );

@@ -2,21 +2,22 @@
    clock, so the percentages below are one shared timeline. Scenes overlap: each
    begins before the last has finished, so there is never a gap.
 
-     The Journey       0-14.5  horse cart runs in from the far left edge
-                       12.4-27.4  bullet train comes out behind the logo and runs
+     The Journey       0-16.7     horse cart runs in from the far left edge
+                       14.3-31.6  bullet train comes out behind the logo and runs
                                   straight through to the far right edge, never stopping
-                       13-23   the sun rises as it passes
-     The Gift          23-31   its wind stirs the branch, sakura blossoms
-                       28-44   a petal drifts back to India
-                       43.5-50 the lotus opens
-     The Return Gift   47-54   the peacock walks to the lotus
-                       53.5-57.5  it bows
-                       56.5-62 it fans its feathers
-                       61-80.5 one feather floats to Japan
-                       80-88.5 it becomes a bird, which flies to the sakura
-                       84-94   the Taj glows, the sun sets, the peacock and lotus clear
-                       88.5-96 the bird sits on the branch: the loop ends here
-                       96-100  the bird and the blossoms fade as the cart comes again
+                       15-26.5    the sun rises as it passes
+     The Gift          26.5-35.8  its wind stirs the branch, sakura blossoms
+                       32.3-50.8  a petal drifts back to India
+                       50.2-57.7  the lotus opens
+     The Return Gift   54.2-62.3  the royal elephant walks to the lotus
+                       61.5-67    it raises its trunk, and holds it up from here on
+                       65.4-82.7  Holi colours and gold sparkles fly across to Japan
+                       81.2-85.4  they land left of Fuji, and a Nara deer appears
+                       85.4-89.2  the deer bows to India
+                       90.4-94.2  it rises and the trunk comes down, at the same moment:
+                                  the loop ends here
+                       88.5-98    the Taj glows and the sun sets behind this
+                       96-100     everything fades as the cart comes again
 
    HOW IT STAYS SMOOTH. A path with waypoints stops at every waypoint if each stretch
    eases in and out, so nothing here moves that way. Things that travel use one
@@ -34,8 +35,12 @@
 .layer {
   --branch-w: 8.5rem;
   --branch-top: 3.75rem;
-  --bird-w: 30px;
   --cart-w: 122px;
+  --deer-w: 62px;
+  /* The raised trunk's tip, and the spot left of Fuji where the colours land. */
+  --tip-x: calc(var(--taj-x) + (var(--ele-x) + 67px * var(--ele-s)) * var(--art-scale));
+  --tip-y: calc(var(--art-top) + (128px - 80px * var(--ele-s)) * var(--art-scale));
+  --land-x0: calc(var(--fuji-x) + 78px * var(--art-scale));
   --art-top: calc(128px - var(--art-h));
   --taj-x: calc(50cqw - var(--art-offset) - 320px * var(--art-scale));
   --fuji-x: calc(50cqw + var(--art-offset));
@@ -92,8 +97,8 @@ header[data-scrolled="true"] .storyRoot * { animation-play-state: paused; }
 }
 @keyframes cartRun {
   0% { opacity: 1; transform: translateX(calc(-1 * var(--cart-w))); }
-  14.5% { opacity: 1; transform: translateX(calc(50cqw - 6px)); }
-  14.6%, 100% { opacity: 0; transform: translateX(calc(50cqw - 6px)); }
+  16.7% { opacity: 1; transform: translateX(calc(50cqw - 6px)); }
+  16.8%, 100% { opacity: 0; transform: translateX(calc(50cqw - 6px)); }
 }
 .cart {
   display: block;
@@ -243,11 +248,11 @@ header[data-scrolled="true"] .storyRoot * { animation-play-state: paused; }
   animation: bullet var(--dur-story) linear infinite;
 }
 @keyframes bullet {
-  0%, 12.4% {
+  0%, 14.3% {
     transform: translateX(-100%);
     animation-timing-function: cubic-bezier(0.32, 0.14, 0.72, 0.9);
   }
-  27.4%, 100% { transform: translateX(100cqw); }
+  31.6%, 100% { transform: translateX(100cqw); }
 }
 .trainNose,
 .trainTail {
@@ -287,9 +292,9 @@ header[data-scrolled="true"] .storyRoot * { animation-play-state: paused; }
 /* ── The sun rises as the train passes, and sets at the end ── */
 .sunPath { animation: sunDay var(--dur-story) ease-in-out infinite; }
 @keyframes sunDay {
-  0%, 13% { transform: translateY(46px); }
-  23%, 84% { transform: translateY(0); }
-  94%, 100% { transform: translateY(46px); }
+  0%, 15% { transform: translateY(46px); }
+  26.5%, 88.5% { transform: translateY(0); }
+  98%, 100% { transform: translateY(46px); }
 }
 
 /* ── The sakura branch, stirred by the train's wind, blossoms ── */
@@ -304,14 +309,11 @@ header[data-scrolled="true"] .storyRoot * { animation-play-state: paused; }
   animation: stir var(--dur-story) ease-in-out infinite;
 }
 @keyframes stir {
-  0%, 23% { transform: rotate(0deg); }
-  25.5% { transform: rotate(-3deg); }
-  27.5% { transform: rotate(1.6deg); }
-  29.5% { transform: rotate(-0.8deg); }
-  31%, 87.6% { transform: rotate(0deg); }
-  /* The branch dips a little as the bird lands. */
-  89.2% { transform: rotate(0.9deg); }
-  91%, 100% { transform: rotate(0deg); }
+  0%, 26.5% { transform: rotate(0deg); }
+  29.4% { transform: rotate(-3deg); }
+  31.7% { transform: rotate(1.6deg); }
+  34% { transform: rotate(-0.8deg); }
+  35.8%, 100% { transform: rotate(0deg); }
 }
 .branch {
   fill: none;
@@ -324,8 +326,8 @@ header[data-scrolled="true"] .storyRoot * { animation-play-state: paused; }
   animation: blossom var(--dur-story) ease-out infinite;
 }
 @keyframes blossom {
-  0%, 24% { opacity: 0; transform: scale(0); }
-  28%, 96% { opacity: 1; transform: scale(1); }
+  0%, 27.7% { opacity: 0; transform: scale(0); }
+  32.3%, 96% { opacity: 1; transform: scale(1); }
   100% { opacity: 0; transform: scale(1); }
 }
 .blossomPetal {
@@ -339,7 +341,7 @@ header[data-scrolled="true"] .storyRoot * { animation-play-state: paused; }
    up-and-down and turning are three separate layers, so it never pauses. ── */
 .petal {
   --x0: calc(100cqw - var(--branch-w) * 0.55);
-  --x1: calc(var(--taj-x) - 10px * var(--art-scale) - 7px);
+  --x1: calc(var(--taj-x) - 10px * var(--art-scale) - 8px);
   position: absolute;
   top: 0;
   left: 0;
@@ -349,26 +351,26 @@ header[data-scrolled="true"] .storyRoot * { animation-play-state: paused; }
     petalFade var(--dur-story) linear infinite;
 }
 @keyframes petalAcross {
-  0%, 28% {
+  0%, 32.3% {
     transform: translateX(var(--x0));
     animation-timing-function: cubic-bezier(0.36, 0.12, 0.6, 0.92);
   }
-  44%, 100% { transform: translateX(var(--x1)); }
+  50.8%, 100% { transform: translateX(var(--x1)); }
 }
 @keyframes petalFade {
-  0%, 28% { opacity: 0; }
-  29%, 44% { opacity: 1; }
-  45%, 100% { opacity: 0; }
+  0%, 32.3% { opacity: 0; }
+  33.5%, 50.8% { opacity: 1; }
+  51.9%, 100% { opacity: 0; }
 }
 .petalDrift {
   animation: petalDrift var(--dur-story) ease-in-out infinite;
 }
 @keyframes petalDrift {
-  0%, 28% { transform: translateY(78px); }
-  32% { transform: translateY(92px); }
-  36% { transform: translateY(74px); }
-  40% { transform: translateY(88px); }
-  44%, 100% { transform: translateY(calc(var(--art-top) + 96px * var(--art-scale))); }
+  0%, 32.3% { transform: translateY(78px); }
+  36.9% { transform: translateY(92px); }
+  41.5% { transform: translateY(74px); }
+  46.2% { transform: translateY(88px); }
+  50.8%, 100% { transform: translateY(calc(var(--art-top) + 96px * var(--art-scale))); }
 }
 .petalSpin {
   display: block;
@@ -378,8 +380,8 @@ header[data-scrolled="true"] .storyRoot * { animation-play-state: paused; }
   animation: petalSpin var(--dur-story) linear infinite;
 }
 @keyframes petalSpin {
-  0%, 28% { transform: rotate3d(0.5, 0.25, 1, 0deg); }
-  44%, 100% { transform: rotate3d(0.5, 0.25, 1, 900deg); }
+  0%, 32.3% { transform: rotate3d(0.5, 0.25, 1, 0deg); }
+  50.8%, 100% { transform: rotate3d(0.5, 0.25, 1, 900deg); }
 }
 .petalSpin path {
   fill: var(--color-sakura);
@@ -390,12 +392,12 @@ header[data-scrolled="true"] .storyRoot * { animation-play-state: paused; }
 /* ── The lotus opens as the petal touches the water ── */
 .water { opacity: 0; animation: lotusFade var(--dur-story) ease-out infinite; }
 @keyframes lotusFade {
-  0%, 43.5% { opacity: 0; }
-  47%, 93% { opacity: 1; }
-  98%, 100% { opacity: 0; }
+  0%, 50.2% { opacity: 0; }
+  54.2%, 96% { opacity: 1; }
+  100% { opacity: 0; }
 }
 .lotusPad {
-  fill: var(--color-peacock);
+  fill: var(--color-leaf);
   opacity: 0.55;
 }
 .ripple {
@@ -420,281 +422,305 @@ header[data-scrolled="true"] .storyRoot * { animation-play-state: paused; }
 }
 .lotusInner path { fill: var(--color-lotus-light); }
 @keyframes lotusPetal {
-  0%, 43.5% { opacity: 0; transform: rotate(0deg) scale(0.2); }
-  44.5% { opacity: 1; }
-  50%, 93% { opacity: 1; transform: rotate(var(--a)) scale(1); }
-  98%, 100% { opacity: 0; transform: rotate(var(--a)) scale(1); }
+  0%, 50.2% { opacity: 0; transform: rotate(0deg) scale(0.2); }
+  51.3% { opacity: 1; }
+  57.7%, 96% { opacity: 1; transform: rotate(var(--a)) scale(1); }
+  100% { opacity: 0; transform: rotate(var(--a)) scale(1); }
 }
 
-/* ── The peacock walks to the lotus, bows, then fans its tail ── */
-.peacock {
+/* ── The royal elephant walks up to the lotus. Its place comes from --ele-x and
+   --ele-s on the band, so the trunk's tip can be worked out for the colours. ── */
+.elephantPlace {
+  transform: translate(var(--ele-x), 128px) scale(var(--ele-s));
+}
+.elephant {
   --walk: -70px;
   opacity: 0;
   animation:
-    peacockWalk var(--dur-story) linear infinite,
-    peacockFade var(--dur-story) linear infinite;
+    elephantWalk var(--dur-story) linear infinite,
+    elephantFade var(--dur-story) linear infinite;
 }
-@keyframes peacockWalk {
-  0%, 47% {
+@keyframes elephantWalk {
+  0%, 54.2% {
     transform: translateX(var(--walk));
     animation-timing-function: cubic-bezier(0.25, 0.45, 0.45, 1);
   }
-  54%, 100% { transform: translateX(0); }
+  62.3%, 100% { transform: translateX(0); }
 }
-@keyframes peacockFade {
-  0%, 47% { opacity: 0; }
-  49%, 92% { opacity: 1; }
-  97%, 100% { opacity: 0; }
+@keyframes elephantFade {
+  0%, 54.2% { opacity: 0; }
+  56.5%, 96% { opacity: 1; }
+  100% { opacity: 0; }
 }
-/* Its legs step while it walks, and settle as it arrives. */
+/* A slow, heavy step while it walks, settling as it arrives. */
 .legA { animation: legA var(--dur-story) ease-in-out infinite; }
 .legB { animation: legB var(--dur-story) ease-in-out infinite; }
 @keyframes legA {
-  0%, 47% { transform: rotate(0deg); }
-  48% { transform: rotate(-16deg); }
-  49% { transform: rotate(16deg); }
-  50% { transform: rotate(-16deg); }
-  51% { transform: rotate(14deg); }
-  52% { transform: rotate(-11deg); }
-  53% { transform: rotate(6deg); }
-  54%, 100% { transform: rotate(0deg); }
+  0%, 54.2% { transform: rotate(0deg); }
+  55.5% { transform: rotate(-9deg); }
+  57% { transform: rotate(9deg); }
+  58.5% { transform: rotate(-9deg); }
+  60% { transform: rotate(7deg); }
+  61.2% { transform: rotate(-4deg); }
+  62.3%, 100% { transform: rotate(0deg); }
 }
 @keyframes legB {
-  0%, 47% { transform: rotate(0deg); }
-  48% { transform: rotate(16deg); }
-  49% { transform: rotate(-16deg); }
-  50% { transform: rotate(16deg); }
-  51% { transform: rotate(-14deg); }
-  52% { transform: rotate(11deg); }
-  53% { transform: rotate(-6deg); }
-  54%, 100% { transform: rotate(0deg); }
+  0%, 54.2% { transform: rotate(0deg); }
+  55.5% { transform: rotate(9deg); }
+  57% { transform: rotate(-9deg); }
+  58.5% { transform: rotate(9deg); }
+  60% { transform: rotate(-7deg); }
+  61.2% { transform: rotate(4deg); }
+  62.3%, 100% { transform: rotate(0deg); }
 }
-.peacockBow {
-  transform-origin: 8px -26px;
-  animation: peacockBow var(--dur-story) ease-in-out infinite;
+/* The trunk curls up joint by joint, stays up through the whole flight and the
+   deer's bow, and comes down as the deer rises. */
+.trunkJoint { animation: trunkJoint var(--dur-story) ease-in-out infinite; }
+@keyframes trunkJoint {
+  0%, 61.5% { transform: rotate(var(--down)); }
+  67%, 90.4% { transform: rotate(var(--up)); }
+  94.2%, 100% { transform: rotate(var(--down)); }
 }
-@keyframes peacockBow {
-  0%, 53.5% { transform: rotate(0deg); }
-  55.5% { transform: rotate(30deg); }
-  57.5%, 100% { transform: rotate(0deg); }
+.elephantHead {
+  transform-origin: 22px -52px;
+  animation: elephantHead var(--dur-story) ease-in-out infinite;
 }
-.feather { animation: feather var(--dur-story) ease-in-out infinite; }
-@keyframes feather {
-  0%, 56.5% { transform: rotate(var(--c)); }
-  62%, 90% { transform: rotate(var(--a)); }
-  96%, 100% { transform: rotate(var(--c)); }
+@keyframes elephantHead {
+  0%, 61.5% { transform: rotate(0deg); }
+  67%, 90.4% { transform: rotate(-4deg); }
+  94.2%, 100% { transform: rotate(0deg); }
 }
-.featherVane {
-  fill: var(--color-peacock);
-  stroke: var(--color-peacock-deep);
+.elephantEar { animation: elephantEar 2.2s ease-in-out infinite alternate; }
+@keyframes elephantEar {
+  from { transform: rotate(-3deg); }
+  to { transform: rotate(7deg); }
+}
+.elephantTail { animation: elephantTail 2.6s ease-in-out infinite alternate; }
+@keyframes elephantTail {
+  from { transform: rotate(-5deg); }
+  to { transform: rotate(9deg); }
+}
+.elephantSkin { fill: var(--color-elephant); }
+.elephantFar { fill: var(--color-elephant-deep); }
+.elephantFarFill { fill: var(--color-elephant-deep); }
+.elephantEarFill {
+  fill: var(--color-elephant-light);
+  stroke: var(--color-elephant-deep);
+  stroke-width: 0.7;
+}
+.elephantEarRim {
+  fill: none;
+  stroke: var(--color-holi-pink);
+  stroke-width: 1;
+  stroke-dasharray: 1 2;
+  stroke-linecap: round;
+}
+.elephantTailLine {
+  fill: none;
+  stroke: var(--color-elephant-deep);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+}
+.trunkPart {
+  fill: none;
+  stroke: var(--color-elephant);
+  stroke-linecap: round;
+}
+.trunkCrease {
+  fill: none;
+  stroke: var(--color-elephant-deep);
   stroke-width: 0.5;
 }
-.featherShaft {
+.elephantAnklet { fill: var(--color-gold); }
+.elephantNails {
+  fill: var(--color-gold-pale);
+  stroke: var(--color-elephant-deep);
+  stroke-width: 0.3;
+}
+.elephantCloth {
+  fill: var(--color-accent);
+  stroke: var(--color-gold-shadow);
+  stroke-width: 0.6;
+}
+.elephantClothInner {
   fill: none;
   stroke: var(--color-gold-light);
-  stroke-width: 0.6;
+  stroke-width: 1;
 }
-.featherEye {
-  fill: var(--color-gold-light);
-  stroke: var(--color-gold-deep);
-  stroke-width: 0.5;
-}
-.featherIris { fill: var(--color-peacock-bright); }
-.featherPupil { fill: var(--color-peacock-deep); }
-.peacockBody {
-  fill: var(--color-peacock-blue);
-  stroke: var(--color-peacock-deep);
-  stroke-width: 0.6;
-}
-.peacockWing {
+.elephantGold {
   fill: var(--color-gold);
-  stroke: var(--color-gold-deep);
+  stroke: var(--color-gold-shadow);
   stroke-width: 0.6;
 }
-.peacockBars {
+.elephantJewel { fill: var(--color-accent-deep); stroke: var(--color-gold-pale); stroke-width: 0.5; }
+.elephantFringe {
   fill: none;
-  stroke: var(--color-gold-shadow);
-  stroke-width: 0.7;
+  stroke: var(--color-gold-light);
+  stroke-width: 2;
+  stroke-dasharray: 0.1 3;
   stroke-linecap: round;
 }
-.peacockNeck {
-  fill: var(--color-peacock-blue);
-  stroke: var(--color-peacock-deep);
+.howdahCurtain { fill: var(--color-accent-deep); }
+.howdahPost {
+  fill: none;
+  stroke: var(--color-gold-shadow);
+  stroke-width: 1.3;
+}
+.elephantTusk {
+  fill: var(--color-gold-pale);
+  stroke: var(--color-gold-deep);
   stroke-width: 0.5;
 }
-.peacockCheek { fill: var(--color-surface-bright); }
-.peacockEye { fill: var(--color-ink); }
-.peacockBeak { fill: var(--color-gold); stroke: var(--color-gold-shadow); stroke-width: 0.4; }
-.peacockCrest {
-  fill: none;
-  stroke: var(--color-peacock-deep);
-  stroke-width: 0.6;
-}
-.crestTip { fill: var(--color-peacock-bright); }
-.peacockLeg,
-.peacockFarLeg {
-  fill: none;
-  stroke: var(--color-gold-shadow);
-  stroke-width: 1.5;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-.peacockFarLeg { stroke: var(--color-gold-deep); stroke-width: 1.2; }
+.elephantEyeWhite { fill: var(--color-surface-bright); }
+.elephantEye { fill: var(--color-ink); }
 
-/* ── One feather flows to Japan, high over the Taj and behind the logo ── */
-.looseFeather {
-  --fx0: calc(var(--taj-x) - 92px * var(--art-scale));
-  --fx1: calc(var(--fuji-x) + 112px * var(--art-scale) - 8px);
+/* ── Holi colours burst from the raised trunk. Each piece glides across at one
+   speed while it rises to its height and falls, so it follows a true arc and never
+   pauses. Pieces start slightly apart, so they drift as a cloud. ── */
+.throwPuff,
+.landPuff {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 44px;
+  height: 44px;
+  margin: -22px 0 0 -22px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--c) 0%, transparent 68%);
+  opacity: 0;
+  animation-delay: var(--delay);
+}
+.throwPuff {
+  animation: throwPuff var(--dur-story) ease-out infinite;
+  animation-delay: var(--delay);
+}
+@keyframes throwPuff {
+  0%, 64.8% { opacity: 0; transform: translate(var(--tip-x), var(--tip-y)) scale(0.2); }
+  66.2% { opacity: 0.8; }
+  71%, 100% { opacity: 0; transform: translate(calc(var(--tip-x) + 26px), calc(var(--tip-y) - 12px)) scale(1.5); }
+}
+.landPuff {
+  animation: landPuff var(--dur-story) ease-out infinite;
+  animation-delay: var(--delay);
+}
+@keyframes landPuff {
+  0%, 80.4% { opacity: 0; transform: translate(calc(var(--land-x0) + var(--shift)), 106px) scale(0.3); }
+  82.4% { opacity: 0.75; }
+  88.5%, 100% { opacity: 0; transform: translate(calc(var(--land-x0) + var(--shift)), 92px) scale(1.7); }
+}
+.spark {
   position: absolute;
   top: 0;
   left: 0;
   opacity: 0;
   animation:
-    featherAcross var(--dur-story) linear infinite,
-    featherFade var(--dur-story) linear infinite;
+    sparkAcross var(--dur-story) linear infinite,
+    sparkFade var(--dur-story) linear infinite;
+  animation-delay: var(--delay);
 }
-@keyframes featherAcross {
-  0%, 61% {
-    transform: translateX(var(--fx0));
-    animation-timing-function: cubic-bezier(0.4, 0.2, 0.7, 0.88);
+@keyframes sparkAcross {
+  0%, 65.4% { transform: translateX(var(--tip-x)); }
+  82.7%, 100% { transform: translateX(calc(var(--land-x0) + var(--land-x))); }
+}
+@keyframes sparkFade {
+  0%, 65.4% { opacity: 0; }
+  66.2%, 82% { opacity: 1; }
+  84.6%, 100% { opacity: 0; }
+}
+.sparkFall {
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+  background: var(--c);
+  animation: sparkFall var(--dur-story) linear infinite;
+  animation-delay: var(--delay);
+}
+.sparkStar {
+  border-radius: 0;
+  clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%);
+  width: calc(var(--size) * 1.7);
+  height: calc(var(--size) * 1.7);
+}
+@keyframes sparkFall {
+  0%, 65.4% {
+    transform: translateY(var(--tip-y)) rotate(0deg);
+    animation-timing-function: cubic-bezier(0.2, 0.62, 0.42, 1);
   }
-  80.5%, 100% { transform: translateX(var(--fx1)); }
-}
-@keyframes featherFade {
-  0%, 61% { opacity: 0; }
-  62%, 79.4% { opacity: 1; }
-  80.8%, 100% { opacity: 0; }
-}
-.looseVane { fill: var(--color-peacock-bright); opacity: 0.55; }
-.looseBarbs {
-  fill: none;
-  stroke: var(--color-peacock);
-  stroke-width: 0.7;
-  stroke-linecap: round;
-}
-.looseQuill {
-  fill: none;
-  stroke: var(--color-gold-deep);
-  stroke-width: 0.9;
-  stroke-linecap: round;
-}
-.featherDrift { animation: featherDrift var(--dur-story) ease-in-out infinite; }
-@keyframes featherDrift {
-  0%, 61% { transform: translateY(calc(var(--art-top) + 46px * var(--art-scale))); }
-  65.5% { transform: translateY(-6px); }
-  70% { transform: translateY(8px); }
-  75% { transform: translateY(-4px); }
-  80.5%, 100% { transform: translateY(calc(var(--art-top) + 30px * var(--art-scale) - 14px)); }
-}
-.featherRock {
-  display: block;
-  width: 15px;
-  height: auto;
-  overflow: visible;
-  animation: featherRock var(--dur-story) ease-in-out infinite;
-}
-@keyframes featherRock {
-  0%, 61% { transform: rotate(-20deg); }
-  65.5% { transform: rotate(68deg); }
-  70% { transform: rotate(38deg); }
-  75% { transform: rotate(78deg); }
-  80.5%, 100% { transform: rotate(52deg); }
+  72.5% {
+    transform: translateY(var(--apex)) rotate(160deg);
+    animation-timing-function: cubic-bezier(0.55, 0, 0.82, 0.5);
+  }
+  82.7%, 100% { transform: translateY(calc(112px - var(--land-y))) rotate(420deg); }
 }
 
-/* ── It becomes a bird, in the air and still moving, which crosses the setting sun
-   and slows to land on the sakura. The perch is the branch's point at (86, 16.7)
-   in its 140-wide drawing, and the bird's feet are at the bottom of its own box. ── */
-.bird {
-  --bx0: calc(var(--fuji-x) + 112px * var(--art-scale) - var(--bird-w) / 2);
-  --by0: calc(var(--art-top) + 30px * var(--art-scale));
-  --bx1: calc(100cqw - 8px - var(--branch-w) * 0.386 - var(--bird-w) / 2);
-  --by1: calc(var(--branch-top) + var(--branch-w) * 0.119 - var(--bird-w) * 0.83);
+/* ── The Nara deer appears from the colours, a little left of Fuji, facing India.
+   It bows, holds a moment and rises as the elephant's trunk comes down. ── */
+.deer {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: var(--bird-w);
+  bottom: 5px;
+  left: calc(var(--land-x0) - var(--deer-w) / 2);
+  width: var(--deer-w);
   opacity: 0;
-  animation:
-    birdAcross var(--dur-story) linear infinite,
-    birdFade var(--dur-story) linear infinite;
+  transform-origin: 50% 100%;
+  animation: deerAppear var(--dur-story) ease-out infinite;
 }
-@keyframes birdAcross {
-  0%, 80% {
-    transform: translateX(var(--bx0));
-    animation-timing-function: cubic-bezier(0.3, 0.42, 0.34, 1);
-  }
-  88.5%, 100% { transform: translateX(var(--bx1)); }
+@keyframes deerAppear {
+  0%, 81.2% { opacity: 0; transform: translateY(6px) scale(0.72); }
+  85.4%, 96% { opacity: 1; transform: translateY(0) scale(1); }
+  100% { opacity: 0; transform: translateY(0) scale(1); }
 }
-@keyframes birdFade {
-  0%, 79.8% { opacity: 0; }
-  80.8%, 96% { opacity: 1; }
-  100% { opacity: 0; }
-}
-/* It swoops low under the Enquire button, then rises onto the branch. */
-.birdRise { animation: birdRise var(--dur-story) ease-in-out infinite; }
-@keyframes birdRise {
-  0%, 80% { transform: translateY(var(--by0)); }
-  85% { transform: translateY(calc(var(--by1) + 12px)); }
-  88.5%, 100% { transform: translateY(var(--by1)); }
-}
-.birdShape {
+.deerShape {
   display: block;
   width: 100%;
   height: auto;
   overflow: visible;
-  animation: birdGrow var(--dur-story) ease-out infinite;
 }
-@keyframes birdGrow {
-  0%, 79.8% { transform: scale(0.3); }
-  81.4%, 100% { transform: scale(1); }
+.deerBow {
+  transform-origin: 22px 32px;
+  animation: deerBow var(--dur-story) ease-in-out infinite;
 }
-.birdBody { fill: var(--color-peacock); stroke: var(--color-gold-deep); stroke-width: 0.5; }
-.birdTailEye { fill: var(--color-gold-light); }
-.birdBeak { fill: var(--color-gold); stroke: var(--color-gold-deep); stroke-width: 0.4; }
-.birdEye { fill: var(--color-surface-bright); }
-.birdWing { fill: var(--color-gold-light); stroke: var(--color-gold-deep); stroke-width: 0.6; stroke-linejoin: round; }
-.birdWingFar { fill: var(--color-gold); }
-.birdLegs { fill: none; stroke: var(--color-gold-deep); stroke-width: 0.9; stroke-linecap: round; }
-/* Open wings in the air, folded on the branch. */
-.birdFlying { animation: birdFlying var(--dur-story) linear infinite; }
-@keyframes birdFlying {
-  0%, 88% { opacity: 1; }
-  88.6%, 100% { opacity: 0; }
+@keyframes deerBow {
+  0%, 85.4% { transform: rotate(0deg); }
+  89.2%, 90.4% { transform: rotate(-78deg); }
+  94.2%, 100% { transform: rotate(0deg); }
 }
-.birdPerched { animation: birdPerched var(--dur-story) linear infinite; }
-@keyframes birdPerched {
-  0%, 88% { opacity: 0; }
-  88.6%, 100% { opacity: 1; }
+.deerLean {
+  transform-origin: 52px 38px;
+  animation: deerLean var(--dur-story) ease-in-out infinite;
 }
-.birdFlap {
-  transform-origin: 0 0;
-  animation: birdFlap 0.34s ease-in-out infinite alternate;
+@keyframes deerLean {
+  0%, 85.4% { transform: rotate(0deg); }
+  89.2%, 90.4% { transform: rotate(-6deg); }
+  94.2%, 100% { transform: rotate(0deg); }
 }
-@keyframes birdFlap {
-  from { transform: scaleY(1); }
-  to { transform: scaleY(-0.35); }
-}
-/* A ring of gold light as the feather turns. */
-.birdBurst {
+.deerCoat { fill: var(--color-deer); }
+.deerFar { fill: var(--color-deer-deep); }
+.deerHoof { fill: var(--color-ink); }
+.deerRump { fill: var(--color-surface-bright); stroke: var(--color-deer-deep); stroke-width: 0.4; }
+.deerTail { fill: var(--color-deer-deep); }
+.deerThroat { fill: var(--color-gold-pale); }
+.deerEarInner { fill: var(--color-sakura); }
+.deerNose { fill: var(--color-ink); }
+.deerEye { fill: var(--color-ink); }
+.deerSpots {
   fill: none;
-  stroke: var(--color-gold);
-  stroke-width: 1;
-  opacity: 0;
-  transform-origin: 0 0;
-  animation: birdBurst var(--dur-story) ease-out infinite;
+  stroke: var(--color-surface-bright);
+  stroke-width: 2.4;
+  stroke-linecap: round;
 }
-@keyframes birdBurst {
-  0%, 79.8% { opacity: 0; transform: scale(0.3); }
-  80.4% { opacity: 1; transform: scale(0.6); }
-  82.4%, 100% { opacity: 0; transform: scale(2); }
+.deerAntler {
+  fill: none;
+  stroke: var(--color-horse-dark);
+  stroke-width: 1.1;
+  stroke-linecap: round;
 }
 
 /* ── Dusk: the Taj glows ── */
 .tajDusk { animation: tajDusk var(--dur-story) ease-in-out infinite; }
 @keyframes tajDusk {
-  0%, 84% { filter: drop-shadow(0 0 0 rgb(201 154 46 / 0)); }
-  90% { filter: drop-shadow(0 0 6px rgb(201 154 46 / 0.95)); }
-  96%, 100% { filter: drop-shadow(0 0 0 rgb(201 154 46 / 0)); }
+  0%, 86% { filter: drop-shadow(0 0 0 rgb(201 154 46 / 0)); }
+  92% { filter: drop-shadow(0 0 6px rgb(201 154 46 / 0.95)); }
+  98%, 100% { filter: drop-shadow(0 0 0 rgb(201 154 46 / 0)); }
 }
 
 /* Narrower desktops: less room left of the Taj and right of Fuji. */
@@ -702,10 +728,10 @@ header[data-scrolled="true"] .storyRoot * { animation-play-state: paused; }
   .layer {
     --branch-w: 4.5rem;
     --branch-top: 4rem;
-    --bird-w: 22px;
     --cart-w: 98px;
+    --deer-w: 46px;
   }
-  .peacock { --walk: -35px; }
+  .elephant { --walk: -35px; }
   .trainNose,
   .trainTail { flex-basis: 3.5rem; }
 }
